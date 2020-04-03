@@ -6,7 +6,8 @@
 *.config
 
 
-# 过滤文件夹Debug,Release,obj
+# 过滤文件夹Debug,Release,obj和.vs
 Debug/
 Release/
 obj/
+.vs/
