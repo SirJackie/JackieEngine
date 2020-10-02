@@ -1,33 +1,13 @@
 ﻿#include <iostream>
 #include <Windows.h>
 #include <d3d9.h>
-#include "DirectXFramework.h"
+#include "resource.h"
+#include "FrameBuffer.h"
 using namespace std;
 
 IDirect3D9* pDirect3D;
 IDirect3DDevice9* pDevice;
 
-void PutPixel(int x, int y, int r, int g, int b)
-{
-	IDirect3DSurface9* pBackBuffer = NULL;
-	D3DLOCKED_RECT rect;
-
-	pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
-	pBackBuffer->LockRect(&rect, NULL, NULL);
-	((D3DCOLOR*)rect.pBits)[x + (rect.Pitch >> 2) * y] = D3DCOLOR_XRGB(r, g, b);
-	pBackBuffer->UnlockRect();
-	pBackBuffer->Release();
-}
-
-void BeginFrame()
-{
-	pDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
-}
-
-void EndFrame()
-{
-	pDevice->Present(NULL, NULL, NULL, NULL);
-}
 
 
 
@@ -94,13 +74,25 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		}
 		else
 		{
-			BeginFrame();
+			pDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
+
+			IDirect3DSurface9* pBackBuffer = NULL;
+			D3DLOCKED_RECT rect;
+
+			pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
+			pBackBuffer->LockRect(&rect, NULL, NULL);
+			
 			for (int y = 0; y < 100; y++) {
 				for (int x = 0; x < 100; x++) {
-					PutPixel(x, y, 255, 255, 255);
+					Pixel(rect, x, y) = RGB888(255, 0, 0);
 				}
 			}
-			EndFrame();
+
+			pBackBuffer->UnlockRect();
+			pBackBuffer->Release();
+
+			
+			pDevice->Present(NULL, NULL, NULL, NULL);
 		}
 	}
 
