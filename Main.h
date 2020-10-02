@@ -4,7 +4,7 @@
 #include "TextOutput.h"
 
 int Color = 0;
-int DeltaColor = 2;
+float DeltaColor = 0.1;
 
 void OnCreate() {
 	;
@@ -18,7 +18,7 @@ void Setup(FrameBuffer fb, int width, int height) {
 	}
 }
 
-void Update(FrameBuffer fb, int width, int height) {
+void Update(FrameBuffer fb, int width, int height, int deltaTime) {
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			int a = RGB888(Color, Color, Color);
@@ -31,15 +31,23 @@ void Update(FrameBuffer fb, int width, int height) {
 	DrawShadowString(fb, 100, 100, chSmall);
 	DrawShadowString(fb, 100, 116, chBig);
 
+	char buffer[100];
+	sprintf_s(
+		buffer,
+		"DeltaTime: %d",
+		deltaTime
+	);
+	DrawShadowString(fb, 10, 10, buffer);
 
-	Color += DeltaColor;
 
-	if (Color == 254) {
-		DeltaColor = -2;
+	Color += (int)(DeltaColor * (float)deltaTime);
+
+	if (Color >= 250) {
+		DeltaColor = -0.1;
 	}
 
-	else if (Color == 0) {
-		DeltaColor = 2;
+	else if (Color <= 5) {
+		DeltaColor = 0.1;
 	}
 
 }

@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <d3d9.h>
 #include "resource.h"
+#include <time.h>
 #include "Main.h"
 using namespace std;
 
@@ -105,6 +106,8 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 
+	clock_t lastTime, thisTime;
+
 	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -123,11 +126,15 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			pBackBuffer->LockRect(&rect, NULL, NULL);
 
 			if (FirstTimeRunning) {
+				thisTime = clock();
 				Setup(rect, WindowWidth, WindowHeight);
 				FirstTimeRunning = FALSE;
+				lastTime = thisTime;
 			}
 			else {
-				Update(rect, WindowWidth, WindowHeight);
+				thisTime = clock();
+				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime);
+				lastTime = thisTime;
 			}
 
 			pBackBuffer->UnlockRect();
