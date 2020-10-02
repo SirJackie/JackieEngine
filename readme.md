@@ -1,4 +1,4 @@
-# FrameBufferWindows
+# CrossBufferForWindow
 
 基于DirectX9.0的FrameBuffer实现，可以帮助你在Windows环境下读写显存。
 
@@ -18,7 +18,7 @@
 
 ![dx4](./ImagesForReadme/dx4.png)
 
-4.安装完成后打开仓库中的FrameBufferWindows.vcxproj，就会自动在VS中打开FrameBufferWindows项目。在右边的“解决方案管理器”中右击项目，点属性，然后按照下面三张图设置：
+4.安装完成后打开仓库中的CrossBufferForWindow.vcxproj，就会自动在VS中打开CrossBufferForWindow项目。在右边的“解决方案管理器”中右击项目，点属性，然后按照下面三张图设置：
 
 ![vs1](./ImagesForReadme/vs1.png)
 
@@ -38,7 +38,7 @@ Enjoy it!
 
 # 关于开源协议
 
-仓库中FrameBufferWindows本身，以及通过该程序衍生得产品，如Demo视频，均属于开源软件，遵守GNU通用公共许可证，即GNU GPL。
+仓库中CrossBufferForWindow本身，以及通过该程序衍生得产品，如Demo视频，均属于开源软件，遵守GNU通用公共许可证，即GNU GPL。
 
 GNU GPL协议授予程序接受人以下权利，或称“自由”：
 
@@ -48,9 +48,9 @@ GNU GPL协议授予程序接受人以下权利，或称“自由”：
 
 - 改进此程序，并公开发布改进的自由。
 
-GNU GPL不会授予许可证接受人无限的权利。再发行权的授予需要许可证接受人开放软件的源代码，及所有修改。且复制件、修改版本，都必须以GPL为许可证，这是为了确保任何使用者不会独自占有开源软件。使用、复制或更改FrameBufferWindows的程序接受人视为同意GNU GPL协议，必须再次开源其更改后的派生物（如源代码等），否则将追究法律责任。
+GNU GPL不会授予许可证接受人无限的权利。再发行权的授予需要许可证接受人开放软件的源代码，及所有修改。且复制件、修改版本，都必须以GPL为许可证，这是为了确保任何使用者不会独自占有开源软件。使用、复制或更改CrossBufferForWindow的程序接受人视为同意GNU GPL协议，必须再次开源其更改后的派生物（如源代码等），否则将追究法律责任。
 
-关于协议版本，FrameBufferWindows使用GPL v2协议。
+关于协议版本，CrossBufferForWindow使用GPL v2协议。
 
 关于GPL v2协议，上述说明仅做参考，具体细节请以LICENSE为准，
 
