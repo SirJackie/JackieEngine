@@ -9,6 +9,31 @@ IDirect3D9* pDirect3D;
 IDirect3DDevice9* pDevice;
 BOOL FirstTimeRunning = TRUE;
 
+int WindowLeftMargin;
+int WindowTopMargin;
+int WindowWidth;
+int WindowHeight;
+
+/*
+** Functions
+*/
+
+void GetScreenResolution(int* resultX, int* resultY) {
+	// Get Screen HDC
+	HDC hdcScreen;
+	hdcScreen = CreateDC(L"DISPLAY", NULL, NULL, NULL);
+
+	// Get X and Y
+	*resultX = GetDeviceCaps(hdcScreen, HORZRES);    // pixel
+	*resultY = GetDeviceCaps(hdcScreen, VERTRES);    // pixel
+
+	// Release HDC
+	if (NULL != hdcScreen)
+	{
+		DeleteDC(hdcScreen);
+	}
+}
+
 
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -24,6 +49,20 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 {
+	/*
+	** Calculate Window Width And Height
+	*/
+	int ScreenX, ScreenY;
+	GetScreenResolution(&ScreenX, &ScreenY);
+
+	int Unit = ScreenY / 30;
+
+	WindowTopMargin = 2 * Unit;
+	WindowHeight = 26 * Unit;
+
+	WindowLeftMargin = Unit;
+	WindowWidth = ScreenX - 2 * Unit;
+
 	OnCreate();
 
 	//Register window class
@@ -36,10 +75,10 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 
 	//Create window
 	RECT wr;
-	wr.left = 100;
-	wr.right = 800 + wr.left;
-	wr.top = 100;
-	wr.bottom = 600 + wr.top;
+	wr.left   = WindowLeftMargin;
+	wr.right  = WindowWidth + wr.left;
+	wr.top    = WindowTopMargin;
+	wr.bottom = WindowHeight + wr.top;
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);
 	HWND hWnd = CreateWindowW(L"DirectX Framework Window", L"DirectX Framework",
 		WS_OVERLAPPEDWINDOW, wr.left, wr.top, wr.right - wr.left, wr.bottom - wr.top,
@@ -84,11 +123,11 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			pBackBuffer->LockRect(&rect, NULL, NULL);
 
 			if (FirstTimeRunning) {
-				Setup(rect, 800, 600);
+				Setup(rect, WindowWidth, WindowHeight);
 				FirstTimeRunning = FALSE;
 			}
 			else {
-				Update(rect, 800, 600);
+				Update(rect, WindowWidth, WindowHeight);
 			}
 
 			pBackBuffer->UnlockRect();
