@@ -2,11 +2,12 @@
 #include <Windows.h>
 #include <d3d9.h>
 #include "resource.h"
-#include "CrossBuffer.h"
+#include "Main.h"
 using namespace std;
 
 IDirect3D9* pDirect3D;
 IDirect3DDevice9* pDevice;
+BOOL FirstTimeRunning = TRUE;
 
 
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -23,6 +24,8 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 {
+	OnCreate();
+
 	//Register window class
 	WNDCLASSEX wc = { sizeof(WNDCLASSEX),CS_CLASSDC,MsgProc,0,0,
 					  GetModuleHandle(NULL),NULL,NULL,NULL,NULL,
@@ -80,10 +83,12 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
 			pBackBuffer->LockRect(&rect, NULL, NULL);
 
-			for (int y = 0; y < 100; y++) {
-				for (int x = 0; x < 100; x++) {
-					Pixel(rect, x, y) = RGB888(255, 0, 0);
-				}
+			if (FirstTimeRunning) {
+				Setup(rect, 800, 600);
+				FirstTimeRunning = FALSE;
+			}
+			else {
+				Update(rect, 800, 600);
 			}
 
 			pBackBuffer->UnlockRect();
@@ -93,6 +98,8 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			pDevice->Present(NULL, NULL, NULL, NULL);
 		}
 	}
+
+	OnDestroy();
 
 	//When WM_DESTROY,release all the variable
 	UnregisterClass(L"DirectX Framework Window", wc.hInstance);
