@@ -6,6 +6,10 @@
 int Color = 0;
 float DeltaColor = 0.1;
 
+float FPS = 0;
+int deltaTimeCount;
+int frameCount;
+
 void OnCreate() {
 	;
 }
@@ -19,6 +23,15 @@ void Setup(FrameBuffer fb, int width, int height) {
 }
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime) {
+	deltaTimeCount += deltaTime;
+	frameCount += 1;
+
+	if (deltaTimeCount > 1000) {
+		FPS = (float)frameCount / ((float)deltaTimeCount / 1000);
+		deltaTimeCount -= 1000;
+		frameCount = 0;
+	}
+
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			int a = RGB888(Color, Color, Color);
@@ -34,7 +47,8 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime) {
 	char buffer[100];
 	sprintf_s(
 		buffer,
-		"DeltaTime: %d",
+		"FPS: %f; DeltaTime: %d",
+		FPS,
 		deltaTime
 	);
 	DrawShadowString(fb, 10, 10, buffer);
