@@ -23,9 +23,16 @@ void DrawChar(FrameBuffer fb, int x, int y, int color, char ch)
 
 void DrawString(FrameBuffer fb, int x, int y, int color, char* stringPointer)
 {
+	int originX = x;
 	for (; *stringPointer != 0x00; stringPointer++) {
+		if (*stringPointer == '\n') {
+			y += 16;
+			x = originX;
+			continue;
+		}
 		DrawChar(fb, x, y, color, *stringPointer); //画这个字符
 		x += 8; //下一个字符X轴位置加8
+		
 	}
 	return;
 }

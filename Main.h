@@ -22,7 +22,58 @@ void Setup(FrameBuffer fb, int width, int height) {
 	}
 }
 
-void Update(FrameBuffer fb, int width, int height, int deltaTime) {
+int BallX = 100;
+int BallY = 100;
+
+void Update(FrameBuffer fb, int width, int height, int deltaTime, BOOL IsKeyPressing, int KeyCode, BOOL IsMousePressing, int MouseX, int MouseY) {
+	/*
+	** Draw Things
+	*/
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			Pixel(fb, x, y) = RGB888(Color, Color, Color);
+		}
+	}
+
+	if (IsKeyPressing == TRUE) {
+		if (KeyCode == 'W') {
+			BallY -= deltaTime / 2;
+		}
+		if (KeyCode == 'S') {
+			BallY += deltaTime / 2;
+		}
+		if (KeyCode == 'A') {
+			BallX -= deltaTime / 2;
+		}
+		if (KeyCode == 'D') {
+			BallX += deltaTime / 2;
+		}
+	}
+
+	if (BallX < 0) {
+		BallX = 0;
+	}
+	else if (BallX > width - 100) {
+		BallX = width - 100;
+	}
+
+	if (BallY < 0) {
+		BallY = 0;
+	}
+	else if (BallY > height - 100) {
+		BallY = height - 100;
+	}
+
+	for (int y = BallY; y < BallY + 100; y++) {
+		for (int x = BallX; x < BallX + 100; x++) {
+			Pixel(fb, x, y) = RGB888(255, 0, 0);
+		}
+	}
+
+
+	/*
+	** Calculate FPS
+	*/
 	deltaTimeCount += deltaTime;
 	frameCount += 1;
 
@@ -31,18 +82,6 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime) {
 		deltaTimeCount -= 1000;
 		frameCount = 0;
 	}
-
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			int a = RGB888(Color, Color, Color);
-			Pixel(fb, x, y) = a;
-		}
-	}
-
-	char chSmall[] = "the quick brown fox jumps over a lazy dog.";
-	char chBig[] = "THE QUICK BROWN FOX JUMPS OVER A LAZY DOG.";
-	DrawShadowString(fb, 100, 100, chSmall);
-	DrawShadowString(fb, 100, 116, chBig);
 
 	char buffer[100];
 	sprintf_s(
@@ -53,7 +92,21 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime) {
 	);
 	DrawShadowString(fb, 10, 10, buffer);
 
+	sprintf_s(
+		buffer,
+		"IsKeyPressing: %d\nKeyCode: %d\nIsMousePressing: %d\nMouseX: %d\nMouseY: %d",
+		IsKeyPressing,
+		KeyCode,
+		IsMousePressing,
+		MouseX,
+		MouseY
+	);
+	DrawShadowString(fb, 10, 30, buffer);
 
+
+	/*
+	** Change Color
+	*/
 	Color += (int)(DeltaColor * (float)deltaTime);
 
 	if (Color >= 250) {

@@ -35,6 +35,13 @@ void GetScreenResolution(int* resultX, int* resultY) {
 	}
 }
 
+BOOL IsKeyPressing;
+int KeyCode;
+BOOL IsMousePressing;
+int MouseX;
+int MouseY;
+
+BOOL FirstTimeGettingInput = TRUE;
 
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -43,8 +50,32 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
+
+	case WM_KEYDOWN:
+		IsKeyPressing = TRUE;
+		KeyCode = wParam;
+		break;
+
+	case WM_KEYUP:
+		IsKeyPressing = FALSE;
+
+	case WM_LBUTTONDOWN:
+		IsMousePressing = TRUE;
+		break;
+
+	case WM_MOUSEMOVE:
+		MouseX = LOWORD(lParam);
+		MouseY = HIWORD(lParam);
+		break;
+
+	default:
+		if (FirstTimeGettingInput) {
+			MouseX = LOWORD(lParam);
+			MouseY = HIWORD(lParam);
+			FirstTimeGettingInput = FALSE;
+		}
+		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}
-	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
 
@@ -133,9 +164,14 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			}
 			else {
 				thisTime = clock();
-				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime);
+				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, IsKeyPressing, KeyCode, IsMousePressing, MouseX, MouseY);
 				lastTime = thisTime;
 			}
+
+			if (IsMousePressing) {
+				IsMousePressing = FALSE;
+			}
+			
 
 			pBackBuffer->UnlockRect();
 			pBackBuffer->Release();
