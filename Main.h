@@ -2,6 +2,7 @@
 
 #include "CrossBuffer.h"
 #include "TextOutput.h"
+#include "Input.h"
 
 int Color = 0;
 float DeltaColor = 0.1;
@@ -25,7 +26,7 @@ void Setup(FrameBuffer fb, int width, int height) {
 int BallX = 100;
 int BallY = 100;
 
-void Update(FrameBuffer fb, int width, int height, int deltaTime, int Keyboard[256], BOOL IsMousePressing, int MouseX, int MouseY) {
+void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	/*
 	** Draw Things
 	*/
@@ -35,16 +36,16 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, int Keyboard[2
 		}
 	}
 
-	if (Keyboard['W'] == 1) {
+	if (keyboard['W'] == 1) {
 		BallY -= deltaTime / 2;
 	}
-	if (Keyboard['S'] == 1) {
+	if (keyboard['S'] == 1) {
 		BallY += deltaTime / 2;
 	}
-	if (Keyboard['A'] == 1) {
+	if (keyboard['A'] == 1) {
 		BallX -= deltaTime / 2;
 	}
-	if (Keyboard['D'] == 1) {
+	if (keyboard['D'] == 1) {
 		BallX += deltaTime / 2;
 	}
 
@@ -92,10 +93,11 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, int Keyboard[2
 
 	sprintf_s(
 		buffer,
-		"IsMousePressing: %d\nMouseX: %d\nMouseY: %d",
-		IsMousePressing,
-		MouseX,
-		MouseY
+		"LButtonState: %d\nRButtonState: %d\nMouseX: %d\nMouseY: %d",
+		mouse.LButtonState,
+		mouse.RButtonState,
+		mouse.X,
+		mouse.Y
 	);
 	DrawShadowString(fb, 10, 30, buffer);
 

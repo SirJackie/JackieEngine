@@ -1,19 +1,29 @@
 ﻿#include <iostream>
 #include <Windows.h>
 #include <d3d9.h>
-#include "resource.h"
 #include <time.h>
+#include "resource.h"
 #include "Main.h"
 using namespace std;
 
-IDirect3D9* pDirect3D;
-IDirect3DDevice9* pDevice;
-BOOL FirstTimeRunning = TRUE;
+/* DirectX Objects */
+IDirect3D9*        pDirect3D;
+IDirect3DDevice9*  pDevice;
 
+/* Window Properties */
 int WindowLeftMargin;
 int WindowTopMargin;
 int WindowWidth;
 int WindowHeight;
+
+/* Input Objects */
+int keyboard[256];
+Mouse mouse;
+
+/* Flags */
+BOOL FirstTimeRunning      = TRUE;
+BOOL FirstTimeGettingInput = TRUE;
+
 
 /*
 ** Functions
@@ -35,55 +45,16 @@ void GetScreenResolution(int* resultX, int* resultY) {
 	}
 }
 
-int Keyboard[256];
-BOOL IsMousePressing;
-int MouseX;
-int MouseY;
-
-BOOL FirstTimeGettingInput = TRUE;
-
-LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	switch (msg)
-	{
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return 0;
-
-	case WM_KEYDOWN:
-		Keyboard[wParam] = 1;
-		break;
-
-	case WM_KEYUP:
-		Keyboard[wParam] = 0;
-		break;
-
-	case WM_LBUTTONDOWN:
-		IsMousePressing = TRUE;
-		break;
-
-	case WM_LBUTTONUP:
-		IsMousePressing = FALSE;
-
-	case WM_MOUSEMOVE:
-		MouseX = LOWORD(lParam);
-		MouseY = HIWORD(lParam);
-		break;
-
-	default:
-		if (FirstTimeGettingInput) {
-			MouseX = LOWORD(lParam);
-			MouseY = HIWORD(lParam);
-			FirstTimeGettingInput = FALSE;
-		}
-		return DefWindowProc(hWnd, msg, wParam, lParam);
-	}
-}
-
+LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 {
-	ZeroMemory(Keyboard, 256 * sizeof(int));
+	/*
+	** Initialize All The Variables
+	*/
+	ZeroMemory(keyboard, 256 * sizeof(int));
+	InitMouse(&mouse);
+
 
 	/*
 	** Calculate Window Width And Height
@@ -93,11 +64,12 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 
 	int Unit = ScreenY / 30;
 
-	WindowTopMargin = 2 * Unit;
-	WindowHeight = 26 * Unit;
+	WindowHeight     = 26 * Unit;
+	WindowTopMargin  = 2 * Unit;
 
-	WindowLeftMargin = Unit;
-	WindowWidth = ScreenX - 2 * Unit;
+	WindowWidth      = WindowHeight / 9 * 16;
+	WindowLeftMargin = (ScreenX - WindowWidth) / 2;
+	
 
 	OnCreate();
 
@@ -141,7 +113,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 
-	clock_t lastTime, thisTime;
+	clock_t lastTime = NULL, thisTime = NULL;
 
 	while (msg.message != WM_QUIT)
 	{
@@ -168,7 +140,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			}
 			else {
 				thisTime = clock();
-				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, Keyboard, IsMousePressing, MouseX, MouseY);
+				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
 				lastTime = thisTime;
 			}
 			
@@ -198,4 +170,51 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	}
 
 	return 0;
+}
+
+LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+
+	case WM_KEYDOWN:
+		keyboard[wParam] = 1;
+		break;
+
+	case WM_KEYUP:
+		keyboard[wParam] = 0;
+		break;
+
+	case WM_LBUTTONDOWN:
+		mouse.LButtonState = PRESSED;
+		break;
+
+	case WM_LBUTTONUP:
+		mouse.LButtonState = UNPRESSED;
+		break;
+
+	case WM_RBUTTONDOWN:
+		mouse.RButtonState = PRESSED;
+		break;
+
+	case WM_RBUTTONUP:
+		mouse.RButtonState = UNPRESSED;
+		break;
+
+	case WM_MOUSEMOVE:
+		mouse.X = LOWORD(lParam);
+		mouse.Y = HIWORD(lParam);
+		break;
+
+	default:
+		if (FirstTimeGettingInput) {
+			mouse.X = LOWORD(lParam);
+			mouse.Y = HIWORD(lParam);
+			FirstTimeGettingInput = FALSE;
+		}
+		return DefWindowProc(hWnd, msg, wParam, lParam);
+	}
 }
