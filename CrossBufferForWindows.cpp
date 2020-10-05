@@ -62,6 +62,9 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		IsMousePressing = TRUE;
 		break;
 
+	case WM_LBUTTONUP:
+		IsMousePressing = FALSE;
+
 	case WM_MOUSEMOVE:
 		MouseX = LOWORD(lParam);
 		MouseY = HIWORD(lParam);
@@ -167,10 +170,6 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 				thisTime = clock();
 				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, Keyboard, IsMousePressing, MouseX, MouseY);
 				lastTime = thisTime;
-			}
-
-			if (IsMousePressing) {
-				IsMousePressing = FALSE;
 			}
 			
 
