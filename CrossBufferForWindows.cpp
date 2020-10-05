@@ -35,8 +35,7 @@ void GetScreenResolution(int* resultX, int* resultY) {
 	}
 }
 
-BOOL IsKeyPressing;
-int KeyCode;
+int Keyboard[256];
 BOOL IsMousePressing;
 int MouseX;
 int MouseY;
@@ -52,12 +51,12 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_KEYDOWN:
-		IsKeyPressing = TRUE;
-		KeyCode = wParam;
+		Keyboard[wParam] = 1;
 		break;
 
 	case WM_KEYUP:
-		IsKeyPressing = FALSE;
+		Keyboard[wParam] = 0;
+		break;
 
 	case WM_LBUTTONDOWN:
 		IsMousePressing = TRUE;
@@ -81,6 +80,8 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 {
+	ZeroMemory(Keyboard, 256 * sizeof(int));
+
 	/*
 	** Calculate Window Width And Height
 	*/
@@ -164,7 +165,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			}
 			else {
 				thisTime = clock();
-				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, IsKeyPressing, KeyCode, IsMousePressing, MouseX, MouseY);
+				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, Keyboard, IsMousePressing, MouseX, MouseY);
 				lastTime = thisTime;
 			}
 

@@ -25,7 +25,7 @@ void Setup(FrameBuffer fb, int width, int height) {
 int BallX = 100;
 int BallY = 100;
 
-void Update(FrameBuffer fb, int width, int height, int deltaTime, BOOL IsKeyPressing, int KeyCode, BOOL IsMousePressing, int MouseX, int MouseY) {
+void Update(FrameBuffer fb, int width, int height, int deltaTime, int Keyboard[256], BOOL IsMousePressing, int MouseX, int MouseY) {
 	/*
 	** Draw Things
 	*/
@@ -35,19 +35,17 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, BOOL IsKeyPres
 		}
 	}
 
-	if (IsKeyPressing == TRUE) {
-		if (KeyCode == 'W') {
-			BallY -= deltaTime / 2;
-		}
-		if (KeyCode == 'S') {
-			BallY += deltaTime / 2;
-		}
-		if (KeyCode == 'A') {
-			BallX -= deltaTime / 2;
-		}
-		if (KeyCode == 'D') {
-			BallX += deltaTime / 2;
-		}
+	if (Keyboard['W'] == 1) {
+		BallY -= deltaTime / 2;
+	}
+	if (Keyboard['S'] == 1) {
+		BallY += deltaTime / 2;
+	}
+	if (Keyboard['A'] == 1) {
+		BallX -= deltaTime / 2;
+	}
+	if (Keyboard['D'] == 1) {
+		BallX += deltaTime / 2;
 	}
 
 	if (BallX < 0) {
@@ -94,9 +92,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, BOOL IsKeyPres
 
 	sprintf_s(
 		buffer,
-		"IsKeyPressing: %d\nKeyCode: %d\nIsMousePressing: %d\nMouseX: %d\nMouseY: %d",
-		IsKeyPressing,
-		KeyCode,
+		"IsMousePressing: %d\nMouseX: %d\nMouseY: %d",
 		IsMousePressing,
 		MouseX,
 		MouseY
