@@ -9,6 +9,8 @@ using namespace std;
 /* DirectX Objects */
 IDirect3D9*        pDirect3D;
 IDirect3DDevice9*  pDevice;
+IDirect3DSurface9* pBackBuffer;
+D3DLOCKED_RECT     rect;
 
 /* Window Properties */
 int WindowLeftMargin;
@@ -23,6 +25,10 @@ Mouse mouse;
 /* Flags */
 BOOL FirstTimeRunning      = TRUE;
 BOOL FirstTimeGettingInput = TRUE;
+
+/* Timer */
+clock_t lastTime = NULL;
+clock_t thisTime = NULL;
 
 
 /*
@@ -47,6 +53,11 @@ void GetScreenResolution(int* resultX, int* resultY) {
 
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+
+/*
+** Main Function
+*/
+
 int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 {
 	/*
@@ -54,6 +65,8 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	*/
 	ZeroMemory(keyboard, 256 * sizeof(int));
 	InitMouse(&mouse);
+	thisTime = clock();
+	lastTime = thisTime;
 
 
 	/*
@@ -71,31 +84,56 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	WindowLeftMargin = (ScreenX - WindowWidth) / 2;
 	
 
+	/*
+	** Call the OnCreate() in Main.h
+	*/
 	OnCreate();
 
-	//Register window class
-	WNDCLASSEX wc = { sizeof(WNDCLASSEX),CS_CLASSDC,MsgProc,0,0,
-					  GetModuleHandle(NULL),NULL,NULL,NULL,NULL,
-					  L"DirectX Framework Window",NULL };
-	wc.hIconSm = (HICON)LoadImage(hInst, MAKEINTRESOURCE(NULL), IMAGE_ICON, 16, 16, 0);
-	wc.hIcon = (HICON)LoadImage(hInst, MAKEINTRESOURCE(NULL), IMAGE_ICON, 32, 32, 0);
+
+	/*
+	** Register Window Class
+	*/
+	WNDCLASSEX wc = {
+		sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0, 0,
+		GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
+		L"DirectX Framework Window", NULL
+	};
+
+	wc.hIconSm = (HICON)LoadImage(
+		hInst, MAKEINTRESOURCE(NULL), IMAGE_ICON, 16, 16, 0
+	);
+
+	wc.hIcon   = (HICON)LoadImage(
+		hInst, MAKEINTRESOURCE(NULL), IMAGE_ICON, 32, 32, 0
+	);
+
 	RegisterClassEx(&wc);
 
-	//Create window
+
+	/*
+	** Create Window
+	*/
 	RECT wr;
 	wr.left   = WindowLeftMargin;
-	wr.right  = WindowWidth + wr.left;
+	wr.right  = WindowWidth  + wr.left;
 	wr.top    = WindowTopMargin;
 	wr.bottom = WindowHeight + wr.top;
+
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);
-	HWND hWnd = CreateWindowW(L"DirectX Framework Window", L"DirectX Framework",
-		WS_OVERLAPPEDWINDOW, wr.left, wr.top, wr.right - wr.left, wr.bottom - wr.top,
-		NULL, NULL, wc.hInstance, NULL);
+	HWND hWnd = CreateWindowW(
+		L"DirectX Framework Window", L"DirectX Framework",
+		WS_OVERLAPPEDWINDOW,
+		wr.left, wr.top, wr.right - wr.left, wr.bottom - wr.top,
+		NULL, NULL, wc.hInstance, NULL
+	);
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 	UpdateWindow(hWnd);
 
-	//Direct3D initialize
+
+	/*
+	** Direct3D Initialize
+	*/
 	pDirect3D = Direct3DCreate9(D3D_SDK_VERSION);
 
 	D3DPRESENT_PARAMETERS d3dpp;
@@ -106,56 +144,92 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
 	d3dpp.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
 
-	pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
-		D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_PUREDEVICE, &d3dpp, &pDevice);
+	pDirect3D->CreateDevice(
+		D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
+		D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_PUREDEVICE,
+		&d3dpp, &pDevice
+	);
 
-	//Process messages
+
+	/*
+	** Process Messages From Windows
+	*/
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 
-	clock_t lastTime = NULL, thisTime = NULL;
-
 	while (msg.message != WM_QUIT)
 	{
+		/*
+		** Main Loop
+		*/
+
+		/* Calculate the Time */
+		thisTime = clock();
+
+		/* If there is a Message from Windows*/
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
+			/* Then Process it */
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		/* Else, Process the Game Loop */
 		else
 		{
-			pDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
+			/*
+			** Clear Back Buffer And Get It
+			*/
+			pDevice->Clear(
+				0, NULL, D3DCLEAR_TARGET,
+				D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0
+			);
+			pBackBuffer = NULL;
 
-			IDirect3DSurface9* pBackBuffer = NULL;
-			D3DLOCKED_RECT rect;
-
-			pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
+			pDevice->GetBackBuffer(
+				0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer
+			);
 			pBackBuffer->LockRect(&rect, NULL, NULL);
 
+
+			/* If it is the First Time Running */
 			if (FirstTimeRunning) {
-				thisTime = clock();
+				/* Call the Setup() in Main.h */
 				Setup(rect, WindowWidth, WindowHeight);
 				FirstTimeRunning = FALSE;
-				lastTime = thisTime;
 			}
-			else {
-				thisTime = clock();
-				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
-				lastTime = thisTime;
-			}
-			
 
+			/* If it is not the First Time Running */
+			else {
+				/* Call the Update() in Main.h */
+				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
+			}
+
+			
+			/*
+			** Release Back Buffer
+			*/
 			pBackBuffer->UnlockRect();
 			pBackBuffer->Release();
 
 
+			/*
+			** Swap the Front and the Back Buffer
+			*/
 			pDevice->Present(NULL, NULL, NULL, NULL);
 		}
+
+		/* Calculate the Time*/
+		lastTime = thisTime;
 	}
 
+	/*
+	** After the Main Loop
+	*/
+
+	/* Call OnDestroy() in Main.h */
 	OnDestroy();
 
-	//When WM_DESTROY,release all the variable
+	/* Release All the Variables */
 	UnregisterClass(L"DirectX Framework Window", wc.hInstance);
 
 	if (pDevice)
@@ -163,6 +237,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		pDevice->Release();
 		pDevice = NULL;
 	}
+
 	if (pDirect3D)
 	{
 		pDirect3D->Release();
@@ -171,6 +246,11 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 
 	return 0;
 }
+
+
+/*
+** Message Loop
+*/
 
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
