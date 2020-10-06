@@ -75,7 +75,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	int Unit = ScreenY / 30;
 
 	WindowHeight     = 26 * Unit;
-	WindowTopMargin  = 2 * Unit;
+	WindowTopMargin  = 2  * Unit;
 
 	WindowWidth      = WindowHeight / 9 * 16;
 	WindowLeftMargin = (ScreenX - WindowWidth) / 2;
