@@ -161,15 +161,6 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		** Main Loop
 		*/
 
-		/* Calculate the Time */
-		thisTime = clock();
-
-		/*if (!FirstTimeRunning) {
-			while ((thisTime - lastTime) < 20) {
-				thisTime = clock();
-			}
-		}*/
-
 		/* If there is a Message from Windows*/
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -177,11 +168,16 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+
 		/* Else, Process the Game Loop */
 		else
 		{
+			/* Calculate the Time */
+			thisTime = clock();
+
 			IDirect3DSurface9* pBackBuffer = NULL;
 			D3DLOCKED_RECT rect;
+
 			/*
 			** Clear Back Buffer And Get It
 			*/
@@ -210,7 +206,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
 			}
 
-			
+
 			/*
 			** Release Back Buffer
 			*/
@@ -222,51 +218,11 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			** Swap the Front and the Back Buffer
 			*/
 			pDevice->Present(NULL, NULL, NULL, NULL);
+
+			/* Calculate the Time*/
+			lastTime = thisTime;
 		}
-
-		/* Calculate the Time*/
-		lastTime = thisTime;
 	}
-
-	//clock_t lastTime = NULL, thisTime = NULL;
-
-	//while (msg.message != WM_QUIT)
-	//{
-	//	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-	//	{
-	//		TranslateMessage(&msg);
-	//		DispatchMessage(&msg);
-	//	}
-	//	else
-	//	{
-	//		pDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
-
-	//		IDirect3DSurface9* pBackBuffer = NULL;
-	//		D3DLOCKED_RECT rect;
-
-	//		pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
-	//		pBackBuffer->LockRect(&rect, NULL, NULL);
-
-	//		if (FirstTimeRunning) {
-	//			thisTime = clock();
-	//			Setup(rect, WindowWidth, WindowHeight);
-	//			FirstTimeRunning = FALSE;
-	//			lastTime = thisTime;
-	//		}
-	//		else {
-	//			thisTime = clock();
-	//			Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
-	//			lastTime = thisTime;
-	//		}
-
-
-	//		pBackBuffer->UnlockRect();
-	//		pBackBuffer->Release();
-
-
-	//		pDevice->Present(NULL, NULL, NULL, NULL);
-	//	}
-	//}
 
 
 	/*
