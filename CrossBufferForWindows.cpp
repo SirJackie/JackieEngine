@@ -172,6 +172,11 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		/* Else, Process the Game Loop */
 		else
 		{
+			/* Calc Mouse Delta */
+			CalcMouseDelta(&mouse);
+			mouse.LastX = mouse.X;
+			mouse.LastY = mouse.Y;
+
 			/* Calculate the Time */
 			thisTime = clock();
 

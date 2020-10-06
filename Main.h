@@ -82,7 +82,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		frameCount = 0;
 	}
 
-	char buffer[100];
+	char buffer[1000];
 	sprintf_s(
 		buffer,
 		"FPS: %f; DeltaTime: %d",
@@ -93,11 +93,15 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	sprintf_s(
 		buffer,
-		"LButtonState: %d\nRButtonState: %d\nMouseX: %d\nMouseY: %d",
+		"LButtonState: %d\nRButtonState: %d\nMouseX: %d\nMouseY: %d\nMouseLastX: %d\nMouseLastY: %d\nMouseDeltaX: %d\nMouseDeltaY: %d",
 		mouse.LButtonState,
 		mouse.RButtonState,
 		mouse.X,
-		mouse.Y
+		mouse.Y,
+		mouse.LastX,
+		mouse.LastY,
+		mouse.DeltaX,
+		mouse.DeltaY
 	);
 	DrawShadowString(fb, 10, 30, buffer);
 
