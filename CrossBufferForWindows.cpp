@@ -6,6 +6,10 @@
 #include "Main.h"
 using namespace std;
 
+/* Window Class Properties */
+#define WindowClassName L"CrossBuffer For Windows Class"
+#define WindowTitle     L"CrossBuffer For Windows"
+
 /* DirectX Objects */
 IDirect3D9* pDirect3D;
 IDirect3DDevice9* pDevice;
@@ -93,7 +97,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	WNDCLASSEX wc = {
 		sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0, 0,
 		GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-		L"DirectX Framework Window", NULL
+		WindowClassName, NULL
 	};
 
 	wc.hIconSm = (HICON)LoadImage(
@@ -118,7 +122,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);
 	HWND hWnd = CreateWindowW(
-		L"DirectX Framework Window", L"DirectX Framework",
+		WindowClassName, WindowTitle,
 		WS_OVERLAPPEDWINDOW,
 		wr.left, wr.top, wr.right - wr.left, wr.bottom - wr.top,
 		NULL, NULL, wc.hInstance, NULL
