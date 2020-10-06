@@ -7,10 +7,8 @@
 using namespace std;
 
 /* DirectX Objects */
-IDirect3D9*        pDirect3D;
-IDirect3DDevice9*  pDevice;
-IDirect3DSurface9* pBackBuffer;
-D3DLOCKED_RECT     rect;
+IDirect3D9* pDirect3D;
+IDirect3DDevice9* pDevice;
 
 /* Window Properties */
 int WindowLeftMargin;
@@ -166,6 +164,12 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		/* Calculate the Time */
 		thisTime = clock();
 
+		/*if (!FirstTimeRunning) {
+			while ((thisTime - lastTime) < 20) {
+				thisTime = clock();
+			}
+		}*/
+
 		/* If there is a Message from Windows*/
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -176,6 +180,8 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		/* Else, Process the Game Loop */
 		else
 		{
+			IDirect3DSurface9* pBackBuffer = NULL;
+			D3DLOCKED_RECT rect;
 			/*
 			** Clear Back Buffer And Get It
 			*/
@@ -221,6 +227,47 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		/* Calculate the Time*/
 		lastTime = thisTime;
 	}
+
+	//clock_t lastTime = NULL, thisTime = NULL;
+
+	//while (msg.message != WM_QUIT)
+	//{
+	//	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	//	{
+	//		TranslateMessage(&msg);
+	//		DispatchMessage(&msg);
+	//	}
+	//	else
+	//	{
+	//		pDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
+
+	//		IDirect3DSurface9* pBackBuffer = NULL;
+	//		D3DLOCKED_RECT rect;
+
+	//		pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
+	//		pBackBuffer->LockRect(&rect, NULL, NULL);
+
+	//		if (FirstTimeRunning) {
+	//			thisTime = clock();
+	//			Setup(rect, WindowWidth, WindowHeight);
+	//			FirstTimeRunning = FALSE;
+	//			lastTime = thisTime;
+	//		}
+	//		else {
+	//			thisTime = clock();
+	//			Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
+	//			lastTime = thisTime;
+	//		}
+
+
+	//		pBackBuffer->UnlockRect();
+	//		pBackBuffer->Release();
+
+
+	//		pDevice->Present(NULL, NULL, NULL, NULL);
+	//	}
+	//}
+
 
 	/*
 	** After the Main Loop
