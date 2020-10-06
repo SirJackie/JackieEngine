@@ -21,7 +21,7 @@ int keyboard[256];
 Mouse mouse;
 
 /* Flags */
-BOOL FirstTimeRunning      = TRUE;
+BOOL FirstTimeRunning = TRUE;
 
 /* Timer */
 clock_t lastTime = NULL;
@@ -60,8 +60,8 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	/*
 	** Initialize All The Variables
 	*/
-	ZeroMemory(keyboard, 256 * sizeof(int));
-	InitMouse(&mouse);
+	ZeroMemory(keyboard, 256 * sizeof(int) );
+	ZeroMemory(&mouse,   sizeof(Mouse)     );
 	thisTime = clock();
 	lastTime = thisTime;
 
