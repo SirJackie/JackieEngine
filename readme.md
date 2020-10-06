@@ -4,7 +4,7 @@
 
 ![Demo](./ImagesForReadme/Demo.png)
 
-# 如何使用
+# 如何把项目运行起来（环境配置）
 
 1.下载并运行DirectX9.0 SDK安装包（DXSDK_Jun10.exe），由于DXSDK不是开源的，这里就不放文件了，放个网上的链接，侵删：链接: http://pan.baidu.com/s/1gfkqSMZ 密码: r6my
 
@@ -30,13 +30,69 @@
 
 5.设置完成后就可以使用了，点击画面上方的“本地Windows调试器”进行编译运行。不出所料的话，你应该会看到一个颜色渐变的Demo。在6代i3，纯CPU环境下能稳定在48帧，Ryzen 3600，纯CPU环境下能稳定在50帧，还算不错。
 
-另外，推荐安装Fraps，它能实时查看任何DirectX编写的软件的帧数，并通过Hook实时显示在软件窗口上，就如下图左上角所示。
-
 ![vs4](./ImagesForReadme/vs4.png)
 
-Enjoy it!
+# APIs
 
+CrossBuffer希望提供一个跨平台的显存读写环境，这样你的代码就可以轻松复用，无需移植！
 
+CrossBuffer在各个平台上都提供Main.h文件，通过修改这个文件，你就可以操作显存、键盘、鼠标、计时等等设备和功能。
+
+Main.h包含4个函数：
+
+```
+#include "CrossBuffer.h"
+#include "Input.h"
+
+void OnCreate() {
+	;
+}
+
+void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
+	;
+}
+
+void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
+	;
+}
+
+void OnDestroy() {
+	;
+}
+
+```
+
+OnCreate()在显存建立之前被调用，没有参数。
+
+Setup()在显存建立后第一帧被调用，参数：
+
+- fb：显存
+- width：屏幕宽度
+- height：屏幕高度
+- deltaTime：这一帧和上一帧的间隔时间（毫秒为单位，在Setup中由于是第一帧，所以为0）
+- keyboard：键盘对象
+- mouse：鼠标对象
+
+Update()在显存建立后除了第一帧以外的每一帧被调用，参数：
+
+- fb：显存
+- width：屏幕宽度
+- height：屏幕高度
+- deltaTime：这一帧和上一帧的间隔时间（毫秒为单位）
+- keyboard：键盘对象
+- mouse：鼠标对象
+
+OnDestroy()在显存释放后被调用，没有参数。
+
+另外要注意：
+
+- 如果需要使用fb显存对象，需要#include "CrossBuffer.h"。
+- 如果需要使用keyboard或mouse对象，需要#include "Input.h"。
+- 如果需要在显存上显示文字，需要#include "TextOutput.h"。
+
+这些库的使用方法参见工程中的Main.h文件，这里就不做详细说明了。如果有问题，请Issue我，我看到后会进行解释。
+
+Enjoy it！
 
 # 关于开源协议
 
