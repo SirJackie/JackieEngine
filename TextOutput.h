@@ -1,7 +1,12 @@
-#pragma once
-
+#ifndef __FONT_H__
+#define __FONT_H__
 #include "Font.h"
+#endif
+
+#ifndef __CROSSBUFFER_H__
+#define __CROSSBUFFER_H__
 #include "CrossBuffer.h"
+#endif
 
 ;
 

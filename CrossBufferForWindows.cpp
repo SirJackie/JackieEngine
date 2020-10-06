@@ -1,9 +1,26 @@
-﻿#include <iostream>
+﻿#ifndef __IOSTREAM__
+#define __IOSTREAM__
+#include <iostream>
+#endif
+
+#ifndef __WINDOWS_H__
+#define __WINDOWS_H__
 #include <Windows.h>
+#endif
+
+#ifndef __D3D9_H__
+#define __D3D9_H__
 #include <d3d9.h>
+#endif
+
+#ifndef __TIME_H__
+#define __TIME_H__
 #include <time.h>
+#endif
+
 #include "resource.h"
 #include "Main.h"
+
 using namespace std;
 
 /* Window Class Properties */

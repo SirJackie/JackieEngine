@@ -1,5 +1,3 @@
-#pragma once
-
 #define PRESSED   1
 #define UNPRESSED 0
 

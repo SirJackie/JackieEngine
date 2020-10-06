@@ -1,4 +1,3 @@
-#pragma once
 const int Font[8 * 16 * 256] = {
 
 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ,

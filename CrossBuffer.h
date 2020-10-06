@@ -1,7 +1,12 @@
-#pragma once
-
+#ifndef __D3D9_H__
+#define __D3D9_H__
 #include <d3d9.h>
+#endif
+
+#ifndef __WINDOWS_H__
+#define __WINDOWS_H__
 #include <Windows.h>
+#endif
 
 #define FrameBuffer D3DLOCKED_RECT
 #define Pixel(fb, x, y) ((D3DCOLOR*)fb.pBits)[x + (fb.Pitch >> 2) * y]
