@@ -15,7 +15,7 @@ void OnCreate() {
 	;
 }
 
-void Setup(FrameBuffer fb, int width, int height) {
+void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			Pixel(fb, x, y) = RGB888(255, 255, 0);

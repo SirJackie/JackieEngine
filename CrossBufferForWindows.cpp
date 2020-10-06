@@ -13,6 +13,8 @@ using namespace std;
 /* DirectX Objects */
 IDirect3D9* pDirect3D;
 IDirect3DDevice9* pDevice;
+IDirect3DSurface9* pBackBuffer;
+D3DLOCKED_RECT rect;
 
 /* Window Properties */
 int WindowLeftMargin;
@@ -175,36 +177,48 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		/* Else, Process the Game Loop */
 		else
 		{
-			/* Calc Mouse Delta */
+			/*
+			** Calculate Mouse Delta
+			*/
 			CalcMouseDelta(&mouse);
 			mouse.LastX = mouse.X;
 			mouse.LastY = mouse.Y;
 
-			/* Calculate the Time */
-			thisTime = clock();
-
-			IDirect3DSurface9* pBackBuffer = NULL;
-			D3DLOCKED_RECT rect;
 
 			/*
-			** Clear Back Buffer And Get It
+			** Calculate the Time
+			** thisTime = the time from the beginning of the program to the present
+			*/
+			thisTime = clock();
+
+
+			/*
+			** Clear Back Buffer
 			*/
 			pDevice->Clear(
 				0, NULL, D3DCLEAR_TARGET,
 				D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0
 			);
-			pBackBuffer = NULL;
 
+
+			/*
+			** Get Back Buffer
+			*/
+			pBackBuffer = NULL;
 			pDevice->GetBackBuffer(
 				0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer
 			);
 			pBackBuffer->LockRect(&rect, NULL, NULL);
 
 
+			/*
+			** Call Main.h
+			*/
+
 			/* If it is the First Time Running */
 			if (FirstTimeRunning) {
 				/* Call the Setup() in Main.h */
-				Setup(rect, WindowWidth, WindowHeight);
+				Setup(rect, WindowWidth, WindowHeight, 0, keyboard, mouse);
 				FirstTimeRunning = FALSE;
 			}
 
@@ -227,7 +241,11 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			*/
 			pDevice->Present(NULL, NULL, NULL, NULL);
 
-			/* Calculate the Time*/
+
+			/*
+			** Calculate the Time
+			** lastTime in next frame = thisTime in this frame
+			*/
 			lastTime = thisTime;
 		}
 	}
