@@ -26,7 +26,7 @@ void Setup(FrameBuffer fb, int width, int height) {
 int BallX = 100;
 int BallY = 100;
 
-void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse, int firstX, int firstY) {
+void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	/*
 	** Draw Things
 	*/
@@ -93,7 +93,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	sprintf_s(
 		buffer,
-		"LButtonState: %d\nRButtonState: %d\nMouseX: %d\nMouseY: %d\nMouseLastX: %d\nMouseLastY: %d\nMouseDeltaX: %d\nMouseDeltaY: %d\nFirstX: %d\nFirstY: %d",
+		"LButtonState: %d\nRButtonState: %d\nMouseX: %d\nMouseY: %d\nMouseLastX: %d\nMouseLastY: %d\nMouseDeltaX: %d\nMouseDeltaY: %d",
 		mouse.LButtonState,
 		mouse.RButtonState,
 		mouse.X,
@@ -101,9 +101,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		mouse.LastX,
 		mouse.LastY,
 		mouse.DeltaX,
-		mouse.DeltaY,
-		firstX,
-		firstY
+		mouse.DeltaY
 	);
 	DrawShadowString(fb, 10, 30, buffer);
 

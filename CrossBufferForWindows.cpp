@@ -16,16 +16,12 @@ int WindowTopMargin;
 int WindowWidth;
 int WindowHeight;
 
-int firstX = 0;
-int firstY = 0;
-
 /* Input Objects */
 int keyboard[256];
 Mouse mouse;
 
 /* Flags */
 BOOL FirstTimeRunning      = TRUE;
-BOOL FirstTimeGettingInput = TRUE;
 
 /* Timer */
 clock_t lastTime = NULL;
@@ -211,7 +207,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			/* If it is not the First Time Running */
 			else {
 				/* Call the Update() in Main.h */
-				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse, firstX, firstY);
+				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
 			}
 
 
@@ -301,13 +297,6 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	default:
-		if (FirstTimeGettingInput) {
-			mouse.X = LOWORD(lParam);
-			mouse.Y = HIWORD(lParam);
-			FirstTimeGettingInput = FALSE;
-			firstX = mouse.X;
-			firstY = mouse.Y;
-		}
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}
 }
