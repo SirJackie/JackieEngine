@@ -1,21 +1,39 @@
-#pragma once
+/*
+** This is a Demo of CrossBuffer
+** You can change everything if you like
+*/
 
 #include "CrossBuffer.h"
 #include "TextOutput.h"
 #include "Input.h"
 
-int Color = 0;
+/* Background Color Transform Variables */
+int   Color = 0;
 float DeltaColor = 0.1;
 
+/* FPS Counting Variables */
 float FPS = 0;
-int deltaTimeCount;
-int frameCount;
+int   deltaTimeCount;
+int   frameCount;
 
+/* Temp Variables */
+int RedCubeX = 100;
+int RedCubeY = 100;
+
+
+/*
+** On Create Callback Function
+*/
 void OnCreate() {
 	;
 }
 
+
+/*
+** Setup Callback Function
+*/
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
+	/* Fill Yellow On The Screen */
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			Pixel(fb, x, y) = RGB888(255, 255, 0);
@@ -23,56 +41,80 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	}
 }
 
-int BallX = 100;
-int BallY = 100;
 
+/*
+** Update Callback Function
+*/
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	/*
-	** Draw Things
+	** Process Background
 	*/
+
+	/* Draw Background */
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			Pixel(fb, x, y) = RGB888(Color, Color, Color);
 		}
 	}
 
+	/* Calculate The Color Of The Background In The Next Frame*/
+	Color += (int)(DeltaColor * (float)deltaTime);
+
+	if (Color >= 250) {
+		DeltaColor = -0.1;
+	}
+
+	else if (Color <= 5) {
+		DeltaColor = 0.1;
+	}
+
+
+	/*
+	** Process Red Cube That Controlled By WASD
+	*/
+
+	/* Process Keyboard Input For Red Cube */
 	if (keyboard['W'] == 1) {
-		BallY -= deltaTime / 2;
+		RedCubeY -= deltaTime / 2;
 	}
 	if (keyboard['S'] == 1) {
-		BallY += deltaTime / 2;
+		RedCubeY += deltaTime / 2;
 	}
 	if (keyboard['A'] == 1) {
-		BallX -= deltaTime / 2;
+		RedCubeX -= deltaTime / 2;
 	}
 	if (keyboard['D'] == 1) {
-		BallX += deltaTime / 2;
+		RedCubeX += deltaTime / 2;
 	}
 
-	if (BallX < 0) {
-		BallX = 0;
+	/* Boundary Treatment For Red Cube */
+	if (RedCubeX < 0) {
+		RedCubeX = 0;
 	}
-	else if (BallX > width - 100) {
-		BallX = width - 100;
-	}
-
-	if (BallY < 0) {
-		BallY = 0;
-	}
-	else if (BallY > height - 100) {
-		BallY = height - 100;
+	else if (RedCubeX > width - 100) {
+		RedCubeX = width - 100;
 	}
 
-	for (int y = BallY; y < BallY + 100; y++) {
-		for (int x = BallX; x < BallX + 100; x++) {
+	if (RedCubeY < 0) {
+		RedCubeY = 0;
+	}
+	else if (RedCubeY > height - 100) {
+		RedCubeY = height - 100;
+	}
+
+	/* Draw Red Cube */
+	for (int y = RedCubeY; y < RedCubeY + 100; y++) {
+		for (int x = RedCubeX; x < RedCubeX + 100; x++) {
 			Pixel(fb, x, y) = RGB888(255, 0, 0);
 		}
 	}
 
 
 	/*
-	** Calculate FPS
+	** FPS Processing
 	*/
+
+	/* Calculate FPS */
 	deltaTimeCount += deltaTime;
 	frameCount += 1;
 
@@ -82,6 +124,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		frameCount = 0;
 	}
 
+	/* Show FPS On Screen */
 	char buffer[1000];
 	sprintf_s(
 		buffer,
@@ -91,6 +134,10 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	);
 	DrawShadowString(fb, 10, 10, buffer);
 
+
+	/*
+	** Show Mouse Input On Screen
+	*/
 	sprintf_s(
 		buffer,
 		"LButtonState: %d\nRButtonState: %d\nMouseX: %d\nMouseY: %d\nMouseLastX: %d\nMouseLastY: %d\nMouseDeltaX: %d\nMouseDeltaY: %d",
@@ -104,21 +151,6 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		mouse.DeltaY
 	);
 	DrawShadowString(fb, 10, 30, buffer);
-
-
-	/*
-	** Change Color
-	*/
-	Color += (int)(DeltaColor * (float)deltaTime);
-
-	if (Color >= 250) {
-		DeltaColor = -0.1;
-	}
-
-	else if (Color <= 5) {
-		DeltaColor = 0.1;
-	}
-
 }
 
 void OnDestroy() {
