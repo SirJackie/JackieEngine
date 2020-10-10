@@ -209,6 +209,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		/* Else, Process the Game Loop */
 		else
 		{
+			ShowCursor(FALSE);
 			/*
 			** Calculate the Time
 			** thisTime = the time from the beginning of the program to the present
