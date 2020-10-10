@@ -9,5 +9,6 @@
 #endif
 
 #define FrameBuffer D3DLOCKED_RECT
-#define Pixel(fb, x, y) ((D3DCOLOR*)fb.pBits)[x + (fb.Pitch >> 2) * y]
+#define GetPixel(fb, x, y)        (((D3DCOLOR*)fb.pBits)[x + (fb.Pitch >> 2) * y])
+#define SetPixel(fb, x, y, color) (((D3DCOLOR*)fb.pBits)[x + (fb.Pitch >> 2) * y] = color)
 #define RGB888(r, g, b) (D3DCOLOR_XRGB(r, g, b))

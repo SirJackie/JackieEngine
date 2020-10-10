@@ -2,7 +2,7 @@
 ** This is a Demo of CrossBuffer
 ** You can change everything if you like
 */
-
+#pragma once
 #include "CrossBuffer.h"
 #include "TextOutput.h"
 #include "Input.h"
@@ -36,7 +36,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	/* Fill Yellow On The Screen */
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			Pixel(fb, x, y) = RGB888(255, 255, 0);
+			SetPixel(fb, x, y, RGB888(255, 255, 0));
 		}
 	}
 }
@@ -53,7 +53,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	/* Draw Background */
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			Pixel(fb, x, y) = RGB888(Color, Color, Color);
+			SetPixel(fb, x, y, RGB888(Color, Color, Color));
 		}
 	}
 
@@ -105,7 +105,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	/* Draw Red Cube */
 	for (int y = RedCubeY; y < RedCubeY + 100; y++) {
 		for (int x = RedCubeX; x < RedCubeX + 100; x++) {
-			Pixel(fb, x, y) = RGB888(255, 0, 0);
+			SetPixel(fb, x, y, RGB888(255, 0, 0));
 		}
 	}
 
