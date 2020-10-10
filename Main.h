@@ -34,6 +34,9 @@ int RedCubeY = 100;
 int GreenCubeX = 300;
 int GreenCubeY = 300;
 
+/* Mouse Sensitivity */
+float MouseSensitivity = 650.0f;
+
 
 /*
 ** On Create Callback Function
@@ -59,7 +62,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 /*
 ** Update Callback Function
 */
-void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
+void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse, int MouseInitX, int MouseInitY) {
 	/*
 	** Process Background
 	*/
@@ -124,8 +127,13 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	}
 
 
-	GreenCubeX += 100.0f * mouse.DeltaX;
-	GreenCubeY += 100.0f * mouse.DeltaY;
+	/*
+	** Process Green Cube That Controlled By Mouse
+	*/
+
+	/* Process Mouse Delta For Green Cube */
+	GreenCubeX += MouseSensitivity * mouse.DeltaX;
+	GreenCubeY += MouseSensitivity * mouse.DeltaY;
 
 	/* Boundary Treatment For Green Cube */
 	if (GreenCubeX < 0) {
@@ -180,15 +188,18 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	*/
 	sprintf_s(
 		buffer,
-		"LButtonState: %d\nRButtonState: %d\nMouseX: %d\nMouseY: %d\nMouseLastX: %d\nMouseLastY: %d\nMouseDeltaX: %f\nMouseDeltaY: %f",
+		"WindowWidth:%d\nWindowHeight:%d\nLButtonState: %d\nRButtonState: %d\nRealDeltaX: %d\nRealDeltaY: %d\nDeltaRatio: %d\nDeltaX: %f\nDeltaY: %f\nMouseInitX:%d\nMouseInitY:%d",
+		width,
+		height,
 		mouse.LButtonState,
 		mouse.RButtonState,
-		mouse.X,
-		mouse.Y,
-		mouse.LastX,
-		mouse.LastY,
+		mouse.RealDeltaX,
+		mouse.RealDeltaY,
+		mouse.DeltaRatio,
 		mouse.DeltaX,
-		mouse.DeltaY
+		mouse.DeltaY,
+		MouseInitX,
+		MouseInitY
 	);
 	DrawShadowString(fb, 10, 30, buffer);
 }

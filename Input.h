@@ -6,16 +6,9 @@
 struct Mouse {
 	int LButtonState;
 	int RButtonState;
-	int X;
-	int Y;
-	int LastX;
-	int LastY;
+	int RealDeltaX;
+	int RealDeltaY;
 	int DeltaRatio;
 	float DeltaX;
 	float DeltaY;
 };
-
-void CalcMouseDelta(Mouse* mouse) {
-	mouse->DeltaX = 1.0f * (mouse->X - mouse->LastX) / mouse->DeltaRatio;
-	mouse->DeltaY = 1.0f * (mouse->Y - mouse->LastY) / mouse->DeltaRatio;
-}

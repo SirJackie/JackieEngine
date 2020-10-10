@@ -47,6 +47,10 @@ int WindowHeight;
 /* Input Objects */
 int keyboard[256];
 Mouse mouse;
+int MouseX;
+int MouseY;
+int MouseInitX;
+int MouseInitY;
 
 /* Flags */
 BOOL FirstTimeRunning = TRUE;
@@ -109,6 +113,10 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	WindowLeftMargin = (ScreenX - WindowWidth) / 2;
 
 	mouse.DeltaRatio = min(WindowWidth, WindowHeight);
+	MouseX = WindowWidth / 2;
+	MouseY = WindowHeight / 2;
+	MouseInitX = MouseX;
+	MouseInitY = MouseY;
 	
 
 	/*
@@ -202,14 +210,6 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		else
 		{
 			/*
-			** Calculate Mouse Delta
-			*/
-			CalcMouseDelta(&mouse);
-			mouse.LastX = mouse.X;
-			mouse.LastY = mouse.Y;
-
-
-			/*
 			** Calculate the Time
 			** thisTime = the time from the beginning of the program to the present
 			*/
@@ -249,7 +249,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			/* If it is not the First Time Running */
 			else {
 				/* Call the Update() in Main.h */
-				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
+				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse, MouseInitX, MouseInitY);
 			}
 
 
@@ -338,8 +338,13 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_MOUSEMOVE:
-		mouse.X = LOWORD(lParam);
-		mouse.Y = HIWORD(lParam);
+		MouseX = LOWORD(lParam);
+		MouseY = HIWORD(lParam);
+		mouse.RealDeltaX = MouseX - MouseInitX;
+		mouse.RealDeltaY = MouseY - MouseInitY;
+		mouse.DeltaX = 1.0 * mouse.RealDeltaX / mouse.DeltaRatio;
+		mouse.DeltaY = 1.0 * mouse.RealDeltaY / mouse.DeltaRatio;
+		SetCursorPos(WindowLeftMargin + MouseInitX, WindowTopMargin + MouseInitY);
 		break;
 
 	default:
