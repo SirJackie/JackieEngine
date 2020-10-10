@@ -1,3 +1,8 @@
-Keyboard Define
+键盘Define
 
-Mouse Lock
+按ESC解锁鼠标
+
+选择是否锁定鼠标
+
+自动计算鼠标灵敏度
+
