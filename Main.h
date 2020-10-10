@@ -140,7 +140,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	*/
 	sprintf_s(
 		buffer,
-		"LButtonState: %d\nRButtonState: %d\nMouseX: %d\nMouseY: %d\nMouseLastX: %d\nMouseLastY: %d\nMouseDeltaX: %d\nMouseDeltaY: %d",
+		"LButtonState: %d\nRButtonState: %d\nMouseX: %d\nMouseY: %d\nMouseLastX: %d\nMouseLastY: %d\nMouseDeltaX: %f\nMouseDeltaY: %f",
 		mouse.LButtonState,
 		mouse.RButtonState,
 		mouse.X,

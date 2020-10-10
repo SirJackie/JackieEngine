@@ -10,11 +10,12 @@ struct Mouse {
 	int Y;
 	int LastX;
 	int LastY;
-	int DeltaX;
-	int DeltaY;
+	int DeltaRatio;
+	float DeltaX;
+	float DeltaY;
 };
 
 void CalcMouseDelta(Mouse* mouse) {
-	mouse->DeltaX = mouse->X - mouse->LastX;
-	mouse->DeltaY = mouse->Y - mouse->LastY;
+	mouse->DeltaX = 1.0f * (mouse->X - mouse->LastX) / mouse->DeltaRatio;
+	mouse->DeltaY = 1.0f * (mouse->Y - mouse->LastY) / mouse->DeltaRatio;
 }

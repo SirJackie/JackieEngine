@@ -102,6 +102,8 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 
 	WindowWidth      = WindowHeight / 9 * 16;
 	WindowLeftMargin = (ScreenX - WindowWidth) / 2;
+
+	mouse.DeltaRatio = min(WindowWidth, WindowHeight);
 	
 
 	/*
