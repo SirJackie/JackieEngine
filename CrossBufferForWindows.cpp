@@ -18,6 +18,11 @@
 #include <time.h>
 #endif
 
+#ifndef __INPUT_H__
+#define __INPUT_H__
+#include "Input.h"
+#endif
+
 #include "resource.h"
 #include "Main.h"
 

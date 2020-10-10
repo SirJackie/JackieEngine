@@ -2,14 +2,25 @@
 ** This is a Demo of CrossBuffer
 ** You can change everything if you like
 */
-#pragma once
+
+#ifndef __CROSSBUFFER_H__
+#define __CROSSBUFFER_H__
 #include "CrossBuffer.h"
+#endif
+
+#ifndef __TEXTOUTPUT_H__
+#define __TEXTOUTPUT_H__
 #include "TextOutput.h"
+#endif
+
+#ifndef __INPUT_H__
+#define __INPUT_H__
 #include "Input.h"
+#endif
 
 /* Background Color Transform Variables */
 int   Color = 0;
-float DeltaColor = 0.1;
+float DeltaColor = 0.1f;
 
 /* FPS Counting Variables */
 float FPS = 0;
@@ -19,6 +30,9 @@ int   frameCount;
 /* Temp Variables */
 int RedCubeX = 100;
 int RedCubeY = 100;
+
+int GreenCubeX = 300;
+int GreenCubeY = 300;
 
 
 /*
@@ -61,11 +75,11 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	Color += (int)(DeltaColor * (float)deltaTime);
 
 	if (Color >= 250) {
-		DeltaColor = -0.1;
+		DeltaColor = -0.1f;
 	}
 
 	else if (Color <= 5) {
-		DeltaColor = 0.1;
+		DeltaColor = 0.1f;
 	}
 
 
@@ -106,6 +120,32 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	for (int y = RedCubeY; y < RedCubeY + 100; y++) {
 		for (int x = RedCubeX; x < RedCubeX + 100; x++) {
 			SetPixel(fb, x, y, RGB888(255, 0, 0));
+		}
+	}
+
+
+	GreenCubeX += 100.0f * mouse.DeltaX;
+	GreenCubeY += 100.0f * mouse.DeltaY;
+
+	/* Boundary Treatment For Green Cube */
+	if (GreenCubeX < 0) {
+		GreenCubeX = 0;
+	}
+	else if (GreenCubeX > width - 100) {
+		GreenCubeX = width - 100;
+	}
+
+	if (GreenCubeY < 0) {
+		GreenCubeY = 0;
+	}
+	else if (GreenCubeY > height - 100) {
+		GreenCubeY = height - 100;
+	}
+
+	/* Draw Green Cube */
+	for (int y = GreenCubeY; y < GreenCubeY + 100; y++) {
+		for (int x = GreenCubeX; x < GreenCubeX + 100; x++) {
+			SetPixel(fb, x, y, RGB888(mouse.LButtonState * 255, 255, mouse.RButtonState * 255));
 		}
 	}
 
