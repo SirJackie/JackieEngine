@@ -250,7 +250,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			/* If it is not the First Time Running */
 			else {
 				/* Call the Update() in Main.h */
-				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse, MouseInitX, MouseInitY);
+				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
 			}
 
 
@@ -284,7 +284,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	OnDestroy();
 
 	/* Release All the Variables */
-	UnregisterClass(L"DirectX Framework Window", wc.hInstance);
+	UnregisterClass(WindowClassName, wc.hInstance);
 
 	if (pDevice)
 	{

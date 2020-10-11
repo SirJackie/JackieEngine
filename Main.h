@@ -62,7 +62,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 /*
 ** Update Callback Function
 */
-void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse, int MouseInitX, int MouseInitY) {
+void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	/*
 	** Process Background
 	*/
@@ -188,7 +188,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	*/
 	sprintf_s(
 		buffer,
-		"WindowWidth:%d\nWindowHeight:%d\nLButtonState: %d\nRButtonState: %d\nRealDeltaX: %d\nRealDeltaY: %d\nDeltaRatio: %d\nDeltaX: %f\nDeltaY: %f\nMouseInitX:%d\nMouseInitY:%d",
+		"WindowWidth:%d\nWindowHeight:%d\nMouseLButtonState: %d\nMouseRButtonState: %d\nMouseRealDeltaX: %d\nMouseRealDeltaY: %d\nMouseDeltaRatio: %d\nMouseDeltaX: %f\nMouseDeltaY: %f",
 		width,
 		height,
 		mouse.LButtonState,
@@ -197,9 +197,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		mouse.RealDeltaY,
 		mouse.DeltaRatio,
 		mouse.DeltaX,
-		mouse.DeltaY,
-		MouseInitX,
-		MouseInitY
+		mouse.DeltaY
 	);
 	DrawShadowString(fb, 10, 30, buffer);
 }
