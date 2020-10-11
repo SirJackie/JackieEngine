@@ -11,4 +11,7 @@ struct Mouse {
 	int DeltaRatio;
 	float DeltaX;
 	float DeltaY;
+	BOOL* WantToLockOrNot;
+	BOOL* NowLockingOrNot;
+	BOOL* HideCursorOrNot;
 };

@@ -51,6 +51,9 @@ int MouseX;
 int MouseY;
 int MouseInitX;
 int MouseInitY;
+BOOL WantToLockOrNot = FALSE;
+BOOL NowLockingOrNot = FALSE;
+BOOL HideCursorOrNot = FALSE;
 
 /* Flags */
 BOOL FirstTimeRunning = TRUE;
@@ -94,6 +97,9 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	*/
 	ZeroMemory(keyboard, 256 * sizeof(int) );
 	ZeroMemory(&mouse,   sizeof(Mouse)     );
+	mouse.WantToLockOrNot = &WantToLockOrNot;
+	mouse.NowLockingOrNot = &NowLockingOrNot;
+	mouse.HideCursorOrNot = &HideCursorOrNot;
 	thisTime = clock();
 	lastTime = thisTime;
 
@@ -209,7 +215,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		/* Else, Process the Game Loop */
 		else
 		{
-			ShowCursor(FALSE);
+			ShowCursor(!HideCursorOrNot);
 			/*
 			** Calculate the Time
 			** thisTime = the time from the beginning of the program to the present
