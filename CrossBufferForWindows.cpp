@@ -343,8 +343,8 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		MouseY = HIWORD(lParam);
 		mouse.RealDeltaX = MouseX - MouseInitX;
 		mouse.RealDeltaY = MouseY - MouseInitY;
-		mouse.DeltaX = 1.0 * mouse.RealDeltaX / mouse.DeltaRatio;
-		mouse.DeltaY = 1.0 * mouse.RealDeltaY / mouse.DeltaRatio;
+		mouse.DeltaX = 1.0f * mouse.RealDeltaX / mouse.DeltaRatio;
+		mouse.DeltaY = 1.0f * mouse.RealDeltaY / mouse.DeltaRatio;
 		SetCursorPos(WindowLeftMargin + MouseInitX, WindowTopMargin + MouseInitY);
 		break;
 
