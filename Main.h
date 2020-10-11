@@ -23,12 +23,10 @@
 #include "JackieEngineLibraries/JackieEngine.h"
 #endif
 
-
-/*
-** Background Color Transform Variables
-*/
-int   Color = 0;
-float DeltaColor = 0.1f;
+#ifndef __STDIO_H__
+#define __STDIO_H__
+#include <stdio.h>
+#endif
 
 
 /*
@@ -37,8 +35,9 @@ float DeltaColor = 0.1f;
 float FPS = 0;
 int   deltaTimeCount;
 int   frameCount;
+char  buffer[1000];
 
-void CalcFPS(FrameBuffer fb, int deltaTime) {
+void CalcFPS(FrameBuffer fb, int deltaTime, char* buffer, int bufferLength) {
 	/*
 	** FPS Processing
 	*/
@@ -54,9 +53,9 @@ void CalcFPS(FrameBuffer fb, int deltaTime) {
 	}
 
 	/* Show FPS On Screen */
-	char buffer[1000];
 	sprintf_s(
 		buffer,
+		bufferLength,
 		"FPS: %f; DeltaTime: %d",
 		FPS,
 		deltaTime
@@ -72,12 +71,13 @@ void OnCreate() {
 	;
 }
 
+Vector4D vec;
 
 /*
 ** Setup Callback Function
 */
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
-	;
+	vec = CreateVector4D(2, 3, 4, 1);
 }
 
 
@@ -85,29 +85,10 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 ** Update Callback Function
 */
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
-	/*
-	** Process Background
-	*/
+	CalcFPS(fb, deltaTime, buffer, 1000);
 
-	/* Draw Background */
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			SetPixel(fb, x, y, RGB888(Color, Color, Color));
-		}
-	}
-
-	/* Calculate The Color Of The Background In The Next Frame*/
-	Color += (int)(DeltaColor * (float)deltaTime);
-
-	if (Color >= 250) {
-		DeltaColor = -0.1f;
-	}
-
-	else if (Color <= 5) {
-		DeltaColor = 0.1f;
-	}
-
-	CalcFPS(fb, deltaTime);
+	OutputVector4D(buffer, 1000, &vec);
+	DrawShadowString(fb, 10, 26, buffer);
 }
 
 void OnDestroy() {
