@@ -8,8 +8,6 @@ struct Mouse {
 	int RButtonState;
 	int RealX;
 	int RealY;
-	int RealLastX;
-	int RealLastY;
 	int RealDeltaX;
 	int RealDeltaY;
 	int DeltaRatio;
@@ -19,3 +17,15 @@ struct Mouse {
 	BOOL* NowLockingOrNot;
 	BOOL* HideCursorOrNot;
 };
+
+void LockMouse(Mouse mouse) {
+	*(mouse.WantToLockOrNot) = TRUE;
+	*(mouse.NowLockingOrNot) = TRUE;
+	*(mouse.HideCursorOrNot) = TRUE;
+}
+
+void UnlockMouse(Mouse mouse) {
+	*(mouse.WantToLockOrNot) = FALSE;
+	*(mouse.NowLockingOrNot) = FALSE;
+	*(mouse.HideCursorOrNot) = FALSE;
+}

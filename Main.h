@@ -35,7 +35,7 @@ int GreenCubeX;
 int GreenCubeY;
 
 /* Mouse Sensitivity */
-float MouseSensitivity = 650.0f;
+float MouseSensitivity;
 
 
 /*
@@ -52,6 +52,8 @@ void OnCreate() {
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	GreenCubeX = mouse.RealX;
 	GreenCubeY = mouse.RealY;
+	MouseSensitivity = mouse.DeltaRatio;
+	LockMouse(mouse);
 	/* Fill Yellow On The Screen */
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
@@ -190,7 +192,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	*/
 	sprintf_s(
 		buffer,
-		"WindowWidth:%d\nWindowHeight:%d\nMouseLButtonState: %d\nMouseRButtonState: %d\nMouseRealDeltaX: %d\nMouseRealDeltaY: %d\nMouseDeltaRatio: %d\nMouseDeltaX: %f\nMouseDeltaY: %f",
+		"WindowWidth:%d\nWindowHeight:%d\nMouseLButtonState: %d\nMouseRButtonState: %d\nMouseRealDeltaX: %d\nMouseRealDeltaY: %d\nMouseDeltaRatio: %d\nMouseDeltaX: %f\nMouseDeltaY: %f\nWantToLockOrNot:%d\nNowLockingOrNot:%d\nHideCursorOrNot:%d",
 		width,
 		height,
 		mouse.LButtonState,
@@ -199,7 +201,10 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		mouse.RealDeltaY,
 		mouse.DeltaRatio,
 		mouse.DeltaX,
-		mouse.DeltaY
+		mouse.DeltaY,
+		*(mouse.WantToLockOrNot),
+		*(mouse.NowLockingOrNot),
+		*(mouse.HideCursorOrNot)
 	);
 	DrawShadowString(fb, 10, 30, buffer);
 }

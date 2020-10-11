@@ -212,12 +212,14 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			/* Then Process it */
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+			ShowCursor(!HideCursorOrNot);
 		}
 
 		/* Else, Process the Game Loop */
 		else
 		{
 			ShowCursor(!HideCursorOrNot);
+
 			/*
 			** Calculate the Time
 			** thisTime = the time from the beginning of the program to the present
@@ -337,6 +339,10 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_KEYDOWN:
 		keyboard[wParam] = 1;
+		if (wParam == VK_ESCAPE) {
+			NowLockingOrNot = FALSE;
+			HideCursorOrNot = FALSE;
+		}
 		break;
 
 	case WM_KEYUP:
@@ -345,6 +351,10 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_LBUTTONDOWN:
 		mouse.LButtonState = PRESSED;
+		if(WantToLockOrNot == TRUE){
+			NowLockingOrNot = TRUE;
+			HideCursorOrNot = TRUE;
+		}
 		break;
 
 	case WM_LBUTTONUP:
@@ -360,7 +370,7 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_MOUSEMOVE:
-
+		/* If First Time Running, MouseXY = MouseInitXY, DeltaXY = 0 */
 		if (FirstTimeRunning == TRUE) {
 			break;
 		}
