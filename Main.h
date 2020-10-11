@@ -73,17 +73,34 @@ void OnCreate() {
 
 Vector4D vector;
 Matrix4D matrix;
+Matrix4D a;
+Matrix4D b;
 
 /*
 ** Setup Callback Function
 */
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	vector = CreateVector4D(2, 3, 4, 1);
+
 	matrix = CreateMatrix4D(
 		 1.0f,   2.0f,   3.0f,   4.0f,
 		 5.0f,   6.0f,   7.0f,   8.0f,
 		 9.0f,  10.0f,  11.0f,  12.0f,
 		13.0f,  14.0f,  15.0f,  16.0f
+	);
+
+	a = CreateMatrix4D(
+		3.0f, 6.0f, 9.0f, 4.0f,
+		2.0f, 7.0f, 8.0f, 3.0f,
+		3.0f, 2.0f, 4.0f, 6.0f,
+		1.0f, 5.0f, 0.0f, 7.0f
+	);
+
+	b = CreateMatrix4D(
+		1.0f, 3.0f, 2.0f, 3.0f,
+		5.0f, 2.0f, 7.0f, 6.0f,
+		0.0f, 4.0f, 8.0f, 9.0f,
+		7.0f, 6.0f, 3.0f, 4.0f
 	);
 }
 
@@ -94,6 +111,10 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, deltaTime, buffer, 1000);
 
+
+	/*
+	** Matrix-Vector Multiply
+	*/
 	OutputVector4D(buffer, 1000, &vector);
 	DrawShadowString(fb, 10, 42, buffer);
 
@@ -104,6 +125,21 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	result = Matrix4D_X_Vector4D(&matrix, &vector);
 	OutputVector4D(buffer, 1000, &result);
 	DrawShadowString(fb, 10, 202, buffer);
+
+
+	/*
+	** Matrix-Matrix Multiply
+	*/
+	OutputMatrix4D(buffer, 1000, &a);
+	DrawShadowString(fb, 10, 282, buffer);
+
+	OutputMatrix4D(buffer, 1000, &b);
+	DrawShadowString(fb, 10, 362, buffer);
+
+	Matrix4D a_times_b;
+	a_times_b = Matrix4D_X_Matrix4D(&b, &a);
+	OutputMatrix4D(buffer, 1000, &a_times_b);
+	DrawShadowString(fb, 10, 442, buffer);
 }
 
 void OnDestroy() {
