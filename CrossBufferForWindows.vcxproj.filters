@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\JackieEngineLibraries">
+      <UniqueIdentifier>{494b7e95-0730-4c21-aa01-8531ac14f564}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -38,6 +41,9 @@
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="JackieEngineLibraries\JackieEngine.h">
+      <Filter>头文件\JackieEngineLibraries</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
