@@ -71,13 +71,20 @@ void OnCreate() {
 	;
 }
 
-Vector4D vec;
+Vector4D vector;
+Matrix4D matrix;
 
 /*
 ** Setup Callback Function
 */
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
-	vec = CreateVector4D(2, 3, 4, 1);
+	vector = CreateVector4D(2, 3, 4, 1);
+	matrix = CreateMatrix4D(
+		11.11f, 12.12f, 13.13f, 14.14f,
+		21.21f, 22.22f, 23.23f, 24.24f,
+		31.31f, 32.32f, 33.33f, 34.34f,
+		41.41f, 42.42f, 43.43f, 44.44f
+	);
 }
 
 
@@ -87,8 +94,11 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, deltaTime, buffer, 1000);
 
-	OutputVector4D(buffer, 1000, &vec);
-	DrawShadowString(fb, 10, 26, buffer);
+	OutputVector4D(buffer, 1000, &vector);
+	DrawShadowString(fb, 10, 42, buffer);
+
+	OutputMatrix4D(buffer, 1000, &matrix);
+	DrawShadowString(fb, 10, 122, buffer);
 }
 
 void OnDestroy() {
