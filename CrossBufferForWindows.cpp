@@ -339,7 +339,7 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_KEYDOWN:
 		keyboard[wParam] = 1;
-		if (wParam == VK_ESCAPE) {
+		if (wParam == KEY_ESCAPE) {
 			NowLockingOrNot = FALSE;
 			HideCursorOrNot = FALSE;
 		}
