@@ -31,8 +31,8 @@ int   frameCount;
 int RedCubeX = 100;
 int RedCubeY = 100;
 
-int GreenCubeX = 300;
-int GreenCubeY = 300;
+int GreenCubeX;
+int GreenCubeY;
 
 /* Mouse Sensitivity */
 float MouseSensitivity = 650.0f;
@@ -50,6 +50,8 @@ void OnCreate() {
 ** Setup Callback Function
 */
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
+	GreenCubeX = mouse.RealX;
+	GreenCubeY = mouse.RealY;
 	/* Fill Yellow On The Screen */
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {

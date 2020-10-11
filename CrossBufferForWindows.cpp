@@ -51,6 +51,8 @@ int MouseX;
 int MouseY;
 int MouseInitX;
 int MouseInitY;
+int MouseLastX;
+int MouseLastY;
 BOOL WantToLockOrNot = FALSE;
 BOOL NowLockingOrNot = FALSE;
 BOOL HideCursorOrNot = FALSE;
@@ -248,6 +250,11 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 
 			/* If it is the First Time Running */
 			if (FirstTimeRunning) {
+				/* Set The Mouse's Initialize Position */
+				mouse.RealX = MouseInitX;
+				mouse.RealY = MouseInitY;
+				SetCursorPos(WindowLeftMargin + MouseInitX, WindowTopMargin + MouseInitY);
+
 				/* Call the Setup() in Main.h */
 				Setup(rect, WindowWidth, WindowHeight, 0, keyboard, mouse);
 				FirstTimeRunning = FALSE;
@@ -278,6 +285,14 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			** lastTime in next frame = thisTime in this frame
 			*/
 			lastTime = thisTime;
+
+			/*
+			** Clear Mouse Delta
+			*/
+			mouse.RealDeltaX = 0;
+			mouse.RealDeltaY = 0;
+			mouse.DeltaX = 0.0f;
+			mouse.DeltaY = 0.0f;
 		}
 	}
 
@@ -345,13 +360,40 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_MOUSEMOVE:
+
+		if (FirstTimeRunning == TRUE) {
+			break;
+		}
+
+		/* Refresh MouseLastX and MouseLastY */
+		if (NowLockingOrNot == TRUE) {
+			MouseLastX = MouseInitX;
+			MouseLastY = MouseInitY;
+		}
+		else {
+			MouseLastX = MouseX;
+			MouseLastY = MouseY;
+		}
+		
+		/* Get Mouse Position */
 		MouseX = LOWORD(lParam);
 		MouseY = HIWORD(lParam);
-		mouse.RealDeltaX = MouseX - MouseInitX;
-		mouse.RealDeltaY = MouseY - MouseInitY;
+
+		/* Calculate Delta */
+		mouse.RealX = MouseX;
+		mouse.RealY = MouseY;
+		mouse.RealDeltaX = MouseX - MouseLastX;
+		mouse.RealDeltaY = MouseY - MouseLastY;
 		mouse.DeltaX = 1.0f * mouse.RealDeltaX / mouse.DeltaRatio;
 		mouse.DeltaY = 1.0f * mouse.RealDeltaY / mouse.DeltaRatio;
-		SetCursorPos(WindowLeftMargin + MouseInitX, WindowTopMargin + MouseInitY);
+
+		/* Lock Action */
+		if (NowLockingOrNot == TRUE) {
+			SetCursorPos(WindowLeftMargin + MouseInitX, WindowTopMargin + MouseInitY);
+		}
+		else {
+			SetCursorPos(WindowLeftMargin + mouse.RealX, WindowTopMargin + mouse.RealY);
+		}
 		break;
 
 	default:

@@ -6,6 +6,10 @@
 struct Mouse {
 	int LButtonState;
 	int RButtonState;
+	int RealX;
+	int RealY;
+	int RealLastX;
+	int RealLastY;
 	int RealDeltaX;
 	int RealDeltaY;
 	int DeltaRatio;
