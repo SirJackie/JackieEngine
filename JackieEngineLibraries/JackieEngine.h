@@ -117,3 +117,11 @@ void OutputMatrix4D(char* buffer, int bufferLength, Matrix4D* matrix) {
 	);
 }
 
+Vector4D Matrix4D_X_Vector4D(Matrix4D* m, Vector4D* v) {
+	Vector4D result;
+	result.x = m->m11 * v->x + m->m12 * v->y + m->m13 * v->z + m->m14 * v->w;
+	result.y = m->m21 * v->x + m->m22 * v->y + m->m23 * v->z + m->m24 * v->w;
+	result.z = m->m31 * v->x + m->m32 * v->y + m->m33 * v->z + m->m34 * v->w;
+	result.w = m->m41 * v->x + m->m42 * v->y + m->m43 * v->z + m->m44 * v->w;
+	return result;
+}

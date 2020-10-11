@@ -80,10 +80,10 @@ Matrix4D matrix;
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	vector = CreateVector4D(2, 3, 4, 1);
 	matrix = CreateMatrix4D(
-		11.11f, 12.12f, 13.13f, 14.14f,
-		21.21f, 22.22f, 23.23f, 24.24f,
-		31.31f, 32.32f, 33.33f, 34.34f,
-		41.41f, 42.42f, 43.43f, 44.44f
+		 1.0f,   2.0f,   3.0f,   4.0f,
+		 5.0f,   6.0f,   7.0f,   8.0f,
+		 9.0f,  10.0f,  11.0f,  12.0f,
+		13.0f,  14.0f,  15.0f,  16.0f
 	);
 }
 
@@ -99,6 +99,11 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	OutputMatrix4D(buffer, 1000, &matrix);
 	DrawShadowString(fb, 10, 122, buffer);
+
+	Vector4D result;
+	result = Matrix4D_X_Vector4D(&matrix, &vector);
+	OutputVector4D(buffer, 1000, &result);
+	DrawShadowString(fb, 10, 202, buffer);
 }
 
 void OnDestroy() {
