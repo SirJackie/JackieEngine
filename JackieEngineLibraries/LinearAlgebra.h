@@ -127,6 +127,38 @@ char* OutputMatrix4D(Matrix4D* matrix) {
 ** Matrix4D and Vector4D Calculation
 */
 
+Vector4D Vector4D_Add_Vector4D(Vector4D* a, Vector4D* b) {
+	Vector4D result;
+	result.x = a->x + b->x;
+	result.y = a->y + b->y;
+	result.z = a->z + b->z;
+	result.w = a->w + b->w;
+	return result;
+}
+
+Vector4D Vector4D_Minus_Vector4D(Vector4D* a, Vector4D* b) {
+	Vector4D result;
+	result.x = a->x - b->x;
+	result.y = a->y - b->y;
+	result.z = a->z - b->z;
+	result.w = a->w - b->w;
+	return result;
+}
+
+float Vector4D_Dot_Vector4D(Vector4D* a, Vector4D* b) {
+	return a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w;
+}
+
+Vector4D Vector4D_Cross_Vector4D(Vector4D* a, Vector4D* b) {
+	Vector4D result;
+	result.x = a->y * b->z - b->y * a->z;
+	result.y = a->z * b->x - a->x * b->z;
+	result.z = a->x * b->y - a->y * b->x;
+	// Cross Product of a Vector only defined on 3D Space, so w is meaningless
+	result.w = 1;
+	return result;
+}
+
 Vector4D Matrix4D_X_Vector4D(Matrix4D* m, Vector4D* v) {
 	Vector4D result;
 	result.x = m->m11 * v->x + m->m12 * v->y + m->m13 * v->z + m->m14 * v->w;
