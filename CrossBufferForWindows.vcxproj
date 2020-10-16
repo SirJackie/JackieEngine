@@ -144,9 +144,11 @@
   <ItemGroup>
     <ClInclude Include="CrossBuffer.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="FPS.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="JackieEngineLibraries\JackieEngine.h" />
+    <ClInclude Include="JackieEngineLibraries\LinearAlgebra.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />

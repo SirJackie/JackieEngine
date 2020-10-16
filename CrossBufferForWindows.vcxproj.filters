@@ -45,6 +45,12 @@
     <ClInclude Include="JackieEngineLibraries\JackieEngine.h">
       <Filter>头文件\JackieEngineLibraries</Filter>
     </ClInclude>
+    <ClInclude Include="JackieEngineLibraries\LinearAlgebra.h">
+      <Filter>头文件\JackieEngineLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="FPS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrossBufferForWindows.cpp">

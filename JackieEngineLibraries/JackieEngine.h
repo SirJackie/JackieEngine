@@ -10,144 +10,122 @@
 #include <math.h>
 #endif
 
+#include "LinearAlgebra.h"
 
-/*
-** Define Trigonometric Functions that use Degrees instead of Radians
-*/
-#define cosd(x)  cos(x*0.017453293)
-#define sind(x)  sin(x*0.017453293)
-#define tand(x)  tan(x*0.017453293)
-#define acosd(x) acos(x*0.017453293)
-#define asind(x) asin(x*0.017453293)
-#define atand(x) atan(x*0.017453293)
+#define MESHLIST_MAX_LENGTH 128
+
+#define MESH4D_BUFFER_LENGTH 512
 
 
 /*
-** Define a Cube
-*/
-float CubeMesh[12 * 3 * 3] = {
-  1.0f, 1.0f, 1.0f,  4.0f, 1.0f, 1.0f,  1.0f, 4.0f, 1.0f,  //near
-  1.0f, 4.0f, 1.0f,  4.0f, 4.0f, 1.0f,  4.0f, 1.0f, 1.0f,  //near
-  1.0f, 1.0f, 4.0f,  4.0f, 1.0f, 4.0f,  1.0f, 4.0f, 4.0f,  //far
-  1.0f, 4.0f, 4.0f,  4.0f, 4.0f, 4.0f,  4.0f, 1.0f, 4.0f,  //far
-  1.0f, 4.0f, 4.0f,  1.0f, 1.0f, 4.0f,  1.0f, 1.0f, 1.0f,  //left
-  1.0f, 4.0f, 4.0f,  1.0f, 4.0f, 1.0f,  1.0f, 1.0f, 1.0f,  //left
-  4.0f, 4.0f, 4.0f,  4.0f, 1.0f, 4.0f,  4.0f, 1.0f, 1.0f,  //right
-  4.0f, 4.0f, 4.0f,  4.0f, 4.0f, 1.0f,  4.0f, 1.0f, 1.0f,  //right
-  1.0f, 4.0f, 1.0f,  1.0f, 4.0f, 4.0f,  4.0f, 4.0f, 4.0f,  //up
-  1.0f, 4.0f, 1.0f,  4.0f, 4.0f, 1.0f,  4.0f, 4.0f, 4.0f,  //up
-  1.0f, 1.0f, 1.0f,  1.0f, 1.0f, 4.0f,  4.0f, 1.0f, 4.0f,  //down
-  1.0f, 1.0f, 1.0f,  4.0f, 1.0f, 1.0f,  4.0f, 1.0f, 4.0f   //down
-};
-
-
-/*
-** Mathematical Definition
+** Mesh4D
 */
 
-struct Vector4D {
-	float x;
-	float y;
-	float z;
-	float w;
+struct Mesh4D {
+	Vector4D  a;
+	Vector4D  b;
+	Vector4D  c;
+	int       red;
+	int       green;
+	int       blue;
+	int       alpha;
 };
 
-struct Matrix4D {
-	float m11, m12, m13, m14;
-	float m21, m22, m23, m24;
-	float m31, m32, m33, m34;
-	float m41, m42, m43, m44;
-};
-
-Vector4D CreateVector4D(float x, float y, float z, float w) {
-	Vector4D NewVector;
-	NewVector.x = x;
-	NewVector.y = y;
-	NewVector.z = z;
-	NewVector.w = w;
-	return NewVector;
+Mesh4D CreateMesh4D(Vector4D a, Vector4D b, Vector4D c) {
+	Mesh4D NewMesh;
+	NewMesh.a = a;
+	NewMesh.b = b;
+	NewMesh.c = c;
+	return NewMesh;
 }
 
-Matrix4D CreateMatrix4D(
-	float m11, float m12, float m13, float m14,
-	float m21, float m22, float m23, float m24,
-	float m31, float m32, float m33, float m34,
-	float m41, float m42, float m43, float m44
-)
-{
-	Matrix4D NewMatrix;
-
-	NewMatrix.m11 = m11;
-	NewMatrix.m12 = m12;
-	NewMatrix.m13 = m13;
-	NewMatrix.m14 = m14;
-
-	NewMatrix.m21 = m21;
-	NewMatrix.m22 = m22;
-	NewMatrix.m23 = m23;
-	NewMatrix.m24 = m24;
-
-	NewMatrix.m31 = m31;
-	NewMatrix.m32 = m32;
-	NewMatrix.m33 = m33;
-	NewMatrix.m34 = m34;
-
-	NewMatrix.m41 = m41;
-	NewMatrix.m42 = m42;
-	NewMatrix.m43 = m43;
-	NewMatrix.m44 = m44;
-
-	return NewMatrix;
+void SetMeshColor(Mesh4D* Mesh, int r, int g, int b, int a) {
+	Mesh->red   = r;
+	Mesh->green = g;
+	Mesh->blue  = b;
+	Mesh->alpha = a;
 }
 
-void OutputVector4D(char* buffer, int bufferLength, Vector4D* vec) {
+void OutputMesh4D(Mesh4D* Mesh) {
+	char* buffer = (char*)malloc(MESH4D_BUFFER_LENGTH * sizeof(char));
+
+	char* VectorABuffer = OutputVector4D(&(Mesh->a));
+	char* VectorBBuffer = OutputVector4D(&(Mesh->b));
+	char* VectorCBuffer = OutputVector4D(&(Mesh->c));
+
 	sprintf_s(
-		buffer, bufferLength, "Vector4D[%f,\n         %f,\n         %f,\n         %f]",
-		vec->x, vec->y, vec->z, vec->w
+		buffer, MESH4D_BUFFER_LENGTH, "Mesh4D[%s,\n         %s,\n         %s]",
+		VectorABuffer, VectorBBuffer, VectorCBuffer
 	);
+
+	free(VectorABuffer);
+	free(VectorBBuffer);
+	free(VectorCBuffer);
 }
 
-void OutputMatrix4D(char* buffer, int bufferLength, Matrix4D* matrix) {
-	sprintf_s(
-		buffer, bufferLength, "Matrix4D[%f, %f, %f, %f,\n         %f, %f, %f, %f,\n         %f, %f, %f, %f,\n         %f, %f, %f, %f]",
-		matrix->m11, matrix->m12, matrix->m13, matrix->m14,
-		matrix->m21, matrix->m22, matrix->m23, matrix->m24,
-		matrix->m31, matrix->m32, matrix->m33, matrix->m34,
-		matrix->m41, matrix->m42, matrix->m43, matrix->m44
-	);
+
+/*
+** MeshList4D
+*/
+
+struct MeshList4D {
+	Mesh4D*  list;
+	int      next;
+	int      length;
+};
+
+MeshList4D CreateMeshList4D(int length) {
+	MeshList4D NewMeshList;
+	NewMeshList.list   = (Mesh4D*)malloc(length * sizeof(Mesh4D));
+	NewMeshList.next   = 0;
+	NewMeshList.length = length;
+	return NewMeshList;
 }
 
-Vector4D Matrix4D_X_Vector4D(Matrix4D* m, Vector4D* v) {
-	Vector4D result;
-	result.x = m->m11 * v->x + m->m12 * v->y + m->m13 * v->z + m->m14 * v->w;
-	result.y = m->m21 * v->x + m->m22 * v->y + m->m23 * v->z + m->m24 * v->w;
-	result.z = m->m31 * v->x + m->m32 * v->y + m->m33 * v->z + m->m34 * v->w;
-	result.w = m->m41 * v->x + m->m42 * v->y + m->m43 * v->z + m->m44 * v->w;
-	return result;
+void DestroyMeshList4D(MeshList4D* TheMeshList) {
+	free(TheMeshList->list);
 }
 
-Matrix4D Matrix4D_X_Matrix4D(Matrix4D* b, Matrix4D* a) {
-	Matrix4D result;
 
-	result.m11 = b->m11 * a->m11 + b->m12 * a->m21 + b->m13 * a->m31 + b->m14 * a->m41;
-	result.m21 = b->m21 * a->m11 + b->m22 * a->m21 + b->m23 * a->m31 + b->m24 * a->m41;
-	result.m31 = b->m31 * a->m11 + b->m32 * a->m21 + b->m33 * a->m31 + b->m34 * a->m41;
-	result.m41 = b->m41 * a->m11 + b->m42 * a->m21 + b->m43 * a->m31 + b->m44 * a->m41;
 
-	result.m12 = b->m11 * a->m12 + b->m12 * a->m22 + b->m13 * a->m32 + b->m14 * a->m42;
-	result.m22 = b->m21 * a->m12 + b->m22 * a->m22 + b->m23 * a->m32 + b->m24 * a->m42;
-	result.m32 = b->m31 * a->m12 + b->m32 * a->m22 + b->m33 * a->m32 + b->m34 * a->m42;
-	result.m42 = b->m41 * a->m12 + b->m42 * a->m22 + b->m43 * a->m32 + b->m44 * a->m42;
 
-	result.m13 = b->m11 * a->m13 + b->m12 * a->m23 + b->m13 * a->m33 + b->m14 * a->m43;
-	result.m23 = b->m21 * a->m13 + b->m22 * a->m23 + b->m23 * a->m33 + b->m24 * a->m43;
-	result.m33 = b->m31 * a->m13 + b->m32 * a->m23 + b->m33 * a->m33 + b->m34 * a->m43;
-	result.m43 = b->m41 * a->m13 + b->m42 * a->m23 + b->m43 * a->m33 + b->m44 * a->m43;
 
-	result.m14 = b->m11 * a->m14 + b->m12 * a->m24 + b->m13 * a->m34 + b->m14 * a->m44;
-	result.m24 = b->m21 * a->m14 + b->m22 * a->m24 + b->m23 * a->m34 + b->m24 * a->m44;
-	result.m34 = b->m31 * a->m14 + b->m32 * a->m24 + b->m33 * a->m34 + b->m34 * a->m44;
-	result.m44 = b->m41 * a->m14 + b->m42 * a->m24 + b->m43 * a->m34 + b->m44 * a->m44;
 
-	return result;
-}
+//Mesh4D CubeMesh[12] = {
+//  CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f)),  //near
+//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f)),  //near
+//  CreateMesh4D(CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f)),  //far
+//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f)),  //far
+//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f)),  //left
+//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f)),  //left
+//  CreateMesh4D(CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f)),  //right
+//  CreateMesh4D(CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f)),  //right
+//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f)),  //up
+//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f)),  //up
+//  CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f)),  //down
+//  CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f))   //down
+//};
+//
+//BOOL PlaceACube(MeshList4D* MeshList, int x, int y, int z) {
+//	for (int i = 0; i < 12; i++) {
+//		if (MeshList->MeshListNext + i >= MeshList->MeshListMaxLength) {
+//			return FALSE;
+//		}
+//
+//		MeshList->MeshList[MeshList->MeshListNext + i].a.x = CubeMesh[i].a.x + x;
+//		MeshList->MeshList[MeshList->MeshListNext + i].a.y = CubeMesh[i].a.y + y;
+//		MeshList->MeshList[MeshList->MeshListNext + i].a.z = CubeMesh[i].a.z + z;
+//		MeshList->MeshList[MeshList->MeshListNext + i].a.w = CubeMesh[i].a.w;
+//
+//		MeshList->MeshList[MeshList->MeshListNext + i].b.x = CubeMesh[i].b.x + x;
+//		MeshList->MeshList[MeshList->MeshListNext + i].b.y = CubeMesh[i].b.y + y;
+//		MeshList->MeshList[MeshList->MeshListNext + i].b.z = CubeMesh[i].b.z + z;
+//		MeshList->MeshList[MeshList->MeshListNext + i].b.w = CubeMesh[i].b.w;
+//
+//		MeshList->MeshList[MeshList->MeshListNext + i].c.x = CubeMesh[i].c.x + x;
+//		MeshList->MeshList[MeshList->MeshListNext + i].c.y = CubeMesh[i].c.y + y;
+//		MeshList->MeshList[MeshList->MeshListNext + i].c.z = CubeMesh[i].c.z + z;
+//		MeshList->MeshList[MeshList->MeshListNext + i].c.w = CubeMesh[i].c.w;
+//	}
+//	return TRUE;
+//}
