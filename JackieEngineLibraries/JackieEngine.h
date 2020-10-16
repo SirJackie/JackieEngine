@@ -14,7 +14,7 @@
 
 #define MESHLIST_MAX_LENGTH 128
 
-#define MESH4D_BUFFER_LENGTH 512
+#define MESH4D_BUFFER_LENGTH 2048
 
 
 /*
@@ -46,7 +46,7 @@ void SetMeshColor(Mesh4D* Mesh, int r, int g, int b, int a) {
 	Mesh->alpha = a;
 }
 
-void OutputMesh4D(Mesh4D* Mesh) {
+char* OutputMesh4D(Mesh4D* Mesh) {
 	char* buffer = (char*)malloc(MESH4D_BUFFER_LENGTH * sizeof(char));
 
 	char* VectorABuffer = OutputVector4D(&(Mesh->a));
@@ -54,13 +54,15 @@ void OutputMesh4D(Mesh4D* Mesh) {
 	char* VectorCBuffer = OutputVector4D(&(Mesh->c));
 
 	sprintf_s(
-		buffer, MESH4D_BUFFER_LENGTH, "Mesh4D[%s,\n         %s,\n         %s]",
+		buffer, MESH4D_BUFFER_LENGTH, "Mesh4D[ %s,\n        %s,\n        %s ]",
 		VectorABuffer, VectorBBuffer, VectorCBuffer
 	);
 
 	free(VectorABuffer);
 	free(VectorBBuffer);
 	free(VectorCBuffer);
+
+	return buffer;
 }
 
 

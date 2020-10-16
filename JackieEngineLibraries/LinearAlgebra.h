@@ -10,8 +10,8 @@
 #include <math.h>
 #endif
 
-#define VECTOR4D_BUFFER_LENGTH 128
-#define MATRIX4D_BUFFER_LENGTH 128
+#define VECTOR4D_BUFFER_LENGTH 256
+#define MATRIX4D_BUFFER_LENGTH 1024
 
 /*
 ** Define Trigonometric Functions that use Degrees instead of Radians
@@ -49,7 +49,7 @@ char* OutputVector4D(Vector4D* vec) {
 
 	sprintf_s(
 		buffer, VECTOR4D_BUFFER_LENGTH,
-		"Vector4D[%f,\n         %f,\n         %f,\n         %f]",
+		"Vector4D[%f, %f, %f, %f]",
 		vec->x, vec->y, vec->z, vec->w
 	);
 

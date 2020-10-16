@@ -38,6 +38,18 @@ void OnCreate() {
 	;
 }
 
+Vector4D Vector = CreateVector4D(2.0f, 3.0f, 4.0f, 1.0f);
+Matrix4D Matrix = CreateMatrix4D(
+	101.0f, 102.0f, 103.0f, 104.0f,
+	201.0f, 202.0f, 203.0f, 204.0f,
+	301.0f, 302.0f, 303.0f, 304.0f,
+	401.0f, 402.0f, 403.0f, 404.0f
+);
+Mesh4D Mesh = CreateMesh4D(
+	CreateVector4D(101.0f, 102.0f, 103.0f, 104.0f),
+	CreateVector4D(201.0f, 202.0f, 203.0f, 204.0f),
+	CreateVector4D(301.0f, 302.0f, 303.0f, 304.0f)
+);
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	;
@@ -46,6 +58,20 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, deltaTime);
+
+	char* buffer;
+
+	buffer = OutputVector4D(&Vector);
+	DrawShadowString(fb, 10, 42, buffer);
+	free(buffer);
+
+	buffer = OutputMatrix4D(&Matrix);
+	DrawShadowString(fb, 10, 74, buffer);
+	free(buffer);
+
+	buffer = OutputMesh4D(&Mesh);
+	DrawShadowString(fb, 10, 154, buffer);
+	free(buffer);
 }
 
 
