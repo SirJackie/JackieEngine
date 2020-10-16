@@ -74,7 +74,14 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	DrawShadowString(fb, 10, 154, buffer);
 	free(buffer);*/
 
-	buffer = OutputMeshList4D(&MeshList, 0, MeshList.next);
+	/*buffer = OutputMeshList4D(&MeshList, 0, MeshList.next);
+	DrawShadowString(fb, 10, 42, buffer);
+	free(buffer);*/
+
+	Vector4D vec = CreateVector4D(3, 4, 0, 1);
+	NormalizeVector4D(&vec);
+
+	buffer = OutputVector4D(&vec);
 	DrawShadowString(fb, 10, 42, buffer);
 	free(buffer);
 }

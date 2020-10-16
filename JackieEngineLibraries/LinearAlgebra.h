@@ -159,6 +159,19 @@ Vector4D Vector4D_Cross_Vector4D(Vector4D* a, Vector4D* b) {
 	return result;
 }
 
+float LengthOfVector4D(Vector4D* vec) {
+	// w is meaningless
+	return sqrt(vec->x * vec->x + vec->y * vec->y + vec->z * vec->z);
+}
+
+void NormalizeVector4D(Vector4D* vec) {
+	float length = LengthOfVector4D(vec);
+	vec->x /= length;
+	vec->y /= length;
+	vec->z /= length;
+	// w is meaningless
+}
+
 Vector4D Matrix4D_X_Vector4D(Matrix4D* m, Vector4D* v) {
 	Vector4D result;
 	result.x = m->m11 * v->x + m->m12 * v->y + m->m13 * v->z + m->m14 * v->w;
