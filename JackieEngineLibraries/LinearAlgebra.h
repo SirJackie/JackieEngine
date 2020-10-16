@@ -10,12 +10,19 @@
 #include <math.h>
 #endif
 
+
+/*
+** Define Buffer Default Length
+*/
+
 #define VECTOR4D_BUFFER_LENGTH 256
 #define MATRIX4D_BUFFER_LENGTH 1024
+
 
 /*
 ** Define Trigonometric Functions that use Degrees instead of Radians
 */
+
 #define cosd(x)  cos(x*0.017453293)
 #define sind(x)  sin(x*0.017453293)
 #define tand(x)  tan(x*0.017453293)
@@ -114,6 +121,11 @@ char* OutputMatrix4D(Matrix4D* matrix) {
 
 	return buffer;
 }
+
+
+/*
+** Matrix4D and Vector4D Calculation
+*/
 
 Vector4D Matrix4D_X_Vector4D(Matrix4D* m, Vector4D* v) {
 	Vector4D result;
