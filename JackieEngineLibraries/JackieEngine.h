@@ -66,15 +66,14 @@ char* OutputMesh4D(Mesh4D* Mesh) {
 	return buffer;
 }
 
-char* OutputMesh4DWithMore12Spaces(Mesh4D* Mesh) {
+char* OutputMesh4DWithMore28Spaces(Mesh4D* Mesh) {
 	char* buffer = (char*)malloc(MESH4D_BUFFER_LENGTH * sizeof(char));
 
 	char* VectorABuffer = OutputVector4D(&(Mesh->a));
 	char* VectorBBuffer = OutputVector4D(&(Mesh->b));
 	char* VectorCBuffer = OutputVector4D(&(Mesh->c));
-
 	sprintf_s(
-		buffer, MESH4D_BUFFER_LENGTH, "Mesh4D[ %s,\n                    %s,\n                    %s ]\n            ",
+		buffer, MESH4D_BUFFER_LENGTH, "Mesh4D[ %s,\n                                    %s,\n                                    %s ]\n                            ",
 		VectorABuffer, VectorBBuffer, VectorCBuffer
 	);
 
@@ -119,17 +118,21 @@ BOOL AddMesh4DToMeshList4D(MeshList4D* MeshList, Mesh4D* Mesh) {
 	}
 }
 
-char* OutputMeshList4D(MeshList4D* MeshList) {
+char* OutputMeshList4D(MeshList4D* MeshList, int from, int to) {
 	char* buffer = (char*)malloc(MESH4DLIST_BUFFER_LENGTH * sizeof(char));
 
 	ZeroMemory(buffer, MESH4DLIST_BUFFER_LENGTH * sizeof(char));
 
-	strcat_s(buffer, MESH4DLIST_BUFFER_LENGTH, "MeshList4D[ ");
+	sprintf_s(
+		buffer, MESH4DLIST_BUFFER_LENGTH,
+		"MeshList4D (%5d, %5d) [ ",
+		from, to
+	);
 
 	char* MeshStringOutput;
 
-	for (int i = 0; i < MeshList->next; i++) {
-		MeshStringOutput = OutputMesh4DWithMore12Spaces(&((MeshList->list)[i]));
+	for (int i = from; i < to; i++) {
+		MeshStringOutput = OutputMesh4DWithMore28Spaces(&((MeshList->list)[i]));
 		strcat_s(buffer, MESH4DLIST_BUFFER_LENGTH, MeshStringOutput);
 		free(MeshStringOutput);
 	}

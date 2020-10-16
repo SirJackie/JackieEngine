@@ -56,6 +56,9 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	AddMesh4DToMeshList4D(&MeshList, &Mesh);
 	AddMesh4DToMeshList4D(&MeshList, &Mesh);
 	AddMesh4DToMeshList4D(&MeshList, &Mesh);
+	AddMesh4DToMeshList4D(&MeshList, &Mesh);
+	AddMesh4DToMeshList4D(&MeshList, &Mesh);
+	AddMesh4DToMeshList4D(&MeshList, &Mesh);
 }
 
 
@@ -76,7 +79,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	DrawShadowString(fb, 10, 154, buffer);
 	free(buffer);
 
-	buffer = OutputMeshList4D(&MeshList);
+	buffer = OutputMeshList4D(&MeshList, 2, 5);
 	DrawShadowString(fb, 10, 234, buffer);
 	free(buffer);
 }
