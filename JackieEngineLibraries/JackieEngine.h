@@ -12,9 +12,10 @@
 
 #include "LinearAlgebra.h"
 
-#define MESHLIST_MAX_LENGTH 128
+#define MESHLIST4D_MAX_LENGTH 128
 
 #define MESH4D_BUFFER_LENGTH 2048
+#define MESH4DLIST_BUFFER_LENGTH 262140
 
 
 /*
@@ -65,6 +66,25 @@ char* OutputMesh4D(Mesh4D* Mesh) {
 	return buffer;
 }
 
+char* OutputMesh4DWithMore12Spaces(Mesh4D* Mesh) {
+	char* buffer = (char*)malloc(MESH4D_BUFFER_LENGTH * sizeof(char));
+
+	char* VectorABuffer = OutputVector4D(&(Mesh->a));
+	char* VectorBBuffer = OutputVector4D(&(Mesh->b));
+	char* VectorCBuffer = OutputVector4D(&(Mesh->c));
+
+	sprintf_s(
+		buffer, MESH4D_BUFFER_LENGTH, "Mesh4D[ %s,\n                    %s,\n                    %s ]\n            ",
+		VectorABuffer, VectorBBuffer, VectorCBuffer
+	);
+
+	free(VectorABuffer);
+	free(VectorBBuffer);
+	free(VectorCBuffer);
+
+	return buffer;
+}
+
 
 /*
 ** MeshList4D
@@ -84,8 +104,39 @@ MeshList4D CreateMeshList4D(int length) {
 	return NewMeshList;
 }
 
-void DestroyMeshList4D(MeshList4D* TheMeshList) {
-	free(TheMeshList->list);
+void DestroyMeshList4D(MeshList4D* MeshList) {
+	free(MeshList->list);
+}
+
+BOOL AddMesh4DToMeshList4D(MeshList4D* MeshList, Mesh4D* Mesh) {
+	if (MeshList->next >= MeshList->length) {
+		return FALSE;
+	}
+	else {
+		MeshList->list[MeshList->next] = *Mesh;
+		MeshList->next += 1;
+		return TRUE;
+	}
+}
+
+char* OutputMeshList4D(MeshList4D* MeshList) {
+	char* buffer = (char*)malloc(MESH4DLIST_BUFFER_LENGTH * sizeof(char));
+
+	ZeroMemory(buffer, MESH4DLIST_BUFFER_LENGTH * sizeof(char));
+
+	strcat_s(buffer, MESH4DLIST_BUFFER_LENGTH, "MeshList4D[ ");
+
+	char* MeshStringOutput;
+
+	for (int i = 0; i < MeshList->next; i++) {
+		MeshStringOutput = OutputMesh4DWithMore12Spaces(&((MeshList->list)[i]));
+		strcat_s(buffer, MESH4DLIST_BUFFER_LENGTH, MeshStringOutput);
+		free(MeshStringOutput);
+	}
+
+	strcat_s(buffer, MESH4DLIST_BUFFER_LENGTH, "]");
+
+	return buffer;
 }
 
 

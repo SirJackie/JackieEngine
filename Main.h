@@ -50,9 +50,12 @@ Mesh4D Mesh = CreateMesh4D(
 	CreateVector4D(201.0f, 202.0f, 203.0f, 204.0f),
 	CreateVector4D(301.0f, 302.0f, 303.0f, 304.0f)
 );
+MeshList4D MeshList = CreateMeshList4D(MESHLIST4D_MAX_LENGTH);
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
-	;
+	AddMesh4DToMeshList4D(&MeshList, &Mesh);
+	AddMesh4DToMeshList4D(&MeshList, &Mesh);
+	AddMesh4DToMeshList4D(&MeshList, &Mesh);
 }
 
 
@@ -71,6 +74,10 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	buffer = OutputMesh4D(&Mesh);
 	DrawShadowString(fb, 10, 154, buffer);
+	free(buffer);
+
+	buffer = OutputMeshList4D(&MeshList);
+	DrawShadowString(fb, 10, 234, buffer);
 	free(buffer);
 }
 
