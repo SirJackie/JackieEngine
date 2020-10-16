@@ -53,12 +53,7 @@ Mesh4D Mesh = CreateMesh4D(
 MeshList4D MeshList = CreateMeshList4D(MESHLIST4D_MAX_LENGTH);
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
-	AddMesh4DToMeshList4D(&MeshList, &Mesh);
-	AddMesh4DToMeshList4D(&MeshList, &Mesh);
-	AddMesh4DToMeshList4D(&MeshList, &Mesh);
-	AddMesh4DToMeshList4D(&MeshList, &Mesh);
-	AddMesh4DToMeshList4D(&MeshList, &Mesh);
-	AddMesh4DToMeshList4D(&MeshList, &Mesh);
+	AddMesh4DArrayToMeshList4D(&MeshList, CubeMesh);
 }
 
 
@@ -67,7 +62,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	char* buffer;
 
-	buffer = OutputVector4D(&Vector);
+	/*buffer = OutputVector4D(&Vector);
 	DrawShadowString(fb, 10, 42, buffer);
 	free(buffer);
 
@@ -77,10 +72,10 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	buffer = OutputMesh4D(&Mesh);
 	DrawShadowString(fb, 10, 154, buffer);
-	free(buffer);
+	free(buffer);*/
 
-	buffer = OutputMeshList4D(&MeshList, 2, 5);
-	DrawShadowString(fb, 10, 234, buffer);
+	buffer = OutputMeshList4D(&MeshList, 0, MeshList.next);
+	DrawShadowString(fb, 10, 42, buffer);
 	free(buffer);
 }
 

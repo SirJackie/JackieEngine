@@ -143,25 +143,37 @@ char* OutputMeshList4D(MeshList4D* MeshList, int from, int to) {
 }
 
 
+/*
+** Model
+*/
+
+Mesh4D CubeMesh[12] = {
+  CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f)),  //near
+  CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f)),  //near
+  CreateMesh4D(CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f)),  //far
+  CreateMesh4D(CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f)),  //far
+  CreateMesh4D(CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f)),  //left
+  CreateMesh4D(CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f)),  //left
+  CreateMesh4D(CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f)),  //right
+  CreateMesh4D(CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f)),  //right
+  CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f)),  //up
+  CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f)),  //up
+  CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f)),  //down
+  CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f))   //down
+};
+
+void AddMesh4DArrayToMeshList4D(MeshList4D* MeshList, Mesh4D* Mesh4DArray) {
+	for (int i = 0; i < 12; i++) {
+		MeshList->list[MeshList->next + i] = Mesh4DArray[i];
+	}
+	MeshList->next += 12;
+}
 
 
 
 
-//Mesh4D CubeMesh[12] = {
-//  CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f)),  //near
-//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f)),  //near
-//  CreateMesh4D(CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f)),  //far
-//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f)),  //far
-//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f)),  //left
-//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f)),  //left
-//  CreateMesh4D(CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f)),  //right
-//  CreateMesh4D(CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f)),  //right
-//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f)),  //up
-//  CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f,  1.0f,  1.0f,  1.0f)),  //up
-//  CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f)),  //down
-//  CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D( 1.0f, -1.0f,  1.0f,  1.0f))   //down
-//};
-//
+
+
 //BOOL PlaceACube(MeshList4D* MeshList, int x, int y, int z) {
 //	for (int i = 0; i < 12; i++) {
 //		if (MeshList->MeshListNext + i >= MeshList->MeshListMaxLength) {
