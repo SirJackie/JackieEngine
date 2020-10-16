@@ -86,5 +86,5 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 
 void OnDestroy() {
-	;
+	DestroyMeshList4D(&MeshList);
 }
