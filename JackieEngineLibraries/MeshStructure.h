@@ -15,6 +15,11 @@
 #include "LinearAlgebra.h"
 #endif
 
+#ifndef __CROSSBUFFER_H__
+#define __CROSSBUFFER_H__
+#include "CrossBuffer.h"
+#endif
+
 
 /*
 ** Define Buffer Default Length
@@ -118,6 +123,16 @@ MeshList4D CreateMeshList4D(int length) {
 
 void DestroyMeshList4D(MeshList4D* MeshList) {
 	free(MeshList->list);
+	MeshList->list = nullptr;
+}
+
+MeshList4D CloneMeshList4D(MeshList4D* MeshList) {
+	MeshList4D NewMeshList = CreateMeshList4D(MeshList->length);
+	for (int i = 0; i < MeshList->next; i++) {
+		NewMeshList.list[i] = (MeshList->list)[i];
+	}
+	NewMeshList.next = MeshList->next;
+	return NewMeshList;
 }
 
 BOOL AddMesh4DToMeshList4D(MeshList4D* MeshList, Mesh4D* Mesh) {

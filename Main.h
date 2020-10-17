@@ -42,21 +42,24 @@ Camera camera;
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	AddMesh4DArrayToMeshList4D(&MeshList, CubeMesh);
 	camera = CreateCamera(0.0f, 0.0f, 0.0f, 1.0f, 9.0f, 45.0f, width, height);
-	CalcCameraMPersp(&camera);
-	CalcCameraMViewport(&camera);
-	TransformMeshList4DWithCamera(&MeshList, &camera);
 }
 
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, deltaTime);
 
+	CalcCameraMPersp(&camera);
+	CalcCameraMViewport(&camera);
 
+	MeshList4D TmpMeshList = CloneMeshList4D(&MeshList);
+	TransformMeshList4DWithCamera(&TmpMeshList, &camera);
 
 	char* buffer;
-	buffer = OutputMeshList4D(&MeshList, 0, MeshList.next);
+	buffer = OutputMeshList4D(&TmpMeshList, 0, TmpMeshList.next);
 	DrawShadowString(fb, 10, 42, buffer);
 	free(buffer);
+
+	DestroyMeshList4D(&TmpMeshList);
 }
 
 
