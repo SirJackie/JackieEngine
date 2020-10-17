@@ -155,6 +155,17 @@ void CalcCameraMOrtho(Camera* camera) {
 	camera->MOrtho = Matrix4D_X_Matrix4D(&SOrtho, &TOrtho);
 }
 
+void CalcCameraMPersp(Camera* camera) {
+	CalcCameraMOrtho(camera);
+	Matrix4D MPerspToOrtho = CreateMatrix4D(
+		camera->n,  0.0f,       0.0f,                    0.0f,
+		0.0f,       camera->n,  0.0f,                    0.0f,
+		0.0f,       0.0f,       camera->f + camera->n,  -1.0f * camera->f * camera->n,
+		0.0f,       0.0f,       1.0f,                    0.0f
+	);
+	camera->MPersp = Matrix4D_X_Matrix4D(&(camera->MOrtho), &MPerspToOrtho);
+}
+
 
 //void CalcCameraMView(Camera* camera) {
 //	// MView = RView * TView

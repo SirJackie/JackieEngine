@@ -56,7 +56,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	//camera.t = 2.0f;
 	//camera.b = -2.0f;
 
-	CalcCameraMOrtho(&camera);
+	CalcCameraMPersp(&camera);
 
 	char* buffer;
 	buffer = OutputCamera(&camera);
