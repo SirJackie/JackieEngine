@@ -59,9 +59,9 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	DrawShadowString(fb, 10, 42, buffer);
 	free(buffer);
 
-	DestroyMeshList4D(&TmpMeshList);
+	RenderMeshList4D(fb, width, height, &MeshList);
 
-	DrawPoint(fb, 100, 100, 5, RGB888(255, 255, 255));
+	DestroyMeshList4D(&TmpMeshList);
 }
 
 
