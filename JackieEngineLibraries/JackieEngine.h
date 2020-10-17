@@ -133,12 +133,27 @@ char* OutputCamera(Camera* camera) {
 	return buffer;
 }
 
+void CalcCameraMOrtho(Camera* camera) {
 
+	/* Translation Matrix */
+	Matrix4D TOrtho = CreateMatrix4D(
+		1.0f, 0.0f, 0.0f, -(camera->r + camera->l) / 2.0f,
+		0.0f, 1.0f, 0.0f, -(camera->t + camera->b) / 2.0f,
+		0.0f, 0.0f, 1.0f, -(camera->n + camera->f) / 2.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
 
+	/* Scale Matrix */
+	Matrix4D SOrtho = CreateMatrix4D(
+		2.0f / (camera->r - camera->l),  0.0f,                            0.0f,                            0.0f,
+		0.0f,                            2.0f / (camera->t - camera->b),  0.0f,                            0.0f,
+		0.0f,                            0.0f,                            2.0f / (camera->n - camera->f),  0.0f,
+		0.0f,                            0.0f,                            0.0f,                            1.0f
+	);
 
-
-
-char buffer[1000];
+	/* MOrtho = SOrtho * TOrtho */
+	camera->MOrtho = Matrix4D_X_Matrix4D(&SOrtho, &TOrtho);
+}
 
 
 //void CalcCameraMView(Camera* camera) {

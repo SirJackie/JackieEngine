@@ -48,6 +48,16 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, deltaTime);
 
+	//// Custom Camera Configuration For Testing Usage
+	//camera.n = -1.0f;
+	//camera.f = -9.0f;
+	//camera.l = -2.0f;
+	//camera.r = 2.0f;
+	//camera.t = 2.0f;
+	//camera.b = -2.0f;
+
+	CalcCameraMOrtho(&camera);
+
 	char* buffer;
 	buffer = OutputCamera(&camera);
 	DrawShadowString(fb, 10, 42, buffer);
