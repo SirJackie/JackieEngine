@@ -25,6 +25,11 @@
 #include "BuiltInModel.h"
 #endif
 
+#ifndef __CROSSBUFFER_H__
+#define __CROSSBUFFER_H__
+#include "CrossBuffer.h"
+#endif
+
 #define CAMERA_BUFFER_LENGTH 2048
 
 struct Camera {
@@ -174,6 +179,21 @@ void CalcCameraMViewport(Camera* camera) {
 		0.0f,                               0.0f,                                0.0f,  1.0f
 	);
 }
+
+void TransformMeshList4DWithCamera(MeshList4D* MeshList, Camera* camera) {
+	Matrix4D TransformMatrix = Matrix4D_X_Matrix4D(&(camera->MViewport), &(camera->MPersp));
+	for (int i = 0; i < MeshList->next; i++) {
+		MeshList->list[i].a = Matrix4D_X_Vector4D(&TransformMatrix, &(MeshList->list[i].a));
+		MeshList->list[i].b = Matrix4D_X_Vector4D(&TransformMatrix, &(MeshList->list[i].b));
+		MeshList->list[i].c = Matrix4D_X_Vector4D(&TransformMatrix, &(MeshList->list[i].c));
+	}
+}
+
+
+
+
+
+
 
 
 //void CalcCameraMView(Camera* camera) {
