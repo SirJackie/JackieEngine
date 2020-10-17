@@ -40,8 +40,9 @@ Camera camera;
 
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
-	AddMesh4DArrayToMeshList4D(&MeshList, CubeMesh);
-	camera = CreateCamera(0.0f, 0.0f, 0.0f, 1.0f, 9.0f, 45.0f, width, height);
+	InitBuiltInModels();
+	AddModelToMeshList4D(&MeshList, &CubeModel, 0.0f, 0.0f, -10.0f);
+	camera = CreateCamera(0.0f, 0.0f, 0.0f, 0.05f, 1000.0f, 60.0f, width, height);
 }
 
 
@@ -52,14 +53,51 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	CalcCameraMViewport(&camera);
 
 	MeshList4D TmpMeshList = CloneMeshList4D(&MeshList);
+
 	TransformMeshList4DWithCamera(&TmpMeshList, &camera);
+
+	for (int i = 0; i < TmpMeshList.next; i++) {
+		TmpMeshList.list[i].a.x *= 100;
+		TmpMeshList.list[i].a.x += width / 2;
+		TmpMeshList.list[i].a.y *= 100;
+		TmpMeshList.list[i].a.y += height / 2;
+
+		TmpMeshList.list[i].b.x *= 100;
+		TmpMeshList.list[i].b.x += width / 2;
+		TmpMeshList.list[i].b.y *= 100;
+		TmpMeshList.list[i].b.y += height / 2;
+
+		TmpMeshList.list[i].c.x *= 100;
+		TmpMeshList.list[i].c.x += width / 2;
+		TmpMeshList.list[i].c.y *= 100;
+		TmpMeshList.list[i].c.y += height / 2;
+	}
 
 	char* buffer;
 	buffer = OutputMeshList4D(&TmpMeshList, 0, TmpMeshList.next);
 	DrawShadowString(fb, 10, 42, buffer);
 	free(buffer);
 
-	RenderMeshList4D(fb, width, height, &MeshList);
+	//RenderMeshList4D(fb, width, height, &MeshList);
+	for (int i = 0; i < TmpMeshList.next; i++) {
+		//if (TmpMeshList.list[i].a.x > 0.0f && TmpMeshList.list[i].a.x < width) {
+		//	if (TmpMeshList.list[i].a.y > 0.0f && TmpMeshList.list[i].a.y < height) {
+				DrawPoint(fb, width, height, TmpMeshList.list[i].a.x, TmpMeshList.list[i].a.y, 5, RGB888(255, 255, 255));
+		//	}
+		//}
+
+		//if (TmpMeshList.list[i].b.x > 0.0f && TmpMeshList.list[i].b.x < width) {
+		//	if (TmpMeshList.list[i].b.y > 0.0f && TmpMeshList.list[i].b.y < height) {
+				DrawPoint(fb, width, height, TmpMeshList.list[i].b.x, TmpMeshList.list[i].b.y, 5, RGB888(255, 255, 255));
+		//	}
+		//}
+
+		//if (TmpMeshList.list[i].c.x > 0.0f && TmpMeshList.list[i].c.x < width) {
+		//	if (TmpMeshList.list[i].c.y > 0.0f && TmpMeshList.list[i].c.y < height) {
+				DrawPoint(fb, width, height, TmpMeshList.list[i].c.x, TmpMeshList.list[i].c.y, 5, RGB888(255, 255, 255));
+		//	}
+		//}
+	}
 
 	DestroyMeshList4D(&TmpMeshList);
 }

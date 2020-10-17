@@ -181,7 +181,8 @@ void CalcCameraMViewport(Camera* camera) {
 }
 
 void TransformMeshList4DWithCamera(MeshList4D* MeshList, Camera* camera) {
-	Matrix4D TransformMatrix = Matrix4D_X_Matrix4D(&(camera->MViewport), &(camera->MPersp));
+	//Matrix4D TransformMatrix = Matrix4D_X_Matrix4D(&(camera->MViewport), &(camera->MPersp));
+	Matrix4D TransformMatrix = camera->MPersp;
 	for (int i = 0; i < MeshList->next; i++) {
 		MeshList->list[i].a = Matrix4D_X_Vector4D(&TransformMatrix, &(MeshList->list[i].a));
 		MeshList->list[i].b = Matrix4D_X_Vector4D(&TransformMatrix, &(MeshList->list[i].b));

@@ -25,7 +25,7 @@
 ** Built-in Models
 */
 
-Mesh4D CubeMesh[12] = {
+Mesh4D CubeMesh4DArray[12] = {
   CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f)),  //near
   CreateMesh4D(CreateVector4D(-1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D(1.0f,  1.0f, -1.0f,  1.0f),  CreateVector4D(1.0f, -1.0f, -1.0f,  1.0f)),  //near
   CreateMesh4D(CreateVector4D(-1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D(1.0f, -1.0f,  1.0f,  1.0f),  CreateVector4D(-1.0f,  1.0f,  1.0f,  1.0f)),  //far
@@ -40,14 +40,32 @@ Mesh4D CubeMesh[12] = {
   CreateMesh4D(CreateVector4D(-1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(1.0f, -1.0f, -1.0f,  1.0f),  CreateVector4D(1.0f, -1.0f,  1.0f,  1.0f))   //down
 };
 
+MeshList4D CubeModel;
 
-/*
-** Model Operation Functions
-*/
+void InitBuiltInModels() {
+	CubeModel.list = CubeMesh4DArray;
+	CubeModel.next = 12;
+	CubeModel.length = 12;
+}
 
-void AddMesh4DArrayToMeshList4D(MeshList4D* MeshList, Mesh4D* Mesh4DArray) {
-	for (int i = 0; i < 12; i++) {
-		MeshList->list[MeshList->next + i] = Mesh4DArray[i];
+void AddModelToMeshList4D(MeshList4D* MeshList, MeshList4D* Model, float x, float y, float z) {
+	MeshList4D TmpMeshList = CloneMeshList4D(Model);
+
+	for (int i = 0; i < TmpMeshList.next; i++) {
+		TmpMeshList.list[i].a.x += x;
+		TmpMeshList.list[i].a.y += y;
+		TmpMeshList.list[i].a.z += z;
+
+		TmpMeshList.list[i].b.x += x;
+		TmpMeshList.list[i].b.y += y;
+		TmpMeshList.list[i].b.z += z;
+		
+		TmpMeshList.list[i].c.x += x;
+		TmpMeshList.list[i].c.y += y;
+		TmpMeshList.list[i].c.z += z;
 	}
-	MeshList->next += 12;
+
+	AddMeshList4DToMeshList4D(MeshList, &TmpMeshList);
+
+	DestroyMeshList4D(&TmpMeshList);
 }

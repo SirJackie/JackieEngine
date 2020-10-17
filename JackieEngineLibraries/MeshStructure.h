@@ -108,7 +108,7 @@ char* OutputMesh4DWithMore28Spaces(Mesh4D* Mesh) {
 */
 
 struct MeshList4D {
-	Mesh4D* list;
+	Mesh4D*  list;
 	int      next;
 	int      length;
 };
@@ -129,7 +129,7 @@ void DestroyMeshList4D(MeshList4D* MeshList) {
 MeshList4D CloneMeshList4D(MeshList4D* MeshList) {
 	MeshList4D NewMeshList = CreateMeshList4D(MeshList->length);
 	for (int i = 0; i < MeshList->next; i++) {
-		NewMeshList.list[i] = (MeshList->list)[i];
+		NewMeshList.list[i] = MeshList->list[i];
 	}
 	NewMeshList.next = MeshList->next;
 	return NewMeshList;
@@ -144,6 +144,13 @@ BOOL AddMesh4DToMeshList4D(MeshList4D* MeshList, Mesh4D* Mesh) {
 		MeshList->next += 1;
 		return TRUE;
 	}
+}
+
+void AddMeshList4DToMeshList4D(MeshList4D* MeshList, MeshList4D* ListToAdd) {
+	for (int i = 0; i < ListToAdd->next; i++) {
+		MeshList->list[MeshList->next + i] = ListToAdd->list[i];
+	}
+	MeshList->next += ListToAdd->next;
 }
 
 char* OutputMeshList4D(MeshList4D* MeshList, int from, int to) {
