@@ -189,6 +189,16 @@ void TransformMeshList4DWithCamera(MeshList4D* MeshList, Camera* camera) {
 	}
 }
 
+void DrawPoint(FrameBuffer fb, int x, int y, int radius, int color) {
+	for (int j = y - radius; j < y + radius; j++) {
+		for (int i = x - radius; i < x + radius; i++) {
+			SetPixel(fb, i, j, color);
+		}
+	}
+}
+
+//void RenderMeshList4D(&MeshList4D)
+
 
 
 

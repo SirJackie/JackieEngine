@@ -60,6 +60,8 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	free(buffer);
 
 	DestroyMeshList4D(&TmpMeshList);
+
+	DrawPoint(fb, 100, 100, 5, RGB888(255, 255, 255));
 }
 
 
