@@ -166,6 +166,15 @@ void CalcCameraMPersp(Camera* camera) {
 	camera->MPersp = Matrix4D_X_Matrix4D(&(camera->MOrtho), &MPerspToOrtho);
 }
 
+void CalcCameraMViewport(Camera* camera) {
+	camera->MViewport = CreateMatrix4D(
+		1.0f * camera->ScreenWidth / 2.0f,  0.0f,                                0.0f,  1.0f * camera->ScreenWidth / 2.0f,
+		0.0f,                               1.0f * camera->ScreenHeight / 2.0f,  0.0f,  1.0f * camera->ScreenHeight / 2.0f,
+		0.0f,                               0.0f,                                1.0f,  0.0f,
+		0.0f,                               0.0f,                                0.0f,  1.0f
+	);
+}
+
 
 //void CalcCameraMView(Camera* camera) {
 //	// MView = RView * TView
