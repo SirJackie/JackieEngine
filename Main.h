@@ -41,20 +41,17 @@ Camera camera;
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	AddMesh4DArrayToMeshList4D(&MeshList, CubeMesh);
-	camera = CreateCamera(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 9.0f, 45.0f, width, height);
+	camera = CreateCamera(0.0f, 0.0f, 0.0f, 1.0f, 9.0f, 45.0f, width, height);
 }
 
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, deltaTime);
 
-	char buffer[1000];
-	sprintf_s(
-		buffer, 1000,
-		"Camera(n: %f\n       f: %f\n       FoV: %f\n       top: % f\n       bottom: %f\n       left: %f\n       right: %f\n       ScreenWidth: %d\n       ScreenHeight: %d\n       AspectRatio: %f)",
-		camera.n, camera.f, camera.FoV, camera.top, camera.bottom, camera.left, camera.right, camera.ScreenWidth, camera.ScreenHeight, camera.AspectRatio
-	);
+	char* buffer;
+	buffer = OutputCamera(&camera);
 	DrawShadowString(fb, 10, 42, buffer);
+	free(buffer);
 }
 
 
