@@ -29,13 +29,19 @@ struct Camera {
 	Vector4D e;    // Position
 	Vector4D g;    // Gaze Direction
 	Vector4D t;    // Up Direction
+	
+	float n;       // Frustum Near
+	float f;       // Frustum Far
+
 	float FoV;     // Field Of Angle (Y-Axis)
 	float top;     // Frustum Top
 	float bottom;  // Frustum Bottom
 	float left;    // Frustum Left
 	float right;   // Frustum Right
-	float n;       // Frustum Near
-	float f;       // Frustum Far
+
+	int ScreenWidth;
+	int ScreenHeight;
+	float AspectRatio;
 
 	Matrix4D MView;      // View Transform Matrix
 	Matrix4D MOrtho;     // Orthographic Projection Transform Matrix
@@ -46,15 +52,30 @@ struct Camera {
 Camera CreateCamera(
 	float x, float y, float z,
 	float xRot, float yRot, float zRot,
-	float FoV, float n, float f
+	float n, float f, float FoV, int ScreenWidth, int ScreenHeight
 )
 {
 	Camera NewCamera;
 	NewCamera.e = CreateVector4D(x, y, z, 1);
 	NewCamera.g = CreateVector4D(xRot, yRot, zRot, 1);
-	NewCamera.FoV = FoV;
+	
 	NewCamera.n = n;
 	NewCamera.f = f;
+	NewCamera.FoV = FoV;
+	NewCamera.ScreenWidth = ScreenWidth;
+	NewCamera.ScreenHeight = ScreenHeight;
+
+	float HalfFoV = NewCamera.FoV / 2;
+	NewCamera.top = tand(HalfFoV) * abs(n);
+	NewCamera.bottom = -1 * NewCamera.top;
+	
+	float height = NewCamera.top * 2;
+	NewCamera.AspectRatio = 1.0f * NewCamera.ScreenWidth / NewCamera.ScreenHeight;
+	float width = height * NewCamera.AspectRatio;
+
+	NewCamera.left = -1 * width / 2;
+	NewCamera.right = width / 2;
+
 	return NewCamera;
 }
 

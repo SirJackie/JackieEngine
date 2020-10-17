@@ -36,33 +36,25 @@ void OnCreate() {
 }
 
 MeshList4D MeshList = CreateMeshList4D(MESHLIST4D_MAX_LENGTH);
+Camera camera;
 
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	AddMesh4DArrayToMeshList4D(&MeshList, CubeMesh);
+	camera = CreateCamera(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 9.0f, 45.0f, width, height);
 }
 
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, deltaTime);
 
-	char* buffer;
-
-	/*buffer = OutputVector4D(&Vector);
+	char buffer[1000];
+	sprintf_s(
+		buffer, 1000,
+		"Camera(n: %f\n       f: %f\n       FoV: %f\n       top: % f\n       bottom: %f\n       left: %f\n       right: %f\n       ScreenWidth: %d\n       ScreenHeight: %d\n       AspectRatio: %f)",
+		camera.n, camera.f, camera.FoV, camera.top, camera.bottom, camera.left, camera.right, camera.ScreenWidth, camera.ScreenHeight, camera.AspectRatio
+	);
 	DrawShadowString(fb, 10, 42, buffer);
-	free(buffer);
-
-	buffer = OutputMatrix4D(&Matrix);
-	DrawShadowString(fb, 10, 74, buffer);
-	free(buffer);
-
-	buffer = OutputMesh4D(&Mesh);
-	DrawShadowString(fb, 10, 154, buffer);
-	free(buffer);*/
-
-	/*buffer = OutputMeshList4D(&MeshList, 0, MeshList.next);
-	DrawShadowString(fb, 10, 42, buffer);
-	free(buffer);*/
 }
 
 
