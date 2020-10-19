@@ -49,29 +49,15 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, deltaTime);
 
+	CalcCameraMOrtho(&camera);
 	CalcCameraMPersp(&camera);
 	CalcCameraMViewport(&camera);
 
 	MeshList4D TmpMeshList = CloneMeshList4D(&MeshList);
 
-	TransformMeshList4DWithCamera(&TmpMeshList, &camera);
-
-	for (int i = 0; i < TmpMeshList.next; i++) {
-		TmpMeshList.list[i].a.x *= 100;
-		TmpMeshList.list[i].a.x += width / 2;
-		TmpMeshList.list[i].a.y *= 100;
-		TmpMeshList.list[i].a.y += height / 2;
-
-		TmpMeshList.list[i].b.x *= 100;
-		TmpMeshList.list[i].b.x += width / 2;
-		TmpMeshList.list[i].b.y *= 100;
-		TmpMeshList.list[i].b.y += height / 2;
-
-		TmpMeshList.list[i].c.x *= 100;
-		TmpMeshList.list[i].c.x += width / 2;
-		TmpMeshList.list[i].c.y *= 100;
-		TmpMeshList.list[i].c.y += height / 2;
-	}
+	OrthographicProjectionTransform(&TmpMeshList, &camera);
+	//PerspectiveProjectionTransform(&TmpMeshList, &camera);
+	//ViewportTransform(&TmpMeshList, &camera);
 
 	char* buffer;
 	buffer = OutputMeshList4D(&TmpMeshList, 0, TmpMeshList.next);
