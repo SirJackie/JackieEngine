@@ -15,7 +15,7 @@ int   FPSDeltaTimeCount;
 int   FPSFrameCount;
 char  FPSBuffer[FPS_BUFFER_LENGTH];
 
-void CalcFPS(FrameBuffer fb, int deltaTime) {
+void CalcFPS(FrameBuffer fb, int width, int height, int deltaTime) {
 	/*
 	** FPS Processing
 	*/
@@ -38,6 +38,6 @@ void CalcFPS(FrameBuffer fb, int deltaTime) {
 		FPS,
 		deltaTime
 	);
-	DrawShadowString(fb, 10, 10, FPSBuffer);
+	DrawShadowString(fb, 10, 10, width, height, FPSBuffer);
 }
 

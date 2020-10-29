@@ -47,7 +47,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
-	CalcFPS(fb, deltaTime);
+	CalcFPS(fb, width, height, deltaTime);
 
 	CalcCameraMOrtho(&camera);
 	CalcCameraMPersp(&camera);
@@ -56,34 +56,11 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	MeshList4D TmpMeshList = CloneMeshList4D(&MeshList);
 
 	OrthographicProjectionTransform(&TmpMeshList, &camera);
-	//PerspectiveProjectionTransform(&TmpMeshList, &camera);
-	//ViewportTransform(&TmpMeshList, &camera);
 
 	char* buffer;
 	buffer = OutputMeshList4D(&TmpMeshList, 0, TmpMeshList.next);
-	DrawShadowString(fb, 10, 42, buffer);
+	DrawShadowString(fb, 10, 42, width, height, buffer);
 	free(buffer);
-
-	//RenderMeshList4D(fb, width, height, &MeshList);
-	for (int i = 0; i < TmpMeshList.next; i++) {
-		//if (TmpMeshList.list[i].a.x > 0.0f && TmpMeshList.list[i].a.x < width) {
-		//	if (TmpMeshList.list[i].a.y > 0.0f && TmpMeshList.list[i].a.y < height) {
-				DrawPoint(fb, width, height, TmpMeshList.list[i].a.x, TmpMeshList.list[i].a.y, 5, RGB888(255, 255, 255));
-		//	}
-		//}
-
-		//if (TmpMeshList.list[i].b.x > 0.0f && TmpMeshList.list[i].b.x < width) {
-		//	if (TmpMeshList.list[i].b.y > 0.0f && TmpMeshList.list[i].b.y < height) {
-				DrawPoint(fb, width, height, TmpMeshList.list[i].b.x, TmpMeshList.list[i].b.y, 5, RGB888(255, 255, 255));
-		//	}
-		//}
-
-		//if (TmpMeshList.list[i].c.x > 0.0f && TmpMeshList.list[i].c.x < width) {
-		//	if (TmpMeshList.list[i].c.y > 0.0f && TmpMeshList.list[i].c.y < height) {
-				DrawPoint(fb, width, height, TmpMeshList.list[i].c.x, TmpMeshList.list[i].c.y, 5, RGB888(255, 255, 255));
-		//	}
-		//}
-	}
 
 	DestroyMeshList4D(&TmpMeshList);
 }

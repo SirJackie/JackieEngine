@@ -26,7 +26,7 @@ void DrawChar(FrameBuffer fb, int x, int y, int color, char ch)
 	}
 }
 
-void DrawString(FrameBuffer fb, int x, int y, int color, char* stringPointer)
+void DrawString(FrameBuffer fb, int width, int height, int x, int y, int color, char* stringPointer)
 {
 	int originX = x;
 	for (; *stringPointer != 0x00; stringPointer++) {
@@ -37,12 +37,20 @@ void DrawString(FrameBuffer fb, int x, int y, int color, char* stringPointer)
 		}
 		DrawChar(fb, x, y, color, *stringPointer); //画这个字符
 		x += 8; //下一个字符X轴位置加8
+
+		if (x >= width) {
+			y += 16;
+			x = originX;
+		}
+		if (y >= height) {
+			return;
+		}
 		
 	}
 	return;
 }
 
-void DrawShadowString(FrameBuffer fb, int x, int y, char* stringPointer) {
-	DrawString(fb, x,     y,     RGB888(0,   0,   0  ), stringPointer);
-	DrawString(fb, x + 1, y + 1, RGB888(255, 255, 255), stringPointer);
+void DrawShadowString(FrameBuffer fb, int width, int height, int x, int y, char* stringPointer) {
+	DrawString(fb, width, height, x,     y,     RGB888(0,   0,   0  ), stringPointer);
+	DrawString(fb, width, height, x + 1, y + 1, RGB888(255, 255, 255), stringPointer);
 }
