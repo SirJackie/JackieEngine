@@ -38,6 +38,6 @@ void CalcFPS(FrameBuffer fb, int width, int height, int deltaTime) {
 		FPS,
 		deltaTime
 	);
-	DrawShadowString(fb, 10, 10, width, height, FPSBuffer);
+	DrawShadowString(fb, width, height, 10, 10, FPSBuffer);
 }
 

@@ -59,7 +59,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	char* buffer;
 	buffer = OutputMeshList4D(&TmpMeshList, 0, TmpMeshList.next);
-	DrawShadowString(fb, 10, 42, width, height, buffer);
+	DrawShadowString(fb, width, height, 10, 42, buffer);
 	free(buffer);
 
 	DestroyMeshList4D(&TmpMeshList);
