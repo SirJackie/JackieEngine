@@ -172,7 +172,7 @@ char* OutputMeshList4D(MeshList4D* MeshList, int from, int to) {
 		free(MeshStringOutput);
 	}
 
-	strcat_s(buffer, MESH4DLIST_BUFFER_LENGTH, "]");
+	//strcat_s(buffer, MESH4DLIST_BUFFER_LENGTH, "]");
 
 	return buffer;
 }
