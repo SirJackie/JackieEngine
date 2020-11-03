@@ -146,7 +146,7 @@ Vector4D Vector4D_Minus_Vector4D(Vector4D* a, Vector4D* b) {
 }
 
 float Vector4D_Dot_Vector4D(Vector4D* a, Vector4D* b) {
-	return a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w;
+	return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
 Vector4D Vector4D_Cross_Vector4D(Vector4D* a, Vector4D* b) {
