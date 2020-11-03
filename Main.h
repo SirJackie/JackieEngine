@@ -55,10 +55,13 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	MeshList4D TmpMeshList = CloneMeshList4D(&MeshList);
 
-	OrthographicProjectionTransform(&TmpMeshList, &camera);
+	//OrthographicProjectionTransform(&TmpMeshList, &camera);
+	//PerspectiveProjectionTransform(&TmpMeshList, &camera);
+	//ViewportTransform(&TmpMeshList, &camera);
 
 	char* buffer;
-	buffer = OutputMeshList4D(&TmpMeshList, 0, TmpMeshList.next);
+	//buffer = OutputMeshList4D(&TmpMeshList, 0, TmpMeshList.next);
+	buffer = OutputCamera(&camera);
 	DrawShadowString(fb, width, height, 10, 42, buffer);
 	free(buffer);
 

@@ -113,27 +113,33 @@ Camera CreateCamera(
 char* OutputCamera(Camera* camera) {
 	char* buffer = (char*)malloc(CAMERA_BUFFER_LENGTH * sizeof(char));
 
-	char* PositionBuffer      = OutputVector4D(&(camera->Position));
-	char* GazeDirectionBuffer = OutputVector4D(&(camera->GazeDirection));
-	char* UpDirectionBuffer   = OutputVector4D(&(camera->UpDirection));
-	char* MViewBuffer         = OutputMatrix4D(&(camera->MView));
-	char* MOrthoBuffer        = OutputMatrix4D(&(camera->MOrtho));
-	char* MPerspBuffer        = OutputMatrix4D(&(camera->MPersp));
-	char* MViewportBuffer     = OutputMatrix4D(&(camera->MViewport));
+	//char* PositionBuffer      = OutputVector4D(&(camera->Position));
+	//char* GazeDirectionBuffer = OutputVector4D(&(camera->GazeDirection));
+	//char* UpDirectionBuffer   = OutputVector4D(&(camera->UpDirection));
+	//char* MViewBuffer         = OutputMatrix4D(&(camera->MView));
+	//char* MOrthoBuffer        = OutputMatrix4D(&(camera->MOrtho));
+	//char* MPerspBuffer        = OutputMatrix4D(&(camera->MPersp));
+	//char* MViewportBuffer     = OutputMatrix4D(&(camera->MViewport));
+
+	//sprintf_s(
+	//	buffer, CAMERA_BUFFER_LENGTH,
+	//	"Camera{\nPosition:        %s\nGazeDirection:   %s\nUpDirection:     %s\nScreenWidth:     %d\nScreenHeight:    %d\nFoV:             %f\nAspectRatio:     %f\nn:               %f\nf:               %f\nt:               %f\nb:               %f\nl:               %f\nr:               %f\nFrustumWidth:    %f\nFrustumHeight:   %f\nMView:\n%s\nMOrtho:\n%s\nMPersp:\n%s\nMViewport:\n%s\n}",
+	//	PositionBuffer, GazeDirectionBuffer, UpDirectionBuffer, camera->ScreenWidth, camera->ScreenHeight, camera->FoV, camera->AspectRatio, camera->n, camera->f, camera->t, camera->b, camera->l, camera->r, camera->FrustumWidth, camera->FrustumHeight, MViewBuffer, MOrthoBuffer, MPerspBuffer, MViewportBuffer
+	//);
 
 	sprintf_s(
 		buffer, CAMERA_BUFFER_LENGTH,
-		"Camera{\nPosition:        %s\nGazeDirection:   %s\nUpDirection:     %s\nScreenWidth:     %d\nScreenHeight:    %d\nFoV:             %f\nAspectRatio:     %f\nn:               %f\nf:               %f\nt:               %f\nb:               %f\nl:               %f\nr:               %f\nFrustumWidth:    %f\nFrustumHeight:   %f\nMView:\n%s\nMOrtho:\n%s\nMPersp:\n%s\nMViewport:\n%s\n}",
-		PositionBuffer, GazeDirectionBuffer, UpDirectionBuffer, camera->ScreenWidth, camera->ScreenHeight, camera->FoV, camera->AspectRatio, camera->n, camera->f, camera->t, camera->b, camera->l, camera->r, camera->FrustumWidth, camera->FrustumHeight, MViewBuffer, MOrthoBuffer, MPerspBuffer, MViewportBuffer
+		"Camera{\nScreenWidth:     %d\nScreenHeight:    %d\nFoV:             %f\nAspectRatio:     %f\nn:               %f\nf:               %f\nt:               %f\nb:               %f\nl:               %f\nr:               %f\nFrustumWidth:    %f\nFrustumHeight:   %f\n}",
+		camera->ScreenWidth, camera->ScreenHeight, camera->FoV, camera->AspectRatio, camera->n, camera->f, camera->t, camera->b, camera->l, camera->r, camera->FrustumWidth, camera->FrustumHeight
 	);
 
-	free(PositionBuffer);
-	free(GazeDirectionBuffer);
-	free(UpDirectionBuffer);
-	free(MViewBuffer);
-	free(MOrthoBuffer);
-	free(MPerspBuffer);
-	free(MViewportBuffer);
+	//free(PositionBuffer);
+	//free(GazeDirectionBuffer);
+	//free(UpDirectionBuffer);
+	//free(MViewBuffer);
+	//free(MOrthoBuffer);
+	//free(MPerspBuffer);
+	//free(MViewportBuffer);
 
 	return buffer;
 }
