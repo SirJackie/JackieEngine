@@ -228,23 +228,23 @@ void DrawPoint(FrameBuffer fb, int width, int height, int x, int y, int radius, 
 
 void RenderMeshList4D(FrameBuffer fb, int width, int height, MeshList4D* MeshList) {
 	for (int i = 0; i < MeshList->next; i++) {
-		if (MeshList->list[i].a.x > 0.0f && MeshList->list[i].a.x < width) {
-			if (MeshList->list[i].a.y > 0.0f && MeshList->list[i].a.y < height) {
+		//if (MeshList->list[i].a.x > 0.0f && MeshList->list[i].a.x < width) {
+			//if (MeshList->list[i].a.y > 0.0f && MeshList->list[i].a.y < height) {
 				DrawPoint(fb, width, height, MeshList->list[i].a.x, MeshList->list[i].a.y, 5, RGB888(255, 255, 255));
-			}
-		}
+			//}
+		//}
 		
-		if (MeshList->list[i].b.x > 0.0f && MeshList->list[i].b.x < width) {
-			if (MeshList->list[i].b.y > 0.0f && MeshList->list[i].b.y < height) {
+		//if (MeshList->list[i].b.x > 0.0f && MeshList->list[i].b.x < width) {
+			//if (MeshList->list[i].b.y > 0.0f && MeshList->list[i].b.y < height) {
 				DrawPoint(fb, width, height, MeshList->list[i].b.x, MeshList->list[i].b.y, 5, RGB888(255, 255, 255));
-			}
-		}
+			//}
+		//}
 
-		if (MeshList->list[i].c.x > 0.0f && MeshList->list[i].c.x < width) {
-			if (MeshList->list[i].c.y > 0.0f && MeshList->list[i].c.y < height) {
+		//if (MeshList->list[i].c.x > 0.0f && MeshList->list[i].c.x < width) {
+			//if (MeshList->list[i].c.y > 0.0f && MeshList->list[i].c.y < height) {
 				DrawPoint(fb, width, height, MeshList->list[i].c.x, MeshList->list[i].c.y, 5, RGB888(255, 255, 255));
-			}
-		}
+			//}
+		//}
 	}
 }
 

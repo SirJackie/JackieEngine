@@ -42,7 +42,7 @@ Camera camera;
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	InitBuiltInModels();
 	AddModelToMeshList4D(&MeshList, &CubeModel, 0.0f, 0.0f, -10.0f);
-	camera = CreateCamera(0.0f, 0.0f, 0.0f, 0.05f, 1000.0f, 60.0f, width, height);
+	camera = CreateCamera(0.0f, 0.0f, 0.0f, -1.0f, -1000.0f, 60.0f, width, height);
 }
 
 
@@ -55,15 +55,17 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	MeshList4D TmpMeshList = CloneMeshList4D(&MeshList);
 
-	//OrthographicProjectionTransform(&TmpMeshList, &camera);
-	//PerspectiveProjectionTransform(&TmpMeshList, &camera);
-	//ViewportTransform(&TmpMeshList, &camera);
+	OrthographicProjectionTransform(&TmpMeshList, &camera);
+	PerspectiveProjectionTransform(&TmpMeshList, &camera);
+	ViewportTransform(&TmpMeshList, &camera);
 
 	char* buffer;
-	//buffer = OutputMeshList4D(&TmpMeshList, 0, TmpMeshList.next);
-	buffer = OutputCamera(&camera);
+	buffer = OutputMeshList4D(&TmpMeshList, 0, TmpMeshList.next);
+	//buffer = OutputCamera(&camera);
 	DrawShadowString(fb, width, height, 10, 42, buffer);
 	free(buffer);
+
+	RenderMeshList4D(fb, width, height, &TmpMeshList);
 
 	DestroyMeshList4D(&TmpMeshList);
 }
