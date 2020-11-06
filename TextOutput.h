@@ -51,6 +51,6 @@ void DrawString(FrameBuffer fb, int width, int height, int x, int y, int color, 
 }
 
 void DrawShadowString(FrameBuffer fb, int width, int height, int x, int y, char* stringPointer) {
-	DrawString(fb, width, height, x,     y,     RGB888(0,   0,   0  ), stringPointer);
-	DrawString(fb, width, height, x + 1, y + 1, RGB888(255, 255, 255), stringPointer);
+	DrawString(fb, width, height, x,     y,     CreateColor(0,   0,   0  , 255), stringPointer);
+	DrawString(fb, width, height, x + 1, y + 1, CreateColor(255, 255, 255, 255), stringPointer);
 }

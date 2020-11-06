@@ -40,8 +40,30 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	;
 }
 
+char* buffer;
+char realbuffer[1000];
+
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	ClacFPS(fb, width, height, deltaTime);
+
+	Color c = CreateColor(123, 145, 156, 167);
+	sprintf_s(
+		realbuffer, 1000,
+		"Color: %d; ColorR: %d; ColorG: %d; ColorB: %d; ColorA: %d",
+		c, GetColorR(c), GetColorG(c), GetColorB(c), GetColorA(c)
+	);
+	DrawShadowString(fb, width, height, 10, 42, realbuffer);
+
+	SetColorR(c, 201);
+	SetColorG(c, 202);
+	SetColorB(c, 203);
+	SetColorA(c, 204);
+	sprintf_s(
+		realbuffer, 1000,
+		"Color: %d; ColorR: %d; ColorG: %d; ColorB: %d; ColorA: %d",
+		c, GetColorR(c), GetColorG(c), GetColorB(c), GetColorA(c)
+	);
+	DrawShadowString(fb, width, height, 10, 74, realbuffer);
 }
 
 

@@ -44,10 +44,7 @@ struct Mesh4D {
 	Vector4D  a;
 	Vector4D  b;
 	Vector4D  c;
-	int       red;
-	int       green;
-	int       blue;
-	int       alpha;
+	int       color;
 };
 
 Mesh4D CreateMesh4D(Vector4D a, Vector4D b, Vector4D c) {
@@ -58,12 +55,12 @@ Mesh4D CreateMesh4D(Vector4D a, Vector4D b, Vector4D c) {
 	return NewMesh;
 }
 
-void SetMeshColor(Mesh4D* Mesh, int r, int g, int b, int a) {
-	Mesh->red = r;
-	Mesh->green = g;
-	Mesh->blue = b;
-	Mesh->alpha = a;
-}
+//void SetMeshColor(Mesh4D* Mesh, int r, int g, int b, int a) {
+//	Mesh->red = r;
+//	Mesh->green = g;
+//	Mesh->blue = b;
+//	Mesh->alpha = a;
+//}
 
 char* OutputMesh4D(Mesh4D* Mesh) {
 	char* buffer = (char*)malloc(MESH4D_BUFFER_LENGTH * sizeof(char));
