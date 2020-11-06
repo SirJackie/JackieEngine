@@ -54,14 +54,68 @@ Vector4D CreateVector4D(float x, float y, float z, float w) {
 char* OutputVector4D(Vector4D* vec) {
 	char* buffer = (char*)malloc(VECTOR4D_BUFFER_LENGTH * sizeof(char));
 
-	sprintf_s(
-		buffer, VECTOR4D_BUFFER_LENGTH,
-		"Vector4D[%f, %f, %f, %f]",
-		vec->x, vec->y, vec->z, vec->w
-	);
+	if (buffer != 0) {
+		sprintf_s(
+			buffer, VECTOR4D_BUFFER_LENGTH,
+			"Vector4D[%f, %f, %f, %f]",
+			vec->x, vec->y, vec->z, vec->w
+		);
+	}
 
 	return buffer;
 }
+
+float LengthOfVector4D(Vector4D* vec) {
+	// Use the Pythagorean Theorem to calculate the length
+	return sqrt(
+		(double)vec->x * vec->x + vec->y * vec->y + vec->z * vec->z
+	);
+}
+
+Vector4D NormalizedVector4D(Vector4D* vec) {
+	float length = LengthOfVector4D(vec);
+	return CreateVector4D(
+		vec->x / length,
+		vec->y / length,
+		vec->z / length,
+		vec->w  // W-Axis is Meaningless, So Do Nothing
+	);
+}
+
+Vector4D Vector4DAddVector4D(Vector4D* a, Vector4D* b) {
+	Vector4D result;
+	result.x = a->x + b->x;
+	result.y = a->y + b->y;
+	result.z = a->z + b->z;
+	result.w = a->w + b->w;
+	return result;
+}
+
+Vector4D Vector4DMinusVector4D(Vector4D* a, Vector4D* b) {
+	Vector4D result;
+	result.x = a->x - b->x;
+	result.y = a->y - b->y;
+	result.z = a->z - b->z;
+	result.w = a->w - b->w;
+	return result;
+}
+
+float Vector4DDotVector4D(Vector4D* a, Vector4D* b) {
+	return a->x * b->x + a->y * b->y + a->z * b->z;
+}
+
+Vector4D Vector4DCrossVector4D(Vector4D* a, Vector4D* b) {
+	Vector4D result;
+	result.x = a->y * b->z - b->y * a->z;
+	result.y = a->z * b->x - a->x * b->z;
+	result.z = a->x * b->y - a->y * b->x;
+	// Cross Product of a Vector is only defined on 3D Space
+	// So W-Axis is Meaningless
+	result.w = a->w;
+	return result;
+}
+
+
 
 
 /*
@@ -110,69 +164,21 @@ Matrix4D CreateMatrix4D(
 char* OutputMatrix4D(Matrix4D* matrix) {
 	char* buffer = (char*)malloc(MATRIX4D_BUFFER_LENGTH * sizeof(char));
 
-	sprintf_s(
-		buffer, MATRIX4D_BUFFER_LENGTH,
-		"Matrix4D[%f, %f, %f, %f,\n         %f, %f, %f, %f,\n         %f, %f, %f, %f,\n         %f, %f, %f, %f]",
-		matrix->m11, matrix->m12, matrix->m13, matrix->m14,
-		matrix->m21, matrix->m22, matrix->m23, matrix->m24,
-		matrix->m31, matrix->m32, matrix->m33, matrix->m34,
-		matrix->m41, matrix->m42, matrix->m43, matrix->m44
-	);
+	if (buffer != 0) {
+		sprintf_s(
+			buffer, MATRIX4D_BUFFER_LENGTH,
+			"Matrix4D[%f, %f, %f, %f,\n         %f, %f, %f, %f,\n         %f, %f, %f, %f,\n         %f, %f, %f, %f]",
+			matrix->m11, matrix->m12, matrix->m13, matrix->m14,
+			matrix->m21, matrix->m22, matrix->m23, matrix->m24,
+			matrix->m31, matrix->m32, matrix->m33, matrix->m34,
+			matrix->m41, matrix->m42, matrix->m43, matrix->m44
+		);
+	}
 
 	return buffer;
 }
 
-
-/*
-** Matrix4D and Vector4D Calculation
-*/
-
-Vector4D Vector4D_Add_Vector4D(Vector4D* a, Vector4D* b) {
-	Vector4D result;
-	result.x = a->x + b->x;
-	result.y = a->y + b->y;
-	result.z = a->z + b->z;
-	result.w = a->w + b->w;
-	return result;
-}
-
-Vector4D Vector4D_Minus_Vector4D(Vector4D* a, Vector4D* b) {
-	Vector4D result;
-	result.x = a->x - b->x;
-	result.y = a->y - b->y;
-	result.z = a->z - b->z;
-	result.w = a->w - b->w;
-	return result;
-}
-
-float Vector4D_Dot_Vector4D(Vector4D* a, Vector4D* b) {
-	return a->x * b->x + a->y * b->y + a->z * b->z;
-}
-
-Vector4D Vector4D_Cross_Vector4D(Vector4D* a, Vector4D* b) {
-	Vector4D result;
-	result.x = a->y * b->z - b->y * a->z;
-	result.y = a->z * b->x - a->x * b->z;
-	result.z = a->x * b->y - a->y * b->x;
-	// Cross Product of a Vector only defined on 3D Space, so w is meaningless
-	result.w = 1;
-	return result;
-}
-
-float LengthOfVector4D(Vector4D* vec) {
-	// w is meaningless
-	return sqrt(vec->x * vec->x + vec->y * vec->y + vec->z * vec->z);
-}
-
-void NormalizeVector4D(Vector4D* vec) {
-	float length = LengthOfVector4D(vec);
-	vec->x /= length;
-	vec->y /= length;
-	vec->z /= length;
-	// w is meaningless
-}
-
-Vector4D Matrix4D_X_Vector4D(Matrix4D* m, Vector4D* v) {
+Vector4D Vector4DTimesMatrix4D(Vector4D* v, Matrix4D* m) {
 	Vector4D result;
 	result.x = m->m11 * v->x + m->m12 * v->y + m->m13 * v->z + m->m14 * v->w;
 	result.y = m->m21 * v->x + m->m22 * v->y + m->m23 * v->z + m->m24 * v->w;
@@ -181,7 +187,7 @@ Vector4D Matrix4D_X_Vector4D(Matrix4D* m, Vector4D* v) {
 	return result;
 }
 
-Matrix4D Matrix4D_X_Matrix4D(Matrix4D* b, Matrix4D* a) {
+Matrix4D Matrix4DTimesMatrix4D(Matrix4D* a, Matrix4D* b) {
 	Matrix4D result;
 
 	result.m11 = b->m11 * a->m11 + b->m12 * a->m21 + b->m13 * a->m31 + b->m14 * a->m41;
