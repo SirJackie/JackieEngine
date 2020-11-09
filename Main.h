@@ -38,6 +38,7 @@ void OnCreate() {
 
 Camera4D cam;
 Matrix4D Morthoa, Morthob, Mortho, Mpersp2ortho, Mpersp, Mviewport, Mtransform;
+Vector4D vecs[8];
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	
@@ -105,6 +106,20 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 		&Mpersp,
 		&Mviewport
 	);
+
+
+	/*
+	** Vectors
+	*/
+
+	vecs[0] = CreateVector4D(-1.0f, -1.0f, -3.0f, 1.0f);
+	vecs[1] = CreateVector4D( 1.0f, -1.0f, -3.0f, 1.0f);
+	vecs[2] = CreateVector4D( 1.0f,  1.0f, -3.0f, 1.0f);
+	vecs[3] = CreateVector4D(-1.0f,  1.0f, -3.0f, 1.0f);
+	vecs[4] = CreateVector4D(-1.0f, -1.0f, -5.0f, 1.0f);
+	vecs[5] = CreateVector4D( 1.0f, -1.0f, -5.0f, 1.0f);
+	vecs[6] = CreateVector4D( 1.0f,  1.0f, -5.0f, 1.0f);
+	vecs[7] = CreateVector4D(-1.0f,  1.0f, -5.0f, 1.0f);
 }
 
 
@@ -113,6 +128,21 @@ char realbuffer[1000];
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	ClacFPS(fb, width, height, deltaTime);
+
+	for (int i = 0; i < 8; i++) {
+		vecs[i] = Vector4DTimesMatrix4D(
+			&(vecs[i]), &Mtransform
+		);
+	}
+
+	for (int i = 0; i < 8; i++) {
+		Vector4DDevidedByW(&(vecs[i]));
+	}
+
+	// Do Y-Axis Reverse
+	for (int i = 0; i < 8; i++) {
+		vecs[i].y = height - vecs[i].y;
+	}
 
 	sprintf_s(
 		realbuffer, 1000,
@@ -129,6 +159,12 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	DrawShadowString(fb, width, height, 10, 234, buffer);
 	free(buffer);
 
+	for (int i = 0; i < 8; i++) {
+		buffer = OutputVector4D(&(vecs[i]));
+		DrawShadowString(fb, width, height, 10, 330 + i * 16, buffer);
+		free(buffer);
+	}
+
 	//buffer = OutputMatrix4D(&Mortho);
 	//DrawShadowString(fb, width, height, 10, 314, buffer);
 	//free(buffer);
@@ -140,6 +176,20 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	//buffer = OutputMatrix4D(&Mpersp);
 	//DrawShadowString(fb, width, height, 10, 474, buffer);
 	//free(buffer);
+
+
+	/*
+	** Reset Vectors
+	*/
+
+	vecs[0] = CreateVector4D(-1.0f, -1.0f, -3.0f, 1.0f);
+	vecs[1] = CreateVector4D( 1.0f, -1.0f, -3.0f, 1.0f);
+	vecs[2] = CreateVector4D( 1.0f,  1.0f, -3.0f, 1.0f);
+	vecs[3] = CreateVector4D(-1.0f,  1.0f, -3.0f, 1.0f);
+	vecs[4] = CreateVector4D(-1.0f, -1.0f, -5.0f, 1.0f);
+	vecs[5] = CreateVector4D( 1.0f, -1.0f, -5.0f, 1.0f);
+	vecs[6] = CreateVector4D( 1.0f,  1.0f, -5.0f, 1.0f);
+	vecs[7] = CreateVector4D(-1.0f,  1.0f, -5.0f, 1.0f);
 }
 
 

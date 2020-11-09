@@ -82,6 +82,13 @@ Vector4D NormalizedVector4D(Vector4D* vec) {
 	);
 }
 
+void Vector4DDevidedByW(Vector4D* vec) {
+	vec->x /= vec->w;
+	vec->y /= vec->w;
+	vec->z /= vec->w;
+	vec->w /= vec->w;
+}
+
 Vector4D Vector4DAddVector4D(Vector4D* a, Vector4D* b) {
 	Vector4D result;
 	result.x = a->x + b->x;
