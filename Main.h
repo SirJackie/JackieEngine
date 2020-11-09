@@ -153,9 +153,38 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 
 char* buffer;
 char realbuffer[1000];
+float deltaX = 0.0f, deltaY = 0.0f, deltaZ = 0.0f;
+float sensitivity = 0.1f;
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	ClacFPS(fb, width, height, deltaTime);
+
+	if (keyboard['W'] == TRUE) {
+		deltaZ -= sensitivity;
+	}
+	if (keyboard['S'] == TRUE) {
+		deltaZ += sensitivity;
+	}
+
+	if (keyboard['A'] == TRUE) {
+		deltaX -= 0.5f * sensitivity;
+	}
+	if (keyboard['D'] == TRUE) {
+		deltaX += 0.5f * sensitivity;
+	}
+
+	if (keyboard['E'] == TRUE) {
+		deltaY -= 0.5f * sensitivity;
+	}
+	if (keyboard['Q'] == TRUE) {
+		deltaY += 0.5f * sensitivity;
+	}
+
+	for (int i = 0; i < 8; i++) {
+		vecs[i].x = vecs[i].x -= deltaX;
+		vecs[i].y = vecs[i].y -= deltaY;
+		vecs[i].z = vecs[i].z -= deltaZ;
+	}
 
 	for (int i = 0; i < 8; i++) {
 		vecs[i] = Vector4DTimesMatrix4D(
