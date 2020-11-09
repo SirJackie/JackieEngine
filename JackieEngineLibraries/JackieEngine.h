@@ -24,3 +24,16 @@
 #define __CROSSBUFFER_H__
 #include "CrossBuffer.h"
 #endif
+
+struct Camera4D {
+	float n;
+	float f;
+	float t;
+	float b;
+	float l;
+	float r;
+	float fovY;
+	int ScreenWidth;
+	int ScreenHeight;
+};
+
