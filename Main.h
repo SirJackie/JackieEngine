@@ -35,6 +35,9 @@ void OnCreate() {
 	;
 }
 
+void DrawVector4D(FrameBuffer fb, Vector4D* vec) {
+	SetPixel(fb, (int)vec->x, (int)vec->y, CreateColor(255, 255, 255, 255));
+}
 
 Camera4D cam;
 Matrix4D Morthoa, Morthob, Mortho, Mpersp2ortho, Mpersp, Mviewport, Mtransform;
@@ -163,6 +166,10 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		buffer = OutputVector4D(&(vecs[i]));
 		DrawShadowString(fb, width, height, 10, 330 + i * 16, buffer);
 		free(buffer);
+	}
+
+	for (int i = 0; i < 8; i++) {
+		DrawVector4D(fb, &(vecs[i]));
 	}
 
 	//buffer = OutputMatrix4D(&Mortho);
