@@ -35,8 +35,33 @@ void OnCreate() {
 	;
 }
 
-void DrawVector4D(FrameBuffer fb, Vector4D* vec) {
-	SetPixel(fb, (int)vec->x, (int)vec->y, CreateColor(255, 255, 255, 255));
+int clamp(int min, int input, int max) {
+	if (input > min) {
+		if (input < max) {
+			return input;
+		}
+		else {
+			return max;
+		}
+	}
+	else {
+		return min;
+	}
+}
+
+void DrawVector4D(FrameBuffer fb, int width, int height, Vector4D* vec, int radius) {
+	int CentralX = (int)vec->x;
+	int CentralY = (int)vec->y;
+	int StartX = clamp(0, CentralX - radius, width);
+	int EndX   = clamp(0, CentralX + radius, width);
+	int StartY = clamp(0, CentralY - radius, height);
+	int EndY   = clamp(0, CentralY + radius, height);
+
+	for (int y = StartY; y < EndY; y++) {
+		for (int x = StartX; x < EndX; x++) {
+			SetPixel(fb, x, y, CreateColor(255, 255, 255, 255));
+		}
+	}
 }
 
 Camera4D cam;
@@ -169,7 +194,8 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	}
 
 	for (int i = 0; i < 8; i++) {
-		DrawVector4D(fb, &(vecs[i]));
+		float tmp = (-1.0f * vecs[i].z) - 0.9f;
+		DrawVector4D(fb, width, height, &(vecs[i]), (int)((0.1f - tmp) * 100.0f));
 	}
 
 	//buffer = OutputMatrix4D(&Mortho);
