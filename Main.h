@@ -37,7 +37,7 @@ void OnCreate() {
 
 
 Camera4D cam;
-Matrix4D Morthoa, Morthob, Mortho;
+Matrix4D Morthoa, Morthob, Mortho, Mpersp2ortho, Mpersp;
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	
@@ -82,6 +82,17 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 		&Morthob
 	);
 
+	Mpersp2ortho = CreateMatrix4D(
+		cam.n, 0.0f, 0.0f, 0.0f,
+		0.0f, cam.n, 0.0f, 0.0f,
+		0.0f, 0.0f, cam.f + cam.n, -1 * cam.f * cam.n,
+		0.0f, 0.0f, 1.0f, 0.0f
+	);
+
+	Mpersp = Matrix4DTimesMatrix4D(
+		&Mpersp2ortho,
+		&Mortho
+	);
 }
 
 
@@ -90,7 +101,7 @@ char realbuffer[1000];
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	ClacFPS(fb, width, height, deltaTime);
-	
+
 	sprintf_s(
 		realbuffer, 1000,
 		"n:%f\nf:%f\nt:%f\nb:%f\nl:%f\nr:%f\n",
@@ -110,9 +121,13 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	DrawShadowString(fb, width, height, 10, 314, buffer);
 	free(buffer);
 
-	sprintf_s(realbuffer, 1000,
-		"%f", 2.0f / (cam.n - cam.f));
-	DrawShadowString(fb, width, height, 10, 414, realbuffer);
+	buffer = OutputMatrix4D(&Mpersp2ortho);
+	DrawShadowString(fb, width, height, 10, 394, buffer);
+	free(buffer);
+
+	buffer = OutputMatrix4D(&Mpersp);
+	DrawShadowString(fb, width, height, 10, 474, buffer);
+	free(buffer);
 }
 
 
