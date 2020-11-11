@@ -29,8 +29,8 @@
 using namespace std;
 
 /* Window Class Properties */
-#define WindowClassName L"CrossBuffer For Windows Class"
-#define WindowTitle     L"CrossBuffer For Windows"
+#define WindowClassName L"Jackie Engine Class"
+#define WindowTitle     L"Jackie Engine     <WASDQE To Move>     <IJKLUO To Look>"
 
 /* DirectX Objects */
 IDirect3D9* pDirect3D;
