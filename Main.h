@@ -100,7 +100,7 @@ float deltaX = 0.0f, deltaY = 0.0f, deltaZ = 0.0f;
 float sensitivity = 0.1f;
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
-	ClacFPS(fb, width, height, deltaTime);
+	CalcFPS(fb, width, height, deltaTime);
 
 	RefreshCamera4DMatrices(&cam);
 
@@ -191,7 +191,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	);
 	DrawShadowString(fb, width, height, 10, 42, realbuffer);
 
-	buffer = OutputMatrix4D(&(cam.Mtranslation));
+	buffer = OutputMatrix4D(&(cam.Mtransform));
 	DrawShadowString(fb, width, height, 10, 314, buffer);
 	free(buffer);
 
