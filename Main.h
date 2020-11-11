@@ -82,7 +82,6 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	** Mortho
 	*/
 
-	CalcCamera4DMortho(&cam);
 	CalcCamera4DMpersp(&cam);
 	Mpersp = cam.Mpersp;
 

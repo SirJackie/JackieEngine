@@ -81,6 +81,7 @@ void CalcCamera4DMortho(Camera4D* cam) {
 }
 
 void CalcCamera4DMpersp(Camera4D* cam) {
+	CalcCamera4DMortho(cam);
 	Matrix4D Mpersp2ortho = CreateMatrix4D(
 		cam->n, 0.0f, 0.0f, 0.0f,
 		0.0f, cam->n, 0.0f, 0.0f,
@@ -93,3 +94,5 @@ void CalcCamera4DMpersp(Camera4D* cam) {
 		&(cam->Mortho)
 	);
 }
+
+
