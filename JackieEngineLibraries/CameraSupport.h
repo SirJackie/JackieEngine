@@ -24,3 +24,21 @@ struct Camera4D {
 	int ScreenWidth;
 	int ScreenHeight;
 };
+
+Camera4D CreateCamera4D(float n, float f, float fovY, int ScreenWidth, int ScreenHeight) {
+	Camera4D cam;
+
+	cam.n = n;
+	cam.f = f;
+	cam.fovY = fovY;
+	cam.ScreenWidth = ScreenWidth;
+	cam.ScreenHeight = ScreenHeight;
+
+	cam.t = abs(cam.n) * tand(cam.fovY / 2.0f);
+	cam.b = -1.0f * cam.t;
+
+	cam.r = cam.ScreenWidth * cam.t / cam.ScreenHeight;
+	cam.l = -1.0 * cam.r;
+
+	return cam;
+}

@@ -75,17 +75,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	** Camera
 	*/
 
-	cam.n = -0.1f;
-	cam.f = -1000.0f;
-	cam.fovY = 60.0f;
-	cam.ScreenWidth = width;
-	cam.ScreenHeight = height;
-
-	cam.t = abs(cam.n) * tand(cam.fovY / 2.0f);
-	cam.b = -1.0f * cam.t;
-
-	cam.r = cam.ScreenWidth * cam.t / cam.ScreenHeight;
-	cam.l = -1.0 * cam.r;
+	cam = CreateCamera4D(-0.1f, -1000.0f, 60.0f, width, height);
 
 
 	/*
