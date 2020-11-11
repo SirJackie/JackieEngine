@@ -83,19 +83,8 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	*/
 
 	CalcCamera4DMortho(&cam);
-	Mortho = cam.Mortho;
-
-	Mpersp2ortho = CreateMatrix4D(
-		cam.n, 0.0f, 0.0f, 0.0f,
-		0.0f, cam.n, 0.0f, 0.0f,
-		0.0f, 0.0f, cam.f + cam.n, -1 * cam.f * cam.n,
-		0.0f, 0.0f, 1.0f, 0.0f
-	);
-
-	Mpersp = Matrix4DTimesMatrix4D(
-		&Mpersp2ortho,
-		&Mortho
-	);
+	CalcCamera4DMpersp(&cam);
+	Mpersp = cam.Mpersp;
 
 	Mviewport = CreateMatrix4D(
 		cam.ScreenWidth / 2.0f, 0.0f, 0.0f, cam.ScreenWidth / 2.0f,
