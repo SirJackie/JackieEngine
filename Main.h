@@ -82,13 +82,10 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	** Mortho
 	*/
 
-	CalcCamera4DMpersp(&cam);
-	CalcCamera4DMviewport(&cam);
+	CalcCamera4DMatrices(&cam);
+	Mtransform = cam.Mtransform;
 
-	Mtransform = Matrix4DTimesMatrix4D(
-		&(cam.Mpersp),
-		&(cam.Mviewport)
-	);
+	
 
 
 	/*

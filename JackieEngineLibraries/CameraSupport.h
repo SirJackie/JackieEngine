@@ -103,3 +103,12 @@ void CalcCamera4DMviewport(Camera4D* cam) {
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 }
+
+void CalcCamera4DMatrices(Camera4D* cam) {
+	CalcCamera4DMpersp(cam);
+	CalcCamera4DMviewport(cam);
+	cam->Mtransform = Matrix4DTimesMatrix4D(
+		&(cam->Mpersp),
+		&(cam->Mviewport)
+	);
+}
