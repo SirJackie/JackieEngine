@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef __CROSSBUFFER_H__
 #define __CROSSBUFFER_H__
 #include "CrossBuffer.h"
@@ -65,7 +63,6 @@ void DrawVector4D(FrameBuffer fb, int width, int height, Vector4D* vec, int radi
 }
 
 Camera4D cam;
-Matrix4D Morthoa, Morthob, Mortho, Mpersp2ortho, Mpersp, Mviewport, Mtransform;
 Vector4D vecs[8];
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
@@ -170,17 +167,9 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	);
 	DrawShadowString(fb, width, height, 10, 42, realbuffer);
 
-	buffer = OutputMatrix4D(&Mviewport);
-	DrawShadowString(fb, width, height, 10, 154, buffer);
-	free(buffer);
-
-	buffer = OutputMatrix4D(&Mtransform);
-	DrawShadowString(fb, width, height, 10, 234, buffer);
-	free(buffer);
-
 	for (int i = 0; i < 8; i++) {
 		buffer = OutputVector4D(&(vecs[i]));
-		DrawShadowString(fb, width, height, 10, 330 + i * 16, buffer);
+		DrawShadowString(fb, width, height, 10, 154 + i * 16, buffer);
 		free(buffer);
 	}
 
