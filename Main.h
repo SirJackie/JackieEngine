@@ -141,6 +141,13 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		cam.rotation.x += 5.0f * sensitivity;
 	}
 
+	if (keyboard['J'] == TRUE) {
+		cam.rotation.y -= 5.0f * sensitivity;
+	}
+	if (keyboard['L'] == TRUE) {
+		cam.rotation.y += 5.0f * sensitivity;
+	}
+
 
 	/*
 	** Do Projection

@@ -93,7 +93,16 @@ void CalcCamera4DMrotation(Camera4D* cam) {
 		0.0f, sind(cam->rotation.x), cosd(cam->rotation.x), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
-	cam->Mrotation = MrotationX;
+	Matrix4D MrotationY = CreateMatrix4D(
+		cosd(cam->rotation.y), 0.0f, sind(cam->rotation.y), 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		-1.0f * sind(cam->rotation.y), 0.0f, cosd(cam->rotation.y), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+	cam->Mrotation = Matrix4DTimesMatrix4D(
+		&MrotationX,
+		&MrotationY
+	);
 }
 
 void CalcCamera4DMortho(Camera4D* cam) {
