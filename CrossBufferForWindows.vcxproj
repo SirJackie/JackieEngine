@@ -147,6 +147,7 @@
     <ClInclude Include="FPS.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="JackieEngineLibraries\CameraSupport.h" />
     <ClInclude Include="JackieEngineLibraries\JackieEngine.h" />
     <ClInclude Include="JackieEngineLibraries\LinearAlgebra.h" />
     <ClInclude Include="JackieEngineLibraries\MeshStructure.h" />

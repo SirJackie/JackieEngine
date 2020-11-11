@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef __STDIO_H__
 #define __STDIO_H__
 #include <stdio.h>
@@ -20,20 +18,12 @@
 #include "MeshStructure.h"
 #endif
 
+#ifndef __CAMERA_SUPPORT_H__
+#define __CAMERA_SUPPORT_H__
+#include "CameraSupport.h"
+#endif
+
 #ifndef __CROSSBUFFER_H__
 #define __CROSSBUFFER_H__
 #include "CrossBuffer.h"
 #endif
-
-struct Camera4D {
-	float n;
-	float f;
-	float t;
-	float b;
-	float l;
-	float r;
-	float fovY;
-	int ScreenWidth;
-	int ScreenHeight;
-};
-

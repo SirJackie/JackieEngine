@@ -54,6 +54,9 @@
     <ClInclude Include="JackieEngineLibraries\MeshStructure.h">
       <Filter>头文件\JackieEngineLibraries</Filter>
     </ClInclude>
+    <ClInclude Include="JackieEngineLibraries\CameraSupport.h">
+      <Filter>头文件\JackieEngineLibraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrossBufferForWindows.cpp">
