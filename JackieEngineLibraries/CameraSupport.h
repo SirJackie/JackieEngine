@@ -17,6 +17,14 @@ struct Camera4D {
 
 
 	/*
+	** Position Setting
+	*/
+
+	Vector4D position;
+	Vector4D rotation;
+
+
+	/*
 	** Frustum Setting
 	*/
 
@@ -35,14 +43,23 @@ struct Camera4D {
 	** Matrices
 	*/
 
+	Matrix4D Mtranslation;
+	Matrix4D Mrotation;
 	Matrix4D Mortho;
 	Matrix4D Mpersp;
 	Matrix4D Mviewport;
 	Matrix4D Mtransform;
 };
 
-Camera4D CreateCamera4D(float n, float f, float fovY, int ScreenWidth, int ScreenHeight) {
+Camera4D CreateCamera4D(
+	float x, float y, float z, float rotx, float roty, float rotz,
+	float n, float f, float fovY, int ScreenWidth, int ScreenHeight
+)
+{
 	Camera4D cam;
+
+	cam.position = CreateVector4D(x, y, z, 1);
+	cam.rotation = CreateVector4D(rotx, roty, rotz, 1);
 
 	cam.n = n;
 	cam.f = f;

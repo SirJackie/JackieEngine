@@ -72,7 +72,10 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	** Camera
 	*/
 
-	cam = CreateCamera4D(-0.1f, -1000.0f, 60.0f, width, height);
+	cam = CreateCamera4D(
+		0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+		-0.1f, -1000.0f, 60.0f, width, height
+	);
 	CalcCamera4DMatrices(&cam);
 
 
