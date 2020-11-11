@@ -73,7 +73,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	*/
 
 	cam = CreateCamera4D(
-		0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+		1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, width, height
 	);
 	CalcCamera4DMatrices(&cam);
@@ -102,36 +102,31 @@ float sensitivity = 0.1f;
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	ClacFPS(fb, width, height, deltaTime);
 
+	RefreshCamera4DMatrices(&cam);
 
 	/*
-	** Simple View Transform
+	** Position Responder
 	*/
 
 	if (keyboard['W'] == TRUE) {
-		deltaZ -= sensitivity;
+		cam.position.z -= sensitivity;
 	}
 	if (keyboard['S'] == TRUE) {
-		deltaZ += sensitivity;
+		cam.position.z += sensitivity;
 	}
 
 	if (keyboard['A'] == TRUE) {
-		deltaX -= 0.5f * sensitivity;
+		cam.position.x -= 0.5f * sensitivity;
 	}
 	if (keyboard['D'] == TRUE) {
-		deltaX += 0.5f * sensitivity;
+		cam.position.x += 0.5f * sensitivity;
 	}
 
 	if (keyboard['E'] == TRUE) {
-		deltaY -= 0.5f * sensitivity;
+		cam.position.y -= 0.5f * sensitivity;
 	}
 	if (keyboard['Q'] == TRUE) {
-		deltaY += 0.5f * sensitivity;
-	}
-
-	for (int i = 0; i < 8; i++) {
-		vecs[i].x = vecs[i].x -= deltaX;
-		vecs[i].y = vecs[i].y -= deltaY;
-		vecs[i].z = vecs[i].z -= deltaZ;
+		cam.position.y += 0.5f * sensitivity;
 	}
 
 
@@ -169,6 +164,10 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		cam.n, cam.f, cam.t, cam.b, cam.l, cam.r
 	);
 	DrawShadowString(fb, width, height, 10, 42, realbuffer);
+
+	buffer = OutputMatrix4D(&(cam.Mtranslation));
+	DrawShadowString(fb, width, height, 10, 314, buffer);
+	free(buffer);
 
 	for (int i = 0; i < 8; i++) {
 		buffer = OutputVector4D(&(vecs[i]));

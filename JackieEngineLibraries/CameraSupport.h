@@ -48,6 +48,7 @@ struct Camera4D {
 	Matrix4D Mortho;
 	Matrix4D Mpersp;
 	Matrix4D Mviewport;
+	Matrix4D MprojAndviewport;
 	Matrix4D Mtransform;
 };
 
@@ -74,6 +75,15 @@ Camera4D CreateCamera4D(
 	cam.l = -1.0 * cam.r;
 
 	return cam;
+}
+
+void CalcCamera4DMtranslation(Camera4D* cam) {
+	cam->Mtranslation = CreateMatrix4D(
+		1.0f, 0.0f, 0.0f, -1.0f * (cam->position.x),
+		0.0f, 1.0f, 0.0f, -1.0f * (cam->position.y),
+		0.0f, 0.0f, 1.0f, -1.0f * (cam->position.z),
+		0.0f, 0.0f, 0.0f,  1.0f
+	);
 }
 
 void CalcCamera4DMortho(Camera4D* cam) {
@@ -121,11 +131,29 @@ void CalcCamera4DMviewport(Camera4D* cam) {
 	);
 }
 
-void CalcCamera4DMatrices(Camera4D* cam) {
+void CalcCamera4DMprojAndviewport(Camera4D* cam) {
 	CalcCamera4DMpersp(cam);
 	CalcCamera4DMviewport(cam);
-	cam->Mtransform = Matrix4DTimesMatrix4D(
+	cam->MprojAndviewport = Matrix4DTimesMatrix4D(
 		&(cam->Mpersp),
 		&(cam->Mviewport)
+	);
+}
+
+void CalcCamera4DMatrices(Camera4D* cam) {
+	CalcCamera4DMtranslation(cam);
+	CalcCamera4DMprojAndviewport(cam);
+	cam->Mtransform = Matrix4DTimesMatrix4D(
+		&(cam->Mtranslation),
+		&(cam->MprojAndviewport)
+	);
+}
+
+void RefreshCamera4DMatrices(Camera4D* cam) {
+	CalcCamera4DMtranslation(cam);
+	// cam->MprojAndviewport is not changed
+	cam->Mtransform = Matrix4DTimesMatrix4D(
+		&(cam->Mtranslation),
+		&(cam->MprojAndviewport)
 	);
 }
