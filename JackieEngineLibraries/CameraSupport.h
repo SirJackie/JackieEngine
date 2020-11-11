@@ -95,4 +95,11 @@ void CalcCamera4DMpersp(Camera4D* cam) {
 	);
 }
 
-
+void CalcCamera4DMviewport(Camera4D* cam) {
+	cam->Mviewport = CreateMatrix4D(
+		cam->ScreenWidth / 2.0f, 0.0f, 0.0f, cam->ScreenWidth / 2.0f,
+		0.0f, cam->ScreenHeight / 2.0f, 0.0f, cam->ScreenHeight / 2.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+}

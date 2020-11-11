@@ -83,18 +83,11 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	*/
 
 	CalcCamera4DMpersp(&cam);
-	Mpersp = cam.Mpersp;
-
-	Mviewport = CreateMatrix4D(
-		cam.ScreenWidth / 2.0f, 0.0f, 0.0f, cam.ScreenWidth / 2.0f,
-		0.0f, cam.ScreenHeight / 2.0f, 0.0f, cam.ScreenHeight / 2.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	);
+	CalcCamera4DMviewport(&cam);
 
 	Mtransform = Matrix4DTimesMatrix4D(
-		&Mpersp,
-		&Mviewport
+		&(cam.Mpersp),
+		&(cam.Mviewport)
 	);
 
 
