@@ -102,8 +102,6 @@ float sensitivity = 0.1f;
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, width, height, deltaTime);
 
-	RefreshCamera4DMatrices(&cam);
-
 	/*
 	** Position Responder
 	*/
@@ -154,6 +152,13 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	if (keyboard['O'] == TRUE) {
 		cam.rotation.z += 5.0f * sensitivity;
 	}
+
+
+	/*
+	** Refresh Camera Matrices
+	*/
+
+	RefreshCamera4DMatrices(&cam);
 
 
 	/*
