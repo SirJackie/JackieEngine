@@ -86,6 +86,16 @@ void CalcCamera4DMtranslation(Camera4D* cam) {
 	);
 }
 
+void CalcCamera4DMrotation(Camera4D* cam) {
+	Matrix4D MrotationX = CreateMatrix4D(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, cosd(cam->rotation.x), -1.0f * sind(cam->rotation.x), 0.0f,
+		0.0f, sind(cam->rotation.x), cosd(cam->rotation.x), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+	cam->Mrotation = MrotationX;
+}
+
 void CalcCamera4DMortho(Camera4D* cam) {
 	Matrix4D Morthoa = CreateMatrix4D(
 		1.0f, 0.0f, 0.0f, -1 * (cam->r + cam->l) / 2.0f,
@@ -151,9 +161,14 @@ void CalcCamera4DMatrices(Camera4D* cam) {
 
 void RefreshCamera4DMatrices(Camera4D* cam) {
 	CalcCamera4DMtranslation(cam);
+	CalcCamera4DMrotation(cam);
 	// cam->MprojAndviewport is not changed
 	cam->Mtransform = Matrix4DTimesMatrix4D(
 		&(cam->Mtranslation),
+		&(cam->Mrotation)
+	);
+	cam->Mtransform = Matrix4DTimesMatrix4D(
+		&(cam->Mtransform),
 		&(cam->MprojAndviewport)
 	);
 }

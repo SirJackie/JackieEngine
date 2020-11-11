@@ -131,6 +131,18 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 
 	/*
+	** Rotation Responder
+	*/
+
+	if (keyboard['I'] == TRUE) {
+		cam.rotation.x -= 5.0f * sensitivity;
+	}
+	if (keyboard['K'] == TRUE) {
+		cam.rotation.x += 5.0f * sensitivity;
+	}
+
+
+	/*
 	** Do Projection
 	*/
 
