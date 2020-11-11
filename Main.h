@@ -76,16 +76,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	*/
 
 	cam = CreateCamera4D(-0.1f, -1000.0f, 60.0f, width, height);
-
-
-	/*
-	** Mortho
-	*/
-
 	CalcCamera4DMatrices(&cam);
-	Mtransform = cam.Mtransform;
-
-	
 
 
 	/*
@@ -110,6 +101,11 @@ float sensitivity = 0.1f;
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	ClacFPS(fb, width, height, deltaTime);
+
+
+	/*
+	** Simple View Transform
+	*/
 
 	if (keyboard['W'] == TRUE) {
 		deltaZ -= sensitivity;
@@ -138,9 +134,14 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		vecs[i].z = vecs[i].z -= deltaZ;
 	}
 
+
+	/*
+	** Do Projection
+	*/
+
 	for (int i = 0; i < 8; i++) {
 		vecs[i] = Vector4DTimesMatrix4D(
-			&(vecs[i]), &Mtransform
+			&(vecs[i]), &(cam.Mtransform)
 		);
 	}
 
@@ -148,10 +149,19 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		Vector4DDevidedByW(&(vecs[i]));
 	}
 
-	// Do Y-Axis Reverse
+
+	/*
+	** Do Y-Axis Reverse
+	*/
+
 	for (int i = 0; i < 8; i++) {
 		vecs[i].y = height - vecs[i].y;
 	}
+
+
+	/*
+	** Output Things
+	*/
 
 	sprintf_s(
 		realbuffer, 1000,
@@ -178,18 +188,6 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		float tmp = (-1.0f * vecs[i].z) - 0.9f;
 		DrawVector4D(fb, width, height, &(vecs[i]), (int)((0.1f - tmp) * 100.0f));
 	}
-
-	//buffer = OutputMatrix4D(&Mortho);
-	//DrawShadowString(fb, width, height, 10, 314, buffer);
-	//free(buffer);
-
-	//buffer = OutputMatrix4D(&Mpersp2ortho);
-	//DrawShadowString(fb, width, height, 10, 394, buffer);
-	//free(buffer);
-
-	//buffer = OutputMatrix4D(&Mpersp);
-	//DrawShadowString(fb, width, height, 10, 474, buffer);
-	//free(buffer);
 
 
 	/*
