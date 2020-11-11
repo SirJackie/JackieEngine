@@ -82,24 +82,8 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	** Mortho
 	*/
 
-	Morthoa = CreateMatrix4D(
-		1.0f, 0.0f, 0.0f, -1 * (cam.r + cam.l) / 2.0f,
-		0.0f, 1.0f, 0.0f, -1 * (cam.t + cam.b) / 2.0f,
-		0.0f, 0.0f, 1.0f, -1 * (cam.n + cam.f) / 2.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	);
-
-	Morthob = CreateMatrix4D(
-		2.0f / (cam.r - cam.l), 0.0f, 0.0f, 0.0f,
-		0.0f, 2.0f / (cam.t - cam.b), 0.0f, 0.0f,
-		0.0f, 0.0f, 2.0f / (cam.n - cam.f), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	);
-
-	Mortho = Matrix4DTimesMatrix4D(
-		&Morthoa,
-		&Morthob
-	);
+	CalcCamera4DMortho(&cam);
+	Mortho = cam.Mortho;
 
 	Mpersp2ortho = CreateMatrix4D(
 		cam.n, 0.0f, 0.0f, 0.0f,

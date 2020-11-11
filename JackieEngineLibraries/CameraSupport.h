@@ -14,6 +14,12 @@
 #endif
 
 struct Camera4D {
+
+
+	/*
+	** Frustum Setting
+	*/
+
 	float n;
 	float f;
 	float t;
@@ -23,6 +29,16 @@ struct Camera4D {
 	float fovY;
 	int ScreenWidth;
 	int ScreenHeight;
+
+
+	/*
+	** Matrices
+	*/
+
+	Matrix4D Mortho;
+	Matrix4D Mpersp;
+	Matrix4D Mviewport;
+	Matrix4D Mtransform;
 };
 
 Camera4D CreateCamera4D(float n, float f, float fovY, int ScreenWidth, int ScreenHeight) {
@@ -41,4 +57,25 @@ Camera4D CreateCamera4D(float n, float f, float fovY, int ScreenWidth, int Scree
 	cam.l = -1.0 * cam.r;
 
 	return cam;
+}
+
+void CalcCamera4DMortho(Camera4D* cam) {
+	Matrix4D Morthoa = CreateMatrix4D(
+		1.0f, 0.0f, 0.0f, -1 * (cam->r + cam->l) / 2.0f,
+		0.0f, 1.0f, 0.0f, -1 * (cam->t + cam->b) / 2.0f,
+		0.0f, 0.0f, 1.0f, -1 * (cam->n + cam->f) / 2.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	Matrix4D Morthob = CreateMatrix4D(
+		2.0f / (cam->r - cam->l), 0.0f, 0.0f, 0.0f,
+		0.0f, 2.0f / (cam->t - cam->b), 0.0f, 0.0f,
+		0.0f, 0.0f, 2.0f / (cam->n - cam->f), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	cam->Mortho = Matrix4DTimesMatrix4D(
+		&Morthoa,
+		&Morthob
+	);
 }
