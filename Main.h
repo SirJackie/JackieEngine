@@ -106,9 +106,15 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 
 	Vector4D v1v2, v0v1, v2v0;
 
-	CreateVector4DFromPointToPoint(v1, v2, &v1v2);
-	CreateVector4DFromPointToPoint(v0, v1, &v0v1);
-	CreateVector4DFromPointToPoint(v2, v0, &v2v0);
+	//CreateVector4DFromPointToPoint(v1, v2, &v1v2);
+	v1v2.x = v1->x - v2->x;
+	v1v2.y = v1->y - v2->y;
+	//CreateVector4DFromPointToPoint(v0, v1, &v0v1);
+	v0v1.x = v0->x - v1->x;
+	v0v1.y = v0->y - v1->y;
+	//CreateVector4DFromPointToPoint(v2, v0, &v2v0);
+	v2v0.x = v2->x - v0->x;
+	v2v0.y = v2->y - v0->y;
 
 	Vector4D p;
 	Vector4D v1p;
