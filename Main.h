@@ -118,6 +118,10 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	Vector4D result2;
 	Vector4D result3;
 
+	float zresult1;
+	float zresult2;
+	float zresult3;
+
 	for (int y = StartY; y < EndY; y++) {
 		for (int x = StartX; x < EndX; x++) {
 			p.x = x;
@@ -129,14 +133,17 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 			v0p = CreateVector4DFromPointToPoint(v0, &p);
 			v2p = CreateVector4DFromPointToPoint(v2, &p);
 
-			result1 = Vector4DCrossVector4D(&v1v2, &v1p);
-			result2 = Vector4DCrossVector4D(&v0v1, &v0p);
-			result3 = Vector4DCrossVector4D(&v2v0, &v2p);
+			//result1 = Vector4DCrossVector4D(&v1v2, &v1p);
+			zresult1 = v1v2.x * v1p.y - v1v2.y * v1p.x;
+			//result2 = Vector4DCrossVector4D(&v0v1, &v0p);
+			zresult2 = v0v1.x * v0p.y - v0v1.y * v0p.x;
+			//result3 = Vector4DCrossVector4D(&v2v0, &v2p);
+			zresult3 = v2v0.x * v2p.y - v2v0.y * v2p.x;
 
-			if (result1.z > 0 && result2.z > 0 && result3.z > 0) {
+			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0) {
 				SetPixel(fb, x, y, color);
 			}
-			else if (result1.z < 0 && result2.z < 0 && result3.z < 0) {
+			else if (zresult1 < 0 && zresult2 < 0 && zresult3 < 0) {
 				SetPixel(fb, x, y, color);
 			}
 		}
