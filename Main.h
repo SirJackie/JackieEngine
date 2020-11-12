@@ -104,48 +104,54 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	EndX       = clamp(0, EndX, width);
 	EndY       = clamp(0, EndY, height);
 
-	Vector4D v1v2, v0v1, v2v0;
+	float v0x = v0->x;
+	float v0y = v0->y;
+	float v1x = v1->x;
+	float v1y = v1->y;
+	float v2x = v2->x;
+	float v2y = v2->y;
 
-	//CreateVector4DFromPointToPoint(v1, v2, &v1v2);
-	v1v2.x = v1->x - v2->x;
-	v1v2.y = v1->y - v2->y;
-	//CreateVector4DFromPointToPoint(v0, v1, &v0v1);
-	v0v1.x = v0->x - v1->x;
-	v0v1.y = v0->y - v1->y;
-	//CreateVector4DFromPointToPoint(v2, v0, &v2v0);
-	v2v0.x = v2->x - v0->x;
-	v2v0.y = v2->y - v0->y;
+	float v1v2x, v1v2y;
+	float v0v1x, v0v1y;
+	float v2v0x, v2v0y;
 
-	Vector4D p;
-	Vector4D v1p;
-	Vector4D v0p;
-	Vector4D v2p;
+	float v1px, v1py;
+	float v0px, v0py;
+	float v2px, v2py;
 
 	float zresult1;
 	float zresult2;
 	float zresult3;
 
+	//CreateVector4DFromPointToPoint(v1, v2, &v1v2);
+	v1v2x = v1x - v2x;
+	v1v2y = v1y - v2y;
+	//CreateVector4DFromPointToPoint(v0, v1, &v0v1);
+	v0v1x = v0x - v1x;
+	v0v1y = v0y - v1y;
+	//CreateVector4DFromPointToPoint(v2, v0, &v2v0);
+	v2v0x = v2x - v0x;
+	v2v0y = v2y - v0y;
+
 	for (int y = StartY; y < EndY; y++) {
 		for (int x = StartX; x < EndX; x++) {
-			p.x = x;
-			p.y = y;
 
 			//CreateVector4DFromPointToPoint(v1, &p, &v1p);
-			v1p.x = v1->x - p.x;
-			v1p.y = v1->y - p.y;
+			v1px = v1->x - x;
+			v1py = v1->y - y;
 			//CreateVector4DFromPointToPoint(v0, &p, &v0p);
-			v0p.x = v0->x - p.x;
-			v0p.y = v0->y - p.y;
+			v0px = v0->x - x;
+			v0py = v0->y - y;
 			//CreateVector4DFromPointToPoint(v2, &p, &v2p);
-			v2p.x = v2->x - p.x;
-			v2p.y = v2->y - p.y;
+			v2px = v2->x - x;
+			v2py = v2->y - y;
 
 			//result1 = Vector4DCrossVector4D(&v1v2, &v1p);
-			zresult1 = v1v2.x * v1p.y - v1v2.y * v1p.x;
+			zresult1 = v1v2x * v1py - v1v2y * v1px;
 			//result2 = Vector4DCrossVector4D(&v0v1, &v0p);
-			zresult2 = v0v1.x * v0p.y - v0v1.y * v0p.x;
+			zresult2 = v0v1x * v0py - v0v1y * v0px;
 			//result3 = Vector4DCrossVector4D(&v2v0, &v2p);
-			zresult3 = v2v0.x * v2p.y - v2v0.y * v2p.x;
+			zresult3 = v2v0x * v2py - v2v0y * v2px;
 
 			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0) {
 				SetPixel(fb, x, y, color);
