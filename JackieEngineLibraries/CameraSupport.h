@@ -173,15 +173,6 @@ void CalcCamera4DMprojAndviewport(Camera4D* cam) {
 	);
 }
 
-void CalcCamera4DMatrices(Camera4D* cam) {
-	CalcCamera4DMtranslation(cam);
-	CalcCamera4DMprojAndviewport(cam);
-	cam->Mtransform = Matrix4DTimesMatrix4D(
-		&(cam->Mtranslation),
-		&(cam->MprojAndviewport)
-	);
-}
-
 void RefreshCamera4DMatrices(Camera4D* cam) {
 	CalcCamera4DMtranslation(cam);
 	CalcCamera4DMrotation(cam);
@@ -194,4 +185,10 @@ void RefreshCamera4DMatrices(Camera4D* cam) {
 		&(cam->Mtransform),
 		&(cam->MprojAndviewport)
 	);
+}
+
+
+void CalcCamera4DMatrices(Camera4D* cam) {
+	CalcCamera4DMprojAndviewport(cam);
+	RefreshCamera4DMatrices(cam);
 }
