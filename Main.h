@@ -100,8 +100,10 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	int StartY = min3(v0->y, v1->y, v2->y);
 	int EndX   = max3(v0->x, v1->x, v2->x);
 	int EndY   = max3(v0->y, v1->y, v2->y);
-	StartX = clamp(0, StartX, width);
-	StartY = clamp(0, StartY, height);
+	StartX     = clamp(0, StartX, width);
+	StartY     = clamp(0, StartY, height);
+	EndX       = clamp(0, EndX, width);
+	EndY       = clamp(0, EndY, height);
 
 	Vector4D v1v2 = CreateVector4DFromPointToPoint(v1, v2);
 	Vector4D v0v1 = CreateVector4DFromPointToPoint(v0, v1);
@@ -176,7 +178,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 char* buffer;
 char realbuffer[1000];
 float deltaX = 0.0f, deltaY = 0.0f, deltaZ = 0.0f;
-float sensitivity = 0.1f;
+float sensitivity = 0.005f;
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, width, height, deltaTime);
@@ -186,24 +188,24 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	*/
 
 	if (keyboard['W'] == TRUE) {
-		cam.position.z -= sensitivity;
+		cam.position.z -= sensitivity * deltaTime;
 	}
 	if (keyboard['S'] == TRUE) {
-		cam.position.z += sensitivity;
+		cam.position.z += sensitivity * deltaTime;
 	}
 
 	if (keyboard['A'] == TRUE) {
-		cam.position.x -= 0.5f * sensitivity;
+		cam.position.x -= 0.5f * sensitivity * deltaTime;
 	}
 	if (keyboard['D'] == TRUE) {
-		cam.position.x += 0.5f * sensitivity;
+		cam.position.x += 0.5f * sensitivity * deltaTime;
 	}
 
 	if (keyboard['E'] == TRUE) {
-		cam.position.y -= 0.5f * sensitivity;
+		cam.position.y -= 0.5f * sensitivity * deltaTime;
 	}
 	if (keyboard['Q'] == TRUE) {
-		cam.position.y += 0.5f * sensitivity;
+		cam.position.y += 0.5f * sensitivity * deltaTime;
 	}
 
 
@@ -212,24 +214,24 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	*/
 
 	if (keyboard['I'] == TRUE) {
-		cam.rotation.x -= 5.0f * sensitivity;
+		cam.rotation.x -= 5.0f * sensitivity * deltaTime;
 	}
 	if (keyboard['K'] == TRUE) {
-		cam.rotation.x += 5.0f * sensitivity;
+		cam.rotation.x += 5.0f * sensitivity * deltaTime;
 	}
 
 	if (keyboard['J'] == TRUE) {
-		cam.rotation.y -= 5.0f * sensitivity;
+		cam.rotation.y -= 5.0f * sensitivity * deltaTime;
 	}
 	if (keyboard['L'] == TRUE) {
-		cam.rotation.y += 5.0f * sensitivity;
+		cam.rotation.y += 5.0f * sensitivity * deltaTime;
 	}
 
 	if (keyboard['U'] == TRUE) {
-		cam.rotation.z -= 5.0f * sensitivity;
+		cam.rotation.z -= 5.0f * sensitivity * deltaTime;
 	}
 	if (keyboard['O'] == TRUE) {
-		cam.rotation.z += 5.0f * sensitivity;
+		cam.rotation.z += 5.0f * sensitivity * deltaTime;
 	}
 
 
@@ -290,9 +292,9 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		DrawVector4D(fb, width, height, &(vecs[i]), (int)((0.1f - tmp) * 100.0f));
 	}
 
-	for (int i = 0; i < 8; i++) {
+	//for (int i = 0; i < 8; i++) {
 		DrawFlatMesh4D(fb, width, height, &(vecs[0]), &(vecs[1]), &(vecs[3]));
-	}
+	//}
 
 
 	/*
