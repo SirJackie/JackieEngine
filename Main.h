@@ -143,6 +143,41 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	}
 }
 
+Matrix4D CreateRotationMatrix(float rotx, float roty, float rotz) {
+	Matrix4D MrotationX = CreateMatrix4D(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, cosd(rotx), -1.0f * sind(rotx), 0.0f,
+		0.0f, sind(rotx), cosd(rotx), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	Matrix4D MrotationY = CreateMatrix4D(
+		cosd(roty), 0.0f, sind(roty), 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		-1.0f * sind(roty), 0.0f, cosd(roty), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	Matrix4D MrotationZ = CreateMatrix4D(
+		cosd(rotz), -1.0f * sind(rotz), 0.0f, 0.0f,
+		sind(rotz), cosd(rotz), 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	Matrix4D Mrotation = Matrix4DTimesMatrix4D(
+		&MrotationX,
+		&MrotationY
+	);
+
+	Mrotation = Matrix4DTimesMatrix4D(
+		&(Mrotation),
+		&MrotationZ
+	);
+
+	return Mrotation;
+}
+
 Camera4D cam;
 Vector4D vecs[8];
 
@@ -154,7 +189,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	*/
 
 	cam = CreateCamera4D(
-		0.0f, 0.0f, 4.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 7.0f, 0.0f, 0.0f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, width, height
 	);
 	CalcCamera4DMatrices(&cam);
@@ -179,6 +214,7 @@ char* buffer;
 char realbuffer[1000];
 float deltaX = 0.0f, deltaY = 0.0f, deltaZ = 0.0f;
 float sensitivity = 0.005f;
+float rotdeg = 0.0f;
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, width, height, deltaTime);
@@ -240,6 +276,23 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	*/
 
 	RefreshCamera4DMatrices(&cam);
+
+
+	/*
+	** Rotate the Vectors
+	*/
+
+	Matrix4D Mrotation = CreateRotationMatrix(rotdeg, -30.0f, rotdeg);
+	rotdeg += 0.03f * deltaTime;
+	if (rotdeg >= 360.0f) {
+		rotdeg = 0.0f;
+	}
+
+	for (int i = 0; i < 8; i++) {
+		vecs[i] = Vector4DTimesMatrix4D(
+			&(vecs[i]), &(Mrotation)
+		);
+	}
 
 
 	/*
