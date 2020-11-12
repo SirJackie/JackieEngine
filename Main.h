@@ -47,6 +47,28 @@ int clamp(int min, int input, int max) {
 	}
 }
 
+int min3(int a, int b, int c) {
+	int min = a;
+	if (b < min) {
+		min = b;
+	}
+	if (c < min) {
+		min = c;
+	}
+	return min;
+}
+
+int max3(int a, int b, int c) {
+	int max = a;
+	if (b > max) {
+		max = b;
+	}
+	if (c > max) {
+		max = c;
+	}
+	return max;
+}
+
 void DrawVector4D(FrameBuffer fb, int width, int height, Vector4D* vec, int radius) {
 	int CentralX = (int)vec->x;
 	int CentralY = (int)vec->y;
@@ -62,6 +84,63 @@ void DrawVector4D(FrameBuffer fb, int width, int height, Vector4D* vec, int radi
 	}
 }
 
+Vector4D CreateVector4DFromPointToPoint(Vector4D* from, Vector4D* to) {
+	Vector4D tmp = Vector4DMinusVector4D(to, from);
+	tmp.w = 1;
+	return tmp;
+}
+
+void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
+	Vector4D* v0, Vector4D* v1, Vector4D* v2
+)
+{
+	Color color = CreateColor(255, 255, 255, 255);
+
+	int StartX = min3(v0->x, v1->x, v2->x);
+	int StartY = min3(v0->y, v1->y, v2->y);
+	int EndX   = max3(v0->x, v1->x, v2->x);
+	int EndY   = max3(v0->y, v1->y, v2->y);
+	StartX = clamp(0, StartX, width);
+	StartY = clamp(0, StartY, height);
+
+	Vector4D v1v2 = CreateVector4DFromPointToPoint(v1, v2);
+	Vector4D v0v1 = CreateVector4DFromPointToPoint(v0, v1);
+	Vector4D v2v0 = CreateVector4DFromPointToPoint(v2, v0);
+
+	Vector4D p;
+	Vector4D v1p;
+	Vector4D v0p;
+	Vector4D v2p;
+
+	Vector4D result1;
+	Vector4D result2;
+	Vector4D result3;
+
+	for (int y = StartY; y < EndY; y++) {
+		for (int x = StartX; x < EndX; x++) {
+			p.x = x;
+			p.y = y;
+			p.z = 0;
+			p.w = 1;
+
+			v1p = CreateVector4DFromPointToPoint(v1, &p);
+			v0p = CreateVector4DFromPointToPoint(v0, &p);
+			v2p = CreateVector4DFromPointToPoint(v2, &p);
+
+			result1 = Vector4DCrossVector4D(&v1v2, &v1p);
+			result2 = Vector4DCrossVector4D(&v0v1, &v0p);
+			result3 = Vector4DCrossVector4D(&v2v0, &v2p);
+
+			if (result1.z > 0 && result2.z > 0 && result3.z > 0) {
+				SetPixel(fb, x, y, color);
+			}
+			else if (result1.z < 0 && result2.z < 0 && result3.z < 0) {
+				SetPixel(fb, x, y, color);
+			}
+		}
+	}
+}
+
 Camera4D cam;
 Vector4D vecs[8];
 
@@ -73,7 +152,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	*/
 
 	cam = CreateCamera4D(
-		0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 4.0f, 0.0f, 0.0f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, width, height
 	);
 	CalcCamera4DMatrices(&cam);
@@ -83,14 +162,14 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 	** Vectors
 	*/
 
-	vecs[0] = CreateVector4D(-1.0f, -1.0f, -3.0f, 1.0f);
-	vecs[1] = CreateVector4D( 1.0f, -1.0f, -3.0f, 1.0f);
-	vecs[2] = CreateVector4D( 1.0f,  1.0f, -3.0f, 1.0f);
-	vecs[3] = CreateVector4D(-1.0f,  1.0f, -3.0f, 1.0f);
-	vecs[4] = CreateVector4D(-1.0f, -1.0f, -5.0f, 1.0f);
-	vecs[5] = CreateVector4D( 1.0f, -1.0f, -5.0f, 1.0f);
-	vecs[6] = CreateVector4D( 1.0f,  1.0f, -5.0f, 1.0f);
-	vecs[7] = CreateVector4D(-1.0f,  1.0f, -5.0f, 1.0f);
+	vecs[0] = CreateVector4D(-1.0f, -1.0f,  1.0f, 1.0f);
+	vecs[1] = CreateVector4D( 1.0f, -1.0f,  1.0f, 1.0f);
+	vecs[2] = CreateVector4D( 1.0f,  1.0f,  1.0f, 1.0f);
+	vecs[3] = CreateVector4D(-1.0f,  1.0f,  1.0f, 1.0f);
+	vecs[4] = CreateVector4D(-1.0f, -1.0f, -1.0f, 1.0f);
+	vecs[5] = CreateVector4D( 1.0f, -1.0f, -1.0f, 1.0f);
+	vecs[6] = CreateVector4D( 1.0f,  1.0f, -1.0f, 1.0f);
+	vecs[7] = CreateVector4D(-1.0f,  1.0f, -1.0f, 1.0f);
 }
 
 
@@ -211,19 +290,23 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		DrawVector4D(fb, width, height, &(vecs[i]), (int)((0.1f - tmp) * 100.0f));
 	}
 
+	for (int i = 0; i < 8; i++) {
+		DrawFlatMesh4D(fb, width, height, &(vecs[0]), &(vecs[1]), &(vecs[3]));
+	}
+
 
 	/*
 	** Reset Vectors
 	*/
 
-	vecs[0] = CreateVector4D(-1.0f, -1.0f, -3.0f, 1.0f);
-	vecs[1] = CreateVector4D( 1.0f, -1.0f, -3.0f, 1.0f);
-	vecs[2] = CreateVector4D( 1.0f,  1.0f, -3.0f, 1.0f);
-	vecs[3] = CreateVector4D(-1.0f,  1.0f, -3.0f, 1.0f);
-	vecs[4] = CreateVector4D(-1.0f, -1.0f, -5.0f, 1.0f);
-	vecs[5] = CreateVector4D( 1.0f, -1.0f, -5.0f, 1.0f);
-	vecs[6] = CreateVector4D( 1.0f,  1.0f, -5.0f, 1.0f);
-	vecs[7] = CreateVector4D(-1.0f,  1.0f, -5.0f, 1.0f);
+	vecs[0] = CreateVector4D(-1.0f, -1.0f,  1.0f, 1.0f);
+	vecs[1] = CreateVector4D( 1.0f, -1.0f,  1.0f, 1.0f);
+	vecs[2] = CreateVector4D( 1.0f,  1.0f,  1.0f, 1.0f);
+	vecs[3] = CreateVector4D(-1.0f,  1.0f,  1.0f, 1.0f);
+	vecs[4] = CreateVector4D(-1.0f, -1.0f, -1.0f, 1.0f);
+	vecs[5] = CreateVector4D( 1.0f, -1.0f, -1.0f, 1.0f);
+	vecs[6] = CreateVector4D( 1.0f,  1.0f, -1.0f, 1.0f);
+	vecs[7] = CreateVector4D(-1.0f,  1.0f, -1.0f, 1.0f);
 }
 
 
