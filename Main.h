@@ -84,10 +84,9 @@ void DrawVector4D(FrameBuffer fb, int width, int height, Vector4D* vec, int radi
 	}
 }
 
-Vector4D CreateVector4DFromPointToPoint(Vector4D* from, Vector4D* to) {
-	Vector4D tmp = Vector4DMinusVector4D(to, from);
-	tmp.w = 1;
-	return tmp;
+void CreateVector4DFromPointToPoint(Vector4D* from, Vector4D* to, Vector4D* result) {
+	result->x = from->x - to->x;
+	result->y = from->y - to->y;
 }
 
 void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
@@ -105,18 +104,16 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	EndX       = clamp(0, EndX, width);
 	EndY       = clamp(0, EndY, height);
 
-	Vector4D v1v2 = CreateVector4DFromPointToPoint(v1, v2);
-	Vector4D v0v1 = CreateVector4DFromPointToPoint(v0, v1);
-	Vector4D v2v0 = CreateVector4DFromPointToPoint(v2, v0);
+	Vector4D v1v2, v0v1, v2v0;
+
+	CreateVector4DFromPointToPoint(v1, v2, &v1v2);
+	CreateVector4DFromPointToPoint(v0, v1, &v0v1);
+	CreateVector4DFromPointToPoint(v2, v0, &v2v0);
 
 	Vector4D p;
 	Vector4D v1p;
 	Vector4D v0p;
 	Vector4D v2p;
-
-	Vector4D result1;
-	Vector4D result2;
-	Vector4D result3;
 
 	float zresult1;
 	float zresult2;
@@ -129,15 +126,12 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 			p.z = 0;
 			p.w = 1;
 
-			v1p = CreateVector4DFromPointToPoint(v1, &p);
-			v0p = CreateVector4DFromPointToPoint(v0, &p);
-			v2p = CreateVector4DFromPointToPoint(v2, &p);
+			CreateVector4DFromPointToPoint(v1, &p, &v1p);
+			CreateVector4DFromPointToPoint(v0, &p, &v0p);
+			CreateVector4DFromPointToPoint(v2, &p, &v2p);
 
-			//result1 = Vector4DCrossVector4D(&v1v2, &v1p);
 			zresult1 = v1v2.x * v1p.y - v1v2.y * v1p.x;
-			//result2 = Vector4DCrossVector4D(&v0v1, &v0p);
 			zresult2 = v0v1.x * v0p.y - v0v1.y * v0p.x;
-			//result3 = Vector4DCrossVector4D(&v2v0, &v2p);
 			zresult3 = v2v0.x * v2p.y - v2v0.y * v2p.x;
 
 			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0) {
