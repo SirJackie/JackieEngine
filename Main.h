@@ -123,15 +123,22 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 		for (int x = StartX; x < EndX; x++) {
 			p.x = x;
 			p.y = y;
-			p.z = 0;
-			p.w = 1;
 
-			CreateVector4DFromPointToPoint(v1, &p, &v1p);
-			CreateVector4DFromPointToPoint(v0, &p, &v0p);
-			CreateVector4DFromPointToPoint(v2, &p, &v2p);
+			//CreateVector4DFromPointToPoint(v1, &p, &v1p);
+			v1p.x = v1->x - p.x;
+			v1p.y = v1->y - p.y;
+			//CreateVector4DFromPointToPoint(v0, &p, &v0p);
+			v0p.x = v0->x - p.x;
+			v0p.y = v0->y - p.y;
+			//CreateVector4DFromPointToPoint(v2, &p, &v2p);
+			v2p.x = v2->x - p.x;
+			v2p.y = v2->y - p.y;
 
+			//result1 = Vector4DCrossVector4D(&v1v2, &v1p);
 			zresult1 = v1v2.x * v1p.y - v1v2.y * v1p.x;
+			//result2 = Vector4DCrossVector4D(&v0v1, &v0p);
 			zresult2 = v0v1.x * v0p.y - v0v1.y * v0p.x;
+			//result3 = Vector4DCrossVector4D(&v2v0, &v2p);
 			zresult3 = v2v0.x * v2p.y - v2v0.y * v2p.x;
 
 			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0) {
