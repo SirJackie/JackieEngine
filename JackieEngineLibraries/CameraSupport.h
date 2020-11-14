@@ -109,13 +109,13 @@ void CalcCamera4DMrotation(Camera4D* cam) {
 	);
 
 	cam->Mrotation = Matrix4DTimesMatrix4D(
-		&MrotationX,
+		&MrotationZ,
 		&MrotationY
 	);
 
 	cam->Mrotation = Matrix4DTimesMatrix4D(
 		&(cam->Mrotation),
-		&MrotationZ
+		&MrotationX
 	);
 }
 
