@@ -84,16 +84,32 @@ void DrawVector4D(FrameBuffer fb, int width, int height, Vector4D* vec, int radi
 	}
 }
 
-void CreateVector4DFromPointToPoint(Vector4D* from, Vector4D* to, Vector4D* result) {
-	result->x = from->x - to->x;
-	result->y = from->y - to->y;
+Vector4D CreateVector4DFromPointToPoint(Vector4D* from, Vector4D* to) {
+	return Vector4DMinusVector4D(to, from);
 }
 
 void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
-	Vector4D* v0, Vector4D* v1, Vector4D* v2
+	Vector4D* v0, Vector4D* v1, Vector4D* v2, Color color, float* ZBuffer
 )
 {
-	Color color = CreateColor(255, 255, 255, 255);
+	/*
+	** Calculate Planar Equation
+	*/
+
+	Vector4D v0v1 = CreateVector4DFromPointToPoint(v0, v1);
+	Vector4D v0v2 = CreateVector4DFromPointToPoint(v0, v2);
+	Vector4D v0v1crossv0v2 = Vector4DCrossVector4D(&v0v1, &v0v2);
+
+	float A = v0v1crossv0v2.x;
+	float B = v0v1crossv0v2.y;
+	float C = v0v1crossv0v2.z;
+	float D = A * v0->x + B * v0->y + C * v0->z;
+
+	
+
+	/*
+	** Calculate Bounding Box
+	*/
 
 	int StartX = min3(v0->x, v1->x, v2->x);
 	int StartY = min3(v0->y, v1->y, v2->y);
@@ -104,12 +120,22 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	EndX       = clamp(0, EndX, width);
 	EndY       = clamp(0, EndY, height);
 
+
+	/*
+	** Pre-Getting Vectors' x, y to speed up (avoid memory-address finding)
+	*/
+
 	float v0x = v0->x;
 	float v0y = v0->y;
 	float v1x = v1->x;
 	float v1y = v1->y;
 	float v2x = v2->x;
 	float v2y = v2->y;
+
+
+	/*
+	** Declare Temporary Variables
+	*/
 
 	float v1v2x, v1v2y;
 	float v0v1x, v0v1y;
@@ -123,6 +149,11 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	float zresult2;
 	float zresult3;
 
+
+	/*
+	** Pre-Calculate v1v2, v0v1, v2v0
+	*/
+
 	//CreateVector4DFromPointToPoint(v1, v2, &v1v2);
 	v1v2x = v1x - v2x;
 	v1v2y = v1y - v2y;
@@ -132,6 +163,13 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	//CreateVector4DFromPointToPoint(v2, v0, &v2v0);
 	v2v0x = v2x - v0x;
 	v2v0y = v2y - v0y;
+
+	float Zp;
+
+
+	/*
+	** Rasterize
+	*/
 
 	for (int y = StartY; y < EndY; y++) {
 		for (int x = StartX; x < EndX; x++) {
@@ -153,11 +191,14 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 			//result3 = Vector4DCrossVector4D(&v2v0, &v2p);
 			zresult3 = v2v0x * v2py - v2v0y * v2px;
 
-			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0) {
-				SetPixel(fb, x, y, color);
-			}
-			else if (zresult1 < 0 && zresult2 < 0 && zresult3 < 0) {
-				SetPixel(fb, x, y, color);
+
+			Zp = (-1.0f * A * v0x - B * v0y - D) / C;
+
+			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0 || zresult1 < 0 && zresult2 < 0 && zresult3 < 0) {
+				if (Zp > ZBuffer[y * width + x]) {
+					ZBuffer[y * width + x] = Zp;
+					SetPixel(fb, x, y, color);
+				}
 			}
 		}
 	}
@@ -366,18 +407,25 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		DrawVector4D(fb, width, height, &(vecs[i]), (int)((0.1f - tmp) * 100.0f));
 	}
 
-	DrawFlatMesh4D(fb, width, height, &(vecs[0]), &(vecs[1]), &(vecs[3]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[2]), &(vecs[3]), &(vecs[1]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[4]), &(vecs[6]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[7]), &(vecs[6]), &(vecs[4]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[4]), &(vecs[0]), &(vecs[7]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[7]), &(vecs[0]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[1]), &(vecs[5]), &(vecs[2]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[6]), &(vecs[2]), &(vecs[5]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[2]), &(vecs[7]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[6]), &(vecs[7]), &(vecs[2]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[0]), &(vecs[4]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[1]), &(vecs[0]));
+	float* ZBuffer = (float*)malloc(sizeof(float) * width * height);
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			ZBuffer[y * width + x] = cam.f;
+		}
+	}
+
+	DrawFlatMesh4D(fb, width, height, &(vecs[0]), &(vecs[1]), &(vecs[3]), CreateColor(255, 0, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[2]), &(vecs[3]), &(vecs[1]), CreateColor(255, 255, 0, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[4]), &(vecs[6]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[7]), &(vecs[6]), &(vecs[4]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[4]), &(vecs[0]), &(vecs[7]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[7]), &(vecs[0]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[1]), &(vecs[5]), &(vecs[2]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[6]), &(vecs[2]), &(vecs[5]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[2]), &(vecs[7]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[6]), &(vecs[7]), &(vecs[2]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[0]), &(vecs[4]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[1]), &(vecs[0]), CreateColor(255, 255, 255, 255), ZBuffer);
 
 
 	/*
@@ -392,6 +440,8 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	vecs[5] = CreateVector4D( 1.0f, -1.0f, -1.0f, 1.0f);
 	vecs[6] = CreateVector4D( 1.0f,  1.0f, -1.0f, 1.0f);
 	vecs[7] = CreateVector4D(-1.0f,  1.0f, -1.0f, 1.0f);
+
+	free(ZBuffer);
 }
 
 
