@@ -30,7 +30,7 @@ using namespace std;
 
 /* Window Class Properties */
 #define WindowClassName L"Jackie Engine Class"
-#define WindowTitle     L"Jackie Engine     <WASDQE To Move>     <IJKLUO To Look>"
+#define WindowTitle     L"Jackie Engine     <WASDQE To Move>     <IJKLUO To Look>     <R To On Or Off The Rotation>"
 
 /* DirectX Objects */
 IDirect3D9* pDirect3D;

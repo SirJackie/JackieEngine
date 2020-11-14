@@ -276,7 +276,9 @@ char* buffer;
 char realbuffer[1000];
 float deltaX = 0.0f, deltaY = 0.0f, deltaZ = 0.0f;
 float sensitivity = 0.005f;
+BOOL rotOrNot = FALSE;
 float rotdeg = 0.0f;
+int KeyDelay = 0;
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	CalcFPS(fb, width, height, deltaTime);
@@ -332,6 +334,15 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		cam.rotation.z += 5.0f * sensitivity * deltaTime;
 	}
 
+	if (keyboard['R'] == TRUE && KeyDelay == 0) {
+		rotOrNot = !(rotOrNot);
+		KeyDelay = 10;
+	}
+
+	if (KeyDelay > 0) {
+		KeyDelay -= 1;
+	}
+
 
 	/*
 	** Refresh Camera Matrices
@@ -346,7 +357,9 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	Matrix4D Mrotation = CreateRotationMatrix(rotdeg, -30.0f, rotdeg);
 	//Matrix4D Mrotation = CreateRotationMatrix(0.0f, 0.0f, 0.0f);
-	rotdeg += 0.03f * deltaTime;
+	if (rotOrNot) {
+		rotdeg += 0.03f * deltaTime;
+	}
 	if (rotdeg >= 360.0f) {
 		rotdeg = 0.0f;
 	}
@@ -395,6 +408,14 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	buffer = OutputMatrix4D(&(cam.Mtransform));
 	DrawShadowString(fb, width, height, 10, 314, buffer);
+	free(buffer);
+
+	buffer = OutputVector4D(&(cam.position));
+	DrawShadowString(fb, width, height, 10, 394, buffer);
+	free(buffer);
+
+	buffer = OutputVector4D(&(cam.rotation));
+	DrawShadowString(fb, width, height, 10, 410, buffer);
 	free(buffer);
 
 	for (int i = 0; i < 8; i++) {
