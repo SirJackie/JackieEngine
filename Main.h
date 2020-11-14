@@ -367,17 +367,17 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	}
 
 	DrawFlatMesh4D(fb, width, height, &(vecs[0]), &(vecs[1]), &(vecs[3]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[2]), &(vecs[3]), &(vecs[1]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[7]), &(vecs[4]), &(vecs[5]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[6]), &(vecs[5]), &(vecs[4]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[4]), &(vecs[0]), &(vecs[6]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[6]), &(vecs[0]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[1]), &(vecs[7]), &(vecs[2]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[2]), &(vecs[7]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[2]), &(vecs[6]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[6]), &(vecs[2]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[7]), &(vecs[0]), &(vecs[4]));
-	DrawFlatMesh4D(fb, width, height, &(vecs[7]), &(vecs[1]), &(vecs[0]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[2]), &(vecs[3]), &(vecs[1]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[7]), &(vecs[4]), &(vecs[5]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[6]), &(vecs[5]), &(vecs[4]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[4]), &(vecs[0]), &(vecs[6]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[6]), &(vecs[0]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[1]), &(vecs[7]), &(vecs[2]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[2]), &(vecs[7]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[2]), &(vecs[6]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[6]), &(vecs[2]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[7]), &(vecs[0]), &(vecs[4]));
+	//DrawFlatMesh4D(fb, width, height, &(vecs[7]), &(vecs[1]), &(vecs[0]));
 
 
 	/*
