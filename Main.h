@@ -28,6 +28,8 @@
 #include "FPS.h"
 #endif
 
+float global = 0.0f;
+
 
 void OnCreate() {
 	;
@@ -92,6 +94,7 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	Vector4D* v0, Vector4D* v1, Vector4D* v2, Color color, float* ZBuffer
 )
 {
+
 	/*
 	** Calculate Planar Equation
 	*/
@@ -198,7 +201,9 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0 || zresult1 < 0 && zresult2 < 0 && zresult3 < 0) {
 				if (Zp > ZBuffer[y * width + x]) {
 					ZBuffer[y * width + x] = Zp;
-					SetPixelLB(fb, height, x, y, color);
+					float ctmp = (fabs(Zp) - 0.90f) * 100 * 10;
+					global = Zp;
+					SetPixelLB(fb, height, x, y, CreateColor((int)ctmp, (int)ctmp, (int)ctmp, 255));
 				}
 			}
 		}
@@ -377,7 +382,25 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	for (int i = 0; i < 8; i++) {
 		vecs[i] = Vector4DTimesMatrix4D(
-			&(vecs[i]), &(cam.Mtransform)
+			&(vecs[i]), &(cam.Mtranslation)
+		);
+	}
+
+	for (int i = 0; i < 8; i++) {
+		vecs[i] = Vector4DTimesMatrix4D(
+			&(vecs[i]), &(cam.Mrotation)
+		);
+	}
+
+	for (int i = 0; i < 8; i++) {
+		buffer = OutputVector4D(&(vecs[i]));
+		DrawShadowString(fb, width, height, 10, 154 + i * 16, buffer);
+		free(buffer);
+	}
+
+	for (int i = 0; i < 8; i++) {
+		vecs[i] = Vector4DTimesMatrix4D(
+			&(vecs[i]), &(cam.MprojAndviewport)
 		);
 	}
 
@@ -409,9 +432,16 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	DrawShadowString(fb, width, height, 10, 410, buffer);
 	free(buffer);
 
+	sprintf_s(
+		realbuffer, 1000,
+		"Global: %f",
+		global
+	);
+	DrawShadowString(fb, width, height, 10, 442, realbuffer);
+
 	for (int i = 0; i < 8; i++) {
 		buffer = OutputVector4D(&(vecs[i]));
-		DrawShadowString(fb, width, height, 10, 154 + i * 16, buffer);
+		DrawShadowString(fb, width, height, 10, 458 + i * 16, buffer);
 		free(buffer);
 	}
 
