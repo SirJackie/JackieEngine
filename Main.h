@@ -79,7 +79,7 @@ void DrawVector4D(FrameBuffer fb, int width, int height, Vector4D* vec, int radi
 
 	for (int y = StartY; y < EndY; y++) {
 		for (int x = StartX; x < EndX; x++) {
-			SetPixel(fb, x, y, CreateColor(255, 255, 255, 255));
+			SetPixelLB(fb, height, x, y, CreateColor(255, 255, 255, 255));
 		}
 	}
 }
@@ -198,7 +198,7 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0 || zresult1 < 0 && zresult2 < 0 && zresult3 < 0) {
 				if (Zp > ZBuffer[y * width + x]) {
 					ZBuffer[y * width + x] = Zp;
-					SetPixel(fb, x, y, color);
+					SetPixelLB(fb, height, x, y, color);
 				}
 			}
 		}
@@ -383,15 +383,6 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	for (int i = 0; i < 8; i++) {
 		Vector4DDevidedByW(&(vecs[i]));
-	}
-
-
-	/*
-	** Do Y-Axis Reverse
-	*/
-
-	for (int i = 0; i < 8; i++) {
-		vecs[i].y = height - vecs[i].y;
 	}
 
 
