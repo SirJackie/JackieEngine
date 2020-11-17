@@ -28,7 +28,8 @@
 #include "FPS.h"
 #endif
 
-float global = 0.0f;
+float globalMin = 1000000.0f;
+float globalMax = -1000000.0f;
 
 
 void OnCreate() {
@@ -198,10 +199,22 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 				Zp = (-1.0f * A * x - B * y - D) / C;
 				if (Zp > ZBuffer[y * width + x]) {
 					ZBuffer[y * width + x] = Zp;
-					//float ctmp = (fabs(Zp) - 0.90f) * 100 * 100;
-					//global = Zp;
+					float ctmp = 1.0f - ((fabs(Zp) - 0.96f) * 50.0f);
+					if (ctmp < globalMin) {
+						globalMin = ctmp;
+					}
+					if (ctmp > globalMax) {
+						globalMax = ctmp;
+					}
+					//ctmp *= 255.0f;
 					//SetPixelLB(fb, height, x, y, CreateColor((int)ctmp, (int)ctmp, (int)ctmp, 255));
-					SetPixelLB(fb, height, x, y, color);
+					//SetPixelLB(fb, height, x, y, color);
+
+					int rtmp = GetColorR(color);
+					int gtmp = GetColorG(color);
+					int btmp = GetColorB(color);
+
+					SetPixelLB(fb, height, x, y, CreateColor((int)(rtmp * ctmp), (int)(gtmp * ctmp), (int)(btmp * ctmp), 255));
 				}
 			}
 		}
@@ -432,8 +445,8 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	sprintf_s(
 		realbuffer, 1000,
-		"Global: %f",
-		global
+		"Global Min: %f; Global Max: %f;",
+		globalMin, globalMax
 	);
 	DrawShadowString(fb, width, height, 10, 442, realbuffer);
 
@@ -443,10 +456,10 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		free(buffer);
 	}
 
-	for (int i = 0; i < 8; i++) {
-		float tmp = (-1.0f * vecs[i].z) - 0.9f;
-		DrawVector4D(fb, width, height, &(vecs[i]), (int)((0.1f - tmp) * 100.0f));
-	}
+	//for (int i = 0; i < 8; i++) {
+	//	float tmp = (-1.0f * vecs[i].z) - 0.9f;
+	//	DrawVector4D(fb, width, height, &(vecs[i]), (int)((0.1f - tmp) * 100.0f));
+	//}
 
 	float* ZBuffer = (float*)malloc(sizeof(float) * width * height);
 	for (int y = 0; y < height; y++) {
