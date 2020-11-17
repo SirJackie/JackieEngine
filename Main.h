@@ -106,7 +106,7 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	float A = v0v1crossv0v2.x;
 	float B = v0v1crossv0v2.y;
 	float C = v0v1crossv0v2.z;
-	float D = A * v0->x + B * v0->y + C * v0->z;
+	float D = -1.0f * (A * v0->x + B * v0->y + C * v0->z);
 
 	
 
@@ -196,14 +196,14 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 
 
 			Zp = (-1.0f * A * v0x - B * v0y - D) / C;
-			Zp *= -1.0f;  // Z-Axis also needs to reverse as well as Y-Axis has been reversed
 
 			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0 || zresult1 < 0 && zresult2 < 0 && zresult3 < 0) {
 				if (Zp > ZBuffer[y * width + x]) {
 					ZBuffer[y * width + x] = Zp;
-					float ctmp = (fabs(Zp) - 0.90f) * 100 * 10;
-					global = Zp;
-					SetPixelLB(fb, height, x, y, CreateColor((int)ctmp, (int)ctmp, (int)ctmp, 255));
+					//float ctmp = (fabs(Zp) - 0.90f) * 100 * 10;
+					//global = Zp;
+					//SetPixelLB(fb, height, x, y, CreateColor((int)ctmp, (int)ctmp, (int)ctmp, 255));
+					SetPixelLB(fb, height, x, y, color);
 				}
 			}
 		}
