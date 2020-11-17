@@ -194,16 +194,14 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 			//result3 = Vector4DCrossVector4D(&v2v0, &v2p);
 			zresult3 = v2v0x * v2py - v2v0y * v2px;
 
-
-			Zp = (-1.0f * A * v0x - B * v0y - D) / C;
-
 			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0 || zresult1 < 0 && zresult2 < 0 && zresult3 < 0) {
+				Zp = (-1.0f * A * x - B * y - D) / C;
 				if (Zp > ZBuffer[y * width + x]) {
 					ZBuffer[y * width + x] = Zp;
-					float ctmp = (fabs(Zp) - 0.90f) * 100 * 10;
-					global = Zp;
-					SetPixelLB(fb, height, x, y, CreateColor((int)ctmp, (int)ctmp, (int)ctmp, 255));
-					//SetPixelLB(fb, height, x, y, color);
+					//float ctmp = (fabs(Zp) - 0.90f) * 100 * 100;
+					//global = Zp;
+					//SetPixelLB(fb, height, x, y, CreateColor((int)ctmp, (int)ctmp, (int)ctmp, 255));
+					SetPixelLB(fb, height, x, y, color);
 				}
 			}
 		}
