@@ -30,6 +30,61 @@
 
 
 /*
+** Define Some Calculating Functions
+*/
+
+int clamp(int min, int input, int max) {
+	if (input > min) {
+		if (input < max) {
+			return input;
+		}
+		else {
+			return max;
+		}
+	}
+	else {
+		return min;
+	}
+}
+
+float fclamp(float min, float input, float max) {
+	if (input > min) {
+		if (input < max) {
+			return input;
+		}
+		else {
+			return max;
+		}
+	}
+	else {
+		return min;
+	}
+}
+
+int min3(int a, int b, int c) {
+	int min = a;
+	if (b < min) {
+		min = b;
+	}
+	if (c < min) {
+		min = c;
+	}
+	return min;
+}
+
+int max3(int a, int b, int c) {
+	int max = a;
+	if (b > max) {
+		max = b;
+	}
+	if (c > max) {
+		max = c;
+	}
+	return max;
+}
+
+
+/*
 ** Vector4D
 */
 

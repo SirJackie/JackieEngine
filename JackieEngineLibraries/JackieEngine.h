@@ -13,11 +13,6 @@
 #include "LinearAlgebra.h"
 #endif
 
-#ifndef __MEST_STRUCTURE_H__
-#define __MEST_STRUCTURE_H__
-#include "MeshStructure.h"
-#endif
-
 #ifndef __CAMERA_SUPPORT_H__
 #define __CAMERA_SUPPORT_H__
 #include "CameraSupport.h"

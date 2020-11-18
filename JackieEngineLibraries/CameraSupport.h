@@ -13,6 +13,11 @@
 #include "LinearAlgebra.h"
 #endif
 
+
+/*
+** Camera4D Definition
+*/
+
 struct Camera4D {
 
 
@@ -77,6 +82,11 @@ Camera4D CreateCamera4D(
 	return cam;
 }
 
+
+/*
+** View Transform Supporting Functions
+*/
+
 void CalcCamera4DMtranslation(Camera4D* cam) {
 	cam->Mtranslation = CreateMatrix4D(
 		1.0f, 0.0f, 0.0f, -1.0f * (cam->position.x),
@@ -118,6 +128,11 @@ void CalcCamera4DMrotation(Camera4D* cam) {
 		&MrotationX
 	);
 }
+
+
+/*
+** Projection Transform Supporting Functions
+*/
 
 void CalcCamera4DMortho(Camera4D* cam) {
 	Matrix4D Morthoa = CreateMatrix4D(
@@ -164,12 +179,31 @@ void CalcCamera4DMviewport(Camera4D* cam) {
 	);
 }
 
+
+/*
+** Functions that Merge Matrices Together In Order To Speed Up
+*/
+
 void CalcCamera4DMprojAndviewport(Camera4D* cam) {
 	CalcCamera4DMpersp(cam);
 	CalcCamera4DMviewport(cam);
 	cam->MprojAndviewport = Matrix4DTimesMatrix4D(
 		&(cam->Mpersp),
 		&(cam->Mviewport)
+	);
+}
+
+void CalcCamera4DMatrices(Camera4D* cam) {
+	CalcCamera4DMtranslation(cam);
+	CalcCamera4DMrotation(cam);
+	CalcCamera4DMprojAndviewport(cam);
+	cam->Mtransform = Matrix4DTimesMatrix4D(
+		&(cam->Mtranslation),
+		&(cam->Mrotation)
+	);
+	cam->Mtransform = Matrix4DTimesMatrix4D(
+		&(cam->Mtransform),
+		&(cam->MprojAndviewport)
 	);
 }
 
@@ -185,10 +219,4 @@ void RefreshCamera4DMatrices(Camera4D* cam) {
 		&(cam->Mtransform),
 		&(cam->MprojAndviewport)
 	);
-}
-
-
-void CalcCamera4DMatrices(Camera4D* cam) {
-	CalcCamera4DMprojAndviewport(cam);
-	RefreshCamera4DMatrices(cam);
 }

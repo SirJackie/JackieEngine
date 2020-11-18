@@ -151,7 +151,6 @@
     <ClInclude Include="JackieEngineLibraries\CameraSupport.h" />
     <ClInclude Include="JackieEngineLibraries\JackieEngine.h" />
     <ClInclude Include="JackieEngineLibraries\LinearAlgebra.h" />
-    <ClInclude Include="JackieEngineLibraries\MeshStructure.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
