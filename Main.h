@@ -189,18 +189,18 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	** Rasterize
 	*/
 
-	for (int y = StartY; y < EndY; y++) {
-		for (int x = StartX; x < EndX; x++) {
+	for (int y = StartY; y <= EndY; y++) {
+		for (int x = StartX; x <= EndX; x++) {
 
 			//CreateVector4DFromPointToPoint(v1, &p, &v1p);
-			v1px = v1->x - x;
-			v1py = v1->y - y;
+			v1px = v1x - x;
+			v1py = v1y - y;
 			//CreateVector4DFromPointToPoint(v0, &p, &v0p);
-			v0px = v0->x - x;
-			v0py = v0->y - y;
+			v0px = v0x - x;
+			v0py = v0y - y;
 			//CreateVector4DFromPointToPoint(v2, &p, &v2p);
-			v2px = v2->x - x;
-			v2py = v2->y - y;
+			v2px = v2x - x;
+			v2py = v2y - y;
 
 			//result1 = Vector4DCrossVector4D(&v1v2, &v1p);
 			zresult1 = v1v2x * v1py - v1v2y * v1px;
