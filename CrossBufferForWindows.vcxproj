@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -151,6 +151,7 @@
     <ClInclude Include="JackieEngineLibraries\CameraSupport.h" />
     <ClInclude Include="JackieEngineLibraries\JackieEngine.h" />
     <ClInclude Include="JackieEngineLibraries\LinearAlgebra.h" />
+    <ClInclude Include="JackieEngineLibraries\Rasterization.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />

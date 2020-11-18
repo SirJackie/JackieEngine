@@ -18,7 +18,7 @@
 #include "CameraSupport.h"
 #endif
 
-#ifndef __CROSSBUFFER_H__
-#define __CROSSBUFFER_H__
-#include "CrossBuffer.h"
+#ifndef __RASTERIZATION_H__
+#define __RASTERIZATION_H__
+#include "Rasterization.h"
 #endif

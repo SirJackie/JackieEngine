@@ -160,6 +160,8 @@ Vector4D Vector4DMinusVector4D(Vector4D* a, Vector4D* b) {
 	return result;
 }
 
+#define CreateVector4DFromPointToPoint(from, to) Vector4DMinusVector4D(to, from)
+
 float Vector4DDotVector4D(Vector4D* a, Vector4D* b) {
 	return a->x * b->x + a->y * b->y + a->z * b->z;
 }

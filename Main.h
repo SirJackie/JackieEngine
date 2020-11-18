@@ -1,3 +1,13 @@
+#ifndef __STDIO_H__
+#define __STDIO_H__
+#include <stdio.h>
+#endif
+
+#ifndef __MATH_H__
+#define __MATH_H__
+#include <math.h>
+#endif
+
 #ifndef __CROSSBUFFER_H__
 #define __CROSSBUFFER_H__
 #include "CrossBuffer.h"
@@ -18,173 +28,20 @@
 #include "JackieEngineLibraries/JackieEngine.h"
 #endif
 
-#ifndef __STDIO_H__
-#define __STDIO_H__
-#include <stdio.h>
-#endif
-
 #ifndef __FPS_H__
 #define __FPS_H__
 #include "FPS.h"
 #endif
 
-float globalMin = 1000000.0f;
-float globalMax = -1000000.0f;
 
+/*
+** OnCreate()
+*/
 
 void OnCreate() {
 	;
 }
 
-void DrawVector4D(FrameBuffer fb, int width, int height, Vector4D* vec, int radius) {
-	int CentralX = (int)vec->x;
-	int CentralY = (int)vec->y;
-	int StartX = clamp(0, CentralX - radius, width);
-	int EndX   = clamp(0, CentralX + radius, width);
-	int StartY = clamp(0, CentralY - radius, height);
-	int EndY   = clamp(0, CentralY + radius, height);
-
-	for (int y = StartY; y < EndY; y++) {
-		for (int x = StartX; x < EndX; x++) {
-			SetPixelLB(fb, height, x, y, CreateColor(255, 255, 255, 255));
-		}
-	}
-}
-
-Vector4D CreateVector4DFromPointToPoint(Vector4D* from, Vector4D* to) {
-	return Vector4DMinusVector4D(to, from);
-}
-
-void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
-	Vector4D* v0, Vector4D* v1, Vector4D* v2, Color color, float* ZBuffer
-)
-{
-
-	/*
-	** Calculate Planar Equation
-	*/
-
-	Vector4D v0v1 = CreateVector4DFromPointToPoint(v0, v1);
-	Vector4D v0v2 = CreateVector4DFromPointToPoint(v0, v2);
-	Vector4D v0v1crossv0v2 = Vector4DCrossVector4D(&v0v1, &v0v2);
-
-	float A = v0v1crossv0v2.x;
-	float B = v0v1crossv0v2.y;
-	float C = v0v1crossv0v2.z;
-	float D = -1.0f * (A * v0->x + B * v0->y + C * v0->z);
-
-	
-
-	/*
-	** Calculate Bounding Box
-	*/
-
-	int StartX = min3(v0->x, v1->x, v2->x);
-	int StartY = min3(v0->y, v1->y, v2->y);
-	int EndX   = max3(v0->x, v1->x, v2->x);
-	int EndY   = max3(v0->y, v1->y, v2->y);
-	StartX     = clamp(0, StartX, width);
-	StartY     = clamp(0, StartY, height);
-	EndX       = clamp(0, EndX, width);
-	EndY       = clamp(0, EndY, height);
-
-
-	/*
-	** Pre-Getting Vectors' x, y to speed up (avoid memory-address finding)
-	*/
-
-	float v0x = v0->x;
-	float v0y = v0->y;
-	float v1x = v1->x;
-	float v1y = v1->y;
-	float v2x = v2->x;
-	float v2y = v2->y;
-
-
-	/*
-	** Declare Temporary Variables
-	*/
-
-	float v1v2x, v1v2y;
-	float v0v1x, v0v1y;
-	float v2v0x, v2v0y;
-
-	float v1px, v1py;
-	float v0px, v0py;
-	float v2px, v2py;
-
-	float zresult1;
-	float zresult2;
-	float zresult3;
-
-
-	/*
-	** Pre-Calculate v1v2, v0v1, v2v0
-	*/
-
-	//CreateVector4DFromPointToPoint(v1, v2, &v1v2);
-	v1v2x = v1x - v2x;
-	v1v2y = v1y - v2y;
-	//CreateVector4DFromPointToPoint(v0, v1, &v0v1);
-	v0v1x = v0x - v1x;
-	v0v1y = v0y - v1y;
-	//CreateVector4DFromPointToPoint(v2, v0, &v2v0);
-	v2v0x = v2x - v0x;
-	v2v0y = v2y - v0y;
-
-	float Zp;
-
-
-	/*
-	** Rasterize
-	*/
-
-	for (int y = StartY; y <= EndY; y++) {
-		for (int x = StartX; x <= EndX; x++) {
-
-			//CreateVector4DFromPointToPoint(v1, &p, &v1p);
-			v1px = v1x - x;
-			v1py = v1y - y;
-			//CreateVector4DFromPointToPoint(v0, &p, &v0p);
-			v0px = v0x - x;
-			v0py = v0y - y;
-			//CreateVector4DFromPointToPoint(v2, &p, &v2p);
-			v2px = v2x - x;
-			v2py = v2y - y;
-
-			//result1 = Vector4DCrossVector4D(&v1v2, &v1p);
-			zresult1 = v1v2x * v1py - v1v2y * v1px;
-			//result2 = Vector4DCrossVector4D(&v0v1, &v0p);
-			zresult2 = v0v1x * v0py - v0v1y * v0px;
-			//result3 = Vector4DCrossVector4D(&v2v0, &v2p);
-			zresult3 = v2v0x * v2py - v2v0y * v2px;
-
-			if (zresult1 > 0 && zresult2 > 0 && zresult3 > 0 || zresult1 < 0 && zresult2 < 0 && zresult3 < 0) {
-				Zp = (-1.0f * A * x - B * y - D) / C;
-				if (Zp > ZBuffer[y * width + x]) {
-					ZBuffer[y * width + x] = Zp;
-					float ctmp = 1.0f - ((fabs(Zp) - 0.96f) * 50.0f);
-					ctmp = fclamp(0.1f, ctmp, 1.0f);
-					if (ctmp < globalMin) {
-						globalMin = ctmp;
-					}
-					if (ctmp > globalMax) {
-						globalMax = ctmp;
-					}
-					//ctmp *= 255.0f;
-					//SetPixelLB(fb, height, x, y, CreateColor((int)ctmp, (int)ctmp, (int)ctmp, 255));
-					//SetPixelLB(fb, height, x, y, color);
-
-					int rtmp = GetColorR(color);
-					int gtmp = GetColorG(color);
-					int btmp = GetColorB(color);
-
-					SetPixelLB(fb, height, x, y, CreateColor((int)(rtmp * ctmp), (int)(gtmp * ctmp), (int)(btmp * ctmp), 255));
-				}
-			}
-		}
-	}
-}
 
 Matrix4D CreateRotationMatrix(float rotx, float roty, float rotz) {
 	Matrix4D MrotationX = CreateMatrix4D(
@@ -407,13 +264,6 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	buffer = OutputVector4D(&(cam.rotation));
 	DrawShadowString(fb, width, height, 10, 410, buffer);
 	free(buffer);
-
-	sprintf_s(
-		realbuffer, 1000,
-		"Global Min: %f; Global Max: %f;",
-		globalMin, globalMax
-	);
-	DrawShadowString(fb, width, height, 10, 442, realbuffer);
 
 	for (int i = 0; i < 8; i++) {
 		buffer = OutputVector4D(&(vecs[i]));
