@@ -50,6 +50,20 @@ int clamp(int min, int input, int max) {
 	}
 }
 
+float fclamp(float min, float input, float max) {
+	if (input > min) {
+		if (input < max) {
+			return input;
+		}
+		else {
+			return max;
+		}
+	}
+	else {
+		return min;
+	}
+}
+
 int min3(int a, int b, int c) {
 	int min = a;
 	if (b < min) {
@@ -200,6 +214,7 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 				if (Zp > ZBuffer[y * width + x]) {
 					ZBuffer[y * width + x] = Zp;
 					float ctmp = 1.0f - ((fabs(Zp) - 0.96f) * 50.0f);
+					ctmp = fclamp(0.1f, ctmp, 1.0f);
 					if (ctmp < globalMin) {
 						globalMin = ctmp;
 					}
@@ -292,7 +307,7 @@ char* buffer;
 char realbuffer[1000];
 float deltaX = 0.0f, deltaY = 0.0f, deltaZ = 0.0f;
 float sensitivity = 0.005f;
-BOOL rotOrNot = FALSE;
+BOOL rotOrNot = TRUE;
 float rotdeg = 0.0f;
 int KeyDelay = 0;
 
