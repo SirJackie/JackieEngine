@@ -85,10 +85,17 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 	int EndX   = max3(v0->x, v1->x, v2->x);
 	int EndY   = max3(v0->y, v1->y, v2->y);
 
-	StartX     = clamp(0, StartX, width );
-	StartY     = clamp(0, StartY, height);
-	EndX       = clamp(0, EndX,   width );
-	EndY       = clamp(0, EndY,   height);
+	StartX     = clamp(0, StartX, width  - 1);
+	StartY     = clamp(0, StartY, height - 1);
+	EndX       = clamp(0, EndX,   width  - 1);
+	EndY       = clamp(0, EndY,   height - 1);
+
+	// Caution : Width and Height are already -1 when they were given
+	//           -1 here is to prevent the overflow caused by
+	//           y <= EndY and x <= EndX below
+
+	// Tip     : y <= EndY and x <= EndX below is to fix the gaps
+	//           between two triangles when Rasterize
 
 
 	/*
