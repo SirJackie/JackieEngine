@@ -18,6 +18,11 @@
 #include "CameraSupport.h"
 #endif
 
+#ifndef __MODEL_SUPPORT_H__
+#define __MODEL_SUPPORT_H__
+#include "ModelSupport.h"
+#endif
+
 #ifndef __CROSSBUFFER_H__
 #define __CROSSBUFFER_H__
 #include "CrossBuffer.h"
