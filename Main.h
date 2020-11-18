@@ -35,6 +35,21 @@
 
 
 /*
+** Global Variables
+*/
+
+Camera4D  cam;
+Vector4D  vecs[8];
+Matrix4D  Mrotation;
+char*     buffer;
+char      realbuffer[1000];
+float     keyboardSensitivity  = 0.005f;
+BOOL      rotateOrNot          = TRUE;
+float     rotateDegree         = 0.0f;
+int       rotateKeyDelay       = 0;
+
+
+/*
 ** OnCreate()
 */
 
@@ -43,10 +58,9 @@ void OnCreate() {
 }
 
 
-
-
-Camera4D cam;
-Vector4D vecs[8];
+/*
+** Setup()
+*/
 
 void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
 	
@@ -77,40 +91,43 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 }
 
 
-char* buffer;
-char realbuffer[1000];
-float deltaX = 0.0f, deltaY = 0.0f, deltaZ = 0.0f;
-float sensitivity = 0.005f;
-BOOL rotOrNot = TRUE;
-float rotdeg = 0.0f;
-int KeyDelay = 0;
+/*
+** Update()
+*/
 
 void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
+	
+
+	/*
+	** Calculating FPS
+	*/
+
 	CalcFPS(fb, width, height, deltaTime);
+
 
 	/*
 	** Position Responder
 	*/
 
 	if (keyboard['W'] == TRUE) {
-		cam.position.z -= sensitivity * deltaTime;
+		cam.position.z -= 1.0f * keyboardSensitivity * deltaTime;
 	}
 	if (keyboard['S'] == TRUE) {
-		cam.position.z += sensitivity * deltaTime;
+		cam.position.z += 1.0f * keyboardSensitivity * deltaTime;
 	}
 
 	if (keyboard['A'] == TRUE) {
-		cam.position.x -= 0.5f * sensitivity * deltaTime;
+		cam.position.x -= 0.5f * keyboardSensitivity * deltaTime;
 	}
 	if (keyboard['D'] == TRUE) {
-		cam.position.x += 0.5f * sensitivity * deltaTime;
+		cam.position.x += 0.5f * keyboardSensitivity * deltaTime;
 	}
 
 	if (keyboard['E'] == TRUE) {
-		cam.position.y -= 0.5f * sensitivity * deltaTime;
+		cam.position.y -= 0.5f * keyboardSensitivity * deltaTime;
 	}
 	if (keyboard['Q'] == TRUE) {
-		cam.position.y += 0.5f * sensitivity * deltaTime;
+		cam.position.y += 0.5f * keyboardSensitivity * deltaTime;
 	}
 
 
@@ -119,33 +136,38 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	*/
 
 	if (keyboard['I'] == TRUE) {
-		cam.rotation.x -= 5.0f * sensitivity * deltaTime;
+		cam.rotation.x -= 5.0f * keyboardSensitivity * deltaTime;
 	}
 	if (keyboard['K'] == TRUE) {
-		cam.rotation.x += 5.0f * sensitivity * deltaTime;
+		cam.rotation.x += 5.0f * keyboardSensitivity * deltaTime;
 	}
 
 	if (keyboard['J'] == TRUE) {
-		cam.rotation.y -= 5.0f * sensitivity * deltaTime;
+		cam.rotation.y -= 5.0f * keyboardSensitivity * deltaTime;
 	}
 	if (keyboard['L'] == TRUE) {
-		cam.rotation.y += 5.0f * sensitivity * deltaTime;
+		cam.rotation.y += 5.0f * keyboardSensitivity * deltaTime;
 	}
 
 	if (keyboard['U'] == TRUE) {
-		cam.rotation.z -= 5.0f * sensitivity * deltaTime;
+		cam.rotation.z -= 5.0f * keyboardSensitivity * deltaTime;
 	}
 	if (keyboard['O'] == TRUE) {
-		cam.rotation.z += 5.0f * sensitivity * deltaTime;
+		cam.rotation.z += 5.0f * keyboardSensitivity * deltaTime;
 	}
 
-	if (keyboard['R'] == TRUE && KeyDelay == 0) {
-		rotOrNot = !(rotOrNot);
-		KeyDelay = 10;
+
+	/*
+	** R Key Responder
+	*/
+
+	if (keyboard['R'] == TRUE && rotateKeyDelay == 0) {
+		rotateOrNot = !(rotateOrNot);
+		rotateKeyDelay = 10;
 	}
 
-	if (KeyDelay > 0) {
-		KeyDelay -= 1;
+	if (rotateKeyDelay > 0) {
+		rotateKeyDelay -= 1;
 	}
 
 
@@ -160,13 +182,13 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	** Rotate the Vectors
 	*/
 
-	Matrix4D Mrotation = CreateRotationMatrix(rotdeg, -30.0f, rotdeg);
-	//Matrix4D Mrotation = CreateRotationMatrix(0.0f, 0.0f, 0.0f);
-	if (rotOrNot) {
-		rotdeg += 0.03f * deltaTime;
+	Mrotation = CreateRotationMatrix(rotateDegree, -30.0f, rotateDegree);
+
+	if (rotateOrNot == TRUE) {
+		rotateDegree += 0.03f * deltaTime;
 	}
-	if (rotdeg >= 360.0f) {
-		rotdeg = 0.0f;
+	if (rotateDegree >= 360.0f) {
+		rotateDegree =  0.0f;
 	}
 
 	for (int i = 0; i < 8; i++) {
@@ -182,25 +204,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 
 	for (int i = 0; i < 8; i++) {
 		vecs[i] = Vector4DTimesMatrix4D(
-			&(vecs[i]), &(cam.Mtranslation)
-		);
-	}
-
-	for (int i = 0; i < 8; i++) {
-		vecs[i] = Vector4DTimesMatrix4D(
-			&(vecs[i]), &(cam.Mrotation)
-		);
-	}
-
-	for (int i = 0; i < 8; i++) {
-		buffer = OutputVector4D(&(vecs[i]));
-		DrawShadowString(fb, width, height, 10, 154 + i * 16, buffer);
-		free(buffer);
-	}
-
-	for (int i = 0; i < 8; i++) {
-		vecs[i] = Vector4DTimesMatrix4D(
-			&(vecs[i]), &(cam.MprojAndviewport)
+			&(vecs[i]), &(cam.Mtransform)
 		);
 	}
 
@@ -213,6 +217,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	** Output Things
 	*/
 
+	// Camera Frustum
 	sprintf_s(
 		realbuffer, 1000,
 		"n:%f\nf:%f\nt:%f\nb:%f\nl:%f\nr:%f\n",
@@ -220,28 +225,32 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	);
 	DrawShadowString(fb, width, height, 10, 42, realbuffer);
 
-	buffer = OutputMatrix4D(&(cam.Mtransform));
+	// Camera Position
+	buffer = OutputVector4D(&(cam.position));
 	DrawShadowString(fb, width, height, 10, 314, buffer);
 	free(buffer);
 
-	buffer = OutputVector4D(&(cam.position));
-	DrawShadowString(fb, width, height, 10, 394, buffer);
-	free(buffer);
-
+	// Camera Rotation
 	buffer = OutputVector4D(&(cam.rotation));
-	DrawShadowString(fb, width, height, 10, 410, buffer);
+	DrawShadowString(fb, width, height, 10, 346, buffer);
 	free(buffer);
 
+	// Mtransform
+	buffer = OutputMatrix4D(&(cam.Mtransform));
+	DrawShadowString(fb, width, height, 10, 378, buffer);
+	free(buffer);
+
+	// Vector List
 	for (int i = 0; i < 8; i++) {
 		buffer = OutputVector4D(&(vecs[i]));
-		DrawShadowString(fb, width, height, 10, 458 + i * 16, buffer);
+		DrawShadowString(fb, width, height, 10, 154 + i * 16, buffer);
 		free(buffer);
 	}
 
-	//for (int i = 0; i < 8; i++) {
-	//	float tmp = (-1.0f * vecs[i].z) - 0.9f;
-	//	DrawVector4D(fb, width, height, &(vecs[i]), (int)((0.1f - tmp) * 100.0f));
-	//}
+
+	/*
+	** Get And Clear Z-Buffer
+	*/
 
 	float* ZBuffer = (float*)malloc(sizeof(float) * width * height);
 	for (int y = 0; y < height; y++) {
@@ -249,6 +258,11 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 			ZBuffer[y * width + x] = cam.f;
 		}
 	}
+
+
+	/*
+	** Do Rasterization
+	*/
 
 	DrawFlatMesh4D(fb, width, height, &(vecs[0]), &(vecs[1]), &(vecs[3]), CreateColor(255, 0, 255, 255), ZBuffer);
 	DrawFlatMesh4D(fb, width, height, &(vecs[2]), &(vecs[3]), &(vecs[1]), CreateColor(255, 255, 0, 255), ZBuffer);
@@ -276,6 +290,11 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	vecs[5] = CreateVector4D( 1.0f, -1.0f, -1.0f, 1.0f);
 	vecs[6] = CreateVector4D( 1.0f,  1.0f, -1.0f, 1.0f);
 	vecs[7] = CreateVector4D(-1.0f,  1.0f, -1.0f, 1.0f);
+
+
+	/*
+	** Delete Z-Buffer
+	*/
 
 	free(ZBuffer);
 }
