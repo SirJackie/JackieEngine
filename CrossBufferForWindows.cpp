@@ -112,16 +112,14 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	int ScreenX, ScreenY;
 	GetScreenResolution(&ScreenX, &ScreenY);
 
-	//int Unit = ScreenY / 30;
+	int Unit = ScreenY / 30;
 
-	//WindowHeight     = 26 * Unit;
-	//WindowTopMargin  = 2  * Unit;
+	WindowHeight     = 26 * Unit;
+	WindowWidth      = WindowHeight / 9 * 16;
 
-	//WindowWidth      = WindowHeight / 9 * 16;
-	//WindowLeftMargin = (ScreenX - WindowWidth) / 2;
+	//WindowWidth = 1104;
+	//WindowHeight = 624;
 
-	WindowWidth = 1104;
-	WindowHeight = 624;
 	WindowLeftMargin = (ScreenX - WindowWidth) / 2;
 	WindowTopMargin = (ScreenY - WindowHeight) / 2;
 
