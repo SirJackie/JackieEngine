@@ -4,7 +4,9 @@
 
 注意！这个引擎正在开发中，尚未完成。不保证每一个Commit都能正常运行。
 
-![Demo](./ImagesForReadme/Demo.png)
+![Demo1](./ImagesForReadme/Demo1.png)
+
+Demo1（版本ec6728a839f6140bbf1829559b30cc8b2504758b）
 
 # 如何把项目运行起来（环境配置）
 
