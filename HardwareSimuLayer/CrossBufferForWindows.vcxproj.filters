@@ -13,53 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\JackieEngineLibraries">
-      <UniqueIdentifier>{494b7e95-0730-4c21-aa01-8531ac14f564}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CrossBuffer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Main.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="TextOutput.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="JackieEngineLibraries\JackieEngine.h">
-      <Filter>头文件\JackieEngineLibraries</Filter>
-    </ClInclude>
-    <ClInclude Include="JackieEngineLibraries\LinearAlgebra.h">
-      <Filter>头文件\JackieEngineLibraries</Filter>
-    </ClInclude>
-    <ClInclude Include="FPS.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="JackieEngineLibraries\CameraSupport.h">
-      <Filter>头文件\JackieEngineLibraries</Filter>
-    </ClInclude>
-    <ClInclude Include="JackieEngineLibraries\Rasterization.h">
-      <Filter>头文件\JackieEngineLibraries</Filter>
-    </ClInclude>
-    <ClInclude Include="JackieEngineLibraries\ModelSupport.h">
-      <Filter>头文件\JackieEngineLibraries</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrossBufferForWindows.cpp">
@@ -78,5 +31,10 @@
     <Image Include="CrossBufferForWindows.ico">
       <Filter>资源文件</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Main.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

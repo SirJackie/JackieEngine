@@ -4,7 +4,7 @@
 
 注意！这个引擎正在开发中，尚未完成。不保证每一个Commit都能正常运行。
 
-![Demo1](./ImagesForReadme/Demo1.png)
+![Demo1](./ReadmeDocumentImages/Demo1.png)
 
 Demo1（版本ec6728a839f6140bbf1829559b30cc8b2504758b）
 
@@ -12,29 +12,29 @@ Demo1（版本ec6728a839f6140bbf1829559b30cc8b2504758b）
 
 1.下载并运行DirectX9.0 SDK安装包（DXSDK_Jun10.exe），由于DXSDK不是开源的，这里就不放文件了，放个网上的链接，侵删：链接: http://pan.baidu.com/s/1gfkqSMZ 密码: r6my
 
-![dx1](./ImagesForReadme/dx1.png)
+![dx1](./ReadmeDocumentImages/dx1.png)
 
 2.选择安装到C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)，默认地址应该就是这个。
 
-![dx2](./ImagesForReadme/dx2.png)
+![dx2](./ReadmeDocumentImages/dx2.png)
 
-![dx3](./ImagesForReadme/dx3.png)
+![dx3](./ReadmeDocumentImages/dx3.png)
 
 3.安装程序最终会出现S1023错误，但这是正常现象，不影响使用。
 
-![dx4](./ImagesForReadme/dx4.png)
+![dx4](./ReadmeDocumentImages/dx4.png)
 
 4.安装完成后打开仓库中的JackieEngine.vcxproj，就会自动在VS中打开JackieEngine项目。在右边的“解决方案管理器”中右击项目，点属性，然后按照下面三张图设置：
 
-![vs1](./ImagesForReadme/vs1.png)
+![vs1](./ReadmeDocumentImages/vs1.png)
 
-![vs2](./ImagesForReadme/vs2.png)
+![vs2](./ReadmeDocumentImages/vs2.png)
 
-![vs3](./ImagesForReadme/vs3.png)
+![vs3](./ReadmeDocumentImages/vs3.png)
 
 5.设置完成后就可以使用了，点击画面上方的“本地Windows调试器”进行编译运行。
 
-![vs4](./ImagesForReadme/vs4.png)
+![vs4](./ReadmeDocumentImages/vs4.png)
 
 # 关于开源协议
 

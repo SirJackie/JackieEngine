@@ -10,27 +10,27 @@
 
 #ifndef __CROSSBUFFER_H__
 #define __CROSSBUFFER_H__
-#include "CrossBuffer.h"
+#include "./CrossBufferLayer/CrossBuffer.h"
 #endif
 
 #ifndef __TEXTOUTPUT_H__
 #define __TEXTOUTPUT_H__
-#include "TextOutput.h"
+#include "./CrossBufferLayer/TextOutput.h"
 #endif
 
 #ifndef __INPUT_H__
 #define __INPUT_H__
-#include "Input.h"
+#include "./CrossBufferLayer/Input.h"
 #endif
 
 #ifndef __JACKIE_ENGINE_H__
 #define __JACKIE_ENGINE_H__
-#include "JackieEngineLibraries/JackieEngine.h"
+#include "./JackieEngineLayer/JackieEngine.h"
 #endif
 
 #ifndef __FPS_H__
 #define __FPS_H__
-#include "FPS.h"
+#include "./CrossBufferLayer/FPS.h"
 #endif
 
 

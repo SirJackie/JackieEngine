@@ -143,22 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CrossBuffer.h" />
-    <ClInclude Include="Font.h" />
-    <ClInclude Include="FPS.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="JackieEngineLibraries\CameraSupport.h" />
-    <ClInclude Include="JackieEngineLibraries\JackieEngine.h" />
-    <ClInclude Include="JackieEngineLibraries\LinearAlgebra.h" />
-    <ClInclude Include="JackieEngineLibraries\ModelSupport.h" />
-    <ClInclude Include="JackieEngineLibraries\Rasterization.h" />
-    <ClInclude Include="Main.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="TextOutput.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="CrossBufferForWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +151,9 @@
   <ItemGroup>
     <Image Include="CrossBufferForWindows.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

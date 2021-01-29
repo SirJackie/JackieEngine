@@ -20,11 +20,11 @@
 
 #ifndef __INPUT_H__
 #define __INPUT_H__
-#include "Input.h"
+#include "../CrossBufferLayer/Input.h"
 #endif
 
 #include "resource.h"
-#include "Main.h"
+#include "../Main.h"
 
 using namespace std;
 
