@@ -153,6 +153,11 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CrossBufferLayer\CrossBuffer.h" />
+    <ClInclude Include="..\CrossBufferLayer\Font.h" />
+    <ClInclude Include="..\CrossBufferLayer\FPS.h" />
+    <ClInclude Include="..\CrossBufferLayer\Input.h" />
+    <ClInclude Include="..\CrossBufferLayer\TextOutput.h" />
     <ClInclude Include="..\Main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

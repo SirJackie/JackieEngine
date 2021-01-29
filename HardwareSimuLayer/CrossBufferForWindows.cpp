@@ -260,15 +260,23 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 				mouse.RealY = MouseInitY;
 				SetCursorPos(WindowLeftMargin + MouseInitX, WindowTopMargin + MouseInitY);
 
+				FrameBuffer fb;
+				fb.pBits = rect.pBits;
+				fb.Pitch = rect.Pitch;
+
 				/* Call the Setup() in Main.h */
-				Setup(rect, WindowWidth, WindowHeight, 0, keyboard, mouse);
+				Setup(fb, WindowWidth, WindowHeight, 0, keyboard, mouse);
 				FirstTimeRunning = FALSE;
 			}
 
 			/* If it is not the First Time Running */
 			else {
 				/* Call the Update() in Main.h */
-				Update(rect, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
+				FrameBuffer fb;
+				fb.pBits = rect.pBits;
+				fb.Pitch = rect.Pitch;
+
+				Update(fb, WindowWidth, WindowHeight, thisTime - lastTime, keyboard, mouse);
 			}
 
 

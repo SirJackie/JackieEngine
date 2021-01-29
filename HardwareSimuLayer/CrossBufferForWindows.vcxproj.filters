@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\CrossBufferLayer">
+      <UniqueIdentifier>{fe0790b5-287b-4b9d-9a1d-af46561a553e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrossBufferForWindows.cpp">
@@ -35,6 +38,21 @@
   <ItemGroup>
     <ClInclude Include="..\Main.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CrossBufferLayer\CrossBuffer.h">
+      <Filter>头文件\CrossBufferLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CrossBufferLayer\Font.h">
+      <Filter>头文件\CrossBufferLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CrossBufferLayer\FPS.h">
+      <Filter>头文件\CrossBufferLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CrossBufferLayer\Input.h">
+      <Filter>头文件\CrossBufferLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CrossBufferLayer\TextOutput.h">
+      <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

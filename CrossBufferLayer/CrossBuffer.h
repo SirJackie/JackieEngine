@@ -1,21 +1,18 @@
-#ifndef __D3D9_H__
-#define __D3D9_H__
-#include <d3d9.h>
-#endif
+struct FrameBuffer
+{
+    int Width;
+    int Height;
+    int Pitch;
+    void* pBits;
+};
 
-#ifndef __WINDOWS_H__
-#define __WINDOWS_H__
-#include <Windows.h>
-#endif
+#define GetPixel(fb, x, y)                   (((unsigned long*)fb.pBits)[x + (fb.Pitch >> 2) * y])
+#define SetPixel(fb, x, y, color)            (((unsigned long*)fb.pBits)[x + (fb.Pitch >> 2) * y] = color)
+#define GetPixelLB(fb, height, x, y)         (((unsigned long*)fb.pBits)[x + (fb.Pitch >> 2) * (height-y)])
+#define SetPixelLB(fb, height, x, y, color)  (((unsigned long*)fb.pBits)[x + (fb.Pitch >> 2) * (height-y)] = color)
 
-#define FrameBuffer                D3DLOCKED_RECT
-#define GetPixel(fb, x, y)         (((D3DCOLOR*)fb.pBits)[x + (fb.Pitch >> 2) * y])
-#define SetPixel(fb, x, y, color)  (((D3DCOLOR*)fb.pBits)[x + (fb.Pitch >> 2) * y] = color)
-#define GetPixelLB(fb, height, x, y)         (((D3DCOLOR*)fb.pBits)[x + (fb.Pitch >> 2) * (height-y)])
-#define SetPixelLB(fb, height, x, y, color)  (((D3DCOLOR*)fb.pBits)[x + (fb.Pitch >> 2) * (height-y)] = color)
-
-#define Color                      D3DCOLOR
-#define CreateColor(r, g, b, a)    (D3DCOLOR_ARGB(a, r, g, b))
+#define Color                      unsigned long
+#define CreateColor(r, g, b, a)    ((Color)((((a)&0xff)<<24)|(((r)&0xff)<<16)|(((g)&0xff)<<8)|((b)&0xff)))
 #define GetColorR(color)           (char)(color>>16) & 0xff
 #define GetColorG(color)           (char)(color>>8)  & 0xff
 #define GetColorB(color)           (char)(color)     & 0xff
