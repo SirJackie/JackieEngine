@@ -1,3 +1,7 @@
+#ifndef __CSBF_CrossBuffer
+#define __CSBF_CrossBuffer
+
+
 struct FrameBuffer
 {
     int Width;
@@ -21,3 +25,6 @@ struct FrameBuffer
 #define SetColorG(color, g)        (color = CreateColor(GetColorR(color), g, GetColorB(color), GetColorA(color)))
 #define SetColorB(color, b)        (color = CreateColor(GetColorR(color), GetColorG(color), b, GetColorA(color)))
 #define SetColorA(color, a)        (color = CreateColor(GetColorR(color), GetColorG(color), GetColorB(color), a))
+
+
+#endif

@@ -1,10 +1,8 @@
-#pragma once
+#ifndef __CSBF_FPS
+#define __CSBF_FPS
 
-#ifndef __CROSSBUFFER_H__
-#define __CROSSBUFFER_H__
+
 #include "CrossBuffer.h"
-#endif
-
 #define FPS_BUFFER_LENGTH 128
 
 /*
@@ -43,3 +41,5 @@ void CalcFPS(FrameBuffer fb, int width, int height, int deltaTime) {
 	DrawShadowString(fb, width, height, 10, 10, FPSBuffer);
 }
 
+
+#endif

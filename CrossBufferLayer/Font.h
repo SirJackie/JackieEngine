@@ -1,3 +1,7 @@
+#ifndef __CSBF_Font
+#define __CSBF_Font
+
+
 const int Font[8 * 16 * 256] = {
 
 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ,
@@ -4607,3 +4611,5 @@ const int Font[8 * 16 * 256] = {
 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ,
 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  ,
 }
+
+#endif
