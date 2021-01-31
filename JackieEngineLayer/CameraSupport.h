@@ -1,17 +1,9 @@
-#ifndef __STDIO_H__
-#define __STDIO_H__
+#ifndef __JKEG_CameraSupport
+#define __JKEG_CameraSupport
+
 #include <stdio.h>
-#endif
-
-#ifndef __MATH_H__
-#define __MATH_H__
 #include <math.h>
-#endif
-
-#ifndef __LINEAR_ALGEBRA_H__
-#define __LINEAR_ALGEBRA_H__
 #include "LinearAlgebra.h"
-#endif
 
 
 /*
@@ -73,7 +65,7 @@ Camera4D CreateCamera4D(
 	cam.ScreenWidth = ScreenWidth;
 	cam.ScreenHeight = ScreenHeight;
 
-	cam.t = abs(cam.n) * tand(cam.fovY / 2.0f);
+	cam.t = fabs(cam.n) * tand(cam.fovY / 2.0f);
 	cam.b = -1.0f * cam.t;
 
 	cam.r = cam.ScreenWidth * cam.t / cam.ScreenHeight;
@@ -220,3 +212,5 @@ void RefreshCamera4DMatrices(Camera4D* cam) {
 		&(cam->MprojAndviewport)
 	);
 }
+
+#endif

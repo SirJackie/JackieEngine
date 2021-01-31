@@ -1,32 +1,12 @@
-#ifndef __STDIO_H__
-#define __STDIO_H__
+#ifndef __JKEG_Rasterization
+#define __JKEG_Rasterization
+
 #include <stdio.h>
-#endif
-
-#ifndef __MATH_H__
-#define __MATH_H__
 #include <math.h>
-#endif
-
-#ifndef __LINEAR_ALGEBRA_H__
-#define __LINEAR_ALGEBRA_H__
 #include "LinearAlgebra.h"
-#endif
-
-#ifndef __CAMERA_SUPPORT_H__
-#define __CAMERA_SUPPORT_H__
 #include "CameraSupport.h"
-#endif
-
-#ifndef __MODEL_SUPPORT_H__
-#define __MODEL_SUPPORT_H__
 #include "ModelSupport.h"
-#endif
-
-#ifndef __CROSSBUFFER_H__
-#define __CROSSBUFFER_H__
-#include "CrossBuffer.h"
-#endif
+#include "../CrossBufferLayer/CrossBuffer.h"
 
 
 /*
@@ -53,11 +33,12 @@ void DrawVector4D(FrameBuffer fb, int width, int height, Vector4D* vec, int radi
 ** Drawing Functions for FlatMesh4D
 */
 
-void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
+void DrawFlatMesh4D(FrameBuffer fb, 
 	Vector4D* v0, Vector4D* v1, Vector4D* v2, Color color, float* ZBuffer
 )
 {
-
+	int width = fb.Width;
+	int height = fb.Height;
 
 	/*
 	** Calculate Planar Equation For Z-Buffer
@@ -216,3 +197,5 @@ void DrawFlatMesh4D(FrameBuffer fb, int width, int height,
 		}
 	}
 }
+
+#endif

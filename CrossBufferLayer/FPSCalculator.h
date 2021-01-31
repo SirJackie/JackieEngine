@@ -1,8 +1,8 @@
-#ifndef __CSBF_FPS
-#define __CSBF_FPS
+#ifndef __CSBF_FPSCalculator
+#define __CSBF_FPSCalculator
 
-
-#include "CrossBuffer.h"
+#include "IOSupport.h"
+#include <stdio.h>
 #define FPS_BUFFER_LENGTH 128
 
 /*
@@ -13,7 +13,7 @@ int   FPSDeltaTimeCount;
 int   FPSFrameCount;
 char  FPSBuffer[FPS_BUFFER_LENGTH];
 
-void CalcFPS(FrameBuffer fb, int width, int height, int deltaTime) {
+void CalcFPS(FrameBuffer fb, int deltaTime) {
 	/*
 	** FPS Processing
 	*/
@@ -32,13 +32,15 @@ void CalcFPS(FrameBuffer fb, int width, int height, int deltaTime) {
 	sprintf_s(
 		FPSBuffer,
 		FPS_BUFFER_LENGTH,
-		"FPS: %f; DeltaTime: %d; Width: %d; Height: %d",
+		"FPS: %f; DeltaTime: %d; Width: %d; Height: %d; Pitch: %d; pBits: %p",
 		FPS,
 		deltaTime,
-		width,
-		height
+		fb.Width,
+		fb.Height,
+		fb.Pitch,
+		fb.pBits
 	);
-	DrawShadowString(fb, width, height, 10, 10, FPSBuffer);
+	DrawShadowString(fb, 10, 10, FPSBuffer);
 }
 
 

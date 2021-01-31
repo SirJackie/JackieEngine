@@ -1,12 +1,8 @@
-#ifndef __STDIO_H__
-#define __STDIO_H__
-#include <stdio.h>
-#endif
+#ifndef __JKEG_LinearAlgebra
+#define __JKEG_LinearAlgebra
 
-#ifndef __MATH_H__
-#define __MATH_H__
+#include <stdio.h>
 #include <math.h>
-#endif
 
 
 /*
@@ -274,3 +270,5 @@ Matrix4D Matrix4DTimesMatrix4D(Matrix4D* a, Matrix4D* b) {
 
 	return result;
 }
+
+#endif

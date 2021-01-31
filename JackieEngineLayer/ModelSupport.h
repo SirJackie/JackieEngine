@@ -1,17 +1,9 @@
-#ifndef __STDIO_H__
-#define __STDIO_H__
+#ifndef __JKEG_ModelSupport
+#define __JKEG_ModelSupport
+
 #include <stdio.h>
-#endif
-
-#ifndef __MATH_H__
-#define __MATH_H__
 #include <math.h>
-#endif
-
-#ifndef __LINEAR_ALGEBRA_H__
-#define __LINEAR_ALGEBRA_H__
 #include "LinearAlgebra.h"
-#endif
 
 
 Matrix4D CreateRotationMatrix(float rotx, float roty, float rotz) {
@@ -48,3 +40,5 @@ Matrix4D CreateRotationMatrix(float rotx, float roty, float rotz) {
 
 	return Mrotation;
 }
+
+#endif

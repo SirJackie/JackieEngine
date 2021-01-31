@@ -1,34 +1,67 @@
-#define PRESSED   1
-#define UNPRESSED 0
+#ifndef __CSBF_IOSupport
+#define __CSBF_IOSupport
+
+#include "FrameBufferSupport.h"
+#include "FontSupport.h"
+
+
+/*
+** Output
+*/
+
+void DrawChar(FrameBuffer fb, int x, int y, int color, char ch)
+{
+	int* bitmapPointer;
+	for (int deltaY = 0; deltaY < 16; deltaY++) {
+		bitmapPointer = (int*)(Font + ((int)ch * 16 * 8) + (8 * deltaY));
+		if (bitmapPointer[0] == 255) { SetPixel(fb, (x + 0), (y + deltaY), color); }
+		if (bitmapPointer[1] == 255) { SetPixel(fb, (x + 1), (y + deltaY), color); }
+		if (bitmapPointer[2] == 255) { SetPixel(fb, (x + 2), (y + deltaY), color); }
+		if (bitmapPointer[3] == 255) { SetPixel(fb, (x + 3), (y + deltaY), color); }
+		if (bitmapPointer[4] == 255) { SetPixel(fb, (x + 4), (y + deltaY), color); }
+		if (bitmapPointer[5] == 255) { SetPixel(fb, (x + 5), (y + deltaY), color); }
+		if (bitmapPointer[6] == 255) { SetPixel(fb, (x + 6), (y + deltaY), color); }
+		if (bitmapPointer[7] == 255) { SetPixel(fb, (x + 7), (y + deltaY), color); }
+	}
+}
+
+
+void DrawString(FrameBuffer fb, int x, int y, int color, const char* stringPointer)
+{
+	int originX = x;
+	for (; *stringPointer != 0x00; stringPointer++) {
+		if (*stringPointer == '\n') {
+			y += 16;
+			x = originX;
+			continue;
+		}
+		DrawChar(fb, x, y, color, *stringPointer);  // Draw This Char
+		x += 8;
+
+		if (x >= fb.Width) {
+			y += 16;
+			x = originX;
+		}
+		if (y >= fb.Height) {
+			return;
+		}
+		
+	}
+	return;
+}
+
+
+void DrawShadowString(FrameBuffer fb, int x, int y, const char* stringPointer) {
+	DrawString(fb, x,     y,     CreateColor(0,   0,   0  ), stringPointer);
+	DrawString(fb, x + 1, y + 1, CreateColor(255, 255, 255), stringPointer);
+}
+
+
+/*
+** Input
+*/
 
 #define Keyboard int*
-
-struct Mouse {
-	int LButtonState;
-	int RButtonState;
-	int RealX;
-	int RealY;
-	int RealDeltaX;
-	int RealDeltaY;
-	int DeltaRatio;
-	float DeltaX;
-	float DeltaY;
-	BOOL* WantToLockOrNot;
-	BOOL* NowLockingOrNot;
-	BOOL* HideCursorOrNot;
-};
-
-void LockMouse(Mouse mouse) {
-	*(mouse.WantToLockOrNot) = TRUE;
-	*(mouse.NowLockingOrNot) = TRUE;
-	*(mouse.HideCursorOrNot) = TRUE;
-}
-
-void UnlockMouse(Mouse mouse) {
-	*(mouse.WantToLockOrNot) = FALSE;
-	*(mouse.NowLockingOrNot) = FALSE;
-	*(mouse.HideCursorOrNot) = FALSE;
-}
 
 #define    KEY_LBUTTON             0x01    // 鼠标左键（控制台不使用）
 #define    KEY_RBUTTON             0x02    // 鼠标右键（控制台不使用）
@@ -68,7 +101,7 @@ void UnlockMouse(Mouse mouse) {
 #define    KEY_DOWN                0x28    // 下方向键，就是↓
 #define    KEY_SELECT              0x29    // Select键
 #define    KEY_PRINT               0x2A    // Print键
-#define    KEY_EXECUTE             0x2B    // Excute键
+#define    KEY_EXE                 0x2B    // Excute键
 #define    KEY_SNAPSHOT            0x2C    // 屏幕打印键，就是PrintScreen
 #define    KEY_INSERT              0x2D    // 插入键，就是Insert
 #define    KEY_DELETE              0x2E    // 删除键，就是Delete
@@ -181,6 +214,9 @@ void UnlockMouse(Mouse mouse) {
 #define    KEY_OEM_AUTO            0xF3    // 诺基亚、爱立信使用的
 #define    KEY_OEM_ENLW            0xF4    // 诺基亚、爱立信使用的
 #define    KEY_OEM_BACKTAB         0xF5    // 诺基亚、爱立信使用的
+#define    KEY_MOUSE_LBTN          0xF0    // 鼠标左键
+#define    KEY_MOUSE_RBTN          0xF1    // 鼠标右键
+#define    KEY_MOUSE_CBTN          0xF2    // 鼠标中键
 #define    KEY_ATTN                0xF6    // Attn键
 #define    KEY_CRSEL               0xF7    // CrSel键
 #define    KEY_EXSEL               0xF8    // ExSel键
@@ -190,3 +226,5 @@ void UnlockMouse(Mouse mouse) {
 #define    KEY_NONAME              0xFC    // 未用
 #define    KEY_PA1                 0xFD    // PA1键
 #define    KEY_OEM_CLEAR           0xFE    // Clear键
+
+#endif

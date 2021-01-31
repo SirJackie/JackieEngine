@@ -1,38 +1,11 @@
-#ifndef __STDIO_H__
-#define __STDIO_H__
 #include <stdio.h>
-#endif
-
-#ifndef __MATH_H__
-#define __MATH_H__
 #include <math.h>
-#endif
-
-#ifndef __CROSSBUFFER_H__
-#define __CROSSBUFFER_H__
 #include "./CrossBufferLayer/CrossBuffer.h"
-#endif
-
-#ifndef __TEXTOUTPUT_H__
-#define __TEXTOUTPUT_H__
-#include "./CrossBufferLayer/TextOutput.h"
-#endif
-
-#ifndef __INPUT_H__
-#define __INPUT_H__
-#include "./CrossBufferLayer/Input.h"
-#endif
-
-#ifndef __JACKIE_ENGINE_H__
-#define __JACKIE_ENGINE_H__
 #include "./JackieEngineLayer/JackieEngine.h"
-#endif
 
-#ifndef __FPS_H__
-#define __FPS_H__
-#include "./CrossBufferLayer/FPS.h"
-#endif
-
+/* Define Window Class Properties */
+#define WindowClassName L"CrossBuffer Class"
+#define WindowTitle     L"CrossBuffer <Click Mouse Buttons or A and D to swap the color>"
 
 /*
 ** Global Variables
@@ -50,19 +23,10 @@ int       rotateKeyDelay       = 0;
 
 
 /*
-** OnCreate()
-*/
-
-void OnCreate() {
-	;
-}
-
-
-/*
 ** Setup()
 */
 
-void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
+void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	
 	
 	/*
@@ -71,7 +35,7 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 
 	cam = CreateCamera4D(
 		0.0f, 0.0f, 7.0f, 0.0f, 0.0f, 0.0f,
-		-0.1f, -1000.0f, 60.0f, width, height
+		-0.1f, -1000.0f, 60.0f, fb.Width, fb.Height
 	);
 	CalcCamera4DMatrices(&cam);
 
@@ -95,38 +59,38 @@ void Setup(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboa
 ** Update()
 */
 
-void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keyboard, Mouse mouse) {
+void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	
 
 	/*
 	** Calculating FPS
 	*/
 
-	CalcFPS(fb, width, height, deltaTime);
+	CalcFPS(fb, deltaTime);
 
 
 	/*
 	** Position Responder
 	*/
 
-	if (keyboard['W'] == TRUE) {
+	if (kb['W'] == TRUE) {
 		cam.position.z -= 1.0f * keyboardSensitivity * deltaTime;
 	}
-	if (keyboard['S'] == TRUE) {
+	if (kb['S'] == TRUE) {
 		cam.position.z += 1.0f * keyboardSensitivity * deltaTime;
 	}
 
-	if (keyboard['A'] == TRUE) {
+	if (kb['A'] == TRUE) {
 		cam.position.x -= 0.5f * keyboardSensitivity * deltaTime;
 	}
-	if (keyboard['D'] == TRUE) {
+	if (kb['D'] == TRUE) {
 		cam.position.x += 0.5f * keyboardSensitivity * deltaTime;
 	}
 
-	if (keyboard['E'] == TRUE) {
+	if (kb['E'] == TRUE) {
 		cam.position.y -= 0.5f * keyboardSensitivity * deltaTime;
 	}
-	if (keyboard['Q'] == TRUE) {
+	if (kb['Q'] == TRUE) {
 		cam.position.y += 0.5f * keyboardSensitivity * deltaTime;
 	}
 
@@ -135,24 +99,24 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	** Rotation Responder
 	*/
 
-	if (keyboard['I'] == TRUE) {
+	if (kb['I'] == TRUE) {
 		cam.rotation.x -= 5.0f * keyboardSensitivity * deltaTime;
 	}
-	if (keyboard['K'] == TRUE) {
+	if (kb['K'] == TRUE) {
 		cam.rotation.x += 5.0f * keyboardSensitivity * deltaTime;
 	}
 
-	if (keyboard['J'] == TRUE) {
+	if (kb['J'] == TRUE) {
 		cam.rotation.y -= 5.0f * keyboardSensitivity * deltaTime;
 	}
-	if (keyboard['L'] == TRUE) {
+	if (kb['L'] == TRUE) {
 		cam.rotation.y += 5.0f * keyboardSensitivity * deltaTime;
 	}
 
-	if (keyboard['U'] == TRUE) {
+	if (kb['U'] == TRUE) {
 		cam.rotation.z -= 5.0f * keyboardSensitivity * deltaTime;
 	}
-	if (keyboard['O'] == TRUE) {
+	if (kb['O'] == TRUE) {
 		cam.rotation.z += 5.0f * keyboardSensitivity * deltaTime;
 	}
 
@@ -161,7 +125,7 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	** R Key Responder
 	*/
 
-	if (keyboard['R'] == TRUE && rotateKeyDelay == 0) {
+	if (kb['R'] == TRUE && rotateKeyDelay == 0) {
 		rotateOrNot = !(rotateOrNot);
 		rotateKeyDelay = 10;
 	}
@@ -223,27 +187,27 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 		"n:%f\nf:%f\nt:%f\nb:%f\nl:%f\nr:%f\n",
 		cam.n, cam.f, cam.t, cam.b, cam.l, cam.r
 	);
-	DrawShadowString(fb, width, height, 10, 42, realbuffer);
+	DrawShadowString(fb, 10, 42, realbuffer);
 
 	// Camera Position
 	buffer = OutputVector4D(&(cam.position));
-	DrawShadowString(fb, width, height, 10, 314, buffer);
+	DrawShadowString(fb, 10, 314, buffer);
 	free(buffer);
 
 	// Camera Rotation
 	buffer = OutputVector4D(&(cam.rotation));
-	DrawShadowString(fb, width, height, 10, 346, buffer);
+	DrawShadowString(fb, 10, 346, buffer);
 	free(buffer);
 
 	// Mtransform
 	buffer = OutputMatrix4D(&(cam.Mtransform));
-	DrawShadowString(fb, width, height, 10, 378, buffer);
+	DrawShadowString(fb, 10, 378, buffer);
 	free(buffer);
 
 	// Vector List
 	for (int i = 0; i < 8; i++) {
 		buffer = OutputVector4D(&(vecs[i]));
-		DrawShadowString(fb, width, height, 10, 154 + i * 16, buffer);
+		DrawShadowString(fb, 10, 154 + i * 16, buffer);
 		free(buffer);
 	}
 
@@ -252,10 +216,10 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	** Get And Clear Z-Buffer
 	*/
 
-	float* ZBuffer = (float*)malloc(sizeof(float) * width * height);
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			ZBuffer[y * width + x] = cam.f;
+	float* ZBuffer = (float*)malloc(sizeof(float) * fb.Width * fb.Height);
+	for (int y = 0; y < fb.Height; y++) {
+		for (int x = 0; x < fb.Width; x++) {
+			ZBuffer[y * fb.Width + x] = cam.f;
 		}
 	}
 
@@ -264,18 +228,18 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	** Do Rasterization
 	*/
 
-	DrawFlatMesh4D(fb, width, height, &(vecs[0]), &(vecs[1]), &(vecs[3]), CreateColor(255, 0, 255, 255), ZBuffer);
-	DrawFlatMesh4D(fb, width, height, &(vecs[2]), &(vecs[3]), &(vecs[1]), CreateColor(255, 255, 0, 255), ZBuffer);
-	DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[4]), &(vecs[6]), CreateColor(255, 255, 255, 255), ZBuffer);
-	DrawFlatMesh4D(fb, width, height, &(vecs[7]), &(vecs[6]), &(vecs[4]), CreateColor(255, 255, 255, 255), ZBuffer);
-	DrawFlatMesh4D(fb, width, height, &(vecs[4]), &(vecs[0]), &(vecs[7]), CreateColor(255, 255, 255, 255), ZBuffer);
-	DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[7]), &(vecs[0]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, width, height, &(vecs[1]), &(vecs[5]), &(vecs[2]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, width, height, &(vecs[6]), &(vecs[2]), &(vecs[5]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, width, height, &(vecs[3]), &(vecs[2]), &(vecs[7]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, width, height, &(vecs[6]), &(vecs[7]), &(vecs[2]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[0]), &(vecs[4]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, width, height, &(vecs[5]), &(vecs[1]), &(vecs[0]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, &(vecs[0]), &(vecs[1]), &(vecs[3]), CreateColor(255, 0, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, &(vecs[2]), &(vecs[3]), &(vecs[1]), CreateColor(255, 255, 0, 255), ZBuffer);
+	DrawFlatMesh4D(fb, &(vecs[5]), &(vecs[4]), &(vecs[6]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, &(vecs[7]), &(vecs[6]), &(vecs[4]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, &(vecs[4]), &(vecs[0]), &(vecs[7]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawFlatMesh4D(fb, &(vecs[3]), &(vecs[7]), &(vecs[0]), CreateColor(255, 255, 255, 255), ZBuffer);
+	//DrawFlatMesh4D(fb, &(vecs[1]), &(vecs[5]), &(vecs[2]), CreateColor(255, 255, 255, 255), ZBuffer);
+	//DrawFlatMesh4D(fb, &(vecs[6]), &(vecs[2]), &(vecs[5]), CreateColor(255, 255, 255, 255), ZBuffer);
+	//DrawFlatMesh4D(fb, &(vecs[3]), &(vecs[2]), &(vecs[7]), CreateColor(255, 255, 255, 255), ZBuffer);
+	//DrawFlatMesh4D(fb, &(vecs[6]), &(vecs[7]), &(vecs[2]), CreateColor(255, 255, 255, 255), ZBuffer);
+	//DrawFlatMesh4D(fb, &(vecs[5]), &(vecs[0]), &(vecs[4]), CreateColor(255, 255, 255, 255), ZBuffer);
+	//DrawFlatMesh4D(fb, &(vecs[5]), &(vecs[1]), &(vecs[0]), CreateColor(255, 255, 255, 255), ZBuffer);
 
 
 	/*
@@ -297,9 +261,4 @@ void Update(FrameBuffer fb, int width, int height, int deltaTime, Keyboard keybo
 	*/
 
 	free(ZBuffer);
-}
-
-
-void OnDestroy() {
-	;
 }
