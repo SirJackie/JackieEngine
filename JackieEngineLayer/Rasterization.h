@@ -198,4 +198,150 @@ void DrawFlatMesh4D(FrameBuffer fb,
 	}
 }
 
+
+/*
+** Scan-Line Rasterization
+**/
+
+#define TriangleSide int
+#define LONGSIDE_RIGHT 0
+#define LONGSIDE_LEFT  1
+
+typedef Color(*ColorFunction) (double, double, double);
+
+/*
+** Flat Bottom Triangle Drawing Functions
+*/
+
+void FBDrawColorPixel(FrameBuffer fb, int x, int y, double r, double s, double t, TriangleSide tris, ColorFunction cfun, double w) {
+	if (tris == LONGSIDE_RIGHT) {
+		SetPixel(fb, x, y, cfun(r + t * w, s, t - t * w));
+	}
+	else {
+		SetPixel(fb, x, y, cfun(r + s * w, t, s - s * w));
+	}
+}
+
+void FBDrawHLine(FrameBuffer fb, int y, int x0, int x1, double a, TriangleSide tris, ColorFunction cfun, double w) {
+	int llen = x1 - x0;
+	double lIPStep = -1.0f / llen;
+	double b = 1;
+
+	for (int xHat = x0; xHat < x1; xHat++) {
+		FBDrawColorPixel(fb, xHat, y, a, b - a * b, a * b - a - b + 1, tris, cfun, w);
+		b += lIPStep;
+	}
+}
+
+void DrawFlatBottomTriangle(FrameBuffer fb, int x0, int yStart, int x1, int x2, int yEnd, TriangleSide tris, ColorFunction cfun, double w) {
+	double l1DeltaX = x1 - x0;
+	double l1DeltaY = yEnd - yStart;
+	double l1m = l1DeltaX / l1DeltaY;  // The Negative Slope of line 1
+	double l1len = sqrt(l1DeltaX * l1DeltaX + l1DeltaY * l1DeltaY);  // The Length of line 1
+	double l1IPStep = -1.0f / l1DeltaY;
+
+	double l2DeltaX = x2 - x0;
+	double l2DeltaY = l1DeltaY;
+	double l2m = l2DeltaX / l2DeltaY;  // The Negative Slope of line 1
+
+	double i = 1.0f * x0;
+	double j = 1.0f * x0;
+	double a = 1.0f;
+
+	for (int yHat = yStart; yHat <= yEnd; yHat++) {
+		FBDrawHLine(fb, yHat, (int)i, (int)j, a, tris, cfun, w);
+		i += l1m;
+		j += l2m;
+		a += l1IPStep;
+	}
+}
+
+
+/*
+** Flat Topped Triangle Drawing Functions
+*/
+
+void FTDrawColorPixel(FrameBuffer fb, int x, int y, double r, double s, double t, TriangleSide tris, ColorFunction cfun, double w) {
+	if (tris == LONGSIDE_RIGHT) {
+		SetPixel(fb, x, y, cfun(s * w, r, s - s * w + t));
+	}
+	else {
+		SetPixel(fb, x, y, cfun(r * w, s, r - r * w + t));
+	}
+}
+
+void FTDrawHLine(FrameBuffer fb, int y, int x0, int x1, double a, TriangleSide tris, ColorFunction cfun, double w) {
+	int llen = x1 - x0;
+	double lIPStep = -1.0f / llen;
+	double b = 1;
+
+	for (int xHat = x0; xHat < x1; xHat++) {
+		FTDrawColorPixel(fb, xHat, y, a * b, a - a * b, 1 - a, tris, cfun, w);
+		b += lIPStep;
+	}
+}
+
+void DrawFlatToppedTriangle(FrameBuffer fb, int x1, int x2, int yStart, int x0, int yEnd, TriangleSide tris, ColorFunction cfun, double w) {
+	double l1DeltaX = x0 - x1;
+	double l1DeltaY = yEnd - yStart;
+	double l1m = l1DeltaX / l1DeltaY;  // The Negative Slope of line 1
+	double l1IPStep = -1.0f / l1DeltaY;
+
+	double l2DeltaX = x0 - x2;
+	double l2DeltaY = l1DeltaY;
+	double l2m = l2DeltaX / l2DeltaY;  // The Negative Slope of line 1
+
+	double i = 1.0f * x1;
+	double j = 1.0f * x2;
+	double a = 1.0f;
+
+	for (int yHat = yStart; yHat <= yEnd; yHat++) {
+		FTDrawHLine(fb, yHat, (int)i, (int)j, a, tris, cfun, w);
+		i += l1m;
+		j += l2m;
+		a += l1IPStep;
+	}
+}
+
+
+/*
+** Draw Whole Triangle
+*/
+
+void DrawTriangle(FrameBuffer fb, Vector4D* A, Vector4D* B, Vector4D* C, ColorFunction cfun) {
+	Vector4D* swap;
+	if ((A->y) > (B->y)) {
+		swap = A;
+		A = B;
+		B = swap;
+	}
+	if ((A->y) > (C->y)) {
+		swap = A;
+		A = C;
+		C = swap;
+	}
+	if ((B->y) > (C->y)) {
+		swap = B;
+		B = C;
+		C = swap;
+	}
+
+	double lsm = (C->x - A->x) / (C->y - A->y);
+	Vector4D D = CreateVector4D(A->x + lsm * (B->y - A->y), B->y, 1, 1);
+	double lsIPStep = -1 / (C->y - A->y);
+	double w = 1 + lsIPStep * (B->y - A->y);
+	TriangleSide tris;
+
+	if (((B->x) < (A->x)) && ((B->x) < (C->x))) {
+		tris = LONGSIDE_RIGHT;
+		DrawFlatBottomTriangle(fb, A->x, A->y, B->x, D.x, B->y, tris, cfun, w);
+		DrawFlatToppedTriangle(fb, B->x, D.x, B->y, C->x, C->y, tris, cfun, w);
+	}
+	else {
+		tris = LONGSIDE_LEFT;
+		DrawFlatBottomTriangle(fb, A->x, A->y, D.x, B->x, B->y, tris, cfun, w);
+		DrawFlatToppedTriangle(fb, D.x, B->x, B->y, C->x, C->y, tris, cfun, w);
+	}
+}
+
 #endif
