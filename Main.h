@@ -7,16 +7,26 @@
 #define WindowClassName L"Jackie Engine Class"
 #define WindowTitle     L"Jackie Engine"
 
-void DrawHLine(FrameBuffer fb, int x0, int x1, int y, Color color) {
-	for (int i = x0; i < x1; i++) {
-		//SetPixel(fb, i, y, color);
-		((unsigned long*)fb.pBits) [i + (fb.Pitch >> 2) * y] = color;
+#define TriangleSide int
+#define LONGSIDE_RIGHT 0
+#define LONGSIDE_LEFT  1
+
+void DrawHLine(FrameBuffer fb, int y, int x0, int x1, double a, TriangleSide tris, Color color, double w) {
+	int llen = x1 - x0;
+	double lIPStep = -1.0f / llen;
+	double b = 1;
+	
+	for (int xHat = x0; xHat < x1; xHat++) {
+		SetPixel(fb, xHat, y, CreateColor((int)(a * 255), (int)(b * 255),  255) );
+		b += lIPStep;
 	}
 }
 
 double expo1, expo2, expo3, expo4, expo5;
 
-void DrawFlatBottomTriangle(FrameBuffer fb, int x0, int yStart, int x1, int x2, int yEnd, Color color) {
+void DrawFlatBottomTriangle(FrameBuffer fb, int x0, int yStart, int x1, int x2, int yEnd, TriangleSide tris, Color cfun, double w) {
+	tris = LONGSIDE_RIGHT;
+	
 	double l1DeltaX = x1 - x0;
 	double l1DeltaY = yEnd - yStart;
 	double l1m = l1DeltaX / l1DeltaY;  // The Negative Slope of line 1
@@ -36,7 +46,7 @@ void DrawFlatBottomTriangle(FrameBuffer fb, int x0, int yStart, int x1, int x2, 
 
 	for (int yHat = yStart; yHat <= yEnd; yHat++) {
 		int ctmp = 255 * a;
-		DrawHLine(fb, (int)i, (int)j, yHat, CreateColor(ctmp, ctmp, ctmp));
+		DrawHLine(fb, yHat, (int)i, (int)j, a, tris, CreateColor(ctmp, ctmp, ctmp), w);
 		i += l1m;
 		j += l2m;
 		a += l1IPStep;
@@ -54,7 +64,7 @@ int x2 = 1000;
 int yEnd = 200;
 
 void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
-	DrawFlatBottomTriangle(fb, x0, yStart, x1, x2, yEnd, CreateColor(255, 255, 255));
+	DrawFlatBottomTriangle(fb, x0, yStart, x1, x2, yEnd, LONGSIDE_RIGHT, CreateColor(255, 255, 255), 0.0f);
 
 	if (kb['W']) {
 		yStart -= 3;
