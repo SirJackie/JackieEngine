@@ -120,52 +120,105 @@ void DrawFlatToppedTriangle(FrameBuffer fb, int x1, int x2, int yStart, int x0, 
 	}
 }
 
+
+/*
+** Draw Whole Triangle
+*/
+
+void DrawTriangle(FrameBuffer fb, Vector4D* A, Vector4D* B, Vector4D* C, ColorFunction cfun) {
+	Vector4D* swap;
+	if ((A->y) > (B->y)) {
+		swap = A;
+		A = B;
+		B = swap;
+	}
+	if ((A->y) > (C->y)) {
+		swap = A;
+		A = C;
+		C = swap;
+	}
+	if ((B->y) > (C->y)) {
+		swap = B;
+		B = C;
+		C = swap;
+	}
+
+	double lsm = (C->x - A->x) / (C->y - A->y);
+	Vector4D D = CreateVector4D(A->x + lsm * (B->y - A->y), B->y, 1, 1);
+	double lsIPStep = -1 / (C->y - A->y);
+	double w = 1 + lsIPStep * (B->y - A->y);
+	TriangleSide tris;
+
+	if (((B->x) < (A->x)) && ((B->x) < (C->x))) {
+		tris = LONGSIDE_RIGHT;
+	}
+	else {
+		tris = LONGSIDE_LEFT;
+	}
+
+	DrawFlatBottomTriangle(fb, A->x, A->y, B->x, D.x,  B->y, tris, cfun, w);
+	DrawFlatToppedTriangle(fb, B->x, D.x,  B->y, C->x, C->y, tris, cfun, w);
+}
+
+Vector4D A, B, C;
+
+
 void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
-	;
+	A = CreateVector4D(500, 0, 1, 1);
+	B = CreateVector4D(300, 200, 1, 1);
+	C = CreateVector4D(800, 500, 1, 1);
 }
 
 
-int x1 = 0;
-int x2 = 1000;
-int yStart = 100;
-int x0 = 500;
-int yEnd = 500;
-
 void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
-	DrawFlatToppedTriangle(fb, x1, x2, yStart, x0, yEnd, LONGSIDE_RIGHT, cfun, 1.0f);
+	DrawTriangle(fb, &A, &B, &C, cfun);
 
+	/*
+	** Vector A Controling Codes
+	*/
 	if (kb['W']) {
-		yStart -= 3;
+		A.y -= 3;
 	}
 	if (kb['S']) {
-		yStart += 3;
+		A.y += 3;
 	}
 	if (kb['A']) {
-		x1 -= 3;
+		A.x -= 3;
 	}
 	if (kb['D']) {
-		x1 += 3;
+		A.x += 3;
 	}
 
-	if (kb['Z']) {
-		x2 -= 3;
+	/*
+	** Vector B Controling Codes
+	*/
+	if (kb['T']) {
+		B.y -= 3;
 	}
-	if (kb['X']) {
-		x2 += 3;
+	if (kb['G']) {
+		B.y += 3;
+	}
+	if (kb['F']) {
+		B.x -= 3;
+	}
+	if (kb['H']) {
+		B.x += 3;
 	}
 
+	/*
+	** Vector C Controling Codes
+	*/
 	if (kb['I']) {
-		yEnd -= 3;
+		C.y -= 3;
 	}
 	if (kb['K']) {
-		yEnd += 3;
+		C.y += 3;
 	}
-
 	if (kb['J']) {
-		x0 -= 3;
+		C.x -= 3;
 	}
 	if (kb['L']) {
-		x0 += 3;
+		C.x += 3;
 	}
 
 	CalcFPS(fb, deltaTime);
