@@ -151,13 +151,14 @@ void DrawTriangle(FrameBuffer fb, Vector4D* A, Vector4D* B, Vector4D* C, ColorFu
 
 	if (((B->x) < (A->x)) && ((B->x) < (C->x))) {
 		tris = LONGSIDE_RIGHT;
+		DrawFlatBottomTriangle(fb, A->x, A->y, B->x, D.x, B->y, tris, cfun, w);
+		DrawFlatToppedTriangle(fb, B->x, D.x, B->y, C->x, C->y, tris, cfun, w);
 	}
 	else {
 		tris = LONGSIDE_LEFT;
+		DrawFlatBottomTriangle(fb, A->x, A->y, D.x,  B->x, B->y, tris, cfun, w);
+		DrawFlatToppedTriangle(fb, D.x,  B->x, B->y, C->x, C->y, tris, cfun, w);
 	}
-
-	DrawFlatBottomTriangle(fb, A->x, A->y, B->x, D.x,  B->y, tris, cfun, w);
-	DrawFlatToppedTriangle(fb, B->x, D.x,  B->y, C->x, C->y, tris, cfun, w);
 }
 
 Vector4D A, B, C;
@@ -165,8 +166,8 @@ Vector4D A, B, C;
 
 void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	A = CreateVector4D(500, 0, 1, 1);
-	B = CreateVector4D(300, 200, 1, 1);
-	C = CreateVector4D(800, 500, 1, 1);
+	B = CreateVector4D(300, 500, 1, 1);
+	C = CreateVector4D(800, 200, 1, 1);
 }
 
 
