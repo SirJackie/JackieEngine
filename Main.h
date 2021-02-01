@@ -23,6 +23,13 @@ Color realCfun(double r, double s, double t) {
 
 ColorFunction cfun = realCfun;
 
+double expo1, expo2, expo3, expo4, expo5;
+
+
+/*
+** Flat Bottom Triangle Drawing Functions
+*/
+
 void FBDrawColorPixel(FrameBuffer fb, int x, int y, double r, double s, double t, TriangleSide tris, ColorFunction cfun, double w) {
 	if (tris == LONGSIDE_RIGHT) {
 		SetPixel(fb, x, y, cfun(r + t * w, s, t - t * w));
@@ -43,17 +50,12 @@ void FBDrawHLine(FrameBuffer fb, int y, int x0, int x1, double a, TriangleSide t
 	}
 }
 
-double expo1, expo2, expo3, expo4, expo5;
-
 void DrawFlatBottomTriangle(FrameBuffer fb, int x0, int yStart, int x1, int x2, int yEnd, TriangleSide tris, ColorFunction cfun, double w) {
 	double l1DeltaX = x1 - x0;
 	double l1DeltaY = yEnd - yStart;
 	double l1m = l1DeltaX / l1DeltaY;  // The Negative Slope of line 1
 	double l1len = sqrt(l1DeltaX * l1DeltaX + l1DeltaY * l1DeltaY);  // The Length of line 1
 	double l1IPStep = -1.0f / l1DeltaY;
-	expo1 = l1len;
-	expo2 = l1m;
-	expo3 = l1IPStep;
 
 	double l2DeltaX = x2 - x0;
 	double l2DeltaY = l1DeltaY;
@@ -64,8 +66,54 @@ void DrawFlatBottomTriangle(FrameBuffer fb, int x0, int yStart, int x1, int x2, 
 	double a = 1.0f;
 
 	for (int yHat = yStart; yHat <= yEnd; yHat++) {
-		int ctmp = 255 * a;
 		FBDrawHLine(fb, yHat, (int)i, (int)j, a, tris, cfun, w);
+		i += l1m;
+		j += l2m;
+		a += l1IPStep;
+	}
+}
+
+
+/*
+** Flat Topped Triangle Drawing Functions
+*/
+
+void FTDrawColorPixel(FrameBuffer fb, int x, int y, double r, double s, double t, TriangleSide tris, ColorFunction cfun, double w) {
+	if (tris == LONGSIDE_RIGHT) {
+		SetPixel(fb, x, y, cfun(s * w, r, s - s * w + t));
+	}
+	else {
+		SetPixel(fb, x, y, cfun(r * w, s, r - r * w + t));
+	}
+}
+
+void FTDrawHLine(FrameBuffer fb, int y, int x0, int x1, double a, TriangleSide tris, ColorFunction cfun, double w) {
+	int llen = x1 - x0;
+	double lIPStep = -1.0f / llen;
+	double b = 1;
+
+	for (int xHat = x0; xHat < x1; xHat++) {
+		FTDrawColorPixel(fb, xHat, y, a * b, a - a * b, 1 - a, tris, cfun, w);
+		b += lIPStep;
+	}
+}
+
+void DrawFlatToppedTriangle(FrameBuffer fb, int x1, int x2, int yStart, int x0, int yEnd, TriangleSide tris, ColorFunction cfun, double w) {
+	double l1DeltaX = x0 - x1;
+	double l1DeltaY = yEnd - yStart;
+	double l1m = l1DeltaX / l1DeltaY;  // The Negative Slope of line 1
+	double l1IPStep = -1.0f / l1DeltaY;
+
+	double l2DeltaX = x0 - x2;
+	double l2DeltaY = l1DeltaY;
+	double l2m = l2DeltaX / l2DeltaY;  // The Negative Slope of line 1
+
+	double i = 1.0f * x1;
+	double j = 1.0f * x2;
+	double a = 1.0f;
+
+	for (int yHat = yStart; yHat <= yEnd; yHat++) {
+		FTDrawHLine(fb, yHat, (int)i, (int)j, a, tris, cfun, w);
 		i += l1m;
 		j += l2m;
 		a += l1IPStep;
@@ -76,14 +124,15 @@ void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	;
 }
 
-int x0 = 500;
-int yStart = 100;
+
 int x1 = 0;
 int x2 = 1000;
+int yStart = 100;
+int x0 = 500;
 int yEnd = 500;
 
 void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
-	DrawFlatBottomTriangle(fb, x0, yStart, x1, x2, yEnd, LONGSIDE_RIGHT, cfun, 0.0f);
+	DrawFlatToppedTriangle(fb, x1, x2, yStart, x0, yEnd, LONGSIDE_RIGHT, cfun, 0.0f);
 
 	if (kb['W']) {
 		yStart -= 3;
@@ -92,23 +141,16 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 		yStart += 3;
 	}
 	if (kb['A']) {
-		x0 -= 3;
-	}
-	if (kb['D']) {
-		x0 += 3;
-	}
-
-	if (kb['J']) {
 		x1 -= 3;
 	}
-	if (kb['L']) {
+	if (kb['D']) {
 		x1 += 3;
 	}
 
-	if (kb['N']) {
+	if (kb['Z']) {
 		x2 -= 3;
 	}
-	if (kb['M']) {
+	if (kb['X']) {
 		x2 += 3;
 	}
 
@@ -117,6 +159,13 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	}
 	if (kb['K']) {
 		yEnd += 3;
+	}
+
+	if (kb['J']) {
+		x0 -= 3;
+	}
+	if (kb['L']) {
+		x0 += 3;
 	}
 
 	CalcFPS(fb, deltaTime);
