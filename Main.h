@@ -14,17 +14,32 @@ void DrawHLine(FrameBuffer fb, int x0, int x1, int y, Color color) {
 	}
 }
 
+double expo1, expo2, expo3, expo4, expo5;
+
 void DrawFlatBottomTriangle(FrameBuffer fb, int x0, int yStart, int x1, int x2, int yEnd, Color color) {
-	double l1m = 1.0f * (x1 - x0) / (yEnd - yStart);
-	double l2m = 1.0f * (x2 - x0) / (yEnd - yStart);
+	double l1DeltaX = x1 - x0;
+	double l1DeltaY = yEnd - yStart;
+	double l1m = l1DeltaX / l1DeltaY;  // The Negative Slope of line 1
+	double l1len = sqrt(l1DeltaX * l1DeltaX + l1DeltaY * l1DeltaY);  // The Length of line 1
+	double l1IPStep = -1.0f / l1DeltaY;
+	expo1 = l1len;
+	expo2 = l1m;
+	expo3 = l1IPStep;
+
+	double l2DeltaX = x2 - x0;
+	double l2DeltaY = l1DeltaY;
+	double l2m = l2DeltaX / l2DeltaY;  // The Negative Slope of line 1
 
 	double i = 1.0f * x0;
 	double j = 1.0f * x0;
+	double a = 1.0f;
 
 	for (int yHat = yStart; yHat <= yEnd; yHat++) {
-		DrawHLine(fb, (int)i, (int)j, yHat, color);
+		int ctmp = 255 * a;
+		DrawHLine(fb, (int)i, (int)j, yHat, CreateColor(ctmp, ctmp, ctmp));
 		i += l1m;
 		j += l2m;
+		a += l1IPStep;
 	}
 }
 
@@ -54,17 +69,17 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 		x0 += 3;
 	}
 
-	if (kb['F']) {
+	if (kb['J']) {
 		x1 -= 3;
 	}
-	if (kb['G']) {
+	if (kb['L']) {
 		x1 += 3;
 	}
 
-	if (kb['H']) {
+	if (kb['N']) {
 		x2 -= 3;
 	}
-	if (kb['J']) {
+	if (kb['M']) {
 		x2 += 3;
 	}
 
@@ -76,6 +91,9 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	}
 
 	CalcFPS(fb, deltaTime);
+	char buffer[1000];
+	sprintf_s(buffer, 1000, "Expose: %f; %f; %f; %f; %f", expo1, expo2, expo3, expo4, expo5);
+	DrawShadowString(fb, 10, 36, buffer);
 }
 
 ///*
