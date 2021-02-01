@@ -23,7 +23,7 @@ Color realCfun(double r, double s, double t) {
 
 ColorFunction cfun = realCfun;
 
-void DrawColorPixel(FrameBuffer fb, int x, int y, double r, double s, double t, TriangleSide tris, ColorFunction cfun, double w) {
+void FBDrawColorPixel(FrameBuffer fb, int x, int y, double r, double s, double t, TriangleSide tris, ColorFunction cfun, double w) {
 	if (tris == LONGSIDE_RIGHT) {
 		SetPixel(fb, x, y, cfun(r + t * w, s, t - t * w));
 	}
@@ -32,13 +32,13 @@ void DrawColorPixel(FrameBuffer fb, int x, int y, double r, double s, double t, 
 	}
 }
 
-void DrawHLine(FrameBuffer fb, int y, int x0, int x1, double a, TriangleSide tris, ColorFunction cfun, double w) {
+void FBDrawHLine(FrameBuffer fb, int y, int x0, int x1, double a, TriangleSide tris, ColorFunction cfun, double w) {
 	int llen = x1 - x0;
 	double lIPStep = -1.0f / llen;
 	double b = 1;
 	
 	for (int xHat = x0; xHat < x1; xHat++) {
-		DrawColorPixel(fb, xHat, y, a, b - a * b, a * b - a - b + 1, tris, cfun, w);
+		FBDrawColorPixel(fb, xHat, y, a, b - a * b, a * b - a - b + 1, tris, cfun, w);
 		b += lIPStep;
 	}
 }
@@ -65,7 +65,7 @@ void DrawFlatBottomTriangle(FrameBuffer fb, int x0, int yStart, int x1, int x2, 
 
 	for (int yHat = yStart; yHat <= yEnd; yHat++) {
 		int ctmp = 255 * a;
-		DrawHLine(fb, yHat, (int)i, (int)j, a, tris, cfun, w);
+		FBDrawHLine(fb, yHat, (int)i, (int)j, a, tris, cfun, w);
 		i += l1m;
 		j += l2m;
 		a += l1IPStep;
