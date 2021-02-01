@@ -132,7 +132,7 @@ int x0 = 500;
 int yEnd = 500;
 
 void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
-	DrawFlatToppedTriangle(fb, x1, x2, yStart, x0, yEnd, LONGSIDE_RIGHT, cfun, 0.0f);
+	DrawFlatToppedTriangle(fb, x1, x2, yStart, x0, yEnd, LONGSIDE_RIGHT, cfun, 1.0f);
 
 	if (kb['W']) {
 		yStart -= 3;
