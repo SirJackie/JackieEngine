@@ -39,7 +39,7 @@ void DrawVector4D(FrameBuffer fb, Vector4D* vec, int radius) {
 
 #define VectorOrder int
 
-typedef int* ZBuffer;
+typedef double* ZBuffer;
 
 typedef Color(*ColorFunction) (double, double, double);
 
@@ -93,6 +93,12 @@ void FBDrawColorPixel(
 		SetPixel(fb, x, y, cfun(glt, gls, glr));
 		break;
 	}
+
+	/*SetPixel(fb, x, y, CreateColor(
+		(int)(255 * z),
+		(int)(255 * z),
+		(int)(255 * z)
+	));*/
 }
 
 void FBDrawHLine(
@@ -211,6 +217,12 @@ void FTDrawColorPixel(
 		SetPixel(fb, x, y, cfun(glt, gls, glr));
 		break;
 	}
+
+	/*SetPixel(fb, x, y, CreateColor(
+		(int)(255 * z),
+		(int)(255 * z),
+		(int)(255 * z)
+	));*/
 }
 
 void FTDrawHLine(

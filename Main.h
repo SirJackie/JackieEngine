@@ -18,19 +18,37 @@ Color cfun(double r, double s, double t) {
 
 Vector4D A, B, C;
 ZBuffer zb;
+double zbInitValue = 0;
 
-void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
-	A = CreateVector4D(500, 0, 0, 1);
-	B = CreateVector4D(200, 300, 0, 1);
-	C = CreateVector4D(800, 500, 0, 1);
-	zb = new int[fb.Width * fb.Height];
+ZBuffer CreateZBuffer(FrameBuffer fb) {
+	return new double[fb.Width * fb.Height];
+}
+
+void ClearZBuffer(FrameBuffer fb, ZBuffer zb, double zbInitValue) {
 	for (int i = 0; i < fb.Width * fb.Height; i++) {
-		zb[i] = -1;
+		zb[i] = zbInitValue;
 	}
 }
 
+void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
+	A = CreateVector4D(500, 0, 0, 1);
+	B = CreateVector4D(200, 300, 0.8, 1);
+	C = CreateVector4D(800, 500, 1, 1);
+	zb = CreateZBuffer(fb);
+	ClearZBuffer(fb, zb, zbInitValue);
+}
+
 void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
+	ClearZBuffer(fb, zb, zbInitValue);
+
 	DrawTriangle(fb, zb, &A, &B, &C, cfun);
+
+	if (kb['W']) {
+		zbInitValue -= 0.01;
+	}
+	if (kb['S']) {
+		zbInitValue += 0.01;
+	}
 }
 
 ///*
