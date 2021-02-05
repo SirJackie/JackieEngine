@@ -351,7 +351,7 @@ void DrawTriangle(FrameBuffer fb, ZBuffer zb,
 
 	if (tris == LONGSIDE_RIGHT) {
 		DrawFlatBottomTriangle(fb, zb, A, B, &D, cfun, tris, vodr, w);
-		DrawFlatBottomTriangle(fb, zb, B, &D, C, cfun, tris, vodr, w);
+		DrawFlatToppedTriangle(fb, zb, B, &D, C, cfun, tris, vodr, w);
 	}
 	else {   // LONGSIDE_LEFT
 		DrawFlatBottomTriangle(fb, zb, A, &D, B, cfun, tris, vodr, w);
