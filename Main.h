@@ -20,9 +20,9 @@ Vector4D A, B, C;
 ZBuffer zb;
 
 void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
-	A = CreateVector4D(500, 0, 0, 1);
-	B = CreateVector4D(200, 300, 0, 1);
-	C = CreateVector4D(800, 300, 0, 1);
+	A = CreateVector4D(200, 0, 0, 1);
+	B = CreateVector4D(800, 0, 0, 1);
+	C = CreateVector4D(500, 300, 0, 1);
 	zb = new int[fb.Width * fb.Height];
 	for (int i = 0; i < fb.Width * fb.Height; i++) {
 		zb[i] = -1;
@@ -30,7 +30,7 @@ void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
 }
 
 void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
-	DrawFlatBottomTriangle(fb, zb, &A, &B, &C, cfun, LONGSIDE_RIGHT, 123, 0);
+	DrawFlatToppedTriangle(fb, zb, &A, &B, &C, cfun, LONGSIDE_RIGHT, 123, 1);
 }
 
 ///*
