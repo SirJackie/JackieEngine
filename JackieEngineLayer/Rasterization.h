@@ -55,6 +55,7 @@ void FBDrawColorPixel(
 )
 {
 	if (zb[y * fb.Width + x] > z) return;  // Z-Buffer Test
+	zb[y * fb.Width + x] = z;              // Over Write Z-Buffer
 
 	double r = a;                          // The Similarity between this pixel and A
 	double s = b - a * b;                  // The Similarity between this pixel and B
