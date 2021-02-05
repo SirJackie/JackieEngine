@@ -371,4 +371,14 @@ void DrawTriangle(FrameBuffer fb, ZBuffer zb,
 	}
 }
 
+ZBuffer CreateZBuffer(FrameBuffer fb) {
+	return new double[fb.Width * fb.Height];
+}
+
+void ClearZBuffer(FrameBuffer fb, ZBuffer zb, double zbInitValue) {
+	for (int i = 0; i < fb.Width * fb.Height; i++) {
+		zb[i] = zbInitValue;
+	}
+}
+
 #endif
