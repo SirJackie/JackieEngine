@@ -161,80 +161,6 @@ void DrawFlatBottomTriangle(
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 ** Flat Topped Triangle Drawing Functions
 */
@@ -354,44 +280,83 @@ void DrawFlatToppedTriangle(
 
 
 
-///*
-//** Draw Whole Triangle
-//*/
-//
-//void DrawTriangle(FrameBuffer fb, Vector4D* A, Vector4D* B, Vector4D* C, ColorFunction cfun) {
-//	Vector4D* swap;
-//	if ((A->y) > (B->y)) {
-//		swap = A;
-//		A = B;
-//		B = swap;
-//	}
-//	if ((A->y) > (C->y)) {
-//		swap = A;
-//		A = C;
-//		C = swap;
-//	}
-//	if ((B->y) > (C->y)) {
-//		swap = B;
-//		B = C;
-//		C = swap;
-//	}
-//
-//	double lsm = (C->x - A->x) / (C->y - A->y);
-//	Vector4D D = CreateVector4D(A->x + lsm * (B->y - A->y), B->y, 1, 1);
-//	double lsIPStep = -1 / (C->y - A->y);
-//	double w = 1 + lsIPStep * (B->y - A->y);
-//	TriangleSide tris;
-//
-//	if (((B->x) < (A->x)) && ((B->x) < (C->x))) {
-//		tris = LONGSIDE_RIGHT;
-//		DrawFlatBottomTriangle(fb, A->x, A->y, B->x, D.x, B->y, tris, cfun, w);
-//		DrawFlatToppedTriangle(fb, B->x, D.x, B->y, C->x, C->y, tris, cfun, w);
-//	}
-//	else {
-//		tris = LONGSIDE_LEFT;
-//		DrawFlatBottomTriangle(fb, A->x, A->y, D.x, B->x, B->y, tris, cfun, w);
-//		DrawFlatToppedTriangle(fb, D.x, B->x, B->y, C->x, C->y, tris, cfun, w);
-//	}
-//}
+/*
+** Draw Whole Triangle
+*/
+
+void DrawTriangle(FrameBuffer fb, ZBuffer zb,
+	Vector4D* A, Vector4D* B, Vector4D* C, ColorFunction cfun
+)
+{
+	TriangleSide tris;
+	VectorOrder  vodr;
+	int vodrArr[3] = { 1, 2, 3 };
+
+	Vector4D* swap;
+	int swapi;
+	if ((A->y) > (B->y)) {
+		swap = A;
+		A = B;
+		B = swap;
+
+		swapi = vodrArr[0];
+		vodrArr[0] = vodrArr[1];
+		vodrArr[1] = swapi;
+	}
+	if ((A->y) > (C->y)) {
+		swap = A;
+		A = C;
+		C = swap;
+
+		swapi = vodrArr[0];
+		vodrArr[0] = vodrArr[2];
+		vodrArr[2] = swapi;
+	}
+	if ((B->y) > (C->y)) {
+		swap = B;
+		B = C;
+		C = swap;
+
+		swapi = vodrArr[1];
+		vodrArr[1] = vodrArr[2];
+		vodrArr[2] = swapi;
+	}
+
+	vodr = vodrArr[0] * 100 + vodrArr[1] * 10 + vodrArr[2];
+
+	double lsm = (C->x - A->x) / (C->y - A->y);
+	double lsIPStep = -1 / (C->y - A->y);
+	double w = 1 + lsIPStep * (B->y - A->y);
+	Vector4D D = CreateVector4D(
+		A->x + lsm * (B->y - A->y),
+		B->y,
+		w * A->z + (1 - w) * C->z,
+		1
+	);  // Calculate the value of D
+
+	if (B->x < A->x && B->x < C->x) {
+		tris = LONGSIDE_RIGHT;
+	}
+	else if (B->x > A->x && B->x > C->x) {
+		tris = LONGSIDE_LEFT;
+	}
+	else {
+		if (D.x > B->x) {
+			tris = LONGSIDE_RIGHT;
+		}
+		else {  // D->x < B->x
+			tris = LONGSIDE_LEFT;
+		}
+	}
+
+	if (tris == LONGSIDE_RIGHT) {
+		DrawFlatBottomTriangle(fb, zb, A, B, &D, cfun, tris, vodr, w);
+		DrawFlatBottomTriangle(fb, zb, B, &D, C, cfun, tris, vodr, w);
+	}
+	else {   // LONGSIDE_LEFT
+		DrawFlatBottomTriangle(fb, zb, A, &D, B, cfun, tris, vodr, w);
+		DrawFlatToppedTriangle(fb, zb, &D, B, C, cfun, tris, vodr, w);
+	}
+}
 
 #endif
