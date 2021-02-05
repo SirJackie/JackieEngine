@@ -95,11 +95,11 @@ void FBDrawColorPixel(
 		break;
 	}
 
-	/*SetPixel(fb, x, y, CreateColor(
-		(int)(255 * z),
-		(int)(255 * z),
-		(int)(255 * z)
-	));*/
+	SetPixel(fb, x, y, CreateColor(
+		(int)(12800 * z),
+		(int)(12800 * z),
+		(int)(12800 * z)
+	));
 }
 
 void FBDrawHLine(
@@ -219,11 +219,11 @@ void FTDrawColorPixel(
 		break;
 	}
 
-	/*SetPixel(fb, x, y, CreateColor(
-		(int)(255 * z),
-		(int)(255 * z),
-		(int)(255 * z)
-	));*/
+	SetPixel(fb, x, y, CreateColor(
+		(int)(12800 * z),
+		(int)(12800 * z),
+		(int)(12800 * z)
+	));
 }
 
 void FTDrawHLine(
