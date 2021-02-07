@@ -59,56 +59,53 @@ void FBDrawColorPixel(
 	if (y > fb.Height - 1) return;
 	if (y < 0) return;
 
-	if (z < zb[y * fb.Width + x]) {
-		int a = -1;
-		return;
-	}// Z-Buffer Test
+	if (z > zb[y * fb.Width + x]) {
+		zb[y * fb.Width + x] = z;              // Over Write Z-Buffer
 
-	zb[y * fb.Width + x] = z;              // Over Write Z-Buffer
+		double r = a;                          // The Similarity between this pixel and A
+		double s = b - a * b;                  // The Similarity between this pixel and B
+		double t = a * b - a - b + 1;          // The Similarity between this pixel and C
 
-	double r = a;                          // The Similarity between this pixel and A
-	double s = b - a * b;                  // The Similarity between this pixel and B
-	double t = a * b - a - b + 1;          // The Similarity between this pixel and C
+		double glr, gls, glt;
 
-	double glr, gls, glt;
+		if (tris == LONGSIDE_RIGHT) {
+			glr = r + t * w;
+			gls = s;
+			glt = t - t * w;
+		}
+		else {   // LONGSIDE_LEFT
+			glr = r + s * w;
+			gls = t;
+			glt = s - s * w;
+		}
 
-	if (tris == LONGSIDE_RIGHT) {
-		glr = r + t * w;
-		gls = s;
-		glt = t - t * w;
+		switch (vodr) {
+		case 123:  //rst
+			SetPixel(fb, x, y, cfun(glr, gls, glt));
+			break;
+		case 132:  //rts
+			SetPixel(fb, x, y, cfun(glr, glt, gls));
+			break;
+		case 213:  //srt
+			SetPixel(fb, x, y, cfun(gls, glr, glt));
+			break;
+		case 231:  //str
+			SetPixel(fb, x, y, cfun(gls, glt, glr));
+			break;
+		case 312:  //trs
+			SetPixel(fb, x, y, cfun(glt, glr, gls));
+			break;
+		case 321:  //tsr
+			SetPixel(fb, x, y, cfun(glt, gls, glr));
+			break;
+		}
+
+		//SetPixel(fb, x, y, CreateColor(
+		//	(int)(2560 * z),
+		//	(int)(2560 * z),
+		//	(int)(2560 * z)
+		//));
 	}
-	else {   // LONGSIDE_LEFT
-		glr = r + s * w;
-		gls = t;
-		glt = s - s * w;
-	}
-
-	switch (vodr) {
-	case 123:  //rst
-		SetPixel(fb, x, y, cfun(glr, gls, glt));
-		break;
-	case 132:  //rts
-		SetPixel(fb, x, y, cfun(glr, glt, gls));
-		break;
-	case 213:  //srt
-		SetPixel(fb, x, y, cfun(gls, glr, glt));
-		break;
-	case 231:  //str
-		SetPixel(fb, x, y, cfun(gls, glt, glr));
-		break;
-	case 312:  //trs
-		SetPixel(fb, x, y, cfun(glt, glr, gls));
-		break;
-	case 321:  //tsr
-		SetPixel(fb, x, y, cfun(glt, gls, glr));
-		break;
-	}
-
-	SetPixel(fb, x, y, CreateColor(
-		(int)(2560 * z),
-		(int)(2560 * z),
-		(int)(2560 * z)
-	));
 }
 
 void FBDrawHLine(
@@ -193,54 +190,53 @@ void FTDrawColorPixel(
 	if (y > fb.Height - 1) return;
 	if (y < 0) return;
 
-	if (z < zb[y * fb.Width + x]) {
-		int a = -1;
-		return;
-	}// Z-Buffer Test
+	if (z > zb[y * fb.Width + x]) {
+		zb[y * fb.Width + x] = z;
 
-	double r = a * b;                      // The Similarity between this pixel and A
-	double s = a - a * b;                  // The Similarity between this pixel and B
-	double t = 1 - a;                      // The Similarity between this pixel and C
+		double r = a * b;                      // The Similarity between this pixel and A
+		double s = a - a * b;                  // The Similarity between this pixel and B
+		double t = 1 - a;                      // The Similarity between this pixel and C
 
-	double glr, gls, glt;
+		double glr, gls, glt;
 
-	if (tris == LONGSIDE_RIGHT) {
-		glr = s * w;
-		gls = r;
-		glt = s - s * w + t;
+		if (tris == LONGSIDE_RIGHT) {
+			glr = s * w;
+			gls = r;
+			glt = s - s * w + t;
+		}
+		else {   // LONGSIDE_LEFT
+			glr = r * w;
+			gls = s;
+			glt = r - r * w + t;
+		}
+
+		switch (vodr) {
+		case 123:  //rst
+			SetPixel(fb, x, y, cfun(glr, gls, glt));
+			break;
+		case 132:  //rts
+			SetPixel(fb, x, y, cfun(glr, glt, gls));
+			break;
+		case 213:  //srt
+			SetPixel(fb, x, y, cfun(gls, glr, glt));
+			break;
+		case 231:  //str
+			SetPixel(fb, x, y, cfun(gls, glt, glr));
+			break;
+		case 312:  //trs
+			SetPixel(fb, x, y, cfun(glt, glr, gls));
+			break;
+		case 321:  //tsr
+			SetPixel(fb, x, y, cfun(glt, gls, glr));
+			break;
+		}
+
+		//SetPixel(fb, x, y, CreateColor(
+		//	(int)(2560 * z),
+		//	(int)(2560 * z),
+		//	(int)(2560 * z)
+		//));
 	}
-	else {   // LONGSIDE_LEFT
-		glr = r * w;
-		gls = s;
-		glt = r - r * w + t;
-	}
-
-	switch (vodr) {
-	case 123:  //rst
-		SetPixel(fb, x, y, cfun(glr, gls, glt));
-		break;
-	case 132:  //rts
-		SetPixel(fb, x, y, cfun(glr, glt, gls));
-		break;
-	case 213:  //srt
-		SetPixel(fb, x, y, cfun(gls, glr, glt));
-		break;
-	case 231:  //str
-		SetPixel(fb, x, y, cfun(gls, glt, glr));
-		break;
-	case 312:  //trs
-		SetPixel(fb, x, y, cfun(glt, glr, gls));
-		break;
-	case 321:  //tsr
-		SetPixel(fb, x, y, cfun(glt, gls, glr));
-		break;
-	}
-
-	SetPixel(fb, x, y, CreateColor(
-		(int)(2560 * z),
-		(int)(2560 * z),
-		(int)(2560 * z)
-	));
 }
 
 void FTDrawHLine(
