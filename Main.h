@@ -69,7 +69,7 @@ void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	*/
 
 	cam = CreateCamera4D(
-		0.0f, 0.0f, 7.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 4.0f, 0.0f, 0.0f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, fb.Width, fb.Height
 	);
 	CalcCamera4DMatrices(&cam);
