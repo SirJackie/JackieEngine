@@ -51,7 +51,7 @@ Matrix4D  Mrotation;
 char*     buffer;
 char      realbuffer[1000];
 float     keyboardSensitivity  = 0.005f;
-BOOL      rotateOrNot          = TRUE;
+BOOL      rotateOrNot          = FALSE;
 float     rotateDegree         = 0.0f;
 int       rotateKeyDelay       = 0;
 ZBuffer zb;
@@ -181,7 +181,7 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	** Rotate the Vectors
 	*/
 
-	Mrotation = CreateRotationMatrix(rotateDegree, -30.0f, rotateDegree);
+	Mrotation = CreateRotationMatrix(rotateDegree, 0.0f, rotateDegree);
 
 	if (rotateOrNot == TRUE) {
 		rotateDegree += 0.03f * deltaTime;
@@ -250,32 +250,25 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	/*
 	** Get And Clear Z-Buffer
 	*/
-	ClearZBuffer(fb, zb, -123456789.0);
+	ClearZBuffer(fb, zb, -1.0);
 
 
 	/*
 	** Do Rasterization
 	*/
 
-	DrawTriangle(fb, zb, &(vecs[0]), &(vecs[1]), &(vecs[3]), cfun);
-	DrawTriangle(fb, zb, &(vecs[2]), &(vecs[3]), &(vecs[1]), cfun);
-	DrawTriangle(fb, zb, &(vecs[5]), &(vecs[4]), &(vecs[6]), cfun);
-	DrawTriangle(fb, zb, &(vecs[7]), &(vecs[6]), &(vecs[4]), cfun);
-	DrawTriangle(fb, zb, &(vecs[4]), &(vecs[0]), &(vecs[7]), cfun);
-	DrawTriangle(fb, zb, &(vecs[3]), &(vecs[7]), &(vecs[0]), cfun);
-
-	//DrawFlatMesh4D(fb, &(vecs[0]), &(vecs[1]), &(vecs[3]), CreateColor(255, 0, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[2]), &(vecs[3]), &(vecs[1]), CreateColor(255, 255, 0, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[5]), &(vecs[4]), &(vecs[6]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[7]), &(vecs[6]), &(vecs[4]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[4]), &(vecs[0]), &(vecs[7]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[3]), &(vecs[7]), &(vecs[0]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[1]), &(vecs[5]), &(vecs[2]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[6]), &(vecs[2]), &(vecs[5]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[3]), &(vecs[2]), &(vecs[7]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[6]), &(vecs[7]), &(vecs[2]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[5]), &(vecs[0]), &(vecs[4]), CreateColor(255, 255, 255, 255), ZBuffer);
-	//DrawFlatMesh4D(fb, &(vecs[5]), &(vecs[1]), &(vecs[0]), CreateColor(255, 255, 255, 255), ZBuffer);
+	DrawTriangle(fb, zb, &(vecs[0]), &(vecs[1]), &(vecs[3]), cfun);  //n1
+	DrawTriangle(fb, zb, &(vecs[2]), &(vecs[3]), &(vecs[1]), cfun);  //n2
+	DrawTriangle(fb, zb, &(vecs[5]), &(vecs[4]), &(vecs[6]), cfun);  //f1
+	DrawTriangle(fb, zb, &(vecs[7]), &(vecs[6]), &(vecs[4]), cfun);  //f2
+	DrawTriangle(fb, zb, &(vecs[4]), &(vecs[0]), &(vecs[7]), cfun);  //l1
+	DrawTriangle(fb, zb, &(vecs[3]), &(vecs[7]), &(vecs[0]), cfun);  //l2
+	DrawTriangle(fb, zb, &(vecs[1]), &(vecs[5]), &(vecs[2]), cfun);  //r1
+	DrawTriangle(fb, zb, &(vecs[6]), &(vecs[2]), &(vecs[5]), cfun);  //r2
+	DrawTriangle(fb, zb, &(vecs[3]), &(vecs[2]), &(vecs[7]), cfun);  //t1
+	DrawTriangle(fb, zb, &(vecs[6]), &(vecs[7]), &(vecs[2]), cfun);  //t2
+	DrawTriangle(fb, zb, &(vecs[5]), &(vecs[0]), &(vecs[4]), cfun);  //b1
+	DrawTriangle(fb, zb, &(vecs[5]), &(vecs[1]), &(vecs[0]), cfun);  //b2
 
 
 	/*

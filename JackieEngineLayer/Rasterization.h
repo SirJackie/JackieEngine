@@ -54,7 +54,16 @@ void FBDrawColorPixel(
 	double w, double a, double b
 )
 {
-	if (zb[y * fb.Width + x] > z) return;  // Z-Buffer Test
+	if (x > fb.Width - 1) return;
+	if (x < 0) return;
+	if (y > fb.Height - 1) return;
+	if (y < 0) return;
+
+	if (z < zb[y * fb.Width + x]) {
+		int a = -1;
+		return;
+	}// Z-Buffer Test
+
 	zb[y * fb.Width + x] = z;              // Over Write Z-Buffer
 
 	double r = a;                          // The Similarity between this pixel and A
@@ -96,9 +105,9 @@ void FBDrawColorPixel(
 	}
 
 	SetPixel(fb, x, y, CreateColor(
-		(int)(12800 * z),
-		(int)(12800 * z),
-		(int)(12800 * z)
+		(int)(2560 * z),
+		(int)(2560 * z),
+		(int)(2560 * z)
 	));
 }
 
@@ -179,7 +188,15 @@ void FTDrawColorPixel(
 	double w, double a, double b
 )
 {
-	if (zb[y * fb.Width + x] > z) return;  // Z-Buffer Test
+	if (x > fb.Width - 1) return;
+	if (x < 0) return;
+	if (y > fb.Height - 1) return;
+	if (y < 0) return;
+
+	if (z < zb[y * fb.Width + x]) {
+		int a = -1;
+		return;
+	}// Z-Buffer Test
 
 	double r = a * b;                      // The Similarity between this pixel and A
 	double s = a - a * b;                  // The Similarity between this pixel and B
@@ -220,9 +237,9 @@ void FTDrawColorPixel(
 	}
 
 	SetPixel(fb, x, y, CreateColor(
-		(int)(12800 * z),
-		(int)(12800 * z),
-		(int)(12800 * z)
+		(int)(2560 * z),
+		(int)(2560 * z),
+		(int)(2560 * z)
 	));
 }
 
