@@ -43,7 +43,7 @@ int clamp(int min, int input, int max) {
 	}
 }
 
-float fclamp(float min, float input, float max) {
+double dclamp(double min, double input, double max) {
 	if (input > min) {
 		if (input < max) {
 			return input;
@@ -85,13 +85,13 @@ int max3(int a, int b, int c) {
 */
 
 struct Vector4D {
-	float x;
-	float y;
-	float z;
-	float w;
+	double x;
+	double y;
+	double z;
+	double w;
 };
 
-Vector4D CreateVector4D(float x, float y, float z, float w) {
+Vector4D CreateVector4D(double x, double y, double z, double w) {
 	Vector4D NewVector;
 	NewVector.x = x;
 	NewVector.y = y;
@@ -106,7 +106,7 @@ char* OutputVector4D(Vector4D* vec) {
 	if (buffer != 0) {
 		sprintf_s(
 			buffer, VECTOR4D_BUFFER_LENGTH,
-			"Vector4D[%f, %f, %f, %f]",
+			"Vector4D[%lf, %lf, %lf, %lf]",
 			vec->x, vec->y, vec->z, vec->w
 		);
 	}
@@ -114,15 +114,15 @@ char* OutputVector4D(Vector4D* vec) {
 	return buffer;
 }
 
-float LengthOfVector4D(Vector4D* vec) {
+double LengthOfVector4D(Vector4D* vec) {
 	// Use the Pythagorean Theorem to calculate the length
 	return sqrt(
-		(double)vec->x * vec->x + vec->y * vec->y + vec->z * vec->z
+		vec->x * vec->x + vec->y * vec->y + vec->z * vec->z
 	);
 }
 
 Vector4D NormalizedVector4D(Vector4D* vec) {
-	float length = LengthOfVector4D(vec);
+	double length = LengthOfVector4D(vec);
 	return CreateVector4D(
 		vec->x / length,
 		vec->y / length,
@@ -158,7 +158,7 @@ Vector4D Vector4DMinusVector4D(Vector4D* a, Vector4D* b) {
 
 #define CreateVector4DFromPointToPoint(from, to) Vector4DMinusVector4D(to, from)
 
-float Vector4DDotVector4D(Vector4D* a, Vector4D* b) {
+double Vector4DDotVector4D(Vector4D* a, Vector4D* b) {
 	return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
@@ -181,17 +181,17 @@ Vector4D Vector4DCrossVector4D(Vector4D* a, Vector4D* b) {
 */
 
 struct Matrix4D {
-	float m11, m12, m13, m14;
-	float m21, m22, m23, m24;
-	float m31, m32, m33, m34;
-	float m41, m42, m43, m44;
+	double m11, m12, m13, m14;
+	double m21, m22, m23, m24;
+	double m31, m32, m33, m34;
+	double m41, m42, m43, m44;
 };
 
 Matrix4D CreateMatrix4D(
-	float m11, float m12, float m13, float m14,
-	float m21, float m22, float m23, float m24,
-	float m31, float m32, float m33, float m34,
-	float m41, float m42, float m43, float m44
+	double m11, double m12, double m13, double m14,
+	double m21, double m22, double m23, double m24,
+	double m31, double m32, double m33, double m34,
+	double m41, double m42, double m43, double m44
 )
 {
 	Matrix4D NewMatrix;
@@ -225,7 +225,7 @@ char* OutputMatrix4D(Matrix4D* matrix) {
 	if (buffer != 0) {
 		sprintf_s(
 			buffer, MATRIX4D_BUFFER_LENGTH,
-			"Matrix4D[%f, %f, %f, %f,\n         %f, %f, %f, %f,\n         %f, %f, %f, %f,\n         %f, %f, %f, %f]",
+			"Matrix4D[%lf, %lf, %lf, %lf,\n         %lf, %lf, %lf, %lf,\n         %lf, %lf, %lf, %lf,\n         %lf, %lf, %lf, %lf]",
 			matrix->m11, matrix->m12, matrix->m13, matrix->m14,
 			matrix->m21, matrix->m22, matrix->m23, matrix->m24,
 			matrix->m31, matrix->m32, matrix->m33, matrix->m34,

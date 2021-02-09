@@ -6,26 +6,26 @@
 #include "LinearAlgebra.h"
 
 
-Matrix4D CreateRotationMatrix(float rotx, float roty, float rotz) {
+Matrix4D CreateRotationMatrix(double rotx, double roty, double rotz) {
 	Matrix4D MrotationX = CreateMatrix4D(
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, cosd(rotx), -1.0f * sind(rotx), 0.0f,
-		0.0f, sind(rotx), cosd(rotx), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		1.0, 0.0, 0.0, 0.0,
+		0.0, cosd(rotx), -1.0 * sind(rotx), 0.0,
+		0.0, sind(rotx), cosd(rotx), 0.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	Matrix4D MrotationY = CreateMatrix4D(
-		cosd(roty), 0.0f, sind(roty), 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		-1.0f * sind(roty), 0.0f, cosd(roty), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		cosd(roty), 0.0, sind(roty), 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		-1.0 * sind(roty), 0.0, cosd(roty), 0.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	Matrix4D MrotationZ = CreateMatrix4D(
-		cosd(rotz), -1.0f * sind(rotz), 0.0f, 0.0f,
-		sind(rotz), cosd(rotz), 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		cosd(rotz), -1.0 * sind(rotz), 0.0, 0.0,
+		sind(rotz), cosd(rotz), 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	Matrix4D Mrotation = Matrix4DTimesMatrix4D(

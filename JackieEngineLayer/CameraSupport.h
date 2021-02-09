@@ -25,13 +25,13 @@ struct Camera4D {
 	** Frustum Setting
 	*/
 
-	float n;
-	float f;
-	float t;
-	float b;
-	float l;
-	float r;
-	float fovY;
+	double n;
+	double f;
+	double t;
+	double b;
+	double l;
+	double r;
+	double fovY;
 	int ScreenWidth;
 	int ScreenHeight;
 
@@ -50,8 +50,8 @@ struct Camera4D {
 };
 
 Camera4D CreateCamera4D(
-	float x, float y, float z, float rotx, float roty, float rotz,
-	float n, float f, float fovY, int ScreenWidth, int ScreenHeight
+	double x, double y, double z, double rotx, double roty, double rotz,
+	double n, double f, double fovY, int ScreenWidth, int ScreenHeight
 )
 {
 	Camera4D cam;
@@ -65,8 +65,8 @@ Camera4D CreateCamera4D(
 	cam.ScreenWidth = ScreenWidth;
 	cam.ScreenHeight = ScreenHeight;
 
-	cam.t = fabs(cam.n) * tand(cam.fovY / 2.0f);
-	cam.b = -1.0f * cam.t;
+	cam.t = fabs(cam.n) * tand(cam.fovY / 2.0);
+	cam.b = -1.0 * cam.t;
 
 	cam.r = cam.ScreenWidth * cam.t / cam.ScreenHeight;
 	cam.l = -1.0 * cam.r;
@@ -81,33 +81,33 @@ Camera4D CreateCamera4D(
 
 void CalcCamera4DMtranslation(Camera4D* cam) {
 	cam->Mtranslation = CreateMatrix4D(
-		1.0f, 0.0f, 0.0f, -1.0f * (cam->position.x),
-		0.0f, 1.0f, 0.0f, -1.0f * (cam->position.y),
-		0.0f, 0.0f, 1.0f, -1.0f * (cam->position.z),
-		0.0f, 0.0f, 0.0f,  1.0f
+		1.0, 0.0, 0.0, -1.0 * (cam->position.x),
+		0.0, 1.0, 0.0, -1.0 * (cam->position.y),
+		0.0, 0.0, 1.0, -1.0 * (cam->position.z),
+		0.0, 0.0, 0.0,  1.0
 	);
 }
 
 void CalcCamera4DMrotation(Camera4D* cam) {
 	Matrix4D MrotationX = CreateMatrix4D(
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, cosd(cam->rotation.x), -1.0f * sind(cam->rotation.x), 0.0f,
-		0.0f, sind(cam->rotation.x), cosd(cam->rotation.x), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		1.0, 0.0, 0.0, 0.0,
+		0.0, cosd(cam->rotation.x), -1.0 * sind(cam->rotation.x), 0.0,
+		0.0, sind(cam->rotation.x), cosd(cam->rotation.x), 0.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	Matrix4D MrotationY = CreateMatrix4D(
-		cosd(cam->rotation.y), 0.0f, sind(cam->rotation.y), 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		-1.0f * sind(cam->rotation.y), 0.0f, cosd(cam->rotation.y), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		cosd(cam->rotation.y), 0.0, sind(cam->rotation.y), 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		-1.0 * sind(cam->rotation.y), 0.0, cosd(cam->rotation.y), 0.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	Matrix4D MrotationZ = CreateMatrix4D(
-		cosd(cam->rotation.z), -1.0f * sind(cam->rotation.z), 0.0f, 0.0f,
-		sind(cam->rotation.z), cosd(cam->rotation.z), 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		cosd(cam->rotation.z), -1.0 * sind(cam->rotation.z), 0.0, 0.0,
+		sind(cam->rotation.z), cosd(cam->rotation.z), 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	cam->Mrotation = Matrix4DTimesMatrix4D(
@@ -128,17 +128,17 @@ void CalcCamera4DMrotation(Camera4D* cam) {
 
 void CalcCamera4DMortho(Camera4D* cam) {
 	Matrix4D Morthoa = CreateMatrix4D(
-		1.0f, 0.0f, 0.0f, -1 * (cam->r + cam->l) / 2.0f,
-		0.0f, 1.0f, 0.0f, -1 * (cam->t + cam->b) / 2.0f,
-		0.0f, 0.0f, 1.0f, -1 * (cam->n + cam->f) / 2.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		1.0, 0.0, 0.0, -1 * (cam->r + cam->l) / 2.0,
+		0.0, 1.0, 0.0, -1 * (cam->t + cam->b) / 2.0,
+		0.0, 0.0, 1.0, -1 * (cam->n + cam->f) / 2.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	Matrix4D Morthob = CreateMatrix4D(
-		2.0f / (cam->r - cam->l), 0.0f, 0.0f, 0.0f,
-		0.0f, 2.0f / (cam->t - cam->b), 0.0f, 0.0f,
-		0.0f, 0.0f, 2.0f / (cam->n - cam->f), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		2.0 / (cam->r - cam->l), 0.0, 0.0, 0.0,
+		0.0, 2.0 / (cam->t - cam->b), 0.0, 0.0,
+		0.0, 0.0, 2.0 / (cam->n - cam->f), 0.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	cam->Mortho = Matrix4DTimesMatrix4D(
@@ -150,10 +150,10 @@ void CalcCamera4DMortho(Camera4D* cam) {
 void CalcCamera4DMpersp(Camera4D* cam) {
 	CalcCamera4DMortho(cam);
 	Matrix4D Mpersp2ortho = CreateMatrix4D(
-		cam->n, 0.0f, 0.0f, 0.0f,
-		0.0f, cam->n, 0.0f, 0.0f,
-		0.0f, 0.0f, cam->f + cam->n, -1 * cam->f * cam->n,
-		0.0f, 0.0f, 1.0f, 0.0f
+		cam->n, 0.0, 0.0, 0.0,
+		0.0, cam->n, 0.0, 0.0,
+		0.0, 0.0, cam->f + cam->n, -1 * cam->f * cam->n,
+		0.0, 0.0, 1.0, 0.0
 	);
 
 	cam->Mpersp = Matrix4DTimesMatrix4D(
@@ -164,17 +164,17 @@ void CalcCamera4DMpersp(Camera4D* cam) {
 
 void CalcCamera4DMviewport(Camera4D* cam) {
 	Matrix4D MviewportPre = CreateMatrix4D(
-		cam->ScreenWidth / 2.0f, 0.0f, 0.0f, cam->ScreenWidth / 2.0f,
-		0.0f, cam->ScreenHeight / 2.0f, 0.0f, cam->ScreenHeight / 2.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		cam->ScreenWidth / 2.0, 0.0, 0.0, cam->ScreenWidth / 2.0,
+		0.0, cam->ScreenHeight / 2.0, 0.0, cam->ScreenHeight / 2.0,
+		0.0, 0.0, 1.0, 0.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	Matrix4D MYReverse = CreateMatrix4D(
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, -1.0f, 0.0f, cam->ScreenHeight,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+		1.0, 0.0, 0.0, 0.0,
+		0.0, -1.0, 0.0, cam->ScreenHeight,
+		0.0, 0.0, 1.0, 0.0,
+		0.0, 0.0, 0.0, 1.0
 	);
 
 	cam->Mviewport = Matrix4DTimesMatrix4D(&MviewportPre, &MYReverse);

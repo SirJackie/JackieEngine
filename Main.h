@@ -50,9 +50,9 @@ Vector4D  vecs[8];
 Matrix4D  Mrotation;
 char*     buffer;
 char      realbuffer[1000];
-float     keyboardSensitivity  = 0.005f;
+double    keyboardSensitivity  = 0.005f;
 BOOL      rotateOrNot          = TRUE;
-float     rotateDegree         = 0.0f;
+double    rotateDegree         = 0.0;
 int       rotateKeyDelay       = 0;
 ZBuffer zb;
 
@@ -69,8 +69,8 @@ void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	*/
 
 	cam = CreateCamera4D(
-		0.0f, 0.0f, 4.0f, 0.0f, 0.0f, 0.0f,
-		-0.1f, -1000.0f, 60.0f, fb.Width, fb.Height
+		0.0, 0.0, 4.0, 0.0, 0.0, 0.0,
+		-0.1f, -1000.0, 60.0, fb.Width, fb.Height
 	);
 	CalcCamera4DMatrices(&cam);
 
@@ -79,14 +79,14 @@ void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	** Vectors
 	*/
 
-	vecs[0] = CreateVector4D(-1.0f, -1.0f,  1.0f, 1.0f);
-	vecs[1] = CreateVector4D( 1.0f, -1.0f,  1.0f, 1.0f);
-	vecs[2] = CreateVector4D( 1.0f,  1.0f,  1.0f, 1.0f);
-	vecs[3] = CreateVector4D(-1.0f,  1.0f,  1.0f, 1.0f);
-	vecs[4] = CreateVector4D(-1.0f, -1.0f, -1.0f, 1.0f);
-	vecs[5] = CreateVector4D( 1.0f, -1.0f, -1.0f, 1.0f);
-	vecs[6] = CreateVector4D( 1.0f,  1.0f, -1.0f, 1.0f);
-	vecs[7] = CreateVector4D(-1.0f,  1.0f, -1.0f, 1.0f);
+	vecs[0] = CreateVector4D(-1.0, -1.0,  1.0, 1.0);
+	vecs[1] = CreateVector4D( 1.0, -1.0,  1.0, 1.0);
+	vecs[2] = CreateVector4D( 1.0,  1.0,  1.0, 1.0);
+	vecs[3] = CreateVector4D(-1.0,  1.0,  1.0, 1.0);
+	vecs[4] = CreateVector4D(-1.0, -1.0, -1.0, 1.0);
+	vecs[5] = CreateVector4D( 1.0, -1.0, -1.0, 1.0);
+	vecs[6] = CreateVector4D( 1.0,  1.0, -1.0, 1.0);
+	vecs[7] = CreateVector4D(-1.0,  1.0, -1.0, 1.0);
 }
 
 
@@ -109,10 +109,10 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	*/
 
 	if (kb['W'] == TRUE) {
-		cam.position.z -= 1.0f * keyboardSensitivity * deltaTime;
+		cam.position.z -= 1.0 * keyboardSensitivity * deltaTime;
 	}
 	if (kb['S'] == TRUE) {
-		cam.position.z += 1.0f * keyboardSensitivity * deltaTime;
+		cam.position.z += 1.0 * keyboardSensitivity * deltaTime;
 	}
 
 	if (kb['A'] == TRUE) {
@@ -135,24 +135,24 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	*/
 
 	if (kb['I'] == TRUE) {
-		cam.rotation.x -= 5.0f * keyboardSensitivity * deltaTime;
+		cam.rotation.x -= 5.0 * keyboardSensitivity * deltaTime;
 	}
 	if (kb['K'] == TRUE) {
-		cam.rotation.x += 5.0f * keyboardSensitivity * deltaTime;
+		cam.rotation.x += 5.0 * keyboardSensitivity * deltaTime;
 	}
 
 	if (kb['J'] == TRUE) {
-		cam.rotation.y -= 5.0f * keyboardSensitivity * deltaTime;
+		cam.rotation.y -= 5.0 * keyboardSensitivity * deltaTime;
 	}
 	if (kb['L'] == TRUE) {
-		cam.rotation.y += 5.0f * keyboardSensitivity * deltaTime;
+		cam.rotation.y += 5.0 * keyboardSensitivity * deltaTime;
 	}
 
 	if (kb['U'] == TRUE) {
-		cam.rotation.z -= 5.0f * keyboardSensitivity * deltaTime;
+		cam.rotation.z -= 5.0 * keyboardSensitivity * deltaTime;
 	}
 	if (kb['O'] == TRUE) {
-		cam.rotation.z += 5.0f * keyboardSensitivity * deltaTime;
+		cam.rotation.z += 5.0 * keyboardSensitivity * deltaTime;
 	}
 
 
@@ -181,13 +181,13 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	** Rotate the Vectors
 	*/
 
-	Mrotation = CreateRotationMatrix(rotateDegree, -30.0f, rotateDegree);
+	Mrotation = CreateRotationMatrix(rotateDegree, -30.0, rotateDegree);
 
 	if (rotateOrNot == TRUE) {
 		rotateDegree += 0.03f * deltaTime;
 	}
-	if (rotateDegree >= 360.0f) {
-		rotateDegree =  0.0f;
+	if (rotateDegree >= 360.0) {
+		rotateDegree =  0.0;
 	}
 
 	for (int i = 0; i < 8; i++) {
@@ -219,7 +219,7 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	// Camera Frustum
 	sprintf_s(
 		realbuffer, 1000,
-		"n:%f\nf:%f\nt:%f\nb:%f\nl:%f\nr:%f\n",
+		"n:%lf\nf:%lf\nt:%lf\nb:%lf\nl:%lf\nr:%lf\n",
 		cam.n, cam.f, cam.t, cam.b, cam.l, cam.r
 	);
 	DrawShadowString(fb, 10, 42, realbuffer);
@@ -239,7 +239,7 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	DrawShadowString(fb, 10, 378, buffer);
 	free(buffer);
 
-	sprintf_s(realbuffer, 1000, "Rotate Degree: %f", rotateDegree);
+	sprintf_s(realbuffer, 1000, "Rotate Degree: %lf", rotateDegree);
 	DrawShadowString(fb, 10, 458, realbuffer);
 
 	// Vector List
@@ -278,12 +278,12 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	** Reset Vectors
 	*/
 
-	vecs[0] = CreateVector4D(-1.0f, -1.0f,  1.0f, 1.0f);
-	vecs[1] = CreateVector4D( 1.0f, -1.0f,  1.0f, 1.0f);
-	vecs[2] = CreateVector4D( 1.0f,  1.0f,  1.0f, 1.0f);
-	vecs[3] = CreateVector4D(-1.0f,  1.0f,  1.0f, 1.0f);
-	vecs[4] = CreateVector4D(-1.0f, -1.0f, -1.0f, 1.0f);
-	vecs[5] = CreateVector4D( 1.0f, -1.0f, -1.0f, 1.0f);
-	vecs[6] = CreateVector4D( 1.0f,  1.0f, -1.0f, 1.0f);
-	vecs[7] = CreateVector4D(-1.0f,  1.0f, -1.0f, 1.0f);
+	vecs[0] = CreateVector4D(-1.0, -1.0,  1.0, 1.0);
+	vecs[1] = CreateVector4D( 1.0, -1.0,  1.0, 1.0);
+	vecs[2] = CreateVector4D( 1.0,  1.0,  1.0, 1.0);
+	vecs[3] = CreateVector4D(-1.0,  1.0,  1.0, 1.0);
+	vecs[4] = CreateVector4D(-1.0, -1.0, -1.0, 1.0);
+	vecs[5] = CreateVector4D( 1.0, -1.0, -1.0, 1.0);
+	vecs[6] = CreateVector4D( 1.0,  1.0, -1.0, 1.0);
+	vecs[7] = CreateVector4D(-1.0,  1.0, -1.0, 1.0);
 }
