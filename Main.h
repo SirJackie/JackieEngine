@@ -8,39 +8,6 @@
 #define WindowTitle     L"Jackie Engine"
 
 
-Color cfun(double r, double s, double t) {
-	return CreateColor(
-		(int)(255 * r),
-		(int)(255 * s),
-		(int)(255 * t)
-	);
-}
-
-//Vector4D A, B, C;
-//ZBuffer zb;
-//double zbInitValue = 0;
-//
-//void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
-//	A = CreateVector4D(500, 0, 0, 1);
-//	B = CreateVector4D(200, 300, 0.8, 1);
-//	C = CreateVector4D(800, 500, 1, 1);
-//	zb = CreateZBuffer(fb);
-//	ClearZBuffer(fb, zb, zbInitValue);
-//}
-//
-//void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
-//	ClearZBuffer(fb, zb, zbInitValue);
-//
-//	DrawTriangle(fb, zb, &A, &B, &C, cfun);
-//
-//	if (kb['W']) {
-//		zbInitValue -= 0.01;
-//	}
-//	if (kb['S']) {
-//		zbInitValue += 0.01;
-//	}
-//}
-
 /*
 ** Global Variables
 */
@@ -55,6 +22,19 @@ BOOL      rotateOrNot          = TRUE;
 double    rotateDegree         = 0.0;
 int       rotateKeyDelay       = 0;
 ZBuffer zb;
+
+
+/*
+** Color Function
+*/
+
+Color cfun(double r, double s, double t) {
+	return CreateColor(
+		(int)(255 * r),
+		(int)(255 * s),
+		(int)(255 * t)
+	);
+}
 
 
 /*
