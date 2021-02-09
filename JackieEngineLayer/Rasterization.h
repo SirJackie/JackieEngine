@@ -59,45 +59,38 @@ void FBDrawColorPixel(
 	if (y > fb.Height - 1) return;
 	if (y < 0) return;
 
-	if (z > zb[y * fb.Width + x]) {
-		zb[y * fb.Width + x] = z;              // Over Write Z-Buffer
+	if (zb[y * fb.Width + x] > z) return;  // Z-Buffer Test
+	zb[y * fb.Width + x] = z;              // Over Write Z-Buffer
 
-		double r = a;                          // The Similarity between this pixel and A
-		double s = b - a * b;                  // The Similarity between this pixel and B
-		double t = a * b - a - b + 1;          // The Similarity between this pixel and C
+	double r = a;                          // The Similarity between this pixel and A
+	double s = b - a * b;                  // The Similarity between this pixel and B
+	double t = a * b - a - b + 1;          // The Similarity between this pixel and C
 
-		double glr, gls, glt;
+	double glr, gls, glt;
 
-		if (tris == LONGSIDE_RIGHT) {
-			glr = r + t * w;
-			gls = s;
-			glt = t - t * w;
-		}
-		else {   // LONGSIDE_LEFT
-			glr = r + s * w;
-			gls = t;
-			glt = s - s * w;
-		}
-
-		if(vodr == 123)  //rst
-			SetPixel(fb, x, y, cfun(glr, gls, glt));
-		if(vodr == 132)  //rts
-			SetPixel(fb, x, y, cfun(glr, glt, gls));
-		if(vodr == 213)  //srt
-			SetPixel(fb, x, y, cfun(gls, glr, glt));
-		if(vodr == 231)  //str but trs
-			SetPixel(fb, x, y, cfun(glt, glr, gls));
-		if(vodr == 312)  //trs but str
-			SetPixel(fb, x, y, cfun(gls, glt, glr));
-		if(vodr == 321)  //tsr
-			SetPixel(fb, x, y, cfun(glt, gls, glr));
-
-		//SetPixel(fb, x, y, CreateColor(
-		//	(int)(2560 * z),
-		//	(int)(2560 * z),
-		//	(int)(2560 * z)
-		//));
+	if (tris == LONGSIDE_RIGHT) {
+		glr = r + t * w;
+		gls = s;
+		glt = t - t * w;
 	}
+	else {   // LONGSIDE_LEFT
+		glr = r + s * w;
+		gls = t;
+		glt = s - s * w;
+	}
+
+	if(vodr == 123)  //rst
+		SetPixel(fb, x, y, cfun(glr, gls, glt));
+	if(vodr == 132)  //rts
+		SetPixel(fb, x, y, cfun(glr, glt, gls));
+	if(vodr == 213)  //srt
+		SetPixel(fb, x, y, cfun(gls, glr, glt));
+	if(vodr == 231)  //str but trs
+		SetPixel(fb, x, y, cfun(glt, glr, gls));
+	if(vodr == 312)  //trs but str
+		SetPixel(fb, x, y, cfun(gls, glt, glr));
+	if(vodr == 321)  //tsr
+		SetPixel(fb, x, y, cfun(glt, gls, glr));
 }
 
 void FBDrawHLine(
@@ -182,45 +175,38 @@ void FTDrawColorPixel(
 	if (y > fb.Height - 1) return;
 	if (y < 0) return;
 
-	if (z > zb[y * fb.Width + x]) {
-		zb[y * fb.Width + x] = z;
+	if (zb[y * fb.Width + x] > z) return;  // Z-Buffer Test
+	zb[y * fb.Width + x] = z;              // Over Write Z-Buffer
 
-		double r = a * b;                      // The Similarity between this pixel and A
-		double s = a - a * b;                  // The Similarity between this pixel and B
-		double t = 1 - a;                      // The Similarity between this pixel and C
+	double r = a * b;                      // The Similarity between this pixel and A
+	double s = a - a * b;                  // The Similarity between this pixel and B
+	double t = 1 - a;                      // The Similarity between this pixel and C
 
-		double glr, gls, glt;
+	double glr, gls, glt;
 
-		if (tris == LONGSIDE_RIGHT) {
-			glr = s * w;
-			gls = r;
-			glt = s - s * w + t;
-		}
-		else {   // LONGSIDE_LEFT
-			glr = r * w;
-			gls = s;
-			glt = r - r * w + t;
-		}
-
-		if(vodr == 123)  //rst
-			SetPixel(fb, x, y, cfun(glr, gls, glt));
-		if(vodr == 132)  //rts
-			SetPixel(fb, x, y, cfun(glr, glt, gls));
-		if(vodr == 213)  //srt
-			SetPixel(fb, x, y, cfun(gls, glr, glt));
-		if(vodr == 231)  //str but trs
-			SetPixel(fb, x, y, cfun(glt, glr, gls));
-		if(vodr == 312)  //trs but str
-			SetPixel(fb, x, y, cfun(gls, glt, glr));
-		if(vodr == 321)  //tsr
-			SetPixel(fb, x, y, cfun(glt, gls, glr));
-
-		//SetPixel(fb, x, y, CreateColor(
-		//	(int)(2560 * z),
-		//	(int)(2560 * z),
-		//	(int)(2560 * z)
-		//));
+	if (tris == LONGSIDE_RIGHT) {
+		glr = s * w;
+		gls = r;
+		glt = s - s * w + t;
 	}
+	else {   // LONGSIDE_LEFT
+		glr = r * w;
+		gls = s;
+		glt = r - r * w + t;
+	}
+
+	if(vodr == 123)  //rst
+		SetPixel(fb, x, y, cfun(glr, gls, glt));
+	if(vodr == 132)  //rts
+		SetPixel(fb, x, y, cfun(glr, glt, gls));
+	if(vodr == 213)  //srt
+		SetPixel(fb, x, y, cfun(gls, glr, glt));
+	if(vodr == 231)  //str but trs
+		SetPixel(fb, x, y, cfun(glt, glr, gls));
+	if(vodr == 312)  //trs but str
+		SetPixel(fb, x, y, cfun(gls, glt, glr));
+	if(vodr == 321)  //tsr
+		SetPixel(fb, x, y, cfun(glt, gls, glr));
 }
 
 void FTDrawHLine(
