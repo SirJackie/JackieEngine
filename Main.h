@@ -181,7 +181,7 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	** Rotate the Vectors
 	*/
 
-	Mrotation = CreateRotationMatrix(rotateDegree, -30.0f, rotateDegree);
+	Mrotation = CreateRotationMatrix(0.0f, 0.0f, rotateDegree);
 
 	if (rotateOrNot == TRUE) {
 		rotateDegree += 0.03f * deltaTime;
@@ -258,17 +258,17 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	*/
 
 	DrawTriangle(fb, zb, &(vecs[0]), &(vecs[1]), &(vecs[3]), cfun);  //n1
-	DrawTriangle(fb, zb, &(vecs[2]), &(vecs[3]), &(vecs[1]), cfun);  //n2
-	DrawTriangle(fb, zb, &(vecs[5]), &(vecs[4]), &(vecs[6]), cfun);  //f1
-	DrawTriangle(fb, zb, &(vecs[7]), &(vecs[6]), &(vecs[4]), cfun);  //f2
-	DrawTriangle(fb, zb, &(vecs[4]), &(vecs[0]), &(vecs[7]), cfun);  //l1
-	DrawTriangle(fb, zb, &(vecs[3]), &(vecs[7]), &(vecs[0]), cfun);  //l2
-	DrawTriangle(fb, zb, &(vecs[1]), &(vecs[5]), &(vecs[2]), cfun);  //r1
-	DrawTriangle(fb, zb, &(vecs[6]), &(vecs[2]), &(vecs[5]), cfun);  //r2
-	DrawTriangle(fb, zb, &(vecs[3]), &(vecs[2]), &(vecs[7]), cfun);  //t1
-	DrawTriangle(fb, zb, &(vecs[6]), &(vecs[7]), &(vecs[2]), cfun);  //t2
-	DrawTriangle(fb, zb, &(vecs[5]), &(vecs[0]), &(vecs[4]), cfun);  //b1
-	DrawTriangle(fb, zb, &(vecs[5]), &(vecs[1]), &(vecs[0]), cfun);  //b2
+	//DrawTriangle(fb, zb, &(vecs[2]), &(vecs[3]), &(vecs[1]), cfun);  //n2
+	//DrawTriangle(fb, zb, &(vecs[5]), &(vecs[4]), &(vecs[6]), cfun);  //f1
+	//DrawTriangle(fb, zb, &(vecs[7]), &(vecs[6]), &(vecs[4]), cfun);  //f2
+	//DrawTriangle(fb, zb, &(vecs[4]), &(vecs[0]), &(vecs[7]), cfun);  //l1
+	//DrawTriangle(fb, zb, &(vecs[3]), &(vecs[7]), &(vecs[0]), cfun);  //l2
+	//DrawTriangle(fb, zb, &(vecs[1]), &(vecs[5]), &(vecs[2]), cfun);  //r1
+	//DrawTriangle(fb, zb, &(vecs[6]), &(vecs[2]), &(vecs[5]), cfun);  //r2
+	//DrawTriangle(fb, zb, &(vecs[3]), &(vecs[2]), &(vecs[7]), cfun);  //t1
+	//DrawTriangle(fb, zb, &(vecs[6]), &(vecs[7]), &(vecs[2]), cfun);  //t2
+	//DrawTriangle(fb, zb, &(vecs[5]), &(vecs[0]), &(vecs[4]), cfun);  //b1
+	//DrawTriangle(fb, zb, &(vecs[5]), &(vecs[1]), &(vecs[0]), cfun);  //b2
 
 
 	/*

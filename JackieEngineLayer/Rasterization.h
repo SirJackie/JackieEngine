@@ -79,26 +79,18 @@ void FBDrawColorPixel(
 			glt = s - s * w;
 		}
 
-		switch (vodr) {
-		case 123:  //rst
+		if(vodr == 123)  //rst
 			SetPixel(fb, x, y, cfun(glr, gls, glt));
-			break;
-		case 132:  //rts
+		if(vodr == 132)  //rts
 			SetPixel(fb, x, y, cfun(glr, glt, gls));
-			break;
-		case 213:  //srt
+		if(vodr == 213)  //srt
 			SetPixel(fb, x, y, cfun(gls, glr, glt));
-			break;
-		case 231:  //str
+		if(vodr == 231)  //str
 			SetPixel(fb, x, y, cfun(gls, glt, glr));
-			break;
-		case 312:  //trs
+		if(vodr == 312)  //trs
 			SetPixel(fb, x, y, cfun(glt, glr, gls));
-			break;
-		case 321:  //tsr
+		if(vodr == 321)  //tsr
 			SetPixel(fb, x, y, cfun(glt, gls, glr));
-			break;
-		}
 
 		//SetPixel(fb, x, y, CreateColor(
 		//	(int)(2560 * z),
@@ -210,26 +202,18 @@ void FTDrawColorPixel(
 			glt = r - r * w + t;
 		}
 
-		switch (vodr) {
-		case 123:  //rst
+		if(vodr == 123)  //rst
 			SetPixel(fb, x, y, cfun(glr, gls, glt));
-			break;
-		case 132:  //rts
+		if(vodr == 132)  //rts
 			SetPixel(fb, x, y, cfun(glr, glt, gls));
-			break;
-		case 213:  //srt
+		if(vodr == 213)  //srt
 			SetPixel(fb, x, y, cfun(gls, glr, glt));
-			break;
-		case 231:  //str
+		if(vodr == 231)  //str
 			SetPixel(fb, x, y, cfun(gls, glt, glr));
-			break;
-		case 312:  //trs
+		if(vodr == 312)  //trs
 			SetPixel(fb, x, y, cfun(glt, glr, gls));
-			break;
-		case 321:  //tsr
+		if(vodr == 321)  //tsr
 			SetPixel(fb, x, y, cfun(glt, gls, glr));
-			break;
-		}
 
 		//SetPixel(fb, x, y, CreateColor(
 		//	(int)(2560 * z),
