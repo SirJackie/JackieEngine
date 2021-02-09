@@ -85,10 +85,10 @@ void FBDrawColorPixel(
 			SetPixel(fb, x, y, cfun(glr, glt, gls));
 		if(vodr == 213)  //srt
 			SetPixel(fb, x, y, cfun(gls, glr, glt));
-		if(vodr == 231)  //str
-			SetPixel(fb, x, y, cfun(gls, glt, glr));
-		if(vodr == 312)  //trs
+		if(vodr == 231)  //str but trs
 			SetPixel(fb, x, y, cfun(glt, glr, gls));
+		if(vodr == 312)  //trs but str
+			SetPixel(fb, x, y, cfun(gls, glt, glr));
 		if(vodr == 321)  //tsr
 			SetPixel(fb, x, y, cfun(glt, gls, glr));
 
@@ -208,10 +208,10 @@ void FTDrawColorPixel(
 			SetPixel(fb, x, y, cfun(glr, glt, gls));
 		if(vodr == 213)  //srt
 			SetPixel(fb, x, y, cfun(gls, glr, glt));
-		if(vodr == 231)  //str
-			SetPixel(fb, x, y, cfun(gls, glt, glr));
-		if(vodr == 312)  //trs
+		if(vodr == 231)  //str but trs
 			SetPixel(fb, x, y, cfun(glt, glr, gls));
+		if(vodr == 312)  //trs but str
+			SetPixel(fb, x, y, cfun(gls, glt, glr));
 		if(vodr == 321)  //tsr
 			SetPixel(fb, x, y, cfun(glt, gls, glr));
 
