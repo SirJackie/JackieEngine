@@ -163,12 +163,21 @@ void CalcCamera4DMpersp(Camera4D* cam) {
 }
 
 void CalcCamera4DMviewport(Camera4D* cam) {
-	cam->Mviewport = CreateMatrix4D(
+	Matrix4D MviewportPre = CreateMatrix4D(
 		cam->ScreenWidth / 2.0f, 0.0f, 0.0f, cam->ScreenWidth / 2.0f,
 		0.0f, cam->ScreenHeight / 2.0f, 0.0f, cam->ScreenHeight / 2.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
+
+	Matrix4D MYReverse = CreateMatrix4D(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, -1.0f, 0.0f, cam->ScreenHeight,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	cam->Mviewport = Matrix4DTimesMatrix4D(&MviewportPre, &MYReverse);
 }
 
 
