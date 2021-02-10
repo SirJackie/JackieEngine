@@ -7,7 +7,6 @@
 #include "../Main.h"
 #include "../CrossBufferLayer/CrossBuffer.h"
 
-
 /*
 ** Definitions
 */

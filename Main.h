@@ -164,7 +164,7 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 	Mrotation = CreateRotationMatrix(rotateDegree, -30.0, rotateDegree);
 
 	if (rotateOrNot == TRUE) {
-		rotateDegree += 0.03f * deltaTime;
+		rotateDegree += (double)0.03 * (double)deltaTime;
 	}
 	if (rotateDegree >= 360.0) {
 		rotateDegree =  0.0;

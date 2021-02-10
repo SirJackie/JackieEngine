@@ -23,7 +23,7 @@ void DrawVector4D(FrameBuffer fb, Vector4D* vec, int radius) {
 
 	for (int y = StartY; y < EndY; y++) {
 		for (int x = StartX; x < EndX; x++) {
-			SetPixel(fb, x, y, CreateColor(255, 255, 255, 255));
+			SetPixel(fb, x, y, CreateColor(255, 255, 255));
 		}
 	}
 }
@@ -145,7 +145,7 @@ void DrawFlatBottomTriangle(
 	double a = 1.0f;
 
 	/* Draw Flat Bottom Triangle */
-	for (int yHat = A->y; yHat <= B->y; yHat++) {
+	for (int yHat = (int)A->y; yHat <= B->y; yHat++) {
 		FBDrawHLine(
 			fb, zb, yHat, (int)i, (int)j, iz, jz,
 			cfun, tris, vodr, w, a
@@ -261,7 +261,7 @@ void DrawFlatToppedTriangle(
 	double a = 1.0f;
 
 	/* Draw Flat Bottom Triangle */
-	for (int yHat = A->y; yHat <= C->y; yHat++) {
+	for (int yHat = (int)A->y; yHat <= C->y; yHat++) {
 		FTDrawHLine(
 			fb, zb, yHat, (int)i, (int)j, iz, jz,
 			cfun, tris, vodr, w, a
