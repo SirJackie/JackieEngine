@@ -163,6 +163,11 @@
     <ClInclude Include="..\CrossBufferLayer\FPSCalculator.h" />
     <ClInclude Include="..\CrossBufferLayer\FrameBuffer.h" />
     <ClInclude Include="..\CrossBufferLayer\IOSupport.h" />
+    <ClInclude Include="..\JackieEngineLayer\CameraSupport.h" />
+    <ClInclude Include="..\JackieEngineLayer\JackieEngine.h" />
+    <ClInclude Include="..\JackieEngineLayer\LinearAlgebra.h" />
+    <ClInclude Include="..\JackieEngineLayer\ModelSupport.h" />
+    <ClInclude Include="..\JackieEngineLayer\Rasterization.h" />
     <ClInclude Include="..\Main.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />

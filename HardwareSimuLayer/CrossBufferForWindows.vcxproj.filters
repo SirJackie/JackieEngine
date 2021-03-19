@@ -25,6 +25,9 @@
     <Filter Include="源文件\HardwareSimuLayer">
       <UniqueIdentifier>{de2754aa-126a-4230-a8d2-c50208a68c07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\JackieEngineLayer">
+      <UniqueIdentifier>{946075c7-e6c9-41cc-b875-4a6283e7eaf6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CrossBufferForWindows.rc">
@@ -66,6 +69,21 @@
     </ClInclude>
     <ClInclude Include="..\CrossBufferLayer\FPSCalculator.h">
       <Filter>头文件\CrossBufferLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\CameraSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\JackieEngine.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\LinearAlgebra.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\ModelSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\Rasterization.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
