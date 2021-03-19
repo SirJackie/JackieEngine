@@ -165,7 +165,7 @@
     <ClInclude Include="..\CrossBufferLayer\IOSupport.h" />
     <ClInclude Include="..\JackieEngineLayer\CameraSupport.h" />
     <ClInclude Include="..\JackieEngineLayer\JackieEngine.h" />
-    <ClInclude Include="..\JackieEngineLayer\LinearAlgebra.h" />
+    <ClInclude Include="..\JackieEngineLayer\MathSupport.h" />
     <ClInclude Include="..\JackieEngineLayer\ModelSupport.h" />
     <ClInclude Include="..\JackieEngineLayer\Rasterization.h" />
     <ClInclude Include="..\Main.h" />
