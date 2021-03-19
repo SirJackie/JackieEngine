@@ -2,10 +2,15 @@
 #include <math.h>
 #include "./CrossBufferLayer/CrossBuffer.h"
 #include "./JackieEngineLayer/JackieEngine.h"
+#include <vector>
+using std::vector;
+
 
 /* Define Window Class Properties */
-#define WindowClassName L"Jackie Engine Class"
-#define WindowTitle     L"Jackie Engine"
+#define WindowClassName   L"Jackie Engine Class"
+#define WindowTitle       L"Jackie Engine"
+#define BitmapRootAddress "..\\"
+
 
 
 /*
@@ -41,7 +46,7 @@ Color cfun(double r, double s, double t) {
 ** Setup()
 */
 
-void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
+void Setup(FrameBuffer fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& fbLoadingQueue) {
 	zb = CreateZBuffer(fb);
 	
 	/*
@@ -74,14 +79,14 @@ void Setup(FrameBuffer fb, Keyboard kb, int deltaTime) {
 ** Update()
 */
 
-void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
+void Update(FrameBuffer fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& fbLoadingQueue) {
 	
 
 	/*
 	** Calculating FPS
 	*/
 
-	CalcFPS(fb, deltaTime);
+	//CalcFPS(fb, deltaTime);
 
 
 	/*
@@ -202,30 +207,30 @@ void Update(FrameBuffer fb, Keyboard kb, int deltaTime) {
 		"n:%lf\nf:%lf\nt:%lf\nb:%lf\nl:%lf\nr:%lf\n",
 		cam.n, cam.f, cam.t, cam.b, cam.l, cam.r
 	);
-	DrawShadowString(fb, 10, 42, realbuffer);
+	//DrawShadowString(fb, 10, 42, realbuffer);
 
 	// Camera Position
 	buffer = OutputVector4D(&(cam.position));
-	DrawShadowString(fb, 10, 314, buffer);
+	//DrawShadowString(fb, 10, 314, buffer);
 	free(buffer);
 
 	// Camera Rotation
 	buffer = OutputVector4D(&(cam.rotation));
-	DrawShadowString(fb, 10, 346, buffer);
+	//DrawShadowString(fb, 10, 346, buffer);
 	free(buffer);
 
 	// Mtransform
 	buffer = OutputMatrix4D(&(cam.Mtransform));
-	DrawShadowString(fb, 10, 378, buffer);
+	//DrawShadowString(fb, 10, 378, buffer);
 	free(buffer);
 
 	sprintf_s(realbuffer, 1000, "Rotate Degree: %lf", rotateDegree);
-	DrawShadowString(fb, 10, 458, realbuffer);
+	//DrawShadowString(fb, 10, 458, realbuffer);
 
 	// Vector List
 	for (int i = 0; i < 8; i++) {
 		buffer = OutputVector4D(&(vecs[i]));
-		DrawShadowString(fb, 10, 154 + i * 16, buffer);
+		//DrawShadowString(fb, 10, 154 + i * 16, buffer);
 		free(buffer);
 	}
 

@@ -19,14 +19,12 @@
     <Filter Include="头文件\HardwareSimuLayer">
       <UniqueIdentifier>{d368b7c8-7fdc-4e3b-8196-5d8167f70a70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\JackieEngineLayer">
-      <UniqueIdentifier>{0cd53849-074f-4d38-9479-5e11ac9a2f76}</UniqueIdentifier>
+    <Filter Include="源文件\CrossBufferLayer">
+      <UniqueIdentifier>{cda31c40-f857-427e-917e-4c2b0c8a2486}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CrossBufferForWindows.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+    <Filter Include="源文件\HardwareSimuLayer">
+      <UniqueIdentifier>{de2754aa-126a-4230-a8d2-c50208a68c07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CrossBufferForWindows.rc">
@@ -45,16 +43,7 @@
     <ClInclude Include="..\Main.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\CrossBufferLayer\FrameBufferSupport.h">
-      <Filter>头文件\CrossBufferLayer</Filter>
-    </ClInclude>
     <ClInclude Include="..\CrossBufferLayer\FontSupport.h">
-      <Filter>头文件\CrossBufferLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CrossBufferLayer\IOSupport.h">
-      <Filter>头文件\CrossBufferLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CrossBufferLayer\FPSCalculator.h">
       <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
     <ClInclude Include="..\CrossBufferLayer\CrossBuffer.h">
@@ -69,20 +58,34 @@
     <ClInclude Include="framework.h">
       <Filter>头文件\HardwareSimuLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\LinearAlgebra.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
+    <ClInclude Include="..\CrossBufferLayer\FrameBuffer.h">
+      <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\CameraSupport.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
+    <ClInclude Include="..\CrossBufferLayer\IOSupport.h">
+      <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\ModelSupport.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
+    <ClInclude Include="..\CrossBufferLayer\FPSCalculator.h">
+      <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\Rasterization.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\JackieEngine.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CrossBufferForWindows.cpp">
+      <Filter>源文件\HardwareSimuLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CrossBufferLayer\FrameBuffer.cpp">
+      <Filter>源文件\CrossBufferLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CrossBufferLayer\IOSupport.cpp">
+      <Filter>源文件\CrossBufferLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CrossBufferLayer\FontSupport.cpp">
+      <Filter>源文件\CrossBufferLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CrossBufferLayer\CrossBuffer.cpp">
+      <Filter>源文件\CrossBufferLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CrossBufferLayer\FPSCalculator.cpp">
+      <Filter>源文件\CrossBufferLayer</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

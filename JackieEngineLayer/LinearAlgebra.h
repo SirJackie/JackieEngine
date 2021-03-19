@@ -29,19 +29,19 @@
 ** Define Some Calculating Functions
 */
 
-int clamp(int min, int input, int max) {
-	if (input > min) {
-		if (input < max) {
-			return input;
-		}
-		else {
-			return max;
-		}
-	}
-	else {
-		return min;
-	}
-}
+//int clamp(int min, int input, int max) {
+//	if (input > min) {
+//		if (input < max) {
+//			return input;
+//		}
+//		else {
+//			return max;
+//		}
+//	}
+//	else {
+//		return min;
+//	}
+//}
 
 double dclamp(double min, double input, double max) {
 	if (input > min) {

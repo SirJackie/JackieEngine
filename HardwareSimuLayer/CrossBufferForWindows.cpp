@@ -6,6 +6,9 @@
 #include "resource.h"
 #include "../Main.h"
 #include "../CrossBufferLayer/CrossBuffer.h"
+#include <string>
+using std::string;
+
 
 /*
 ** Definitions
@@ -31,8 +34,8 @@ BOOL FirstTimeRunning = TRUE;
 clock_t lastTime = clock();
 clock_t thisTime = clock();
 Window win;
-FrameBuffer fb;
 Keyboard kb = (Keyboard)malloc(256 * sizeof(int));
+vector<FrameBuffer*> fbLoadingQueue;
 
 /* Define Functions */
 void GetScreenResolution(int* resultX, int* resultY) {
@@ -44,6 +47,78 @@ void GetScreenResolution(int* resultX, int* resultY) {
 	*resultY = GetDeviceCaps(hdcScreen, VERTRES);
 	// Release HDC
 	if (NULL != hdcScreen) DeleteDC(hdcScreen);
+}
+
+void ReadBitmapToFrameBuffer(const char* bmpAddress, FrameBuffer& fb) {
+	// Getting File Pointer
+	FILE* fp = NULL;
+	string str;
+	str += BitmapRootAddress;
+	str += bmpAddress;
+	int ret = fopen_s(&fp, str.c_str(), "rb");
+	if (fp == 0)
+	{
+		return;
+	}
+
+	// Read the File
+	BITMAPFILEHEADER fileheader = { 0 };
+	fread(&fileheader, sizeof(fileheader), 1, fp);
+	if (fileheader.bfType != 0x4D42)
+	{
+		fclose(fp);
+		return;
+	}
+
+	// Read Bitmap Information Header
+	BITMAPINFOHEADER head;
+	fread(&head, sizeof(BITMAPINFOHEADER), 1, fp);
+	long bmpWidth = head.biWidth;
+	long bmpHeight = head.biHeight;
+	WORD biBitCount = head.biBitCount;
+	if (biBitCount != 24)
+	{
+		//::AfxMessageBox(_T("请选择24位位图！"));
+		fclose(fp);
+		return;
+	}
+
+	int totalSize = (bmpWidth * biBitCount / 8 + 3) / 4 * 4 * bmpHeight;
+	BYTE* pBmpBuf = new BYTE[totalSize];
+	size_t size = 0;
+	while (true)
+	{
+		int iret = fread(&pBmpBuf[size], 1, 1, fp);
+		if (iret == 0)
+			break;
+		size = size + iret;
+	}
+	fclose(fp);
+
+	int pitch = bmpWidth % 4;
+
+	// Create FrameBuffer
+	fb.DisAllocateBuffer();
+	fb.AllocateBuffer(bmpWidth, bmpHeight);
+	int bmpHeightNegOne = bmpHeight - 1;
+
+	for (int i = 0; i < bmpHeight; i++)
+	{
+		int realPitch = i * pitch;
+		for (int j = 0; j < bmpWidth; j++)
+		{
+			SetPixel(
+				fb, j, i,
+				CreateColor(
+					pBmpBuf[((bmpHeightNegOne - i) * bmpWidth + j) * 3 + 2 + realPitch],
+					pBmpBuf[((bmpHeightNegOne - i) * bmpWidth + j) * 3 + 1 + realPitch],
+					pBmpBuf[((bmpHeightNegOne - i) * bmpWidth + j) * 3 + realPitch]
+				)
+			);
+		}
+	}
+	delete[] pBmpBuf;
+	pBmpBuf = NULL;
 }
 
 
@@ -97,6 +172,7 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
+FrameBuffer bitmapbuffer;
 
 /*
 ** Main Function
@@ -196,23 +272,27 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			pBackBuffer->LockRect(&rect, NULL, NULL);
 
 			// Init FrameBuffer Object
-			fb.Width = win.Width;
-			fb.Height = win.Height;
+			FrameBuffer fb(win.Width, win.Height, (rect.Pitch) >> 2, (Color*)rect.pBits);
 
 			// If it is the First Time Running
 			if (FirstTimeRunning) {
-				fb.pBits = rect.pBits;
-				fb.Pitch = rect.Pitch;
-				Setup(fb, kb, 0);                      /* Call the Setup() in Main.h */
+				Setup(fb, kb, 0, fbLoadingQueue);                      /* Call the Setup() in Main.h */
 				FirstTimeRunning = FALSE;
 			}
 
 			// If it is not the First Time Running
 			else {
-				fb.pBits = rect.pBits;
-				fb.Pitch = rect.Pitch;
-				Update(fb, kb, thisTime - lastTime);   /* Call the Update() in Main.h */
+				Update(fb, kb, thisTime - lastTime, fbLoadingQueue);   /* Call the Update() in Main.h */
 			}
+
+			for (unsigned int i = 0; i < fbLoadingQueue.size(); i++) {
+				FrameBuffer& fb = *(fbLoadingQueue[i]);
+				if (fb.wannaLoadBitmap == true) {
+					ReadBitmapToFrameBuffer(fb.bitmapAddress.c_str(), fb);
+					fb.wannaLoadBitmap = false;
+				}
+			}
+			fbLoadingQueue.clear();
 
 			// Release Back Buffer and Swap it to Front
 			pBackBuffer->UnlockRect();

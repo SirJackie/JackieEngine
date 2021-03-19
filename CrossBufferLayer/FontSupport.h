@@ -1,5 +1,5 @@
-#ifndef __CSBF_FontSupport
-#define __CSBF_FontSupport
+#ifndef __CSBF_FontSupport__
+#define __CSBF_FontSupport__
 
 
 const int Font[8 * 16 * 256] = {
