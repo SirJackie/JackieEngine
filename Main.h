@@ -109,8 +109,38 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 
 	// Vector4D Testing
 	ss << "Vector4D Testing: ";
-	Vector4D vec(2.0f, 3.0f, 4.0f, 1.0f);
+	ss << "\n";
+
+	Vector4D vec(1.0f, 2.0f, 0.0f, 2.0f);
 	ss << vec.str();
+	ss << "\n";
+
+	ss << "Length Of the Vector: ";
+	ss << vec.length();
+	ss << "\n";
+
+	ss << "If Normalized: ";
+	ss << vec.normalized().str();
+	ss << "\n";
+
+	ss << "After vec.DevideByW(): ";
+	vec.DevideByW();
+	ss << vec.str();
+	ss << "\n";
+	ss << "\n";
+
+	ss << "vec + vec: ";
+	Vector4D vec1(1.0f, 2.0f, 3.0f, 1.0f);
+	Vector4D vec2(1.0f, 2.0f, 3.0f, 1.0f);
+	Vector4D vec3(1.0f, 2.0f, 3.0f, 1.0f);
+	ss << (vec1 + vec2 + vec3).str();
+	ss << "\n";
+
+	ss << "vec - vec: ";
+	Vector4D vec4(3.0f, 3.0f, 3.0f, 1.0f);
+	Vector4D vec5(1.0f, 2.0f, 3.0f, 1.0f);
+	Vector4D vec6(-1.0f, -1.0f, -1.0f, 1.0f);
+	ss << (vec4 - vec5 - vec6).str();
 
 
 	fb.Draw(ss.str().c_str());

@@ -3,6 +3,7 @@
 #include <sstream>
 using std::string;
 using std::stringstream;
+using std::sqrtf;
 
 int min3(int a, int b, int c) {
 	int min = a;
@@ -69,4 +70,48 @@ string Vector4D::str(){
 	ss << "]";
 
 	return ss.str();
+}
+
+float Vector4D::length() {
+	// Use the Pythagorean Theorem to calculate the length
+	return sqrtf(x*x + y*y + z*z);
+}
+
+Vector4D Vector4D::normalized() {
+	float length = this->length();
+	return Vector4D(
+		this->x / length,
+		this->y / length,
+		this->z / length,
+		this->w  // W-Axis is Meaningless, So Do Nothing
+	);
+}
+
+void Vector4D::DevideByW() {
+	x /= w;
+	y /= w;
+	z /= w;
+	w =  1;  // The same as w /= w;
+}
+
+Vector4D Vector4D::operator+(const Vector4D& b) const {
+	const Vector4D& a = *this;
+
+	return Vector4D(
+		a.x + b.x,
+		a.y + b.y,
+		a.z + b.z,
+		1
+	);
+}
+
+Vector4D Vector4D::operator-(const Vector4D& b) const {
+	const Vector4D& a = *this;
+
+	return Vector4D(
+		a.x - b.x,
+		a.y - b.y,
+		a.z - b.z,
+		1
+	);
 }

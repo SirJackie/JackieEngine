@@ -68,45 +68,15 @@ public:
 	float w;
 
 	Vector4D(float x_, float y_, float z_, float w_);
-	string str();
+	string    str();
+	float     length();
+	Vector4D  normalized();
+	void      DevideByW();
+	Vector4D  operator+(const Vector4D& b) const;
+	Vector4D  operator-(const Vector4D& b) const;
 };
 
 
-
-
-//float LengthOfVector4D(Vector4D* vec) {
-//	// Use the Pythagorean Theorem to calculate the length
-//	return sqrt(
-//		vec->x * vec->x + vec->y * vec->y + vec->z * vec->z
-//	);
-//}
-//
-//Vector4D NormalizedVector4D(Vector4D* vec) {
-//	float length = LengthOfVector4D(vec);
-//	return CreateVector4D(
-//		vec->x / length,
-//		vec->y / length,
-//		vec->z / length,
-//		vec->w  // W-Axis is Meaningless, So Do Nothing
-//	);
-//}
-//
-//void Vector4DDevidedByW(Vector4D* vec) {
-//	vec->x /= vec->w;
-//	vec->y /= vec->w;
-//	vec->z /= vec->w;
-//	vec->w /= vec->w;
-//}
-//
-//Vector4D Vector4DAddVector4D(Vector4D* a, Vector4D* b) {
-//	Vector4D result;
-//	result.x = a->x + b->x;
-//	result.y = a->y + b->y;
-//	result.z = a->z + b->z;
-//	result.w = a->w + b->w;
-//	return result;
-//}
-//
 //Vector4D Vector4DMinusVector4D(Vector4D* a, Vector4D* b) {
 //	Vector4D result;
 //	result.x = a->x - b->x;
@@ -115,9 +85,7 @@ public:
 //	result.w = a->w - b->w;
 //	return result;
 //}
-//
-//#define CreateVector4DFromPointToPoint(from, to) Vector4DMinusVector4D(to, from)
-//
+
 //float Vector4DDotVector4D(Vector4D* a, Vector4D* b) {
 //	return a->x * b->x + a->y * b->y + a->z * b->z;
 //}
