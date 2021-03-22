@@ -2,20 +2,6 @@
 #include <vector>
 using std::vector;
 
-int clamp(int min, int x, int max) {
-	int result = x;
-
-	if (min > result) {
-		result = min;
-	}
-
-	if (max < result) {
-		result = max;
-	}
-
-	return result;
-}
-
 void FrameBuffer::AllocateBuffer(int width, int height) {
 	Width        = width  > 1 ? width  : 1;
 	Height       = height > 1 ? height : 1;
