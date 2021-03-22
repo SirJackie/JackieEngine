@@ -2,6 +2,34 @@
 #include <vector>
 using std::vector;
 
+int clamp(int min, int input, int max) {
+	if (input > min) {
+		if (input < max) {
+			return input;
+		}
+		else {
+			return max;
+		}
+	}
+	else {
+		return min;
+	}
+}
+
+float fclamp(float min, float input, float max) {
+	if (input > min) {
+		if (input < max) {
+			return input;
+		}
+		else {
+			return max;
+		}
+	}
+	else {
+		return min;
+	}
+}
+
 void FrameBuffer::AllocateBuffer(int width, int height) {
 	Width        = width  > 1 ? width  : 1;
 	Height       = height > 1 ? height : 1;

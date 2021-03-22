@@ -33,94 +33,25 @@ using std::atanf;
 
 
 
-///*
-//** Define Some Calculating Functions
-//*/
-//
-////#ifndef __MathSupport_Clamp__
-////#define __MathSupport_Clamp__
-////
-//////int clamp(int min, int input, int max) {
-//////    if (input > min) {
-//////        if (input < max) {
-//////            return input;
-//////        }
-//////        else {
-//////            return max;
-//////        }
-//////    }
-//////    else {
-//////        return min;
-//////    }
-//////}
-//////
-//////float fclamp(float min, float input, float max) {
-//////    if (input > min) {
-//////        if (input < max) {
-//////            return input;
-//////        }
-//////        else {
-//////            return max;
-//////        }
-//////    }
-//////    else {
-//////        return min;
-//////    }
-//////}
-////
-////#endif
-//
-//
-//#ifndef __MathSupport_MinMax3__
-//#define __MathSupport_MinMax3__
-//
-//int min3(int a, int b, int c) {
-//	int min = a;
-//	if (b < min) {
-//		min = b;
-//	}
-//	if (c < min) {
-//		min = c;
-//	}
-//	return min;
-//}
-//
-//int max3(int a, int b, int c) {
-//	int max = a;
-//	if (b > max) {
-//		max = b;
-//	}
-//	if (c > max) {
-//		max = c;
-//	}
-//	return max;
-//}
-//
-//float fmin3(float a, float b, float c) {
-//	float min = a;
-//	if (b < min) {
-//		min = b;
-//	}
-//	if (c < min) {
-//		min = c;
-//	}
-//	return min;
-//}
-//
-//float fmax3(float a, float b, float c) {
-//	float max = a;
-//	if (b > max) {
-//		max = b;
-//	}
-//	if (c > max) {
-//		max = c;
-//	}
-//	return max;
-//}
-//
-//#endif
-//
-//
+/*
+** Define Some Calculating Functions
+*/
+
+#ifndef __MathSupport_Clamp__
+#define __MathSupport_Clamp__
+int   clamp (int   min, int   input, int   max);
+float fclamp(float min, float input, float max);
+#endif
+
+#ifndef __MathSupport_MinMax3__
+#define __MathSupport_MinMax3__
+int   min3 (int   a, int   b, int   c);
+int   max3 (int   a, int   b, int   c);
+float fmin3(float a, float b, float c);
+float fmax3(float a, float b, float c);
+#endif
+
+
 /////*
 ////** Vector4D
 ////*/

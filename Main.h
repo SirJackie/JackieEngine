@@ -38,18 +38,18 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 	ss << "Trigonometric Function Testing: ";
 
 	ss << sind(30.0f);
-	ss << ";";
+	ss << "; ";
 	ss << cosd(60.0f);
-	ss << ";";
+	ss << "; ";
 	ss << tand(45.0f);
-	ss << ";";
+	ss << "; ";
 
 	ss << asind(0.5f);
-	ss << ";";
+	ss << "; ";
 	ss << acosd(0.5f);
-	ss << ";";
+	ss << "; ";
 	ss << atand(1.0f);
-	ss << ";";
+	ss << "; ";
 
 	ss << "\n";
 
@@ -59,8 +59,51 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 	ss << "Clamp Testing: ";
 
 	ss << clamp(3, 4, 5);
+	ss << "; ";
 	ss << clamp(3, 2, 5);
+	ss << "; ";
 	ss << clamp(3, 6, 5);
+	ss << "; ";
+
+	ss << fclamp(3.0f, 4.0f, 5.0f);
+	ss << "; ";
+	ss << fclamp(3.0f, 2.0f, 5.0f);
+	ss << "; ";
+	ss << fclamp(3.0f, 6.0f, 5.0f);
+	ss << "; ";
+
+	ss << "\n";
+
+	// Min3 & Max3 Testing Testing
+	ss << "Min3 & Max3 Testing: ";
+
+	ss << min3(3, 4, 5);
+	ss << "; ";
+	ss << min3(5, 3, 4);
+	ss << "; ";
+	ss << min3(4, 5, 3);
+	ss << "; ";
+
+	ss << max3(3, 4, 5);
+	ss << "; ";
+	ss << max3(5, 3, 4);
+	ss << "; ";
+	ss << max3(4, 5, 3);
+	ss << "; ";
+
+	ss << fmin3(3.0f, 4.0f, 5.0f);
+	ss << "; ";
+	ss << fmin3(5.0f, 3.0f, 4.0f);
+	ss << "; ";
+	ss << fmin3(4.0f, 5.0f, 3.0f);
+	ss << "; ";
+
+	ss << fmax3(3.0f, 4.0f, 5.0f);
+	ss << "; ";
+	ss << fmax3(5.0f, 3.0f, 4.0f);
+	ss << "; ";
+	ss << fmax3(4.0f, 5.0f, 3.0f);
+	ss << "; ";
 
 
 	fb.Draw(ss.str().c_str());

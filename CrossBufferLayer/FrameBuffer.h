@@ -30,35 +30,8 @@ using std::vector;
 
 #ifndef __MathSupport_Clamp__
 #define __MathSupport_Clamp__
-
-int clamp(int min, int input, int max) {
-    if (input > min) {
-        if (input < max) {
-            return input;
-        }
-        else {
-            return max;
-        }
-    }
-    else {
-        return min;
-    }
-}
-
-float fclamp(float min, float input, float max) {
-    if (input > min) {
-        if (input < max) {
-            return input;
-        }
-        else {
-            return max;
-        }
-    }
-    else {
-        return min;
-    }
-}
-
+int   clamp (int   min, int   input, int   max);
+float fclamp(float min, float input, float max);
 #endif
 
 

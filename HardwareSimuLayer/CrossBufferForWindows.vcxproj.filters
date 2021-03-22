@@ -28,6 +28,9 @@
     <Filter Include="头文件\JackieEngineLayer">
       <UniqueIdentifier>{946075c7-e6c9-41cc-b875-4a6283e7eaf6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\JackieEngineLayer">
+      <UniqueIdentifier>{359e2271-44b5-4915-881d-53d6b23a563b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CrossBufferForWindows.rc">
@@ -104,6 +107,12 @@
     </ClCompile>
     <ClCompile Include="..\CrossBufferLayer\FPSCalculator.cpp">
       <Filter>源文件\CrossBufferLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\MathSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\JackieEngine.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
