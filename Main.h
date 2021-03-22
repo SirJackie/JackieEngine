@@ -53,8 +53,6 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 
 	ss << "\n";
 
-
-
 	// Clamp Testing
 	ss << "Clamp Testing: ";
 
@@ -104,6 +102,15 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 	ss << "; ";
 	ss << fmax3(4.0f, 5.0f, 3.0f);
 	ss << "; ";
+
+	ss << "\n";
+	ss << "\n";
+
+
+	// Vector4D Testing
+	ss << "Vector4D Testing: ";
+	Vector4D vec(2.0f, 3.0f, 4.0f, 1.0f);
+	ss << vec.str();
 
 
 	fb.Draw(ss.str().c_str());

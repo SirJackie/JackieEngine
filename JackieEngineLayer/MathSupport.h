@@ -2,6 +2,10 @@
 #define __JKEG_MathSupport__
 
 #include <cmath>
+#include <string>
+#include <sstream>
+using std::string;
+using std::stringstream;
 
 
 
@@ -52,118 +56,102 @@ float fmax3(float a, float b, float c);
 #endif
 
 
-/////*
-////** Vector4D
-////*/
-////
-////struct Vector4D {
-////	double x;
-////	double y;
-////	double z;
-////	double w;
-////};
-////
-////Vector4D CreateVector4D(double x, double y, double z, double w) {
-////	Vector4D NewVector;
-////	NewVector.x = x;
-////	NewVector.y = y;
-////	NewVector.z = z;
-////	NewVector.w = w;
-////	return NewVector;
-////}
-////
-////char* OutputVector4D(Vector4D* vec) {
-////	char* buffer = (char*)malloc(VECTOR4D_BUFFER_LENGTH * sizeof(char));
-////
-////	if (buffer != 0) {
-////		sprintf_s(
-////			buffer, VECTOR4D_BUFFER_LENGTH,
-////			"Vector4D[%lf, %lf, %lf, %lf]",
-////			vec->x, vec->y, vec->z, vec->w
-////		);
-////	}
-////
-////	return buffer;
-////}
-////
-////double LengthOfVector4D(Vector4D* vec) {
-////	// Use the Pythagorean Theorem to calculate the length
-////	return sqrt(
-////		vec->x * vec->x + vec->y * vec->y + vec->z * vec->z
-////	);
-////}
-////
-////Vector4D NormalizedVector4D(Vector4D* vec) {
-////	double length = LengthOfVector4D(vec);
-////	return CreateVector4D(
-////		vec->x / length,
-////		vec->y / length,
-////		vec->z / length,
-////		vec->w  // W-Axis is Meaningless, So Do Nothing
-////	);
-////}
-////
-////void Vector4DDevidedByW(Vector4D* vec) {
-////	vec->x /= vec->w;
-////	vec->y /= vec->w;
-////	vec->z /= vec->w;
-////	vec->w /= vec->w;
-////}
-////
-////Vector4D Vector4DAddVector4D(Vector4D* a, Vector4D* b) {
-////	Vector4D result;
-////	result.x = a->x + b->x;
-////	result.y = a->y + b->y;
-////	result.z = a->z + b->z;
-////	result.w = a->w + b->w;
-////	return result;
-////}
-////
-////Vector4D Vector4DMinusVector4D(Vector4D* a, Vector4D* b) {
-////	Vector4D result;
-////	result.x = a->x - b->x;
-////	result.y = a->y - b->y;
-////	result.z = a->z - b->z;
-////	result.w = a->w - b->w;
-////	return result;
-////}
-////
-////#define CreateVector4DFromPointToPoint(from, to) Vector4DMinusVector4D(to, from)
-////
-////double Vector4DDotVector4D(Vector4D* a, Vector4D* b) {
-////	return a->x * b->x + a->y * b->y + a->z * b->z;
-////}
-////
-////Vector4D Vector4DCrossVector4D(Vector4D* a, Vector4D* b) {
-////	Vector4D result;
-////	result.x = a->y * b->z - b->y * a->z;
-////	result.y = a->z * b->x - a->x * b->z;
-////	result.z = a->x * b->y - a->y * b->x;
-////	// Cross Product of a Vector is only defined on 3D Space
-////	// So W-Axis is Meaningless
-////	result.w = a->w;
-////	return result;
-////}
-////
-////
-////
-////
+/*
+** Vector4D
+*/
+
+class Vector4D {
+public:
+	float x;
+	float y;
+	float z;
+	float w;
+
+	Vector4D(float x_, float y_, float z_, float w_);
+	string str();
+};
+
+
+
+
+//float LengthOfVector4D(Vector4D* vec) {
+//	// Use the Pythagorean Theorem to calculate the length
+//	return sqrt(
+//		vec->x * vec->x + vec->y * vec->y + vec->z * vec->z
+//	);
+//}
+//
+//Vector4D NormalizedVector4D(Vector4D* vec) {
+//	float length = LengthOfVector4D(vec);
+//	return CreateVector4D(
+//		vec->x / length,
+//		vec->y / length,
+//		vec->z / length,
+//		vec->w  // W-Axis is Meaningless, So Do Nothing
+//	);
+//}
+//
+//void Vector4DDevidedByW(Vector4D* vec) {
+//	vec->x /= vec->w;
+//	vec->y /= vec->w;
+//	vec->z /= vec->w;
+//	vec->w /= vec->w;
+//}
+//
+//Vector4D Vector4DAddVector4D(Vector4D* a, Vector4D* b) {
+//	Vector4D result;
+//	result.x = a->x + b->x;
+//	result.y = a->y + b->y;
+//	result.z = a->z + b->z;
+//	result.w = a->w + b->w;
+//	return result;
+//}
+//
+//Vector4D Vector4DMinusVector4D(Vector4D* a, Vector4D* b) {
+//	Vector4D result;
+//	result.x = a->x - b->x;
+//	result.y = a->y - b->y;
+//	result.z = a->z - b->z;
+//	result.w = a->w - b->w;
+//	return result;
+//}
+//
+//#define CreateVector4DFromPointToPoint(from, to) Vector4DMinusVector4D(to, from)
+//
+//float Vector4DDotVector4D(Vector4D* a, Vector4D* b) {
+//	return a->x * b->x + a->y * b->y + a->z * b->z;
+//}
+//
+//Vector4D Vector4DCrossVector4D(Vector4D* a, Vector4D* b) {
+//	Vector4D result;
+//	result.x = a->y * b->z - b->y * a->z;
+//	result.y = a->z * b->x - a->x * b->z;
+//	result.z = a->x * b->y - a->y * b->x;
+//	// Cross Product of a Vector is only defined on 3D Space
+//	// So W-Axis is Meaningless
+//	result.w = a->w;
+//	return result;
+//}
+
+
+
+
 /////*
 ////** Matrix4D
 ////*/
 ////
 ////struct Matrix4D {
-////	double m11, m12, m13, m14;
-////	double m21, m22, m23, m24;
-////	double m31, m32, m33, m34;
-////	double m41, m42, m43, m44;
+////	float m11, m12, m13, m14;
+////	float m21, m22, m23, m24;
+////	float m31, m32, m33, m34;
+////	float m41, m42, m43, m44;
 ////};
 ////
 ////Matrix4D CreateMatrix4D(
-////	double m11, double m12, double m13, double m14,
-////	double m21, double m22, double m23, double m24,
-////	double m31, double m32, double m33, double m34,
-////	double m41, double m42, double m43, double m44
+////	float m11, float m12, float m13, float m14,
+////	float m21, float m22, float m23, float m24,
+////	float m31, float m32, float m33, float m34,
+////	float m41, float m42, float m43, float m44
 ////)
 ////{
 ////	Matrix4D NewMatrix;
