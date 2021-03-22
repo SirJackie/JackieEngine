@@ -8,23 +8,25 @@
 ** Define Trigonometric Functions that use Degrees instead of Radians
 */
 
-#define RAD2DEG_CONSTANT 0.017453293
+#define  PI         3.14159265f
+#define  _DEG2RAD_  PI / 180.0f
+#define  _RAD2DEG_  180.0f / PI
 
-using std::sin;
-using std::cos;
-using std::tan;
+using std::sinf;
+using std::cosf;
+using std::tanf;
 
-using std::asin;
-using std::acos;
-using std::atan;
+using std::asinf;
+using std::acosf;
+using std::atanf;
 
-#define cosd  (x)    cos  (x*RAD2DEG_CONSTANT)
-#define sind  (x)    sin  (x*RAD2DEG_CONSTANT)
-#define tand  (x)    tan  (x*RAD2DEG_CONSTANT)
+#define cosd(x) cosf(x*_DEG2RAD_)
+#define sind(x) sinf(x*_DEG2RAD_)
+#define tand(x) tanf(x*_DEG2RAD_)
 
-#define acosd (x)    acos (x*RAD2DEG_CONSTANT)
-#define asind (x)    asin (x*RAD2DEG_CONSTANT)
-#define atand (x)    atan (x*RAD2DEG_CONSTANT)
+#define acosd(x) (acosf(x)*_RAD2DEG_)
+#define asind(x) (asinf(x)*_RAD2DEG_)
+#define atand(x) (atanf(x)*_RAD2DEG_)
 
 
 

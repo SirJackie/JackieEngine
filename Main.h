@@ -33,7 +33,7 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 
 	stringstream ss;
 
-	/*ss << sind(30.0f);
+	ss << sind(30.0f);
 	ss << ";";
 	ss << cosd(60.0f);
 	ss << ";";
@@ -45,10 +45,7 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 	ss << acosd(0.5f);
 	ss << ";";
 	ss << atand(1.0f);
-	ss << ";";*/
-
-	float i = cos(30.0f);
-	ss << i;
+	ss << ";";
 
 	fb.Draw(ss.str().c_str());
 }
