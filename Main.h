@@ -166,8 +166,14 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 		13.0f, 14.0f, 15.0f, 16.0f
 	);
 	ss << mat.str();
-	ss << mat.str();
 	ss << "\n";
+
+	ss << "mat * mat: \n";
+	ss << (mat * mat).str();
+	ss << "\n";
+
+	ss << "vec * mat: \n";
+	ss << (vec1 * mat).str();
 
 
 	fb.Draw(ss.str().c_str());
