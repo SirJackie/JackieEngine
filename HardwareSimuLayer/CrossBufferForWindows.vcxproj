@@ -148,6 +148,7 @@
     <ClCompile Include="..\CrossBufferLayer\FPSCalculator.cpp" />
     <ClCompile Include="..\CrossBufferLayer\FrameBuffer.cpp" />
     <ClCompile Include="..\CrossBufferLayer\IOSupport.cpp" />
+    <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp" />
     <ClCompile Include="..\JackieEngineLayer\JackieEngine.cpp" />
     <ClCompile Include="..\JackieEngineLayer\MathSupport.cpp" />
     <ClCompile Include="CrossBufferForWindows.cpp" />

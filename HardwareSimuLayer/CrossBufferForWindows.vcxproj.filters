@@ -114,5 +114,8 @@
     <ClCompile Include="..\JackieEngineLayer\JackieEngine.cpp">
       <Filter>源文件\JackieEngineLayer</Filter>
     </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
