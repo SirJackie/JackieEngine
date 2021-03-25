@@ -81,70 +81,28 @@ public:
 };
 
 
+/*
+** Matrix4D
+*/
+
+class Matrix4D {
+public:
+	float m11, m12, m13, m14;
+	float m21, m22, m23, m24;
+	float m31, m32, m33, m34;
+	float m41, m42, m43, m44;
+
+	Matrix4D(
+		float m11, float m12, float m13, float m14,
+		float m21, float m22, float m23, float m24,
+		float m31, float m32, float m33, float m34,
+		float m41, float m42, float m43, float m44
+	);
+
+	string str() const;
+};
 
 
-
-
-/////*
-////** Matrix4D
-////*/
-////
-////struct Matrix4D {
-////	float m11, m12, m13, m14;
-////	float m21, m22, m23, m24;
-////	float m31, m32, m33, m34;
-////	float m41, m42, m43, m44;
-////};
-////
-////Matrix4D CreateMatrix4D(
-////	float m11, float m12, float m13, float m14,
-////	float m21, float m22, float m23, float m24,
-////	float m31, float m32, float m33, float m34,
-////	float m41, float m42, float m43, float m44
-////)
-////{
-////	Matrix4D NewMatrix;
-////
-////	NewMatrix.m11 = m11;
-////	NewMatrix.m12 = m12;
-////	NewMatrix.m13 = m13;
-////	NewMatrix.m14 = m14;
-////
-////	NewMatrix.m21 = m21;
-////	NewMatrix.m22 = m22;
-////	NewMatrix.m23 = m23;
-////	NewMatrix.m24 = m24;
-////
-////	NewMatrix.m31 = m31;
-////	NewMatrix.m32 = m32;
-////	NewMatrix.m33 = m33;
-////	NewMatrix.m34 = m34;
-////
-////	NewMatrix.m41 = m41;
-////	NewMatrix.m42 = m42;
-////	NewMatrix.m43 = m43;
-////	NewMatrix.m44 = m44;
-////
-////	return NewMatrix;
-////}
-////
-////char* OutputMatrix4D(Matrix4D* matrix) {
-////	char* buffer = (char*)malloc(MATRIX4D_BUFFER_LENGTH * sizeof(char));
-////
-////	if (buffer != 0) {
-////		sprintf_s(
-////			buffer, MATRIX4D_BUFFER_LENGTH,
-////			"Matrix4D[%lf, %lf, %lf, %lf,\n         %lf, %lf, %lf, %lf,\n         %lf, %lf, %lf, %lf,\n         %lf, %lf, %lf, %lf]",
-////			matrix->m11, matrix->m12, matrix->m13, matrix->m14,
-////			matrix->m21, matrix->m22, matrix->m23, matrix->m24,
-////			matrix->m31, matrix->m32, matrix->m33, matrix->m34,
-////			matrix->m41, matrix->m42, matrix->m43, matrix->m44
-////		);
-////	}
-////
-////	return buffer;
-////}
-////
 ////Vector4D Vector4DTimesMatrix4D(Vector4D* v, Matrix4D* m) {
 ////	Vector4D result;
 ////	result.x = m->m11 * v->x + m->m12 * v->y + m->m13 * v->z + m->m14 * v->w;

@@ -66,7 +66,7 @@ Vector4D::Vector4D() {
 string Vector4D::str() const {
 	stringstream ss;
 
-	ss << "Vector4D[";
+	ss << "Vector4D [";
 	ss << this->x;
 	ss << ", ";
 	ss << this->y;
@@ -147,4 +147,49 @@ Vector4D Vector4D::operator%(const Vector4D& b) const {
 	result.w = 1;  // W-Axis is Meaningless, So Do Nothing
 
 	return result;
+}
+
+
+Matrix4D::Matrix4D(
+	float m11, float m12, float m13, float m14,
+	float m21, float m22, float m23, float m24,
+	float m31, float m32, float m33, float m34,
+	float m41, float m42, float m43, float m44
+){
+	this->m11 = m11;
+	this->m12 = m12;
+	this->m13 = m13;
+	this->m14 = m14;
+
+	this->m21 = m21;
+	this->m22 = m22;
+	this->m23 = m23;
+	this->m24 = m24;
+
+	this->m31 = m31;
+	this->m32 = m32;
+	this->m33 = m33;
+	this->m34 = m34;
+
+	this->m41 = m41;
+	this->m42 = m42;
+	this->m43 = m43;
+	this->m44 = m44;
+}
+
+string Matrix4D::str() const {
+	stringstream ss;
+
+	ss  << "\nMatrix4D [\n";
+	ss  << this->m11 << ", " << this->m12 << ", "
+		<< this->m13 << ", " << this->m14 << ", " << "\n";
+	ss  << this->m21 << ", " << this->m22 << ", "
+		<< this->m23 << ", " << this->m24 << ", " << "\n";
+	ss  << this->m31 << ", " << this->m32 << ", "
+		<< this->m33 << ", " << this->m34 << ", " << "\n";
+	ss  << this->m41 << ", " << this->m42 << ", "
+		<< this->m43 << ", " << this->m44 << ", " << "\n";
+	ss  << "]\n";
+
+	return ss.str();
 }
