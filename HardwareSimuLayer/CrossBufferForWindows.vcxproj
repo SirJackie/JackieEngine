@@ -151,6 +151,7 @@
     <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp" />
     <ClCompile Include="..\JackieEngineLayer\JackieEngine.cpp" />
     <ClCompile Include="..\JackieEngineLayer\MathSupport.cpp" />
+    <ClCompile Include="..\JackieEngineLayer\ObjectSupport.cpp" />
     <ClCompile Include="CrossBufferForWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,8 +170,7 @@
     <ClInclude Include="..\JackieEngineLayer\CameraSupport.h" />
     <ClInclude Include="..\JackieEngineLayer\JackieEngine.h" />
     <ClInclude Include="..\JackieEngineLayer\MathSupport.h" />
-    <ClInclude Include="..\JackieEngineLayer\ModelSupport.h" />
-    <ClInclude Include="..\JackieEngineLayer\Rasterization.h" />
+    <ClInclude Include="..\JackieEngineLayer\ObjectSupport.h" />
     <ClInclude Include="..\Main.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />

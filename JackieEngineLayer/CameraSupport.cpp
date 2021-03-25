@@ -134,5 +134,5 @@ void Camera4D::CalcAllTheMatricies() {
 }
 
 string Camera4D::str() {
-	return "Camera. TotalTransformMatrix: " + TotalTransformMatrix.str();
+	return "\nCamera. TotalTransformMatrix: " + TotalTransformMatrix.str() + "\n";
 }

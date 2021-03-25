@@ -79,13 +79,10 @@
     <ClInclude Include="..\JackieEngineLayer\JackieEngine.h">
       <Filter>头文件\JackieEngineLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\ModelSupport.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\Rasterization.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
-    </ClInclude>
     <ClInclude Include="..\JackieEngineLayer\MathSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\ObjectSupport.h">
       <Filter>头文件\JackieEngineLayer</Filter>
     </ClInclude>
   </ItemGroup>
@@ -115,6 +112,9 @@
       <Filter>源文件\JackieEngineLayer</Filter>
     </ClCompile>
     <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\ObjectSupport.cpp">
       <Filter>源文件\JackieEngineLayer</Filter>
     </ClCompile>
   </ItemGroup>

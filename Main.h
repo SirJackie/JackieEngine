@@ -11,13 +11,22 @@ using std::stringstream;
 #define WindowTitle       L"Jackie Engine"
 #define BitmapRootAddress "..\\"
 
+Object4D obj;
 
 /*
 ** Setup()
 */
 
 void Setup(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& fbLoadingQueue) {
-	;
+	obj.add(Vector4D(-1.0, -1.0,  1.0, 1.0));
+	obj.add(Vector4D( 1.0, -1.0,  1.0, 1.0));
+	obj.add(Vector4D( 1.0,  1.0,  1.0, 1.0));
+	obj.add(Vector4D(-1.0,  1.0,  1.0, 1.0));
+	obj.add(Vector4D(-1.0, -1.0, -1.0, 1.0));
+	obj.add(Vector4D( 1.0, -1.0, -1.0, 1.0));
+	obj.add(Vector4D( 1.0,  1.0, -1.0, 1.0));
+	obj.add(Vector4D(-1.0,  1.0, -1.0, 1.0));
+
 }
 
 
@@ -33,6 +42,7 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 
 
 	stringstream ss;
+	ss << "\n";
 
 	// Camera4D Testing
 	ss << "Camera4D Testing: \n";
@@ -42,6 +52,10 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 	);
 
 	ss << cam.str();
+
+	ss << obj.vecs.size();
+	VectorList vecs2 = obj.vecs;
+	ss << vecs2.size();
 
 	fb.Draw(ss.str().c_str());
 }
@@ -55,11 +69,3 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 
 
 
-	//vecs[0] = CreateVector4D(-1.0, -1.0,  1.0, 1.0);
-	//vecs[1] = CreateVector4D( 1.0, -1.0,  1.0, 1.0);
-	//vecs[2] = CreateVector4D( 1.0,  1.0,  1.0, 1.0);
-	//vecs[3] = CreateVector4D(-1.0,  1.0,  1.0, 1.0);
-	//vecs[4] = CreateVector4D(-1.0, -1.0, -1.0, 1.0);
-	//vecs[5] = CreateVector4D( 1.0, -1.0, -1.0, 1.0);
-	//vecs[6] = CreateVector4D( 1.0,  1.0, -1.0, 1.0);
-	//vecs[7] = CreateVector4D(-1.0,  1.0, -1.0, 1.0);
