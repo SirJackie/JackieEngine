@@ -22,6 +22,8 @@ Camera4D::Camera4D(
 
 	this->r = this->ScreenWidth * this->t / this->ScreenHeight;
 	this->l = -1.0f * this->r;
+
+	CalcAllTheMatricies();
 }
 
 void Camera4D::CalcTranslation() {
@@ -88,4 +90,49 @@ void Camera4D::CalcPerspectiveProjection() {
 	);
 
 	PerspectiveProjectionMatrix = Mpersp2ortho * OrthographicProjectionMatrix;
+}
+
+void Camera4D::CalcViewport() {
+	Matrix4D MviewportPre = Matrix4D(
+		this->ScreenWidth / 2.0f, 0.0f, 0.0f, this->ScreenWidth / 2.0f,
+		0.0f, this->ScreenHeight / 2.0f, 0.0f, this->ScreenHeight / 2.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	Matrix4D MYReverse = Matrix4D(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, -1.0f, 0.0f, (float)this->ScreenHeight,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	ViewportMatrix = MviewportPre * MYReverse;
+}
+
+void Camera4D::CalcTranslationAndRotation() {
+	CalcTranslation();
+	CalcRotation();
+	TranslationAndRotationMatrix = TranslationMatrix * RotationMatrix;
+}
+
+void Camera4D::CalcProjectionAndViewport() {
+	CalcPerspectiveProjection();
+	CalcViewport();
+	ProjectionAndViewportMatrix = PerspectiveProjectionMatrix * ViewportMatrix;
+}
+
+void Camera4D::RefreshTranslationAndRotation() {
+	CalcTranslationAndRotation();
+	//CalcProjectionAndViewport();
+	TotalTransformMatrix = TranslationAndRotationMatrix * ProjectionAndViewportMatrix;
+}
+void Camera4D::CalcAllTheMatricies() {
+	CalcTranslationAndRotation();
+	CalcProjectionAndViewport();
+	TotalTransformMatrix = TranslationAndRotationMatrix * ProjectionAndViewportMatrix;
+}
+
+string Camera4D::str() {
+	return "Camera. TotalTransformMatrix: " + TotalTransformMatrix.str();
 }
