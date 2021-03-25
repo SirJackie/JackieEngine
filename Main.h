@@ -141,6 +141,19 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 	Vector4D vec5(1.0f, 2.0f, 3.0f, 1.0f);
 	Vector4D vec6(-1.0f, -1.0f, -1.0f, 1.0f);
 	ss << (vec4 - vec5 - vec6).str();
+	ss << "\n";
+
+	ss << "vec dot vec: ";
+	Vector4D vec7(1.0f, 2.0f, 3.0f, 1.0f);
+	Vector4D vec8(1.0f, 2.0f, 3.0f, 1.0f);
+	ss << (vec7 * vec8);
+	ss << "\n";
+
+	ss << "vec cross vec: ";
+	Vector4D vec9 (1.0f, 0.0f, 0.0f, 1.0f);
+	Vector4D vec10(0.0f, 0.0f, 1.0f, 1.0f);
+	ss << (vec9 % vec10).str();
+	ss << "\n";
 
 
 	fb.Draw(ss.str().c_str());

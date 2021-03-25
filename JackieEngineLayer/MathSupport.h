@@ -68,38 +68,19 @@ public:
 	float w;
 
 	Vector4D(float x_, float y_, float z_, float w_);
-	string    str();
-	float     length();
-	Vector4D  normalized();
+	Vector4D();
+	string    str()                        const;
+	float     length()                     const;
+	Vector4D  normalized()                 const;
+	void      Normalize();
 	void      DevideByW();
 	Vector4D  operator+(const Vector4D& b) const;
 	Vector4D  operator-(const Vector4D& b) const;
+	float     operator*(const Vector4D& b) const;  // Dot   Product
+	Vector4D  operator%(const Vector4D& b) const;  // Cross Product
 };
 
 
-//Vector4D Vector4DMinusVector4D(Vector4D* a, Vector4D* b) {
-//	Vector4D result;
-//	result.x = a->x - b->x;
-//	result.y = a->y - b->y;
-//	result.z = a->z - b->z;
-//	result.w = a->w - b->w;
-//	return result;
-//}
-
-//float Vector4DDotVector4D(Vector4D* a, Vector4D* b) {
-//	return a->x * b->x + a->y * b->y + a->z * b->z;
-//}
-//
-//Vector4D Vector4DCrossVector4D(Vector4D* a, Vector4D* b) {
-//	Vector4D result;
-//	result.x = a->y * b->z - b->y * a->z;
-//	result.y = a->z * b->x - a->x * b->z;
-//	result.z = a->x * b->y - a->y * b->x;
-//	// Cross Product of a Vector is only defined on 3D Space
-//	// So W-Axis is Meaningless
-//	result.w = a->w;
-//	return result;
-//}
 
 
 

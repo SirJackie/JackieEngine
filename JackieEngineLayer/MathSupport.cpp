@@ -56,7 +56,14 @@ Vector4D::Vector4D(float x_, float y_, float z_, float w_) {
 	w = w_;
 }
 
-string Vector4D::str(){
+Vector4D::Vector4D() {
+	x = NAN;
+	y = NAN;
+	z = NAN;
+	w = NAN;
+}
+
+string Vector4D::str() const {
 	stringstream ss;
 
 	ss << "Vector4D[";
@@ -72,12 +79,12 @@ string Vector4D::str(){
 	return ss.str();
 }
 
-float Vector4D::length() {
+float Vector4D::length() const {
 	// Use the Pythagorean Theorem to calculate the length
 	return sqrtf(x*x + y*y + z*z);
 }
 
-Vector4D Vector4D::normalized() {
+Vector4D Vector4D::normalized() const {
 	float length = this->length();
 	return Vector4D(
 		this->x / length,
@@ -87,11 +94,19 @@ Vector4D Vector4D::normalized() {
 	);
 }
 
-void Vector4D::DevideByW() {
+void Vector4D::Normalize() {
+	float length = this->length();
+	this->x /= length;
+	this->y /= length;
+	this->z /= length;
+	// W-Axis is Meaningless, So Do Nothing
+}
+
+void Vector4D::DevideByW(){
 	x /= w;
 	y /= w;
 	z /= w;
-	w =  1;  // The same as w /= w;
+	w =  1;      // The same as w /= w;
 }
 
 Vector4D Vector4D::operator+(const Vector4D& b) const {
@@ -114,4 +129,22 @@ Vector4D Vector4D::operator-(const Vector4D& b) const {
 		a.z - b.z,
 		1
 	);
+}
+
+float Vector4D::operator*(const Vector4D& b) const {
+	const Vector4D& a = *this;
+
+	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+Vector4D Vector4D::operator%(const Vector4D& b) const {
+	const Vector4D& a = *this;
+	Vector4D result;
+
+	result.x = a.y * b.z - b.y * a.z;
+	result.y = a.z * b.x - a.x * b.z;
+	result.z = a.x * b.y - a.y * b.x;
+	result.w = 1;  // W-Axis is Meaningless, So Do Nothing
+
+	return result;
 }
