@@ -47,15 +47,24 @@ void Update(FrameBuffer& fb, Keyboard kb, int deltaTime, vector<FrameBuffer*>& f
 	// Camera4D Testing
 	ss << "Camera4D Testing: \n";
 	Camera4D cam(
-		0.0f, 0.0f, 4.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, fb.Width, fb.Height
 	);
 
 	ss << cam.str();
 
+	// Object4D Testing
 	ss << obj.vecs.size();
-	VectorList vecs2 = obj.vecs;
-	ss << vecs2.size();
+	ss << "\n";
+	Object4D obj2 = obj;
+	cam.ProjectObject(obj2);
+
+	for (int i = 0; i < obj2.vecs.size(); i++) {
+		ss << obj2.vecs[i].str();
+		ss << "\n";
+		SetPixel(fb, (int)obj2.vecs[i].x, (int)obj2.vecs[i].y, CreateColor(255, 255, 255));
+		
+	}
 
 	fb.Draw(ss.str().c_str());
 }

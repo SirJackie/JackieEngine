@@ -136,3 +136,10 @@ void Camera4D::CalcAllTheMatricies() {
 string Camera4D::str() {
 	return "\nCamera. TotalTransformMatrix: " + TotalTransformMatrix.str() + "\n";
 }
+
+void Camera4D::ProjectObject(Object4D& obj) {
+	for (int i = 0; i < obj.vecs.size(); i++) {
+		obj.vecs[i] = obj.vecs[i] * TotalTransformMatrix;
+		obj.vecs[i].DevideByW();
+	}
+}

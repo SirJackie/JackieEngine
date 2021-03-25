@@ -56,5 +56,6 @@ public:
 	void CalcAllTheMatricies();
 
 	string str();
+	void ProjectObject(Object4D& obj);
 };
 #endif

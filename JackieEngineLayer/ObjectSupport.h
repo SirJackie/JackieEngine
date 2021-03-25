@@ -5,11 +5,11 @@
 #include <vector>
 using std::vector;
 
-typedef vector<Vector4D> VectorList;
+typedef vector<Vector4D> Vector4DList;
 
 class Object4D {
 public:
-	vector<Vector4D> vecs;
+	Vector4DList vecs;
 
 	Object4D();
 	void add(Vector4D vec);
