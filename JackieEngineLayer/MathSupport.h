@@ -22,6 +22,16 @@ public:
 	FVector4D  normalized()                 const;
 	void       Normalize();
 	void       DevideByW();
+
+	// Vector-Scalar Calculation
+	friend FVector4D operator+(const FVector4D& a, f32 b);
+	friend FVector4D operator+(f32 b, const FVector4D& a);
+	friend FVector4D operator-(const FVector4D& a, f32 b);
+	friend FVector4D operator-(f32 b, const FVector4D& a);
+	friend FVector4D operator*(const FVector4D& a, f32 b);
+	friend FVector4D operator*(f32 b, const FVector4D& a);
+
+	// Vector-Vector Calculation
 	FVector4D  operator+(const FVector4D& b) const;
 	FVector4D  operator-(const FVector4D& b) const;
 	float      operator*(const FVector4D& b) const;  // Dot   Product

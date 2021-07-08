@@ -60,6 +60,54 @@ void FVector4D::DevideByW(){
 	w =  1;      // The same as w /= w;
 }
 
+FVector4D operator+(const FVector4D& a, f32 b)
+{
+	return FVector4D
+	(
+		a.x + b, a.y + b, a.z + b, a.w
+	);
+}
+
+FVector4D operator+(f32 b, const FVector4D& a)
+{
+	return FVector4D
+	(
+		a.x + b, a.y + b, a.z + b, a.w
+	);
+}
+
+FVector4D operator-(const FVector4D& a, f32 b)
+{
+	return FVector4D
+	(
+		a.x - b, a.y - b, a.z - b, a.w
+	);
+}
+
+FVector4D operator-(f32 b, const FVector4D& a)
+{
+	return FVector4D
+	(
+		a.x - b, a.y - b, a.z - b, a.w
+	);
+}
+
+FVector4D operator*(const FVector4D& a, f32 b)
+{
+	return FVector4D
+	(
+		a.x * b, a.y * b, a.z * b, a.w
+	);
+}
+
+FVector4D operator*(f32 b, const FVector4D& a)
+{
+	return FVector4D
+	(
+		a.x * b, a.y * b, a.z * b, a.w
+	);
+}
+
 FVector4D FVector4D::operator+(const FVector4D& b) const {
 	const FVector4D& a = *this;
 
@@ -129,25 +177,25 @@ FMatrix4D::FMatrix4D(
 }
 
 FMatrix4D::FMatrix4D() {
-	this->m11 = NAN;
-	this->m12 = NAN;
-	this->m13 = NAN;
-	this->m14 = NAN;
+	this->m11 = 0;
+	this->m12 = 0;
+	this->m13 = 0;
+	this->m14 = 0;
 
-	this->m21 = NAN;
-	this->m22 = NAN;
-	this->m23 = NAN;
-	this->m24 = NAN;
+	this->m21 = 0;
+	this->m22 = 0;
+	this->m23 = 0;
+	this->m24 = 0;
 
-	this->m31 = NAN;
-	this->m32 = NAN;
-	this->m33 = NAN;
-	this->m34 = NAN;
+	this->m31 = 0;
+	this->m32 = 0;
+	this->m33 = 0;
+	this->m34 = 0;
 
-	this->m41 = NAN;
-	this->m42 = NAN;
-	this->m43 = NAN;
-	this->m44 = NAN;
+	this->m41 = 0;
+	this->m42 = 0;
+	this->m43 = 0;
+	this->m44 = 0;
 }
 
 string FMatrix4D::str() const {
