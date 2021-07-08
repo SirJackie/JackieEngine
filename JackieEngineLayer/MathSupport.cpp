@@ -101,7 +101,7 @@ FVector4D FVector4D::operator%(const FVector4D& b) const {
 }
 
 
-Matrix4D::Matrix4D(
+FMatrix4D::FMatrix4D(
 	float m11_, float m12_, float m13_, float m14_,
 	float m21_, float m22_, float m23_, float m24_,
 	float m31_, float m32_, float m33_, float m34_,
@@ -128,7 +128,7 @@ Matrix4D::Matrix4D(
 	this->m44 = m44_;
 }
 
-Matrix4D::Matrix4D() {
+FMatrix4D::FMatrix4D() {
 	this->m11 = NAN;
 	this->m12 = NAN;
 	this->m13 = NAN;
@@ -150,7 +150,7 @@ Matrix4D::Matrix4D() {
 	this->m44 = NAN;
 }
 
-string Matrix4D::str() const {
+string FMatrix4D::str() const {
 	stringstream ss;
 
 	ss  << "\nMatrix4D [\n";
@@ -167,7 +167,7 @@ string Matrix4D::str() const {
 	return ss.str();
 }
 
-FVector4D operator*(FVector4D& v, Matrix4D& m) {
+FVector4D operator*(FVector4D& v, FMatrix4D& m) {
 	FVector4D result;
 
 	result.x = m.m11 * v.x + m.m12 * v.y + m.m13 * v.z + m.m14 * v.w;
@@ -178,8 +178,8 @@ FVector4D operator*(FVector4D& v, Matrix4D& m) {
 	return result;
 }
 
-Matrix4D operator*(Matrix4D& a, Matrix4D& b) {
-	Matrix4D result;
+FMatrix4D operator*(FMatrix4D& a, FMatrix4D& b) {
+	FMatrix4D result;
 
 	result.m11 = b.m11 * a.m11 + b.m12 * a.m21 + b.m13 * a.m31 + b.m14 * a.m41;
 	result.m21 = b.m21 * a.m11 + b.m22 * a.m21 + b.m23 * a.m31 + b.m24 * a.m41;

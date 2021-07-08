@@ -27,7 +27,7 @@ Camera4D::Camera4D(
 }
 
 void Camera4D::CalcTranslation() {
-	TranslationMatrix = Matrix4D(
+	TranslationMatrix = FMatrix4D(
 		1.0f, 0.0f, 0.0f, -1.0f * (this->position.x),
 		0.0f, 1.0f, 0.0f, -1.0f * (this->position.y),
 		0.0f, 0.0f, 1.0f, -1.0f * (this->position.z),
@@ -36,21 +36,21 @@ void Camera4D::CalcTranslation() {
 }
 
 void Camera4D::CalcRotation() {
-	Matrix4D MrotationX = Matrix4D(
+	FMatrix4D MrotationX = FMatrix4D(
 		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, CS_cos(this->rotation.x), -1.0f * CS_sin(this->rotation.x), 0.0f,
 		0.0f, CS_sin(this->rotation.x), CS_cos(this->rotation.x), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	Matrix4D MrotationY = Matrix4D(
+	FMatrix4D MrotationY = FMatrix4D(
 		CS_cos(this->rotation.y), 0.0f, CS_sin(this->rotation.y), 0.0f,
 		0.0f, 1.0f, 0.0f, 0.0f,
 		-1.0f * CS_sin(this->rotation.y), 0.0f, CS_cos(this->rotation.y), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	Matrix4D MrotationZ = Matrix4D(
+	FMatrix4D MrotationZ = FMatrix4D(
 		CS_cos(this->rotation.z), -1.0f * CS_sin(this->rotation.z), 0.0f, 0.0f,
 		CS_sin(this->rotation.z), CS_cos(this->rotation.z), 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
@@ -62,14 +62,14 @@ void Camera4D::CalcRotation() {
 }
 
 void Camera4D::CalcOrthographicProjection() {
-	Matrix4D Morthoa = Matrix4D(
+	FMatrix4D Morthoa = FMatrix4D(
 		1.0f, 0.0f, 0.0f, -1.0f * (this->r + this->l) / 2.0f,
 		0.0f, 1.0f, 0.0f, -1.0f * (this->t + this->b) / 2.0f,
 		0.0f, 0.0f, 1.0f, -1.0f * (this->n + this->f) / 2.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	Matrix4D Morthob = Matrix4D(
+	FMatrix4D Morthob = FMatrix4D(
 		2.0f / (this->r - this->l), 0.0f, 0.0f, 0.0f,
 		0.0f, 2.0f / (this->t - this->b), 0.0f, 0.0f,
 		0.0f, 0.0f, 2.0f / (this->n - this->f), 0.0f,
@@ -82,7 +82,7 @@ void Camera4D::CalcOrthographicProjection() {
 void Camera4D::CalcPerspectiveProjection() {
 	CalcOrthographicProjection();
 
-	Matrix4D Mpersp2ortho = Matrix4D(
+	FMatrix4D Mpersp2ortho = FMatrix4D(
 		this->n, 0.0, 0.0, 0.0,
 		0.0, this->n, 0.0, 0.0,
 		0.0, 0.0, this->f + this->n, -1 * this->f * this->n,
@@ -93,14 +93,14 @@ void Camera4D::CalcPerspectiveProjection() {
 }
 
 void Camera4D::CalcViewport() {
-	Matrix4D MviewportPre = Matrix4D(
+	FMatrix4D MviewportPre = FMatrix4D(
 		this->ScreenWidth / 2.0f, 0.0f, 0.0f, this->ScreenWidth / 2.0f,
 		0.0f, this->ScreenHeight / 2.0f, 0.0f, this->ScreenHeight / 2.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	Matrix4D MYReverse = Matrix4D(
+	FMatrix4D MYReverse = FMatrix4D(
 		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, -1.0f, 0.0f, (float)this->ScreenHeight,
 		0.0f, 0.0f, 1.0f, 0.0f,

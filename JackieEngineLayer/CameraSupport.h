@@ -29,14 +29,14 @@ private:
 	int ScreenHeight;
 
 	// Matricies
-	Matrix4D TranslationMatrix;
-	Matrix4D RotationMatrix;
-	Matrix4D OrthographicProjectionMatrix;
-	Matrix4D PerspectiveProjectionMatrix;
-	Matrix4D ViewportMatrix;
-	Matrix4D TranslationAndRotationMatrix;
-	Matrix4D ProjectionAndViewportMatrix;
-	Matrix4D TotalTransformMatrix;
+	FMatrix4D TranslationMatrix;
+	FMatrix4D RotationMatrix;
+	FMatrix4D OrthographicProjectionMatrix;
+	FMatrix4D PerspectiveProjectionMatrix;
+	FMatrix4D ViewportMatrix;
+	FMatrix4D TranslationAndRotationMatrix;
+	FMatrix4D ProjectionAndViewportMatrix;
+	FMatrix4D TotalTransformMatrix;
 
 public:
 	// Methods
