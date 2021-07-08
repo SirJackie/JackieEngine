@@ -19,6 +19,9 @@ public:
 	f32 l;
 	f32 r;
 	f32 fovY;
+	f32 fot;    // FoV-Tangent Reation
+	f32 hw;     // Half of Screen Width
+	f32 hh;     // Half of Screen Height
 	i32 screenWidth;
 	i32 screenHeight;
 
@@ -48,12 +51,8 @@ private:
 	// Matricies
 	FMatrix4D TranslationMatrix;
 	FMatrix4D RotationMatrix;
-	FMatrix4D OrthographicProjectionMatrix;
-	FMatrix4D PerspectiveProjectionMatrix;
-	FMatrix4D ViewportMatrix;
-	FMatrix4D TranslationAndRotationMatrix;
-	FMatrix4D ProjectionAndViewportMatrix;
-	FMatrix4D TotalTransformMatrix;
+	FMatrix4D ProjectionMatrix;
+	FMatrix4D TotalMatrix;
 
 public:
 	// Methods
@@ -63,14 +62,8 @@ public:
 	);
 	void CalcTranslation();
 	void CalcRotation();
-	void CalcOrthographicProjection();
-	void CalcPerspectiveProjection();
-	void CalcViewport();
-
-	void CalcTranslationAndRotation();
-	void CalcProjectionAndViewport();
-	void RefreshTranslationAndRotation();
-	void CalcAllTheMatricies();
+	void CalcProjection();
+	void CalcTotal();
 
 	string str();
 	void ProjectObject(Object4D& obj);
