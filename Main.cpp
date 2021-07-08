@@ -39,7 +39,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	for (ui32 i = 0; i < obj2.vecs.size(); i++) {
 		ss << obj2.vecs[i].str();
 		ss << "\n";
-		//SetPixel(fb, (int)obj2.vecs[i].x, (int)obj2.vecs[i].y, 255, 255, 255);
+		CS_PutPixel(fb, (i32)obj2.vecs[i].x, (i32)obj2.vecs[i].y, 255, 255, 255);
 
 	}
 
