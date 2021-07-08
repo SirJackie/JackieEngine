@@ -11,8 +11,9 @@ private:
 	i32 frameCount;
 public:
 	CS_FPSCalculator();
-	void Count(i32 deltaTime);
-	f32  GetCurrentFPS();
+	void    Count(i32 deltaTime);
+	f32     GetCurrentFPS();
+	string  GetStrStatus();
 };
 
 #endif

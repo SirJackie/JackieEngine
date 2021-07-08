@@ -23,3 +23,17 @@ f32 CS_FPSCalculator::GetCurrentFPS()
 {
 	return fps;
 }
+
+string CS_FPSCalculator::GetStrStatus() {
+	stringstream ss;
+	ss << "FPS: ";
+
+	if (abs(fps - 0.0f) < 0.005) {
+		ss << "Loading...";
+	}
+	else {
+		ss << fps;
+	}
+	
+	return ss.str();
+}

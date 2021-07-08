@@ -148,7 +148,6 @@
     <ClCompile Include="..\CrossBufferLayer\KeyboardSupport.cpp" />
     <ClCompile Include="..\CrossBufferLayer\MouseSupport.cpp" />
     <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\JackieEngine.cpp" />
     <ClCompile Include="..\JackieEngineLayer\MathSupport.cpp" />
     <ClCompile Include="..\JackieEngineLayer\ObjectSupport.cpp" />
     <ClCompile Include="..\Main.cpp" />
