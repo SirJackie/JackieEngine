@@ -215,6 +215,45 @@ string FMatrix4D::str() const {
 	return ss.str();
 }
 
+FMatrix4D FMatrix4D::GenerateTranslationMatrix(f32 x, f32 y, f32 z)
+{
+	return FMatrix4D
+	(
+		1.0f, 0.0f, 0.0f, -1.0f * x,
+		0.0f, 1.0f, 0.0f, -1.0f * y,
+		0.0f, 0.0f, 1.0f, -1.0f * z,
+		0.0f, 0.0f, 0.0f,  1.0f
+	);
+}
+
+FMatrix4D FMatrix4D::GenerateRotationMatrix(f32 x, f32 y, f32 z)
+{
+	FMatrix4D MrotationX = FMatrix4D(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, CS_cos(x), -1.0f * CS_sin(x), 0.0f,
+		0.0f, CS_sin(x), CS_cos(x), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	FMatrix4D MrotationY = FMatrix4D(
+		CS_cos(y), 0.0f, CS_sin(y), 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		-1.0f * CS_sin(y), 0.0f, CS_cos(y), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	FMatrix4D MrotationZ = FMatrix4D(
+		CS_cos(z), -1.0f * CS_sin(z), 0.0f, 0.0f,
+		CS_sin(z), CS_cos(z), 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	FMatrix4D RotationMatrix = MrotationZ * MrotationY;
+	RotationMatrix = RotationMatrix * MrotationX;
+	return RotationMatrix;
+}
+
 FVector4D operator*(FVector4D& v, FMatrix4D& m) {
 	FVector4D result;
 

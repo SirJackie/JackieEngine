@@ -47,38 +47,17 @@ FCamera4D::FCamera4D
 }
 
 void FCamera4D::CalcTranslation() {
-	TranslationMatrix = FMatrix4D(
-		1.0f, 0.0f, 0.0f, -1.0f * (position.x),
-		0.0f, 1.0f, 0.0f, -1.0f * (position.y),
-		0.0f, 0.0f, 1.0f, -1.0f * (position.z),
-		0.0f, 0.0f, 0.0f, 1.0f
+	TranslationMatrix = FMatrix4D::GenerateTranslationMatrix
+	(
+		position.x, position.y, position.z
 	);
 }
 
 void FCamera4D::CalcRotation() {
-	FMatrix4D MrotationX = FMatrix4D(
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, CS_cos(rotation.x), -1.0f * CS_sin(rotation.x), 0.0f,
-		0.0f, CS_sin(rotation.x), CS_cos(rotation.x), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
+	RotationMatrix = FMatrix4D::GenerateRotationMatrix
+	(
+		rotation.x, rotation.y, rotation.z
 	);
-
-	FMatrix4D MrotationY = FMatrix4D(
-		CS_cos(rotation.y), 0.0f, CS_sin(rotation.y), 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		-1.0f * CS_sin(rotation.y), 0.0f, CS_cos(rotation.y), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	);
-
-	FMatrix4D MrotationZ = FMatrix4D(
-		CS_cos(rotation.z), -1.0f * CS_sin(rotation.z), 0.0f, 0.0f,
-		CS_sin(rotation.z), CS_cos(rotation.z), 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	);
-
-	RotationMatrix = MrotationZ * MrotationY;
-	RotationMatrix = RotationMatrix * MrotationX;
 }
 
 void FCamera4D::CalcProjection() {

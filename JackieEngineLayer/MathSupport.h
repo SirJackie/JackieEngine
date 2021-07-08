@@ -18,7 +18,7 @@ public:
 	FVector4D(f32 x_, f32 y_, f32 z_, f32 w_);
 	FVector4D();
 	string     str()                        const;
-	f32      length()                     const;
+	f32        length()                     const;
 	FVector4D  normalized()                 const;
 	void       Normalize();
 	void       DevideByW();
@@ -34,7 +34,7 @@ public:
 	// Vector-Vector Calculation
 	FVector4D  operator+(const FVector4D& b) const;
 	FVector4D  operator-(const FVector4D& b) const;
-	f32      operator*(const FVector4D& b) const;  // Dot   Product
+	f32        operator*(const FVector4D& b) const;  // Dot   Product
 	FVector4D  operator%(const FVector4D& b) const;  // Cross Product
 };
 
@@ -61,5 +61,8 @@ public:
 	string str() const;
 	friend FVector4D operator*(FVector4D& v, FMatrix4D& m);
 	friend FMatrix4D operator*(FMatrix4D& a, FMatrix4D& b);
+
+	static FMatrix4D GenerateTranslationMatrix (f32 x, f32 y, f32 z);
+	static FMatrix4D GenerateRotationMatrix    (f32 x, f32 y, f32 z);
 };
 #endif
