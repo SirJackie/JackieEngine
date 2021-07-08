@@ -10,10 +10,25 @@
 ** FFrustum
 */
 
-//class FFrustum {
-//public:
-//	
-//};
+class FFrustum {
+public:
+	f32 n;
+	f32 f;
+	f32 t;
+	f32 b;
+	f32 l;
+	f32 r;
+	f32 fovY;
+	i32 screenWidth;
+	i32 screenHeight;
+
+	FFrustum();
+	FFrustum
+	(
+		f32 n_, f32 f_, f32 fovY_, i32 screenWidth_, i32 screenHeight_
+	);
+	void CalculateFrustum();
+};
 
 
 /*
@@ -28,15 +43,7 @@ private:
 	FVector4D rotation;
 
 	// Frustum
-	f32 n;
-	f32 f;
-	f32 t;
-	f32 b;
-	f32 l;
-	f32 r;
-	f32 fovY;
-	int ScreenWidth;
-	int ScreenHeight;
+	FFrustum  frustum;
 
 	// Matricies
 	FMatrix4D TranslationMatrix;
@@ -51,8 +58,8 @@ private:
 public:
 	// Methods
 	FCamera4D(
-		f32 x, f32 y, f32 z, f32 rotx, f32 roty, f32 rotz,
-		f32 n, f32 f, f32 fovY, int ScreenWidth, int ScreenHeight
+		f32 x_, f32 y_, f32 z_, f32 rotx_, f32 roty_, f32 rotz_,
+		f32 n_, f32 f_, f32 fovY_, i32 screenWidth_, i32 screenHeight_
 	);
 	void CalcTranslation();
 	void CalcRotation();
