@@ -6,14 +6,14 @@ i32 numtotal = 0;
 
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	obj.add(Vector4D(-1.0, -1.0, 1.0, 1.0));
-	obj.add(Vector4D(1.0, -1.0, 1.0, 1.0));
-	obj.add(Vector4D(1.0, 1.0, 1.0, 1.0));
-	obj.add(Vector4D(-1.0, 1.0, 1.0, 1.0));
-	obj.add(Vector4D(-1.0, -1.0, -1.0, 1.0));
-	obj.add(Vector4D(1.0, -1.0, -1.0, 1.0));
-	obj.add(Vector4D(1.0, 1.0, -1.0, 1.0));
-	obj.add(Vector4D(-1.0, 1.0, -1.0, 1.0));
+	obj.add(FVector4D(-1.0, -1.0, 1.0, 1.0));
+	obj.add(FVector4D(1.0, -1.0, 1.0, 1.0));
+	obj.add(FVector4D(1.0, 1.0, 1.0, 1.0));
+	obj.add(FVector4D(-1.0, 1.0, 1.0, 1.0));
+	obj.add(FVector4D(-1.0, -1.0, -1.0, 1.0));
+	obj.add(FVector4D(1.0, -1.0, -1.0, 1.0));
+	obj.add(FVector4D(1.0, 1.0, -1.0, 1.0));
+	obj.add(FVector4D(-1.0, 1.0, -1.0, 1.0));
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {

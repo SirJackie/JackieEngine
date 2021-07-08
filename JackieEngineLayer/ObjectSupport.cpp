@@ -4,6 +4,6 @@ Object4D::Object4D() {
 	;
 }
 
-void Object4D::add(Vector4D vec) {
+void Object4D::add(FVector4D vec) {
 	vecs.push_back(vec);
 }

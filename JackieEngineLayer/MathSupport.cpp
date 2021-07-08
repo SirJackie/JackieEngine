@@ -1,27 +1,23 @@
 #include "MathSupport.h"
-#include <string>
-#include <sstream>
-using std::string;
-using std::stringstream;
 
-Vector4D::Vector4D(float x_, float y_, float z_, float w_) {
+FVector4D::FVector4D(float x_, float y_, float z_, float w_) {
 	x = x_;
 	y = y_;
 	z = z_;
 	w = w_;
 }
 
-Vector4D::Vector4D() {
-	x = NAN;
-	y = NAN;
-	z = NAN;
-	w = NAN;
+FVector4D::FVector4D() {
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
+	w = 0.0f;
 }
 
-string Vector4D::str() const {
+string FVector4D::str() const {
 	stringstream ss;
 
-	ss << "Vector4D [";
+	ss << "FVector4D [";
 	ss << this->x;
 	ss << ", ";
 	ss << this->y;
@@ -34,14 +30,14 @@ string Vector4D::str() const {
 	return ss.str();
 }
 
-float Vector4D::length() const {
+float FVector4D::length() const {
 	// Use the Pythagorean Theorem to calculate the length
 	return sqrtf(x*x + y*y + z*z);
 }
 
-Vector4D Vector4D::normalized() const {
+FVector4D FVector4D::normalized() const {
 	float length = this->length();
-	return Vector4D(
+	return FVector4D(
 		this->x / length,
 		this->y / length,
 		this->z / length,
@@ -49,7 +45,7 @@ Vector4D Vector4D::normalized() const {
 	);
 }
 
-void Vector4D::Normalize() {
+void FVector4D::Normalize() {
 	float length = this->length();
 	this->x /= length;
 	this->y /= length;
@@ -57,17 +53,17 @@ void Vector4D::Normalize() {
 	// W-Axis is Meaningless, So Do Nothing
 }
 
-void Vector4D::DevideByW(){
+void FVector4D::DevideByW(){
 	x /= w;
 	y /= w;
 	z /= w;
 	w =  1;      // The same as w /= w;
 }
 
-Vector4D Vector4D::operator+(const Vector4D& b) const {
-	const Vector4D& a = *this;
+FVector4D FVector4D::operator+(const FVector4D& b) const {
+	const FVector4D& a = *this;
 
-	return Vector4D(
+	return FVector4D(
 		a.x + b.x,
 		a.y + b.y,
 		a.z + b.z,
@@ -75,10 +71,10 @@ Vector4D Vector4D::operator+(const Vector4D& b) const {
 	);
 }
 
-Vector4D Vector4D::operator-(const Vector4D& b) const {
-	const Vector4D& a = *this;
+FVector4D FVector4D::operator-(const FVector4D& b) const {
+	const FVector4D& a = *this;
 
-	return Vector4D(
+	return FVector4D(
 		a.x - b.x,
 		a.y - b.y,
 		a.z - b.z,
@@ -86,15 +82,15 @@ Vector4D Vector4D::operator-(const Vector4D& b) const {
 	);
 }
 
-float Vector4D::operator*(const Vector4D& b) const {
-	const Vector4D& a = *this;
+float FVector4D::operator*(const FVector4D& b) const {
+	const FVector4D& a = *this;
 
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-Vector4D Vector4D::operator%(const Vector4D& b) const {
-	const Vector4D& a = *this;
-	Vector4D result;
+FVector4D FVector4D::operator%(const FVector4D& b) const {
+	const FVector4D& a = *this;
+	FVector4D result;
 
 	result.x = a.y * b.z - b.y * a.z;
 	result.y = a.z * b.x - a.x * b.z;
@@ -171,8 +167,8 @@ string Matrix4D::str() const {
 	return ss.str();
 }
 
-Vector4D operator*(Vector4D& v, Matrix4D& m) {
-	Vector4D result;
+FVector4D operator*(FVector4D& v, Matrix4D& m) {
+	FVector4D result;
 
 	result.x = m.m11 * v.x + m.m12 * v.y + m.m13 * v.z + m.m14 * v.w;
 	result.y = m.m21 * v.x + m.m22 * v.y + m.m23 * v.z + m.m24 * v.w;

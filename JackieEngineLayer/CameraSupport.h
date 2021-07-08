@@ -14,8 +14,8 @@ class Camera4D {
 private:
 
 	// Position
-	Vector4D position;
-	Vector4D rotation;
+	FVector4D position;
+	FVector4D rotation;
 
 	// Frustum
 	float n;

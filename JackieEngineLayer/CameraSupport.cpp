@@ -8,8 +8,8 @@ Camera4D::Camera4D(
 )
 {
 
-	this->position = Vector4D(x_, y_, z_, 1);
-	this->rotation = Vector4D(rotx_, roty_, rotz_, 1);
+	this->position = FVector4D(x_, y_, z_, 1);
+	this->rotation = FVector4D(rotx_, roty_, rotz_, 1);
 
 	this->n = n_;
 	this->f = f_;

@@ -5,34 +5,27 @@
 
 
 /*
-** Define Some Calculating Functions
-*/
-
-
-
-
-/*
 ** Vector4D
 */
 
-class Vector4D {
+class FVector4D {
 public:
 	float x;
 	float y;
 	float z;
 	float w;
 
-	Vector4D(float x_, float y_, float z_, float w_);
-	Vector4D();
-	string    str()                        const;
-	float     length()                     const;
-	Vector4D  normalized()                 const;
-	void      Normalize();
-	void      DevideByW();
-	Vector4D  operator+(const Vector4D& b) const;
-	Vector4D  operator-(const Vector4D& b) const;
-	float     operator*(const Vector4D& b) const;  // Dot   Product
-	Vector4D  operator%(const Vector4D& b) const;  // Cross Product
+	FVector4D(float x_, float y_, float z_, float w_);
+	FVector4D();
+	string     str()                        const;
+	float      length()                     const;
+	FVector4D  normalized()                 const;
+	void       Normalize();
+	void       DevideByW();
+	FVector4D  operator+(const FVector4D& b) const;
+	FVector4D  operator-(const FVector4D& b) const;
+	float      operator*(const FVector4D& b) const;  // Dot   Product
+	FVector4D  operator%(const FVector4D& b) const;  // Cross Product
 };
 
 
@@ -56,7 +49,7 @@ public:
 	Matrix4D();
 
 	string str() const;
-	friend Vector4D operator*(Vector4D& v, Matrix4D& m);
+	friend FVector4D operator*(FVector4D& v, Matrix4D& m);
 	friend Matrix4D operator*(Matrix4D& a, Matrix4D& b);
 };
 #endif
