@@ -7,6 +7,16 @@
 
 
 /*
+** FFrustum
+*/
+
+//class FFrustum {
+//public:
+//	
+//};
+
+
+/*
 ** FCamera4D
 */
 
@@ -18,13 +28,13 @@ private:
 	FVector4D rotation;
 
 	// Frustum
-	float n;
-	float f;
-	float t;
-	float b;
-	float l;
-	float r;
-	float fovY;
+	f32 n;
+	f32 f;
+	f32 t;
+	f32 b;
+	f32 l;
+	f32 r;
+	f32 fovY;
 	int ScreenWidth;
 	int ScreenHeight;
 
@@ -41,8 +51,8 @@ private:
 public:
 	// Methods
 	FCamera4D(
-		float x, float y, float z, float rotx, float roty, float rotz,
-		float n, float f, float fovY, int ScreenWidth, int ScreenHeight
+		f32 x, f32 y, f32 z, f32 rotx, f32 roty, f32 rotz,
+		f32 n, f32 f, f32 fovY, int ScreenWidth, int ScreenHeight
 	);
 	void CalcTranslation();
 	void CalcRotation();

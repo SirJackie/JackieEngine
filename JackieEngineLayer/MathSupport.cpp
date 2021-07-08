@@ -1,6 +1,6 @@
 #include "MathSupport.h"
 
-FVector4D::FVector4D(float x_, float y_, float z_, float w_) {
+FVector4D::FVector4D(f32 x_, f32 y_, f32 z_, f32 w_) {
 	x = x_;
 	y = y_;
 	z = z_;
@@ -30,13 +30,13 @@ string FVector4D::str() const {
 	return ss.str();
 }
 
-float FVector4D::length() const {
+f32 FVector4D::length() const {
 	// Use the Pythagorean Theorem to calculate the length
 	return sqrtf(x*x + y*y + z*z);
 }
 
 FVector4D FVector4D::normalized() const {
-	float length = this->length();
+	f32 length = this->length();
 	return FVector4D(
 		this->x / length,
 		this->y / length,
@@ -46,7 +46,7 @@ FVector4D FVector4D::normalized() const {
 }
 
 void FVector4D::Normalize() {
-	float length = this->length();
+	f32 length = this->length();
 	this->x /= length;
 	this->y /= length;
 	this->z /= length;
@@ -130,7 +130,7 @@ FVector4D FVector4D::operator-(const FVector4D& b) const {
 	);
 }
 
-float FVector4D::operator*(const FVector4D& b) const {
+f32 FVector4D::operator*(const FVector4D& b) const {
 	const FVector4D& a = *this;
 
 	return a.x * b.x + a.y * b.y + a.z * b.z;
@@ -150,10 +150,10 @@ FVector4D FVector4D::operator%(const FVector4D& b) const {
 
 
 FMatrix4D::FMatrix4D(
-	float m11_, float m12_, float m13_, float m14_,
-	float m21_, float m22_, float m23_, float m24_,
-	float m31_, float m32_, float m33_, float m34_,
-	float m41_, float m42_, float m43_, float m44_
+	f32 m11_, f32 m12_, f32 m13_, f32 m14_,
+	f32 m21_, f32 m22_, f32 m23_, f32 m24_,
+	f32 m31_, f32 m32_, f32 m33_, f32 m34_,
+	f32 m41_, f32 m42_, f32 m43_, f32 m44_
 ){
 	this->m11 = m11_;
 	this->m12 = m12_;

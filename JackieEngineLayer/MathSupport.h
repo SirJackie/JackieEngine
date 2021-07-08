@@ -10,15 +10,15 @@
 
 class FVector4D {
 public:
-	float x;
-	float y;
-	float z;
-	float w;
+	f32 x;
+	f32 y;
+	f32 z;
+	f32 w;
 
-	FVector4D(float x_, float y_, float z_, float w_);
+	FVector4D(f32 x_, f32 y_, f32 z_, f32 w_);
 	FVector4D();
 	string     str()                        const;
-	float      length()                     const;
+	f32      length()                     const;
 	FVector4D  normalized()                 const;
 	void       Normalize();
 	void       DevideByW();
@@ -34,7 +34,7 @@ public:
 	// Vector-Vector Calculation
 	FVector4D  operator+(const FVector4D& b) const;
 	FVector4D  operator-(const FVector4D& b) const;
-	float      operator*(const FVector4D& b) const;  // Dot   Product
+	f32      operator*(const FVector4D& b) const;  // Dot   Product
 	FVector4D  operator%(const FVector4D& b) const;  // Cross Product
 };
 
@@ -45,16 +45,16 @@ public:
 
 class FMatrix4D {
 public:
-	float m11, m12, m13, m14;
-	float m21, m22, m23, m24;
-	float m31, m32, m33, m34;
-	float m41, m42, m43, m44;
+	f32 m11, m12, m13, m14;
+	f32 m21, m22, m23, m24;
+	f32 m31, m32, m33, m34;
+	f32 m41, m42, m43, m44;
 
 	FMatrix4D(
-		float m11, float m12, float m13, float m14,
-		float m21, float m22, float m23, float m24,
-		float m31, float m32, float m33, float m34,
-		float m41, float m42, float m43, float m44
+		f32 m11, f32 m12, f32 m13, f32 m14,
+		f32 m21, f32 m22, f32 m23, f32 m24,
+		f32 m31, f32 m32, f32 m33, f32 m34,
+		f32 m41, f32 m42, f32 m43, f32 m44
 	);
 	FMatrix4D();
 

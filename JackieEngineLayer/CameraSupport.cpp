@@ -3,8 +3,8 @@
 using std::abs;
 
 FCamera4D::FCamera4D(
-	float x_, float y_, float z_, float rotx_, float roty_, float rotz_,
-	float n_, float f_, float fovY_, int ScreenWidth_, int ScreenHeight_
+	f32 x_, f32 y_, f32 z_, f32 rotx_, f32 roty_, f32 rotz_,
+	f32 n_, f32 f_, f32 fovY_, int ScreenWidth_, int ScreenHeight_
 )
 {
 
@@ -102,7 +102,7 @@ void FCamera4D::CalcViewport() {
 
 	FMatrix4D MYReverse = FMatrix4D(
 		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, -1.0f, 0.0f, (float)this->ScreenHeight,
+		0.0f, -1.0f, 0.0f, (f32)this->ScreenHeight,
 		0.0f, 0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
