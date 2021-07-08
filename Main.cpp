@@ -2,6 +2,7 @@
 
 CS_FPSCalculator fpsCalculator;
 Object4D obj;
+i32 numtotal = 0;
 
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
@@ -43,5 +44,6 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	}
 
-	fb.Print(ss.str().c_str());
+	fb.PrintLn(ss.str().c_str());
+	fb.PrintLn(numtotal);
 }

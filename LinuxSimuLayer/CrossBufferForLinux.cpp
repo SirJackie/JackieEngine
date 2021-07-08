@@ -17,7 +17,7 @@ SDL_Event e;
 CS_FrameBuffer fb;
 
 // Time Counting Variables
-csbool FirstTimeRunning;
+csbool FirstTimeRunning = csTrue;
 clock_t lastTime;
 clock_t thisTime;
 

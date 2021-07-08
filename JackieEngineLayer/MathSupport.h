@@ -18,21 +18,25 @@ using std::stringstream;
 #define  _DEG2RAD_  PI / 180.0f
 #define  _RAD2DEG_  180.0f / PI
 
-using std::sinf;
-using std::cosf;
-using std::tanf;
+using std::sin;
+using std::cos;
+using std::tan;
 
-using std::asinf;
-using std::acosf;
-using std::atanf;
+using std::asin;
+using std::acos;
+using std::atan;
 
-#define cosd(x) cosf(x*_DEG2RAD_)
-#define sind(x) sinf(x*_DEG2RAD_)
-#define tand(x) tanf(x*_DEG2RAD_)
+using std::sqrt;
 
-#define acosd(x) (acosf(x)*_RAD2DEG_)
-#define asind(x) (asinf(x)*_RAD2DEG_)
-#define atand(x) (atanf(x)*_RAD2DEG_)
+using namespace std;
+
+#define cosd(x) cos(x*_DEG2RAD_)
+#define sind(x) sin(x*_DEG2RAD_)
+#define tand(x) tan(x*_DEG2RAD_)
+
+#define acosd(x) (acos(x)*_RAD2DEG_)
+#define asind(x) (asin(x)*_RAD2DEG_)
+#define atand(x) (atan(x)*_RAD2DEG_)
 
 
 

@@ -3,7 +3,6 @@
 #include <sstream>
 using std::string;
 using std::stringstream;
-using std::sqrtf;
 
 int min3(int a, int b, int c) {
 	int min = a;
