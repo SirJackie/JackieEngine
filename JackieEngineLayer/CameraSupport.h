@@ -1,7 +1,7 @@
 #ifndef __JKEG_CameraSupport__
 #define __JKEG_CameraSupport__
 
-#include <cmath>
+#include "../CrossBufferLayer/BasicDataTypeDeclarations.h"
 #include "MathSupport.h"
 #include "ObjectSupport.h"
 
@@ -56,6 +56,7 @@ private:
 
 public:
 	// Methods
+	FCamera4D();
 	FCamera4D(
 		f32 x_, f32 y_, f32 z_, f32 rotx_, f32 roty_, f32 rotz_,
 		f32 n_, f32 f_, f32 fovY_, i32 screenWidth_, i32 screenHeight_
@@ -66,6 +67,6 @@ public:
 	void CalcTotal();
 
 	string str();
-	void ProjectObject(Object4D& obj);
+	void ProjectObject(FObject4D& obj);
 };
 #endif

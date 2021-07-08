@@ -1,9 +1,9 @@
 #include "ObjectSupport.h"
 
-Object4D::Object4D() {
+FObject4D::FObject4D() {
 	;
 }
 
-void Object4D::add(FVector4D vec) {
-	vecs.push_back(vec);
+void FObject4D::Add(const FVector4D& vec) {
+	vl.push_back(vec);
 }

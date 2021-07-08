@@ -31,6 +31,18 @@ void FFrustum::CalculateFrustum()
 	hh = (f32)screenHeight / 2.0f;
 }
 
+FCamera4D::FCamera4D()
+{
+	position = FVector4D();
+	rotation = FVector4D();
+	frustum  = FFrustum();
+
+	TranslationMatrix = FMatrix4D();
+	RotationMatrix    = FMatrix4D();
+	ProjectionMatrix  = FMatrix4D();
+	TotalMatrix       = FMatrix4D();
+}
+
 FCamera4D::FCamera4D
 (
 	f32 x_, f32 y_, f32 z_, f32 rotx_, f32 roty_, f32 rotz_,
@@ -82,9 +94,10 @@ string FCamera4D::str() {
 	return "\nCamera. TotalTransformMatrix: " + TotalMatrix.str() + "\n";
 }
 
-void FCamera4D::ProjectObject(Object4D& obj) {
-	for (ui32 i = 0; i < obj.vecs.size(); i++) {
-		obj.vecs[i] = obj.vecs[i] * TotalMatrix;
-		obj.vecs[i].DevideByW();
+void FCamera4D::ProjectObject(FObject4D& obj) {
+	obj.tmpVl = obj.vl;
+	for (ui32 i = 0; i < obj.tmpVl.size(); i++) {
+		obj.tmpVl[i] = obj.tmpVl[i] * TotalMatrix;
+		obj.tmpVl[i].DevideByW();
 	}
 }

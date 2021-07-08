@@ -2,17 +2,17 @@
 #define __JKEG_ObjectSupport__
 
 #include "MathSupport.h"
-#include <vector>
-using std::vector;
 
-typedef vector<FVector4D> Vector4DList;
+typedef vector<FVector4D> Veclist;
 
-class Object4D {
+
+class FObject4D {
 public:
-	Vector4DList vecs;
+	Veclist vl;
+	Veclist tmpVl;
 
-	Object4D();
-	void add(FVector4D vec);
+	FObject4D();
+	void Add(const FVector4D& vec);
 };
 
 #endif

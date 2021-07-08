@@ -91,6 +91,9 @@
     <ClInclude Include="..\CrossBufferLayer\BasicDataTypeDeclarations.h">
       <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\RasterizingSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CrossBufferLayer\FrameBuffer.cpp">
@@ -127,6 +130,9 @@
       <Filter>源文件\JackieEngineLayer</Filter>
     </ClCompile>
     <ClCompile Include="..\JackieEngineLayer\ObjectSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\RasterizingSupport.cpp">
       <Filter>源文件\JackieEngineLayer</Filter>
     </ClCompile>
   </ItemGroup>
