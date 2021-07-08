@@ -17,7 +17,7 @@ Camera4D::Camera4D(
 	this->ScreenWidth = ScreenWidth_;
 	this->ScreenHeight = ScreenHeight_;
 
-	this->t = abs(this->n) * tand(this->fovY / 2.0f);
+	this->t = abs(this->n) * CS_tan(this->fovY / 2.0f);
 	this->b = -1.0f * this->t;
 
 	this->r = this->ScreenWidth * this->t / this->ScreenHeight;
@@ -38,21 +38,21 @@ void Camera4D::CalcTranslation() {
 void Camera4D::CalcRotation() {
 	Matrix4D MrotationX = Matrix4D(
 		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, cosd(this->rotation.x), -1.0f * sind(this->rotation.x), 0.0f,
-		0.0f, sind(this->rotation.x), cosd(this->rotation.x), 0.0f,
+		0.0f, CS_cos(this->rotation.x), -1.0f * CS_sin(this->rotation.x), 0.0f,
+		0.0f, CS_sin(this->rotation.x), CS_cos(this->rotation.x), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
 	Matrix4D MrotationY = Matrix4D(
-		cosd(this->rotation.y), 0.0f, sind(this->rotation.y), 0.0f,
+		CS_cos(this->rotation.y), 0.0f, CS_sin(this->rotation.y), 0.0f,
 		0.0f, 1.0f, 0.0f, 0.0f,
-		-1.0f * sind(this->rotation.y), 0.0f, cosd(this->rotation.y), 0.0f,
+		-1.0f * CS_sin(this->rotation.y), 0.0f, CS_cos(this->rotation.y), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
 	Matrix4D MrotationZ = Matrix4D(
-		cosd(this->rotation.z), -1.0f * sind(this->rotation.z), 0.0f, 0.0f,
-		sind(this->rotation.z), cosd(this->rotation.z), 0.0f, 0.0f,
+		CS_cos(this->rotation.z), -1.0f * CS_sin(this->rotation.z), 0.0f, 0.0f,
+		CS_sin(this->rotation.z), CS_cos(this->rotation.z), 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
@@ -138,7 +138,7 @@ string Camera4D::str() {
 }
 
 void Camera4D::ProjectObject(Object4D& obj) {
-	for (int i = 0; i < obj.vecs.size(); i++) {
+	for (ui32 i = 0; i < obj.vecs.size(); i++) {
 		obj.vecs[i] = obj.vecs[i] * TotalTransformMatrix;
 		obj.vecs[i].DevideByW();
 	}

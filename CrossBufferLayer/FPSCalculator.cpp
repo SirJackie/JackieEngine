@@ -1,6 +1,4 @@
 #include "FPSCalculator.h"
-#include <sstream>
-using std::stringstream;
 
 CS_FPSCalculator::CS_FPSCalculator() {
 	fps             = 0.0f;

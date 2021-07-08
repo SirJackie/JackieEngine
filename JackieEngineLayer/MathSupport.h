@@ -1,44 +1,7 @@
 #ifndef __JKEG_MathSupport__
 #define __JKEG_MathSupport__
 
-#include <cmath>
-#include <string>
-#include <sstream>
-using std::string;
-using std::stringstream;
-
-
-
-
-/*
-** Define Trigonometric Functions that use Degrees instead of Radians
-*/
-
-#define  PI         3.14159265f
-#define  _DEG2RAD_  PI / 180.0f
-#define  _RAD2DEG_  180.0f / PI
-
-using std::sin;
-using std::cos;
-using std::tan;
-
-using std::asin;
-using std::acos;
-using std::atan;
-
-using std::sqrt;
-
-using namespace std;
-
-#define cosd(x) cos(x*_DEG2RAD_)
-#define sind(x) sin(x*_DEG2RAD_)
-#define tand(x) tan(x*_DEG2RAD_)
-
-#define acosd(x) (acos(x)*_RAD2DEG_)
-#define asind(x) (asin(x)*_RAD2DEG_)
-#define atand(x) (atan(x)*_RAD2DEG_)
-
-
+#include "../CrossBufferLayer/BasicDataTypeDeclarations.h"
 
 
 /*

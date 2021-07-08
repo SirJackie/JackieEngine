@@ -12,8 +12,3 @@ f32 CS_fclamp(f32 min, f32 x, f32 max)
 {
 	return (x < min ? min : (x > max ? max : x));
 }
-
-void CS_Memset(void* ptr, i8 fillingContent, i32 length)
-{
-	memset(ptr, fillingContent, length);
-}

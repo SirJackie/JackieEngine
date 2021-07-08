@@ -1,7 +1,5 @@
 #include "FrameBuffer.h"
 #include "FontSupport.h"
-#include <vector>
-using std::vector;
 
 
 void CS_FrameBuffer::AllocateBuffer(i32 width, i32 height)

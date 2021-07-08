@@ -1,8 +1,6 @@
 #ifndef __CSBF_BasicDataTypeDeclarations__
 #define __CSBF_BasicDataTypeDeclarations__
 
-#include <cstring>
-
 
 /*
 ** Define Cross Platform Types
@@ -38,8 +36,34 @@ const      csbool csFalse       = 0;
 i32 CS_iclamp(i32 min, i32 x, i32 max);
 f32 CS_fclamp(f32 min, f32 x, f32 max);
 
-using std::memset;
-void CS_Memset(void* ptr, i8 fillingContent, i32 length);
+#include <string>
+#include <sstream>
+using std::string;
+using std::stringstream;
 
+#include <vector>
+using std::vector;
+
+#include <cstring>
+using std::memset;
+#define CS_Memset(ptr, fillingContent, length) (memset(ptr, fillingContent, length))
+
+#include <cmath>
+using std::sin;
+using std::cos;
+using std::tan;
+using std::asin;
+using std::acos;
+using std::atan;
+using std::sqrt;
+#define  PI          3.14159265f
+#define  _DEG2RAD_   PI / 180.0f
+#define  _RAD2DEG_   180.0f / PI
+#define  CS_cos(x)   (cos((x)*_DEG2RAD_))
+#define  CS_sin(x)   (sin((x)*_DEG2RAD_))
+#define  CS_tan(x)   (tan((x)*_DEG2RAD_))
+#define  CS_acos(x)  (acos((x))*_RAD2DEG_)
+#define  CS_asin(x)  (asin((x))*_RAD2DEG_)
+#define  CS_atan(x)  (atan((x))*_RAD2DEG_)
 
 #endif

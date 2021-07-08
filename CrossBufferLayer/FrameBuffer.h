@@ -4,11 +4,6 @@
 #include "BasicDataTypeDeclarations.h"
 #include "FontSupport.h"
 
-#include <string>
-using std::string;
-#include <sstream>
-using std::stringstream;
-
 #define CS_FB_INIT_CURX 10
 #define CS_FB_INIT_CURY 10
 
