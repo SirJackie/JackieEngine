@@ -76,4 +76,6 @@ public:
     }
 };
 
+#define SetPixel(fb, x, y, r, g, b) ({    i32 framebuffer_setpixel_temp_pos = (y) * fb.width + (x); (fb).redBuffer[framebuffer_setpixel_temp_pos] = (r); (fb).greenBuffer[framebuffer_setpixel_temp_pos] = (g); (fb).blueBuffer[framebuffer_setpixel_temp_pos] = (b);    })
+
 #endif

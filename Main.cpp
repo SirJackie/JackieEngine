@@ -1,76 +1,47 @@
 #include "Main.h"
 
-i32 deltaColor = 0;
-i32 startX = 100, startY = 100, endX = 200, endY = 200;
-i32 step;
 CS_FPSCalculator fpsCalculator;
+Object4D obj;
+
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	;
+	obj.add(Vector4D(-1.0, -1.0, 1.0, 1.0));
+	obj.add(Vector4D(1.0, -1.0, 1.0, 1.0));
+	obj.add(Vector4D(1.0, 1.0, 1.0, 1.0));
+	obj.add(Vector4D(-1.0, 1.0, 1.0, 1.0));
+	obj.add(Vector4D(-1.0, -1.0, -1.0, 1.0));
+	obj.add(Vector4D(1.0, -1.0, -1.0, 1.0));
+	obj.add(Vector4D(1.0, 1.0, -1.0, 1.0));
+	obj.add(Vector4D(-1.0, 1.0, -1.0, 1.0));
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	fpsCalculator.Count(deltaTime);
-	step = (i32)(0.2f * deltaTime);
+	
+	stringstream ss;
+	ss << "\n";
 
-	startX = CS_iclamp(0, startX, fb.width);
-	startY = CS_iclamp(0, startY, fb.height);
+	// Camera4D Testing
+	ss << "Camera4D Testing: \n";
+	Camera4D cam(
+		0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f,
+		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
+	);
 
-	endX = CS_iclamp(CS_iclamp(0, startX+100, fb.width),  endX, fb.width);
-	endY = CS_iclamp(CS_iclamp(0, startY+100, fb.height), endY, fb.height);
+	ss << cam.str();
 
-	if (deltaColor == 255) {
-		deltaColor = 0;
+	// Object4D Testing
+	ss << obj.vecs.size();
+	ss << "\n";
+	Object4D obj2 = obj;
+	cam.ProjectObject(obj2);
+
+	for (ui32 i = 0; i < obj2.vecs.size(); i++) {
+		ss << obj2.vecs[i].str();
+		ss << "\n";
+		//SetPixel(fb, (int)obj2.vecs[i].x, (int)obj2.vecs[i].y, 255, 255, 255);
+
 	}
 
-	for (i32 y = startY; y < endY; y++) {
-		for (i32 x = startX; x < endX; x++) {
-			fb.redBuffer[y * fb.width + x] = 255 - deltaColor;
-			fb.greenBuffer[y * fb.width + x] = deltaColor;
-			fb.blueBuffer[y * fb.width + x] = deltaColor;
-		}
-	}
-
-	fb.DrawString("Alphabet", startX + 11, startY + 11, 0, 0, 0);
-	fb.DrawString("Alphabet", startX + 10, startY + 10, 255, 255, 255);
-
-	string ts = "C++ String Test!";
-	i32 ti32 = 32;
-	i16 ti16 = 16;
-
-	fb.Print("FPS: ");
-	fb.Print(fpsCalculator.GetCurrentFPS());
-	fb.Print(", DeltaTime: ");
-	fb.Print(deltaTime);
-	fb.Print("\n");
-
-	fb.Print(mouse.GetStrStatus());
-	fb.Print("\n");
-
-	fb.Print("KeyboardStatus: ");
-	fb.Print(kb.GetStrStatus());
-	fb.Print("\n");
-
-	fb.PrintLn((int)kb.keyBuffer['Z']);
-
-	deltaColor += 1;
-
-	if (kb.IsKeyPressed('W')) startY -= step;
-	if (kb.IsKeyPressed('S')) startY += step;
-	if (kb.IsKeyPressed('A')) startX -= step;
-	if (kb.IsKeyPressed('D')) startX += step;
-
-	if (kb.IsKeyPressed('I')) endY -= step;
-	if (kb.IsKeyPressed('K')) endY += step;
-	if (kb.IsKeyPressed('J')) endX -= step;
-	if (kb.IsKeyPressed('L')) endX += step;
-
-	if (kb.IsKeyFirstTimePressed('Z')) {
-		if (mouse.IsInfinityModeOpened() == csFalse) {
-			mouse.OpenInfinityMode();
-		}
-		else {
-			mouse.CloseInfinityMode();
-		}
-	}
+	fb.Print(ss.str().c_str());
 }

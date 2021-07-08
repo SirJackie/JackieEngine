@@ -2,9 +2,14 @@
 #define __CSBF_Main__
 
 #include "./CrossBufferLayer/CrossBuffer.h"
+#include "./JackieEngineLayer/JackieEngine.h"
+#include <vector>
+#include <sstream>
+using std::vector;
+using std::stringstream;
 
 /* Define Window Class Properties */
-#define WindowTitle (i32*)L"CrossBuffer <Press WASD and IJKL to move the position>"
+#define WindowTitle (i32*)L"Jackie Engine"
 
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime);

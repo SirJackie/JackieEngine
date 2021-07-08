@@ -25,6 +25,12 @@
     <Filter Include="源文件\WindowsSimuLayer">
       <UniqueIdentifier>{de2754aa-126a-4230-a8d2-c50208a68c07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\JackieEngineLayer">
+      <UniqueIdentifier>{999074e6-01d0-4297-a4b7-ab15cdbf04e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\JackieEngineLayer">
+      <UniqueIdentifier>{ac2862d2-5c22-4882-9af8-d9163056c1f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CrossBufferForWindows.rc">
@@ -73,6 +79,18 @@
     <ClInclude Include="..\CrossBufferLayer\MouseSupport.h">
       <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\CameraSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\JackieEngine.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\MathSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\ObjectSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CrossBufferLayer\FrameBuffer.cpp">
@@ -104,6 +122,18 @@
     </ClCompile>
     <ClCompile Include="KeyboardHelper.cpp">
       <Filter>源文件\WindowsSimuLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\JackieEngine.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\MathSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\ObjectSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
