@@ -23,7 +23,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	// Camera4D Testing
 	ss << "Camera4D Testing: \n";
-	Camera4D cam(
+	FCamera4D cam(
 		0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
 	);

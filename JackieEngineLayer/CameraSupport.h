@@ -7,10 +7,10 @@
 
 
 /*
-** Camera4D Definition
+** FCamera4D
 */
 
-class Camera4D {
+class FCamera4D {
 private:
 
 	// Position
@@ -40,7 +40,7 @@ private:
 
 public:
 	// Methods
-	Camera4D(
+	FCamera4D(
 		float x, float y, float z, float rotx, float roty, float rotz,
 		float n, float f, float fovY, int ScreenWidth, int ScreenHeight
 	);

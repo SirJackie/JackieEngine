@@ -5,7 +5,7 @@
 
 
 /*
-** Vector4D
+** FVector4D
 */
 
 class FVector4D {
@@ -40,7 +40,7 @@ public:
 
 
 /*
-** Matrix4D
+** FMatrix4D
 */
 
 class FMatrix4D {

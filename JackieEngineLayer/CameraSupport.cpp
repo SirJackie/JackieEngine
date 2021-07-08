@@ -2,7 +2,7 @@
 #include <cmath>
 using std::abs;
 
-Camera4D::Camera4D(
+FCamera4D::FCamera4D(
 	float x_, float y_, float z_, float rotx_, float roty_, float rotz_,
 	float n_, float f_, float fovY_, int ScreenWidth_, int ScreenHeight_
 )
@@ -26,7 +26,7 @@ Camera4D::Camera4D(
 	CalcAllTheMatricies();
 }
 
-void Camera4D::CalcTranslation() {
+void FCamera4D::CalcTranslation() {
 	TranslationMatrix = FMatrix4D(
 		1.0f, 0.0f, 0.0f, -1.0f * (this->position.x),
 		0.0f, 1.0f, 0.0f, -1.0f * (this->position.y),
@@ -35,7 +35,7 @@ void Camera4D::CalcTranslation() {
 	);
 }
 
-void Camera4D::CalcRotation() {
+void FCamera4D::CalcRotation() {
 	FMatrix4D MrotationX = FMatrix4D(
 		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, CS_cos(this->rotation.x), -1.0f * CS_sin(this->rotation.x), 0.0f,
@@ -61,7 +61,7 @@ void Camera4D::CalcRotation() {
 	RotationMatrix = RotationMatrix * MrotationX;
 }
 
-void Camera4D::CalcOrthographicProjection() {
+void FCamera4D::CalcOrthographicProjection() {
 	FMatrix4D Morthoa = FMatrix4D(
 		1.0f, 0.0f, 0.0f, -1.0f * (this->r + this->l) / 2.0f,
 		0.0f, 1.0f, 0.0f, -1.0f * (this->t + this->b) / 2.0f,
@@ -79,7 +79,7 @@ void Camera4D::CalcOrthographicProjection() {
 	OrthographicProjectionMatrix = Morthoa * Morthob;
 }
 
-void Camera4D::CalcPerspectiveProjection() {
+void FCamera4D::CalcPerspectiveProjection() {
 	CalcOrthographicProjection();
 
 	FMatrix4D Mpersp2ortho = FMatrix4D(
@@ -92,7 +92,7 @@ void Camera4D::CalcPerspectiveProjection() {
 	PerspectiveProjectionMatrix = Mpersp2ortho * OrthographicProjectionMatrix;
 }
 
-void Camera4D::CalcViewport() {
+void FCamera4D::CalcViewport() {
 	FMatrix4D MviewportPre = FMatrix4D(
 		this->ScreenWidth / 2.0f, 0.0f, 0.0f, this->ScreenWidth / 2.0f,
 		0.0f, this->ScreenHeight / 2.0f, 0.0f, this->ScreenHeight / 2.0f,
@@ -110,34 +110,34 @@ void Camera4D::CalcViewport() {
 	ViewportMatrix = MviewportPre * MYReverse;
 }
 
-void Camera4D::CalcTranslationAndRotation() {
+void FCamera4D::CalcTranslationAndRotation() {
 	CalcTranslation();
 	CalcRotation();
 	TranslationAndRotationMatrix = TranslationMatrix * RotationMatrix;
 }
 
-void Camera4D::CalcProjectionAndViewport() {
+void FCamera4D::CalcProjectionAndViewport() {
 	CalcPerspectiveProjection();
 	CalcViewport();
 	ProjectionAndViewportMatrix = PerspectiveProjectionMatrix * ViewportMatrix;
 }
 
-void Camera4D::RefreshTranslationAndRotation() {
+void FCamera4D::RefreshTranslationAndRotation() {
 	CalcTranslationAndRotation();
 	//CalcProjectionAndViewport();
 	TotalTransformMatrix = TranslationAndRotationMatrix * ProjectionAndViewportMatrix;
 }
-void Camera4D::CalcAllTheMatricies() {
+void FCamera4D::CalcAllTheMatricies() {
 	CalcTranslationAndRotation();
 	CalcProjectionAndViewport();
 	TotalTransformMatrix = TranslationAndRotationMatrix * ProjectionAndViewportMatrix;
 }
 
-string Camera4D::str() {
+string FCamera4D::str() {
 	return "\nCamera. TotalTransformMatrix: " + TotalTransformMatrix.str() + "\n";
 }
 
-void Camera4D::ProjectObject(Object4D& obj) {
+void FCamera4D::ProjectObject(Object4D& obj) {
 	for (ui32 i = 0; i < obj.vecs.size(); i++) {
 		obj.vecs[i] = obj.vecs[i] * TotalTransformMatrix;
 		obj.vecs[i].DevideByW();
