@@ -33,8 +33,35 @@ const      csbool csFalse       = 0;
 ** Define Basic Functions
 */
 
-i32 CS_iclamp(i32 min, i32 x, i32 max);
-f32 CS_fclamp(f32 min, f32 x, f32 max);
+inline i32 CS_iclamp(i32 min, i32 x, i32 max)
+{
+	return (x < min ? min : (x >= max ? (max - 1) : x));
+}
+
+inline f32 CS_fclamp(f32 min, f32 x, f32 max)
+{
+	return (x < min ? min : (x > max ? max : x));
+}
+
+inline i32 CS_imin3(i32 a, i32 b, i32 c)
+{
+	return a < b ? (c < a ? c : a) : (c < b ? c : b);
+}
+
+inline i32 CS_imax3(i32 a, i32 b, i32 c)
+{
+	return a > b ? (c > a ? c : a) : (c > b ? c : b);
+}
+
+inline f32 CS_fmin3(f32 a, f32 b, f32 c)
+{
+	return a < b ? (c < a ? c : a) : (c < b ? c : b);
+}
+
+inline f32 CS_fmax3(f32 a, f32 b, f32 c)
+{
+	return a > b ? (c > a ? c : a) : (c > b ? c : b);
+}
 
 #include <string>
 #include <sstream>

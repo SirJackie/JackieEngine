@@ -61,9 +61,6 @@
     <ClInclude Include="..\CrossBufferLayer\FPSCalculator.h">
       <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\CrossBufferLayer\BasicDataTypeDeclarations.h">
-      <Filter>头文件\CrossBufferLayer</Filter>
-    </ClInclude>
     <ClInclude Include="..\CrossBufferLayer\KeyboardSupport.h">
       <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
@@ -91,15 +88,15 @@
     <ClInclude Include="..\JackieEngineLayer\ObjectSupport.h">
       <Filter>头文件\JackieEngineLayer</Filter>
     </ClInclude>
+    <ClInclude Include="..\CrossBufferLayer\BasicDataTypeDeclarations.h">
+      <Filter>头文件\CrossBufferLayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CrossBufferLayer\FrameBuffer.cpp">
       <Filter>源文件\CrossBufferLayer</Filter>
     </ClCompile>
     <ClCompile Include="..\CrossBufferLayer\FPSCalculator.cpp">
-      <Filter>源文件\CrossBufferLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CrossBufferLayer\BasicDataTypeDeclarations.cpp">
       <Filter>源文件\CrossBufferLayer</Filter>
     </ClCompile>
     <ClCompile Include="..\CrossBufferLayer\KeyboardSupport.cpp">
