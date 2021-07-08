@@ -1,22 +1,18 @@
 #ifndef __CSBF_FPSCalculator__
 #define __CSBF_FPSCalculator__
 
-#include "FrameBuffer.h"
-#include "IOSupport.h"
+#include "BasicDataTypeDeclarations.h"
 
-/*
-** FPS Calculating
-*/
 
-class FPSCalculator {
+class CS_FPSCalculator {
 private:
-	float FPS;
-	int   DeltaTimeCount;
-	int   FrameCount;
+	f32 fps;
+	i32 deltaTimeCount;
+	i32 frameCount;
 public:
-	FPSCalculator();
-	void Count(int deltaTime);
-	void ShowOnScreen(FrameBuffer& fb);
+	CS_FPSCalculator();
+	void Count(i32 deltaTime);
+	f32  GetCurrentFPS();
 };
 
 #endif

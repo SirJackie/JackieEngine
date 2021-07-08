@@ -1,277 +1,212 @@
 #include "FrameBuffer.h"
+#include "FontSupport.h"
 #include <vector>
 using std::vector;
 
-int clamp(int min, int input, int max) {
-	if (input > min) {
-		if (input < max) {
-			return input;
-		}
-		else {
-			return max;
-		}
-	}
-	else {
-		return min;
-	}
-}
 
-float fclamp(float min, float input, float max) {
-	if (input > min) {
-		if (input < max) {
-			return input;
-		}
-		else {
-			return max;
-		}
-	}
-	else {
-		return min;
-	}
-}
-
-void FrameBuffer::AllocateBuffer(int width, int height) {
-	Width        = width  > 1 ? width  : 1;
-	Height       = height > 1 ? height : 1;
-	Pitch        = Width;
-	pBits        = new Color[Pitch * Height];
-	externalBits = false;
-}
-
-void FrameBuffer::DisAllocateBuffer() {
-	if (externalBits == true) {
-		;                // Do Nothing
-	}
-	else {
-		delete[] pBits;  // Release the buffer
-	}
-}
-
-void FrameBuffer::ClearBuffer() {
-	// Clear the buffer
-	for (int y = 0; y < Height - 1; y++) {
-		for (int x = 0; x < Width - 1; x++) {
-			SetPixel((*this), x, y, CreateColor(0, 0, 0));
-		}
-	}
-}
-
-void FrameBuffer::InitCursor() {
-	InitCurX = CurX = INIT_CUR_X < (Width  - TEXT_WIDTH ) ? INIT_CUR_X : 0;
-	InitCurY = CurY = INIT_CUR_Y < (Height - TEXT_HEIGHT) ? INIT_CUR_Y : 0;
-}
-
-FrameBuffer::FrameBuffer() {
-	AllocateBuffer(1, 1);
-	ClearBuffer();
-	InitCursor();
-	wannaLoadBitmap = false;
-}
-
-FrameBuffer::FrameBuffer(int Width_, int Height_) {
-	AllocateBuffer(Width_, Height_);
-	ClearBuffer();
-	InitCursor();
-	wannaLoadBitmap = false;
-}
-
-FrameBuffer::FrameBuffer(int Width_, int Height_, int Pitch_, Color* pBits_) {
-	Width        = Width_  > 1 ? Width_  : 1;
-	Height       = Height_ > 1 ? Height_ : 1;
-	Pitch        = Pitch_;
-	pBits        = pBits_;
-	externalBits = true;
-	// External Buffer should be cleared.
-	InitCursor();
-	wannaLoadBitmap = false;
-}
-
-FrameBuffer::FrameBuffer(const FrameBuffer& fb) {
-	AllocateBuffer(fb.Width, fb.Height);
-	DrawBuffer(fb, 0, 0);                 // Draw fb to this buffer
-	InitCursor();
-	wannaLoadBitmap = false;
-}
-
-void FrameBuffer::LoadBMP(string bitmapAddress_, vector<FrameBuffer*>& fbLoadingQueue) {
-	this->wannaLoadBitmap = true;
-	this->bitmapAddress = bitmapAddress_;
-	fbLoadingQueue.push_back(this);
-}
-
-FrameBuffer& FrameBuffer::operator=(const FrameBuffer& fb) {
-	DisAllocateBuffer();                  // Disallocate old buffer first
-	AllocateBuffer(fb.Width, fb.Height);  // Then allocate a new one
-	DrawBuffer(fb, 0, 0);                 // Draw fb to this buffer
-	InitCursor();                         // Init Cursor
-	wannaLoadBitmap = false;
-
-	return (*this);                       // Support a = b = c
-}
-
-FrameBuffer::~FrameBuffer() {
-	DisAllocateBuffer();
-}
-
-void FrameBuffer::DrawChar(int x, int y, Color color, char ch)
+void CS_FrameBuffer::AllocateBuffer(i32 width, i32 height)
 {
-	int* bitmapPointer;
-	for (int deltaY = 0; deltaY < 16; deltaY++) {
-		bitmapPointer = (int*)(Font + ((int)ch * 16 * 8) + (8 * deltaY));
-		if (bitmapPointer[0] == 255) { SetPixel((*this), (x + 0), (y + deltaY), color); }
-		if (bitmapPointer[1] == 255) { SetPixel((*this), (x + 1), (y + deltaY), color); }
-		if (bitmapPointer[2] == 255) { SetPixel((*this), (x + 2), (y + deltaY), color); }
-		if (bitmapPointer[3] == 255) { SetPixel((*this), (x + 3), (y + deltaY), color); }
-		if (bitmapPointer[4] == 255) { SetPixel((*this), (x + 4), (y + deltaY), color); }
-		if (bitmapPointer[5] == 255) { SetPixel((*this), (x + 5), (y + deltaY), color); }
-		if (bitmapPointer[6] == 255) { SetPixel((*this), (x + 6), (y + deltaY), color); }
-		if (bitmapPointer[7] == 255) { SetPixel((*this), (x + 7), (y + deltaY), color); }
-	}
+    redBuffer   = new ui8[width * height];
+    greenBuffer = new ui8[width * height];
+    blueBuffer  = new ui8[width * height];
 }
 
-void FrameBuffer::DrawString(Color color, const char* stringPointer)
+void CS_FrameBuffer::DisAllocateBuffer()
 {
-	
-	// Use a while loop to prevent the
-	// Interlocking "CurX + TEXT_WIDTH > Width"
-	// ----------------------------------------
-	// This will only happens on the first time
-	// checking, so the checking below will not
-	// do this.
-	bool XAvailableFlag = false;
-	while (XAvailableFlag == false) {
-		if (CurX + TEXT_WIDTH > Width) {
-			CurY += TEXT_HEIGHT;
-			CurX = InitCurX;
-		}
-		else {
-			XAvailableFlag = true;
-		}
-		if (CurY + TEXT_HEIGHT > Height) {
-			return;
-		}
-	}
-
-
-	for (; *stringPointer != 0x00; stringPointer++) {
-
-		// Before Drawing
-		if (*stringPointer == '\n') {
-			CurY += TEXT_HEIGHT;
-			CurX = InitCurX;
-			continue;
-		}
-
-		// Drawing
-		int CurXMinusOne = CurX - 1;
-		int CurYMinusOne = CurY - 1;
-		int TmpX = CurXMinusOne > 0 ? CurXMinusOne : 0;
-		int TmpY = CurYMinusOne > 0 ? CurYMinusOne : 0;
-
-		this->DrawChar(CurX, CurY, color, *stringPointer);
-
-		CurX += TEXT_WIDTH;
-
-		// After
-
-		if (CurX + TEXT_WIDTH > Width) {
-			CurY += TEXT_HEIGHT;
-			CurX = InitCurX;
-		}
-
-		if (CurY + TEXT_HEIGHT > Height) {
-			return;
-		}
-
-	}
-	return;
+    delete[] redBuffer;
+    delete[] greenBuffer;
+    delete[] blueBuffer;
 }
 
-void FrameBuffer::DrawBuffer(const FrameBuffer& fb, int PositionX, int PositionY) {
-
-	int StartX = clamp(0, PositionX, this->Width);
-	int StartY = clamp(0, PositionY, this->Height);
-	int EndX = clamp(0, PositionX + fb.Width, this->Width);
-	int EndY = clamp(0, PositionY + fb.Height, this->Height);
-
-	for (int y = StartY; y < EndY; y++) {
-		for (int x = StartX; x < EndX; x++) {
-			SetPixel(
-				(*this), x, y,
-				GetPixel(
-					fb,
-					x - PositionX,
-					y - PositionY
-				)
-			);
-		}
-	}
+void CS_FrameBuffer::ClearSelfBuffer()
+{
+    CS_Memset(redBuffer, 0, width * height);
+    CS_Memset(greenBuffer, 0, width * height);
+    CS_Memset(blueBuffer, 0, width * height);
 }
 
-void FrameBuffer::Draw(const char* stringPointer) {
+void CS_FrameBuffer::CopySameSizeBuffer(const CS_FrameBuffer& from, CS_FrameBuffer& to)
+{
+    if(  (from.width * from.height)  <  (to.width * to.height)  ){
+        return;  // Too small to copy
+    }
 
-	Color White = CreateColor(255, 255, 255);
-	Color Black = CreateColor(0, 0, 0);
+    ui8* toRedBuffPtr = to.redBuffer;
+    ui8* toGreenBuffPtr = to.greenBuffer;
+    ui8* toBlueBuffPtr = to.blueBuffer;
 
-	// Use a while loop to prevent the
-	// Interlocking "CurX + TEXT_WIDTH > Width"
-	// ----------------------------------------
-	// This will only happens on the first time
-	// checking, so the checking below will not
-	// do this.
-	bool XAvailableFlag = false;
-	while (XAvailableFlag == false) {
-		if (CurX + TEXT_WIDTH > Width) {
-			CurY += TEXT_HEIGHT;
-			CurX = InitCurX;
-		}
-		else{
-			XAvailableFlag = true;
-		}
-		if (CurY + TEXT_HEIGHT > Height) {
-			return;
-		}
-	}
-	
+    ui8* fromRedBuffPtr = from.redBuffer;
+    ui8* fromGreenBuffPtr = from.greenBuffer;
+    ui8* fromBlueBuffPtr = from.blueBuffer;
 
-	for (; *stringPointer != 0x00; stringPointer++) {
+    for (i32 i = 0; i < width * height; i++) {
+        *toRedBuffPtr = *fromRedBuffPtr;
+        *toGreenBuffPtr = *fromGreenBuffPtr;
+        *toBlueBuffPtr = *fromBlueBuffPtr;
 
-		// Before Drawing
-		if (*stringPointer == '\n') {
-			CurY += TEXT_HEIGHT;
-			CurX = InitCurX;
-			continue;
-		}
+        toRedBuffPtr++;
+        toGreenBuffPtr++;
+        toBlueBuffPtr++;
 
-		// Drawing
-		int CurXMinusOne = CurX - 1;
-		int CurYMinusOne = CurY - 1;
-		int TmpX = CurXMinusOne > 0 ? CurXMinusOne : 0;
-		int TmpY = CurYMinusOne > 0 ? CurYMinusOne : 0;
-
-		this->DrawChar(CurX, CurY, Black, *stringPointer);  // Draw Black Shadow
-		this->DrawChar(TmpX, TmpY, White, *stringPointer);  // Draw White Cover
-
-		CurX += TEXT_WIDTH;
-
-		// After
-
-		if (CurX + TEXT_WIDTH > Width) {
-			CurY += TEXT_HEIGHT;
-			CurX = InitCurX;
-		}
-
-		if (CurY + TEXT_HEIGHT > Height) {
-			return;
-		}
-
-	}
-	return;
+        fromRedBuffPtr++;
+        fromGreenBuffPtr++;
+        fromBlueBuffPtr++;
+    }
 }
 
-void FrameBuffer::Draw(const FrameBuffer& fb) {
-	CurX += 3;
-	DrawBuffer(fb, CurX, CurY);
-	CurY += fb.Height - 16;
-	CurX += fb.Width  + 4;
+CS_FrameBuffer::CS_FrameBuffer()
+{
+    curX = CS_FB_INIT_CURX;
+    curY = CS_FB_INIT_CURY;
+
+    width = height = 1;
+
+    AllocateBuffer(1, 1);
+    ClearSelfBuffer();
+}
+
+CS_FrameBuffer::CS_FrameBuffer(i32 Width_, i32 Height_)
+{
+    curX = CS_FB_INIT_CURX;
+    curY = CS_FB_INIT_CURY;
+
+    width  = Width_;
+    height = Height_;
+
+    AllocateBuffer(width, height);
+    ClearSelfBuffer();
+}
+
+CS_FrameBuffer::CS_FrameBuffer(const CS_FrameBuffer& fb)
+{
+    width  = fb.width;
+    height = fb.height;
+
+    curX = fb.curX;
+    curY = fb.curY;
+
+    AllocateBuffer(width, height);
+    CopySameSizeBuffer(fb, (*this));
+}
+
+CS_FrameBuffer& CS_FrameBuffer::operator=(const CS_FrameBuffer& fb)
+{
+    DisAllocateBuffer();
+
+    width = fb.width;
+    height = fb.height;
+
+    curX = fb.curX;
+    curY = fb.curY;
+
+    AllocateBuffer(width, height);
+    CopySameSizeBuffer(fb, (*this));
+
+    return (*this);  // Support a = b = c
+}
+
+CS_FrameBuffer::~CS_FrameBuffer()
+{
+    DisAllocateBuffer();
+}
+
+void CS_FrameBuffer::DrawChar
+(
+    const char& ch, const i32 xStart, const i32 yStart,
+    const ui8 r, const ui8 g, const ui8 b
+)
+{
+    ui8* chBmStartPtr = ((ui8*)CS_font + 16 * 8 * ch);
+    ui8* redBufStartPtr = redBuffer;
+    ui8* grnBufStartPtr = greenBuffer;
+    ui8* bluBufStartPtr = blueBuffer;
+
+    i32 xMin = CS_iclamp(0, xStart, width);
+    i32 yMin = CS_iclamp(0, yStart, height);
+    i32 xMax = CS_iclamp(0, xStart + CS_FONT_WIDTH, width);
+    i32 yMax = CS_iclamp(0, yStart + CS_FONT_HEIGHT, height);
+
+    i32 deltaY = yMin-yStart;
+    ui8* chBmPtr = chBmStartPtr + deltaY * CS_FONT_WIDTH;
+    ui8* redBufPtr = redBufStartPtr + deltaY * width;
+    ui8* grnBufPtr = grnBufStartPtr + deltaY * width;
+    ui8* bluBufPtr = bluBufStartPtr + deltaY * width;
+
+    for (i32 y = yMin; y < yMax; y++) {
+        i32 deltaY = (y - yStart);
+        chBmPtr = chBmStartPtr + deltaY * CS_FONT_WIDTH;
+        redBufPtr = redBufStartPtr + y * width + xMin;
+        grnBufPtr = grnBufStartPtr + y * width + xMin;
+        bluBufPtr = bluBufStartPtr + y * width + xMin;
+
+        for (i32 x = xMin; x < xMax; x++) {
+            if (*chBmPtr != 0) *redBufPtr = r;
+            if (*chBmPtr != 0) *grnBufPtr = g;
+            if (*chBmPtr != 0) *bluBufPtr = b;
+
+            chBmPtr++;
+            redBufPtr++;
+            grnBufPtr++;
+            bluBufPtr++;
+        }
+    }
+}
+
+void CS_FrameBuffer::DrawString
+(
+    const i8* str, const i32 x, const i32 y,
+    const ui8 r, const ui8 g, const ui8 b
+)
+{
+    i32 xNow = x, yNow = y;
+    i8* charNow = (i8*)str;
+    while (*charNow != 0) {
+        DrawChar(*charNow, xNow, yNow, r, g, b);
+        charNow++;
+        if ((xNow + CS_FONT_WIDTH) > width) {
+            yNow += CS_FONT_HEIGHT;
+            xNow = x;
+        }
+        else {
+            xNow+= CS_FONT_WIDTH;
+        }
+    }
+}
+
+void CS_FrameBuffer::Print(const i8* str)
+{
+    i8* charNow = (i8*)str;
+    while (*charNow != 0) {
+        if (*charNow == '\n') {
+            curY += CS_FONT_HEIGHT;
+            curX = CS_FB_INIT_CURX;
+            charNow++;
+        }
+        else{
+            DrawChar(*charNow, curX + 1, curY + 1, 0, 0, 0);
+            DrawChar(*charNow, curX, curY, 255, 255, 255);
+            charNow++;
+            if ((curX + CS_FONT_WIDTH * 2) > width) {
+                curY += CS_FONT_HEIGHT;
+                curX = CS_FB_INIT_CURX;
+            }
+            else {
+                curX += CS_FONT_WIDTH;
+            }
+        }
+    }
+}
+
+void CS_FrameBuffer::Print(csbool csb){
+    if(csb == csFalse){
+        Print("False");
+    }
+    else{
+        Print("True");
+    }
+}
+
+void CS_FrameBuffer::Print(string str)
+{
+    Print(str.c_str());
 }

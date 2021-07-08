@@ -1,9 +1,14 @@
 #ifndef __CSBF__
 #define __CSBF__
 
-#include "FrameBuffer.h"
-#include "FontSupport.h"
-#include "IOSupport.h"
-#include "FPSCalculator.h"
+// Level 1
+#include "BasicDataTypeDeclarations.h"
+	// Level 2
+	#include "FontSupport.h"
+	#include "FPSCalculator.h"
+	#include "KeyboardSupport.h"
+	#include "MouseSupport.h"
+		// Level 3
+		#include "FrameBuffer.h"
 
 #endif

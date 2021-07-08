@@ -143,16 +143,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\CrossBufferLayer\CrossBuffer.cpp" />
-    <ClCompile Include="..\CrossBufferLayer\FontSupport.cpp" />
+    <ClCompile Include="..\CrossBufferLayer\BasicDataTypeDeclarations.cpp" />
     <ClCompile Include="..\CrossBufferLayer\FPSCalculator.cpp" />
     <ClCompile Include="..\CrossBufferLayer\FrameBuffer.cpp" />
-    <ClCompile Include="..\CrossBufferLayer\IOSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\JackieEngine.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\MathSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\ObjectSupport.cpp" />
+    <ClCompile Include="..\CrossBufferLayer\KeyboardSupport.cpp" />
+    <ClCompile Include="..\CrossBufferLayer\MouseSupport.cpp" />
+    <ClCompile Include="..\Main.cpp" />
     <ClCompile Include="CrossBufferForWindows.cpp" />
+    <ClCompile Include="D3DHelper.cpp" />
+    <ClCompile Include="KeyboardHelper.cpp" />
+    <ClCompile Include="WindowsHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CrossBufferForWindows.rc" />
@@ -162,19 +162,17 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CrossBufferLayer\BasicDataTypeDeclarations.h" />
     <ClInclude Include="..\CrossBufferLayer\CrossBuffer.h" />
     <ClInclude Include="..\CrossBufferLayer\FontSupport.h" />
     <ClInclude Include="..\CrossBufferLayer\FPSCalculator.h" />
     <ClInclude Include="..\CrossBufferLayer\FrameBuffer.h" />
-    <ClInclude Include="..\CrossBufferLayer\IOSupport.h" />
-    <ClInclude Include="..\JackieEngineLayer\CameraSupport.h" />
-    <ClInclude Include="..\JackieEngineLayer\JackieEngine.h" />
-    <ClInclude Include="..\JackieEngineLayer\MathSupport.h" />
-    <ClInclude Include="..\JackieEngineLayer\ObjectSupport.h" />
+    <ClInclude Include="..\CrossBufferLayer\KeyboardSupport.h" />
+    <ClInclude Include="..\CrossBufferLayer\MouseSupport.h" />
     <ClInclude Include="..\Main.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="D3DHelper.h" />
+    <ClInclude Include="KeyboardHelper.h" />
+    <ClInclude Include="WindowsHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
