@@ -31,4 +31,6 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	camera.ProjectObject(object);
 	rasterizer.DrawPoint(object);
+
+	rasterizer.DrawProtectedCube(10, 10, 100, 100, 255, 0, 0);
 }
