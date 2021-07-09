@@ -5,7 +5,7 @@ FCamera           camera;
 FObject           object;
 FRasterizer       rasterizer;
 f32               walkSpeed = 0.01f;
-f32               mouseSensitivity = 0.1f;
+f32               mouseSensitivity = 30.0f;
 csbool            rotate = csFalse;
 
 
@@ -58,7 +58,11 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	if(kb.IsKeyFirstTimePressed(CSK_R)){
 		rotate = !rotate;
 	}
-	camera.Rotate(mouse.deltaY * mouseSensitivity, mouse.deltaX * mouseSensitivity, 0.0f);
+	camera.Rotate(
+		(f32)mouse.deltaY / (f32)mouse.windowHeight * mouseSensitivity,
+		(f32)mouse.deltaX / (f32)mouse.windowWidth  * mouseSensitivity,
+		0.0f
+	);
 	
 
 	// Projection and Rasterization
@@ -67,8 +71,14 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	// Count FPS and Print Things
 	fpsCalculator.Count(deltaTime);
+	fb.Print(mouse.ToString());
+	fb.PrintLn(kb.ToString());
+
 	fb.PrintLn(fpsCalculator.ToString());
+
+	fb.PrintLn("Press WASD to Move, Rotate the Mouse to Look.");
+	fb.PrintLn("Press R to Rotate the Cube, Space to Rise, Shift to Fall\n");
+	
 	fb.PrintLn(camera.ToString());
 	fb.PrintLn(object.ToString());
-	fb.PrintLn((i32)kb.IsKeyPressed(CSK_W));
 }

@@ -43,7 +43,7 @@ void CS_Keyboard::SimuLayerSetKeyState(i8 key, csbool state)
 }
 
 string CS_Keyboard::ToString(){
-    string str = "{";
+    string str = "Keyboard: {";
     
     if(keyBuffer[CSK_Esc] != csFalse) str += "CSK_Esc, ";
     if(keyBuffer[CSK_F1] != csFalse) str += "CSK_F1, ";
