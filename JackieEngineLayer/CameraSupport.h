@@ -68,5 +68,6 @@ public:
 	string  ToString();
 	void    ProjectObject(FObject& obj);
 	void    Walk(const FVector4D& direction_);
+	void    Rotate(f32 x_, f32 y_, f32 z_);
 };
 #endif

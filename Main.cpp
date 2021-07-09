@@ -4,7 +4,9 @@ CS_FPSCalculator  fpsCalculator;
 FCamera           camera;
 FObject           object;
 FRasterizer       rasterizer;
-f32               walkSpeed = 0.02f;
+f32               walkSpeed = 0.01f;
+f32               mouseSensitivity = 0.1f;
+csbool            rotate = csFalse;
 
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
@@ -24,24 +26,34 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	object.Add(FVector4D( 1.0, -1.0, -1.0, 1.0));
 	object.Add(FVector4D( 1.0,  1.0, -1.0, 1.0));
 	object.Add(FVector4D(-1.0,  1.0, -1.0, 1.0));
+
+	// Open Mouse Locking
+	mouse.OpenInfinityMode();
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	// Rotation
-	object.Rotate(0.05f * deltaTime, -0.05f * deltaTime, 0.0f);
+	if(rotate){
+		object.Rotate(0.05f * deltaTime, -0.05f * deltaTime, 0.0f);
+	}
 
 	if(kb.IsKeyPressed(CSK_W)){
-		camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 0.0f) * walkSpeed * deltaTime);
+		camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 1.0f) * walkSpeed * deltaTime);
 	}
 	if(kb.IsKeyPressed(CSK_S)){
-		camera.Walk(FVector4D( 0.0f, 0.0f,  1.0f, 0.0f) * walkSpeed * deltaTime);
+		camera.Walk(FVector4D( 0.0f, 0.0f,  1.0f, 1.0f) * walkSpeed * deltaTime);
 	}
 	if(kb.IsKeyPressed(CSK_A)){
-		camera.Walk(FVector4D(-1.0f, 0.0f,  0.0f, 0.0f) * walkSpeed * deltaTime);
+		camera.Walk(FVector4D(-1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
 	}
 	if(kb.IsKeyPressed(CSK_D)){
-		camera.Walk(FVector4D( 1.0f, 0.0f,  0.0f, 0.0f) * walkSpeed * deltaTime);
+		camera.Walk(FVector4D( 1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
 	}
+	if(kb.IsKeyFirstTimePressed(CSK_R)){
+		rotate = !rotate;
+	}
+	camera.Rotate(mouse.deltaY * mouseSensitivity, mouse.deltaX * mouseSensitivity, 0.0f);
+	
 
 	// Projection and Rasterization
 	camera.ProjectObject(object);

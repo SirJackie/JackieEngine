@@ -8,6 +8,10 @@ class CS_Mouse {
 public:
 	i32 x;
     i32 y;
+    i32 lastX;
+    i32 lastY;
+    i32 deltaX;
+    i32 deltaY;
     i32 windowWidth;
     i32 windowHeight;
 

@@ -3,6 +3,10 @@
 CS_Mouse::CS_Mouse(){
     x = 0;
     y = 0;
+    lastX = 0;
+    lastY = 0;
+    deltaX = 0;
+    deltaY = 0;
     windowWidth = 0;
     windowHeight = 0;
 
@@ -15,6 +19,10 @@ CS_Mouse::CS_Mouse(){
 CS_Mouse::CS_Mouse(i32 windowWidth_, i32 windowHeight_){
     x = 0;
     y = 0;
+    lastX = 0;
+    lastY = 0;
+    deltaX = 0;
+    deltaY = 0;
     windowWidth = windowWidth_;
     windowHeight = windowHeight_;
 

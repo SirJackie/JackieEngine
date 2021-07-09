@@ -49,6 +49,8 @@ int main( int argc, char* args[] )
             tmpy -= sdlHelper.topMargin;
             mouse.x = tmpx;
             mouse.y = tmpy;
+            mouse.lastX = mouse.x;
+            mouse.lastY = mouse.y;
         }
 
         if(lastFrameInfinityState == csFalse && mouse.infinityMode == csTrue){
@@ -165,6 +167,9 @@ int main( int argc, char* args[] )
             quit = csTrue;
         }
 
+        mouse.deltaX = mouse.x - mouse.lastX;
+        mouse.deltaY = mouse.y - mouse.lastY;
+
         // If it is the First Time Running
         if (FirstTimeRunning) {
             Setup (fb, keyboardHelper.kb, mouse, 0);                     // Call the Setup()  in Main.h
@@ -185,6 +190,11 @@ int main( int argc, char* args[] )
         // Update Time Counting Variables
         // lastTime in next frame = thisTime in this frame
         lastTime = thisTime;
+
+        // Update Mouse Delta Counting Variables
+        // lastX in next frame = x in this frame
+        mouse.lastX = mouse.x;
+        mouse.lastY = mouse.y;
     }
 
     // After Main Loop
