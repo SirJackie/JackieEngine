@@ -86,8 +86,7 @@ void FCamera::CalcTotal() {
 	CalcTranslation();
 	CalcRotation();
 	CalcProjection();
-	TotalMatrix = TranslationMatrix * RotationMatrix;
-	TotalMatrix = TotalMatrix *  ProjectionMatrix;
+	TotalMatrix = TranslationMatrix * RotationMatrix * ProjectionMatrix;
 }
 
 string FCamera::ToString() {

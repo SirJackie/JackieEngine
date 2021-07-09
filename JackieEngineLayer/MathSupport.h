@@ -24,18 +24,18 @@ public:
 	void       DevideByW();
 
 	// Vector-Scalar Calculation
-	friend FVector4D operator+(const FVector4D& a, f32 b);
-	friend FVector4D operator+(f32 b, const FVector4D& a);
-	friend FVector4D operator-(const FVector4D& a, f32 b);
-	friend FVector4D operator-(f32 b, const FVector4D& a);
-	friend FVector4D operator*(const FVector4D& a, f32 b);
-	friend FVector4D operator*(f32 b, const FVector4D& a);
+	friend const FVector4D operator+(const FVector4D& a, const f32 b);
+	friend const FVector4D operator+(const f32 b, const FVector4D& a);
+	friend const FVector4D operator-(const FVector4D& a, const f32 b);
+	friend const FVector4D operator-(const f32 b, const FVector4D& a);
+	friend const FVector4D operator*(const FVector4D& a, const f32 b);
+	friend const FVector4D operator*(const f32 b, const FVector4D& a);
 
 	// Vector-Vector Calculation
-	FVector4D  operator+(const FVector4D& b) const;
-	FVector4D  operator-(const FVector4D& b) const;
-	f32        operator*(const FVector4D& b) const;  // Dot   Product
-	FVector4D  operator%(const FVector4D& b) const;  // Cross Product
+	const FVector4D  operator+(const FVector4D& b) const;
+	const FVector4D  operator-(const FVector4D& b) const;
+	const f32        operator*(const FVector4D& b) const;  // Dot   Product
+	const FVector4D  operator%(const FVector4D& b) const;  // Cross Product
 };
 
 
@@ -59,8 +59,8 @@ public:
 	FMatrix4D();
 
 	string ToString() const;
-	friend FVector4D operator*(FVector4D& v, FMatrix4D& m);
-	friend FMatrix4D operator*(FMatrix4D& a, FMatrix4D& b);
+	friend const FVector4D operator*(const FVector4D& v, const FMatrix4D& m);
+	friend const FMatrix4D operator*(const FMatrix4D& a, const FMatrix4D& b);
 
 	static FMatrix4D GenerateTranslationMatrix (f32 x, f32 y, f32 z);
 	static FMatrix4D GenerateRotationMatrix    (f32 x, f32 y, f32 z);

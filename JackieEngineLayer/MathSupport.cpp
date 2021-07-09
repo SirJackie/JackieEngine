@@ -60,7 +60,7 @@ void FVector4D::DevideByW(){
 	w =  1;      // The same as w /= w;
 }
 
-FVector4D operator+(const FVector4D& a, f32 b)
+const FVector4D operator+(const FVector4D& a, const f32 b)
 {
 	return FVector4D
 	(
@@ -68,7 +68,7 @@ FVector4D operator+(const FVector4D& a, f32 b)
 	);
 }
 
-FVector4D operator+(f32 b, const FVector4D& a)
+const FVector4D operator+(const f32 b, const FVector4D& a)
 {
 	return FVector4D
 	(
@@ -76,7 +76,7 @@ FVector4D operator+(f32 b, const FVector4D& a)
 	);
 }
 
-FVector4D operator-(const FVector4D& a, f32 b)
+const FVector4D operator-(const FVector4D& a, const f32 b)
 {
 	return FVector4D
 	(
@@ -84,7 +84,7 @@ FVector4D operator-(const FVector4D& a, f32 b)
 	);
 }
 
-FVector4D operator-(f32 b, const FVector4D& a)
+const FVector4D operator-(const f32 b, const FVector4D& a)
 {
 	return FVector4D
 	(
@@ -92,7 +92,7 @@ FVector4D operator-(f32 b, const FVector4D& a)
 	);
 }
 
-FVector4D operator*(const FVector4D& a, f32 b)
+const FVector4D operator*(const FVector4D& a, const f32 b)
 {
 	return FVector4D
 	(
@@ -100,7 +100,7 @@ FVector4D operator*(const FVector4D& a, f32 b)
 	);
 }
 
-FVector4D operator*(f32 b, const FVector4D& a)
+const FVector4D operator*(const f32 b, const FVector4D& a)
 {
 	return FVector4D
 	(
@@ -108,7 +108,7 @@ FVector4D operator*(f32 b, const FVector4D& a)
 	);
 }
 
-FVector4D FVector4D::operator+(const FVector4D& b) const {
+const FVector4D FVector4D::operator+(const FVector4D& b) const {
 	const FVector4D& a = *this;
 
 	return FVector4D(
@@ -119,7 +119,7 @@ FVector4D FVector4D::operator+(const FVector4D& b) const {
 	);
 }
 
-FVector4D FVector4D::operator-(const FVector4D& b) const {
+const FVector4D FVector4D::operator-(const FVector4D& b) const {
 	const FVector4D& a = *this;
 
 	return FVector4D(
@@ -130,13 +130,13 @@ FVector4D FVector4D::operator-(const FVector4D& b) const {
 	);
 }
 
-f32 FVector4D::operator*(const FVector4D& b) const {
+const f32 FVector4D::operator*(const FVector4D& b) const {
 	const FVector4D& a = *this;
 
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-FVector4D FVector4D::operator%(const FVector4D& b) const {
+const FVector4D FVector4D::operator%(const FVector4D& b) const {
 	const FVector4D& a = *this;
 	FVector4D result;
 
@@ -201,7 +201,7 @@ FMatrix4D::FMatrix4D() {
 string FMatrix4D::ToString() const {
 	stringstream ss;
 
-	ss  << "Matrix4D [\n";
+	ss  << "FMatrix4D [\n";
 	ss  << this->m11 << ", " << this->m12 << ", "
 		<< this->m13 << ", " << this->m14 << ", " << "\n";
 	ss  << this->m21 << ", " << this->m22 << ", "
@@ -249,12 +249,10 @@ FMatrix4D FMatrix4D::GenerateRotationMatrix(f32 x, f32 y, f32 z)
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	FMatrix4D RotationMatrix = MrotationZ * MrotationY;
-	RotationMatrix = RotationMatrix * MrotationX;
-	return RotationMatrix;
+	return MrotationZ * MrotationY * MrotationX;
 }
 
-FVector4D operator*(FVector4D& v, FMatrix4D& m) {
+const FVector4D operator*(const FVector4D& v, const FMatrix4D& m) {
 	FVector4D result;
 
 	result.x = m.m11 * v.x + m.m12 * v.y + m.m13 * v.z + m.m14 * v.w;
@@ -265,7 +263,7 @@ FVector4D operator*(FVector4D& v, FMatrix4D& m) {
 	return result;
 }
 
-FMatrix4D operator*(FMatrix4D& a, FMatrix4D& b) {
+const FMatrix4D operator*(const FMatrix4D& a, const FMatrix4D& b) {
 	FMatrix4D result;
 
 	result.m11 = b.m11 * a.m11 + b.m12 * a.m21 + b.m13 * a.m31 + b.m14 * a.m41;
