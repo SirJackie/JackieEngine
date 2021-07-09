@@ -1,8 +1,8 @@
 #include "Main.h"
 
 CS_FPSCalculator  fpsCalculator;
-FObject4D         obj;
-FCamera4D         camera;
+FObject           obj;
+FCamera           camera;
 FRasterizer       rasterizer;
 
 
@@ -21,7 +21,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	fpsCalculator.Count(deltaTime);
 	fb.PrintLn(fpsCalculator.GetStrStatus());
 
-	camera = FCamera4D(
+	camera = FCamera(
 		0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
 	);

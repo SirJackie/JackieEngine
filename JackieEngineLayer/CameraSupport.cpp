@@ -31,7 +31,7 @@ void FFrustum::CalculateFrustum()
 	hh = (f32)screenHeight / 2.0f;
 }
 
-FCamera4D::FCamera4D()
+FCamera::FCamera()
 {
 	position = FVector4D();
 	rotation = FVector4D();
@@ -43,7 +43,7 @@ FCamera4D::FCamera4D()
 	TotalMatrix       = FMatrix4D();
 }
 
-FCamera4D::FCamera4D
+FCamera::FCamera
 (
 	f32 x_, f32 y_, f32 z_, f32 rotx_, f32 roty_, f32 rotz_,
 	f32 n_, f32 f_, f32 fovY_, i32 screenWidth_, i32 screenHeight_
@@ -58,21 +58,21 @@ FCamera4D::FCamera4D
 	CalcTotal();
 }
 
-void FCamera4D::CalcTranslation() {
+void FCamera::CalcTranslation() {
 	TranslationMatrix = FMatrix4D::GenerateTranslationMatrix
 	(
 		position.x, position.y, position.z
 	);
 }
 
-void FCamera4D::CalcRotation() {
+void FCamera::CalcRotation() {
 	RotationMatrix = FMatrix4D::GenerateRotationMatrix
 	(
 		rotation.x, rotation.y, rotation.z
 	);
 }
 
-void FCamera4D::CalcProjection() {
+void FCamera::CalcProjection() {
 	ProjectionMatrix = FMatrix4D
 	(
 		frustum.hh * frustum.fot, 0, frustum.hw, 0,
@@ -82,7 +82,7 @@ void FCamera4D::CalcProjection() {
 	);
 }
 
-void FCamera4D::CalcTotal() {
+void FCamera::CalcTotal() {
 	CalcTranslation();
 	CalcRotation();
 	CalcProjection();
@@ -90,11 +90,11 @@ void FCamera4D::CalcTotal() {
 	TotalMatrix = TotalMatrix *  ProjectionMatrix;
 }
 
-string FCamera4D::str() {
+string FCamera::str() {
 	return "\nCamera. TotalTransformMatrix: " + TotalMatrix.str() + "\n";
 }
 
-void FCamera4D::ProjectObject(FObject4D& obj) {
+void FCamera::ProjectObject(FObject& obj) {
 	obj.tmpVl = obj.vl;
 	for (ui32 i = 0; i < obj.tmpVl.size(); i++) {
 		obj.tmpVl[i] = obj.tmpVl[i] * TotalMatrix;

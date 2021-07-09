@@ -6,12 +6,12 @@
 typedef vector<FVector4D> Veclist;
 
 
-class FObject4D {
+class FObject {
 public:
 	Veclist vl;
 	Veclist tmpVl;
 
-	FObject4D();
+	FObject();
 	void Add(const FVector4D& vec);
 };
 

@@ -11,7 +11,7 @@ public:
 	CS_FrameBuffer* ptrfb;
 	FRasterizer();
 	FRasterizer(CS_FrameBuffer& fb);
-	void DrawPoint(FObject4D& obj);
+	void DrawPoint(FObject& obj);
 };
 
 #endif

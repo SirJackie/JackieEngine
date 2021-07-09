@@ -10,7 +10,7 @@ FRasterizer::FRasterizer(CS_FrameBuffer& fb)
 	ptrfb = &fb;
 }
 
-void FRasterizer::DrawPoint(FObject4D& obj)
+void FRasterizer::DrawPoint(FObject& obj)
 {
 	for (ui32 i = 0; i < obj.tmpVl.size(); i++) {
 		CS_PutPixel
