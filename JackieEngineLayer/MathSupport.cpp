@@ -1,19 +1,5 @@
 #include "MathSupport.h"
 
-FVector4D::FVector4D(f32 x_, f32 y_, f32 z_, f32 w_) {
-	x = x_;
-	y = y_;
-	z = z_;
-	w = w_;
-}
-
-FVector4D::FVector4D() {
-	x = 0.0f;
-	y = 0.0f;
-	z = 0.0f;
-	w = 0.0f;
-}
-
 string FVector4D::ToString() const {
 	stringstream ss;
 

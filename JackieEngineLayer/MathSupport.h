@@ -8,15 +8,23 @@
 ** FVector4D
 */
 
-class FVector4D {
+class FVector3D{
 public:
 	f32 x;
 	f32 y;
 	f32 z;
+
+	FVector3D() : x(0.0f), y(0.0f), z(0.0f) {}
+	FVector3D(f32 x_, f32 y_, f32 z_) : x(x_), y(y_), z(z_) {}
+};
+
+class FVector4D : public FVector3D {
+public:
 	f32 w;
 
-	FVector4D(f32 x_, f32 y_, f32 z_, f32 w_);
-	FVector4D();
+	FVector4D() : FVector3D(), w(0.0f) {}
+	FVector4D(f32 x_, f32 y_, f32 z_, f32 w_) : FVector3D(x_, y_, z_), w(w_) {}
+	
 	string     ToString()                   const;
 	f32        length()                     const;
 	FVector4D  normalized()                 const;
