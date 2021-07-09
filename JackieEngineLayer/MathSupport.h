@@ -17,7 +17,7 @@ public:
 
 	FVector4D(f32 x_, f32 y_, f32 z_, f32 w_);
 	FVector4D();
-	string     str()                        const;
+	string     ToString()                   const;
 	f32        length()                     const;
 	FVector4D  normalized()                 const;
 	void       Normalize();
@@ -58,7 +58,7 @@ public:
 	);
 	FMatrix4D();
 
-	string str() const;
+	string ToString() const;
 	friend FVector4D operator*(FVector4D& v, FMatrix4D& m);
 	friend FMatrix4D operator*(FMatrix4D& a, FMatrix4D& b);
 

@@ -18,7 +18,7 @@ public:
 
     CS_Mouse();
     CS_Mouse(i32 screenWidth_, i32 screenHeight_);
-    string GetStrStatus();
+    string ToString();
     void OpenInfinityMode();
     void CloseInfinityMode();
     csbool IsInfinityModeOpened();

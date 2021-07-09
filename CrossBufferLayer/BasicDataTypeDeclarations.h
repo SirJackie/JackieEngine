@@ -63,6 +63,9 @@ inline f32 CS_fmax3(f32 a, f32 b, f32 c)
 	return a > b ? (c > a ? c : a) : (c > b ? c : b);
 }
 
+#include <iostream>
+using std::endl;
+
 #include <string>
 #include <sstream>
 using std::string;

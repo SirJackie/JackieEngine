@@ -24,7 +24,7 @@ CS_Mouse::CS_Mouse(i32 windowWidth_, i32 windowHeight_){
     infinityMode = csFalse;
 }
 
-string CS_Mouse::GetStrStatus(){
+string CS_Mouse::ToString(){
     stringstream ss;
     
     ss << "MouseX: ";
@@ -72,7 +72,7 @@ string CS_Mouse::GetStrStatus(){
         ss << "False";
     }
     
-
+    ss << "\n";
     return ss.str();
 }
 

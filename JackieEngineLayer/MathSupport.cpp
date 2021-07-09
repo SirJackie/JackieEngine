@@ -14,7 +14,7 @@ FVector4D::FVector4D() {
 	w = 0.0f;
 }
 
-string FVector4D::str() const {
+string FVector4D::ToString() const {
 	stringstream ss;
 
 	ss << "FVector4D [";
@@ -25,7 +25,7 @@ string FVector4D::str() const {
 	ss << this->z;
 	ss << ", ";
 	ss << this->w;
-	ss << "]";
+	ss << "]\n";
 
 	return ss.str();
 }
@@ -198,10 +198,10 @@ FMatrix4D::FMatrix4D() {
 	this->m44 = 0;
 }
 
-string FMatrix4D::str() const {
+string FMatrix4D::ToString() const {
 	stringstream ss;
 
-	ss  << "\nMatrix4D [\n";
+	ss  << "Matrix4D [\n";
 	ss  << this->m11 << ", " << this->m12 << ", "
 		<< this->m13 << ", " << this->m14 << ", " << "\n";
 	ss  << this->m21 << ", " << this->m22 << ", "

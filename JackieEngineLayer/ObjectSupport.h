@@ -12,7 +12,8 @@ public:
 	Veclist tmpVl;
 
 	FObject();
-	void Add(const FVector4D& vec);
+	void    Add(const FVector4D& vec);
+	string  ToString();
 };
 
 #endif

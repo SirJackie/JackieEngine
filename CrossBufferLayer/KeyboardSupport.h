@@ -13,7 +13,7 @@ public:
 	void   SimuLayerSetKeyIsPressed(i8 key);
 	void   SimuLayerSetKeyIsReleased(i8 key);
 	void   SimuLayerSetKeyState(i8 key, csbool state);
-	string GetStrStatus();
+	string ToString();
 };
 
 

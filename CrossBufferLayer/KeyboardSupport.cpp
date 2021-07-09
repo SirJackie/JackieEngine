@@ -42,7 +42,7 @@ void CS_Keyboard::SimuLayerSetKeyState(i8 key, csbool state)
     }
 }
 
-string CS_Keyboard::GetStrStatus(){
+string CS_Keyboard::ToString(){
     string str = "{";
     
     if(keyBuffer[CSK_Esc] != csFalse) str += "CSK_Esc, ";
@@ -157,6 +157,6 @@ string CS_Keyboard::GetStrStatus(){
     if(keyBuffer[CSK_KeypadMultiply] != csFalse) str += "CSK_KeypadMultiply, ";
     if(keyBuffer[CSK_KeypadDevide] != csFalse) str += "CSK_KeypadDevide, ";
 
-    str += "}";
+    str += "}\n";
     return str;
 }

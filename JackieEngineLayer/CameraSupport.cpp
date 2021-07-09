@@ -90,8 +90,8 @@ void FCamera::CalcTotal() {
 	TotalMatrix = TotalMatrix *  ProjectionMatrix;
 }
 
-string FCamera::str() {
-	return "\nCamera. TotalTransformMatrix: " + TotalMatrix.str() + "\n";
+string FCamera::ToString() {
+	return "FCamera:\n" + TotalMatrix.ToString();
 }
 
 void FCamera::ProjectObject(FObject& obj) {

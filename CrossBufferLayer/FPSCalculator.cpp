@@ -24,7 +24,7 @@ f32 CS_FPSCalculator::GetCurrentFPS()
 	return fps;
 }
 
-string CS_FPSCalculator::GetStrStatus() {
+string CS_FPSCalculator::ToString() {
 	stringstream ss;
 	ss << "FPS: ";
 
@@ -34,6 +34,7 @@ string CS_FPSCalculator::GetStrStatus() {
 	else {
 		ss << fps;
 	}
-	
+
+	ss << "\n";
 	return ss.str();
 }

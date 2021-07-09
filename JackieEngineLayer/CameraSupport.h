@@ -61,12 +61,12 @@ public:
 		f32 x_, f32 y_, f32 z_, f32 rotx_, f32 roty_, f32 rotz_,
 		f32 n_, f32 f_, f32 fovY_, i32 screenWidth_, i32 screenHeight_
 	);
-	void CalcTranslation();
-	void CalcRotation();
-	void CalcProjection();
-	void CalcTotal();
+	void    CalcTranslation();
+	void    CalcRotation();
+	void    CalcProjection();
+	void    CalcTotal();
 
-	string str();
-	void ProjectObject(FObject& obj);
+	string  ToString();
+	void    ProjectObject(FObject& obj);
 };
 #endif
