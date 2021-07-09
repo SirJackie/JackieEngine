@@ -36,17 +36,28 @@ void FRasterizer::DrawProtectedCube(i32 x0, i32 y0, i32 x1, i32 y1, ui8 r_, ui8 
 	}	
 }
 
-void FRasterizer::DrawPoint(FVector3D& point){
-	;
+void FRasterizer::DrawRadiusCube(i32 x, i32 y, i32 radius){
+	DrawProtectedCube(
+		x - radius, y - radius,
+		x + radius, y + radius,
+		255, 255, 255
+	);
+}
+
+void FRasterizer::Draw3DPoint(FVector3D& point){
+	DrawRadiusCube(point.x, point.y, 5);
+}
+
+void FRasterizer::Draw4DPoint(FVector4D& point){
+	DrawRadiusCube(
+		point.x, point.y,
+		(1.0f + point.z) * 200.0f
+	);
 }
 
 void FRasterizer::DrawPoint(FObject& obj_)
 {
 	for (ui32 i = 0; i < obj_.tmpVl.size(); i++) {
-		CS_PutPixel
-		(
-			*ptrfb, (i32)obj_.tmpVl[i].x, (i32)obj_.tmpVl[i].y,
-			255, 255, 255
-		);
+		Draw4DPoint(obj_.tmpVl[i]);
 	}
 }

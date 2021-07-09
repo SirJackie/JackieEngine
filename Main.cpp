@@ -18,11 +18,6 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	fpsCalculator.Count(deltaTime);
-	fb.PrintLn(fpsCalculator.ToString());
-	fb.PrintLn(camera.ToString());
-	fb.PrintLn(object.ToString());
-
 	camera = FCamera(
 		0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
@@ -32,5 +27,8 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	camera.ProjectObject(object);
 	rasterizer.DrawPoint(object);
 
-	rasterizer.DrawProtectedCube(10, 10, 100, 100, 255, 0, 0);
+	fpsCalculator.Count(deltaTime);
+	fb.PrintLn(fpsCalculator.ToString());
+	fb.PrintLn(camera.ToString());
+	fb.PrintLn(object.ToString());
 }

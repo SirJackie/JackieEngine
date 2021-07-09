@@ -13,7 +13,7 @@ string FObject::ToString(){
 	ss << "FObject: " << endl;
 
 	for(i32 i = 0; i < vl.size(); i++){
-		ss << vl[i].ToString();
+		ss << tmpVl[i].ToString();
 	}
 
 	return ss.str();
