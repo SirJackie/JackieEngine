@@ -18,22 +18,24 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	object.Rotate(0.05f * deltaTime, -0.05f * deltaTime, 0.0f);
-	object.Translate(0.0f, 0.0f, 5.0f);
 
+	// Initialize FrameBuffer-required Components
 	camera = FCamera(
-		0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
 	);
 	rasterizer = FRasterizer(fb);
 
+	// Rotation
+	object.Rotate(0.05f * deltaTime, -0.05f * deltaTime, 0.0f);
+
+	// Projection and Rasterization
 	camera.ProjectObject(object);
 	rasterizer.DrawPoint(object);
 
+	// Count FPS and Print Things
 	fpsCalculator.Count(deltaTime);
 	fb.PrintLn(fpsCalculator.ToString());
 	fb.PrintLn(camera.ToString());
 	fb.PrintLn(object.ToString());
-
-	object.Translate(0.0f, 0.0f, -5.0f);
 }
