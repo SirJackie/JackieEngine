@@ -1,5 +1,75 @@
 #include "MathSupport.h"
 
+
+/*
+** FVector3D
+*/
+
+// Methods
+string FVector3D::ToString() const{
+	stringstream ss;
+
+	ss << "FVector3D [";
+	ss << this->x;
+	ss << ", ";
+	ss << this->y;
+	ss << ", ";
+	ss << this->z;
+	ss << "]\n";
+
+	return ss.str();
+}
+
+// Vector-Scalar Calculation
+const FVector3D operator+(const FVector3D& a, const f32 b){
+	return FVector3D(
+		a.x + b, a.y + b, a.z
+	);
+}
+const FVector3D operator+(const f32 b, const FVector3D& a){
+	return FVector3D(
+		a.x + b, a.y + b, a.z
+	);
+}
+const FVector3D operator-(const FVector3D& a, const f32 b){
+	return FVector3D(
+		a.x - b, a.y - b, a.z
+	);
+}
+const FVector3D operator-(const f32 b, const FVector3D& a){
+	return FVector3D(
+		a.x - b, a.y - b, a.z
+	);
+}
+const FVector3D operator*(const FVector3D& a, const f32 b){
+	return FVector3D(
+		a.x * b, a.y * b, a.z
+	);
+}
+const FVector3D operator*(const f32 b, const FVector3D& a){
+	return FVector3D(
+		a.x * b, a.y * b, a.z
+	);
+}
+
+// Vector-Vector Calculation
+const FVector3D operator+(const FVector3D& a, const FVector3D& b){
+	return FVector3D(
+		a.x + b.x, a.y + b.y, a.z
+	);
+}
+const FVector3D operator-(const FVector3D& a, const FVector3D& b){
+	return FVector3D{
+		a.x - b.x, a.y - b.y, a.z - b.z
+	};
+}
+
+
+/*
+** FVector4D
+*/
+
+// Methods
 string FVector4D::ToString() const {
 	stringstream ss;
 
@@ -46,14 +116,13 @@ void FVector4D::DevideByW(){
 	w =  1;      // The same as w /= w;
 }
 
+// Vector-Scalar Calculation
 const FVector4D operator+(const FVector4D& a, const f32 b)
 {
-	return FVector4D
-	(
+	return FVector4D(
 		a.x + b, a.y + b, a.z + b, a.w
 	);
 }
-
 const FVector4D operator+(const f32 b, const FVector4D& a)
 {
 	return FVector4D
@@ -64,74 +133,53 @@ const FVector4D operator+(const f32 b, const FVector4D& a)
 
 const FVector4D operator-(const FVector4D& a, const f32 b)
 {
-	return FVector4D
-	(
+	return FVector4D(
 		a.x - b, a.y - b, a.z - b, a.w
 	);
 }
 
 const FVector4D operator-(const f32 b, const FVector4D& a)
 {
-	return FVector4D
-	(
+	return FVector4D(
 		a.x - b, a.y - b, a.z - b, a.w
 	);
 }
 
 const FVector4D operator*(const FVector4D& a, const f32 b)
 {
-	return FVector4D
-	(
+	return FVector4D(
 		a.x * b, a.y * b, a.z * b, a.w
 	);
 }
 
 const FVector4D operator*(const f32 b, const FVector4D& a)
 {
-	return FVector4D
-	(
+	return FVector4D(
 		a.x * b, a.y * b, a.z * b, a.w
 	);
 }
 
-const FVector4D FVector4D::operator+(const FVector4D& b) const {
-	const FVector4D& a = *this;
-
+// Vector-Vector Calculation
+const FVector4D operator+(const FVector4D& a, const FVector4D& b){
 	return FVector4D(
-		a.x + b.x,
-		a.y + b.y,
-		a.z + b.z,
-		1
+		a.x + b.x, a.y + b.y, a.z + b.z, a.w
 	);
 }
-
-const FVector4D FVector4D::operator-(const FVector4D& b) const {
-	const FVector4D& a = *this;
-
+const FVector4D operator-(const FVector4D& a, const FVector4D& b){
 	return FVector4D(
-		a.x - b.x,
-		a.y - b.y,
-		a.z - b.z,
-		1
+		a.x - b.x, a.y - b.y, a.z - b.z, a.w
 	);
 }
-
-const f32 FVector4D::operator*(const FVector4D& b) const {
-	const FVector4D& a = *this;
-
+const f32 operator*(const FVector4D& a, const FVector4D& b){
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
-
-const FVector4D FVector4D::operator%(const FVector4D& b) const {
-	const FVector4D& a = *this;
-	FVector4D result;
-
-	result.x = a.y * b.z - b.y * a.z;
-	result.y = a.z * b.x - a.x * b.z;
-	result.z = a.x * b.y - a.y * b.x;
-	result.w = 1;  // W-Axis is Meaningless, So Do Nothing
-
-	return result;
+const FVector4D operator%(const FVector4D& a, const FVector4D& b){
+	return FVector4D(
+		a.y * b.z - b.y * a.z,
+		a.z * b.x - a.x * b.z,
+		a.x * b.y - a.y * b.x,
+		a.z
+	);
 }
 
 
