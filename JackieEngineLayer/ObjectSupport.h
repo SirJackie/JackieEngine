@@ -13,6 +13,8 @@ public:
 
 	FObject();
 	void    Add(const FVector4D& vec);
+	void    Translate(f32 x_, f32 y_, f32 z_);
+	void    Rotate(f32 x_, f32 y_, f32 z_);
 	string  ToString();
 };
 
