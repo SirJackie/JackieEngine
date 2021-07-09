@@ -49,6 +49,12 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	if(kb.IsKeyPressed(CSK_D)){
 		camera.Walk(FVector4D( 1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
 	}
+	if(kb.IsKeyPressed(CSK_Space)){
+		camera.Elevator( walkSpeed * deltaTime);
+	}
+	if(kb.IsKeyPressed(CSK_Shift)){
+		camera.Elevator(-walkSpeed * deltaTime);
+	}
 	if(kb.IsKeyFirstTimePressed(CSK_R)){
 		rotate = !rotate;
 	}

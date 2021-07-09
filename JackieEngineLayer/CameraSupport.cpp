@@ -111,6 +111,11 @@ void FCamera::Walk(const FVector4D& direction_){
 	CalcTotal();
 }
 
+void FCamera::Elevator(f32 length_){
+	position.y += length_;
+	CalcTotal();
+}
+
 void FCamera::Rotate(f32 x_, f32 y_, f32 z_){
 	rotation.x += x_;
 	rotation.y += y_;
