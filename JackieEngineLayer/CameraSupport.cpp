@@ -100,3 +100,13 @@ void FCamera::ProjectObject(FObject& obj) {
 		obj.tmpVl[i].DevideByW();
 	}
 }
+
+void FCamera::Walk(const FVector4D& direction_){
+	FVector4D direction = direction_;
+	FMatrix4D rotmat = FMatrix4D::GenerateRotationMatrix(
+		rotation.x, rotation.y, 0.0f
+	);
+	direction = direction * rotmat;
+	position = position + direction;
+	CalcTotal();
+}

@@ -39,7 +39,7 @@ public:
 */
 
 class FCamera {
-private:
+public:
 
 	// Position
 	FVector4D position;
@@ -54,7 +54,6 @@ private:
 	FMatrix4D ProjectionMatrix;
 	FMatrix4D TotalMatrix;
 
-public:
 	// Methods
 	FCamera();
 	FCamera(
@@ -68,5 +67,6 @@ public:
 
 	string  ToString();
 	void    ProjectObject(FObject& obj);
+	void    Walk(const FVector4D& direction_);
 };
 #endif
