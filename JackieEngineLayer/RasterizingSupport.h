@@ -10,8 +10,8 @@ class FRasterizer {
 public:
 	CS_FrameBuffer* ptrfb;
 	FRasterizer();
-	FRasterizer(CS_FrameBuffer& fb);
-	void DrawPoint(FObject& obj);
+	FRasterizer(CS_FrameBuffer& fb_);
+	void DrawPoint(FObject& obj_);
 };
 
 #endif
