@@ -62,7 +62,14 @@ void FRasterizer::DrawFlatTopTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f3
 
 	for(i32 y = ys; y < ye; y++){
 		xStart += nslope1;
-		xEnd += nslope2;
+		xEnd   += nslope2;
+
+		i32 xs = (i32)ceil(xStart - 0.5f);
+		i32 xe = (i32)ceil(xEnd   - 0.5f);
+
+		for(i32 x = xs; x < xe; x++){
+			CS_PutPixel(*ptrfb, x, y, r, g, b);
+		}
 	}
 
 	ptrfb->PrintLn(xStart);
