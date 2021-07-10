@@ -44,8 +44,31 @@ void FRasterizer::DrawRadiusCube(i32 x, i32 y, i32 radius){
 	);
 }
 
-void FRasterizer::DrawTriangle(const FVector4D& v0, const FVector4D& v1, const FVector4D& v2){
-	;
+void FRasterizer::DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const FVector4D& v2_){
+	// Sort Y Order
+	FVector4D *v0 = (FVector4D*)&v0_;
+	FVector4D *v1 = (FVector4D*)&v1_;
+	FVector4D *v2 = (FVector4D*)&v2_;
+	if(v0->y > v1->y) swap(v0, v1);
+	if(v0->y > v2->y) swap(v0, v2);
+	if(v1->y > v2->y) swap(v1, v2);
+
+	if(v1->y == v2->y){
+		ptrfb->PrintLn("Flat Bottom Triangle");
+	}
+
+	else if(v0->y == v1->y){
+		ptrfb->PrintLn("Flat Top Triangle");
+	}
+
+	else if(v1->x > v2->x){
+		ptrfb->PrintLn("Longside Left Triangle");
+	}
+
+	else{
+		ptrfb->PrintLn("Longside Right Triangle");
+	}
+
 }
 
 void FRasterizer::DrawFlatBottomTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b){

@@ -82,8 +82,31 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	fb.PrintLn(camera.ToString());
 	fb.PrintLn(object.ToString());
 
-	// rasterizer.DrawFlatBottomTriangle(0.0f, 400.0f, 100.0f, 0.0f, 300.0f, 255, 255, 255);
-	// rasterizer.DrawFlatTopTriangle(0.0f, 400.0f, 0.0f, 300.0f, 100.0f, 255, 255, 255);
+	// Interpolation test
 	FVector4D a(0.0f, 0.0f, 0.0f, 1.0f), b(1.0f, 1.0f, 1.0f, 1.0f);
 	fb.PrintLn(a.InterpolateTo(b, 0.3f).ToString());
+
+	// DrawTriangleTest
+	// rasterizer.DrawFlatBottomTriangle(0.0f, 400.0f, 100.0f, 0.0f, 300.0f, 255, 255, 255);
+	// rasterizer.DrawFlatTopTriangle(0.0f, 400.0f, 0.0f, 300.0f, 100.0f, 255, 255, 255);
+	rasterizer.DrawTriangle(
+		FVector4D(100.0f, 0.0f, 0.0f, 0.0f),
+		FVector4D(0.0f, 400.0f, 0.0f, 0.0f),
+		FVector4D(300.0f, 400.0f, 0.0f, 0.0f)
+	);
+	rasterizer.DrawTriangle(
+		FVector4D(0.0f, 0.0f, 0.0f, 0.0f),
+		FVector4D(300.0f, 0.0f, 0.0f, 0.0f),
+		FVector4D(100.0f, 400.0f, 0.0f, 0.0f)
+	);
+	rasterizer.DrawTriangle(
+		FVector4D(100.0f, 0.0f, 0.0f, 0.0f),
+		FVector4D(0.0f, 500.0f, 0.0f, 0.0f),
+		FVector4D(300.0f, 400.0f, 0.0f, 0.0f)
+	);
+	rasterizer.DrawTriangle(
+		FVector4D(100.0f, 0.0f, 0.0f, 0.0f),
+		FVector4D(0.0f, 400.0f, 0.0f, 0.0f),
+		FVector4D(300.0f, 500.0f, 0.0f, 0.0f)
+	);
 }
