@@ -30,15 +30,7 @@ MSG msg;
 // Message Processing Function Declaration
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-struct WinMouse {
-	i32 realx;
-	i32 realy;
-	i32 pagex;
-	i32 pagey;
-	csbool nowInfinityState;
-};
-
-WinMouse winMouse;
+csbool lastFrameInfinityState = csFalse;
 
 void SetLocalCursorPos(i32 x, i32 y) {
 	SetCursorPos
@@ -66,11 +58,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	fb = CS_FrameBuffer(windowsHelper.windowWidth, windowsHelper.windowHeight);
 	mouse = CS_Mouse(windowsHelper.windowWidth, windowsHelper.windowHeight);
 
-	winMouse.realx = 0;
-	winMouse.realy = 0;
-	winMouse.pagex = 0;
-	winMouse.pagey = 0;
-	winMouse.nowInfinityState = csFalse;
+	i32 CenterX = windowsHelper.leftMargin;
+	i32 CenterY = windowsHelper.topMargin;
+	i32 GlobalCenterX = windowsHelper.leftMargin + (windowsHelper.windowWidth  / 2);
+	i32 GlobalCenterY = windowsHelper.topMargin  + (windowsHelper.windowHeight / 2);
+
+	mouse = CS_Mouse(windowsHelper.windowWidth, windowsHelper.windowHeight);
 
 	// Initialize Time Counting Variables
 	FirstTimeRunning = csTrue;
@@ -87,46 +80,34 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			GetCursorPos(&pt);
 			mouse.x = pt.x - windowsHelper.leftMargin;
 			mouse.y = pt.y - windowsHelper.topMargin;
-		}
-
-		if (FirstTimeRunning == csTrue) {
 			mouse.lastX = mouse.x;
 			mouse.lastY = mouse.y;
 		}
 
-		if (winMouse.nowInfinityState == csFalse) {
-			if (mouse.infinityMode == csTrue) {
-				winMouse.nowInfinityState = csTrue;
-				RECT rect;
-				rect.left = windowsHelper.leftMargin;
-				rect.top = windowsHelper.topMargin;
-				rect.right = windowsHelper.leftMargin + windowsHelper.windowWidth - 1;
-				rect.bottom = windowsHelper.topMargin + windowsHelper.windowHeight - 1;
-				ClipCursor(&rect);
-			}
+		if (lastFrameInfinityState == csFalse && mouse.infinityMode == csTrue) {
+			// Make the next frame mouse.x|y equals to this frame
+			SetCursorPos(GlobalCenterX, GlobalCenterY);
+
+			lastFrameInfinityState = csTrue;
 		}
 
-		if (winMouse.nowInfinityState == csTrue) {
-			if (mouse.infinityMode == csFalse) {
-				winMouse.pagex = 0;
-				winMouse.pagey = 0;
-				winMouse.realx = 0;
-				winMouse.realy = 0;
-				winMouse.nowInfinityState = csFalse;
-				ClipCursor(NULL);
-				
-				i32 newCursorPosX = mouse.x;
-				i32 newCursorPosY = mouse.y;
-				if (newCursorPosX < 0) newCursorPosX = 0;
-				if (newCursorPosY < 0) newCursorPosY = 0;
-				if (newCursorPosX > windowsHelper.windowWidth - 1) {
-					newCursorPosX = windowsHelper.windowWidth - 1;
-				}
-				if (newCursorPosY > windowsHelper.windowHeight - 1) {
-					newCursorPosY = windowsHelper.windowHeight - 1;
-				}
-				SetLocalCursorPos(newCursorPosX, newCursorPosY);
-			}
+		else if (lastFrameInfinityState == csTrue && mouse.infinityMode == csFalse) {
+			SetLocalCursorPos
+			(
+				CS_iclamp(0, mouse.x, windowsHelper.windowWidth),
+				CS_iclamp(0, mouse.y, windowsHelper.windowHeight)
+			);
+			lastFrameInfinityState = csFalse;
+		}
+
+		else if (lastFrameInfinityState == csTrue && mouse.infinityMode == csTrue) {
+			POINT pt;
+			GetCursorPos(&pt);
+
+			mouse.x += pt.x - GlobalCenterX;
+			mouse.y += pt.y - GlobalCenterY;
+
+			SetCursorPos(GlobalCenterX, GlobalCenterY);
 		}
 		
 
@@ -139,14 +120,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		/* Process our Game Loop */
 
-		mouse.deltaX = mouse.x - mouse.lastX;
-		mouse.deltaY = mouse.y - mouse.lastY;
-
 		// Update Keyboard Status when there is or isn't a message
 		keyboardHelper.MoveWinBufIntoKeyBuf();
 		if (keyboardHelper.kb.IsKeyPressed(CSK_Esc)) {
 			SendMessage(windowsHelper.hWnd, WM_CLOSE, 0, 0);
 		}
+
+		mouse.deltaX = mouse.x - mouse.lastX;
+		mouse.deltaY = mouse.y - mouse.lastY;
 
 		// Update Time Counting Variables
 		thisTime = clock();
@@ -239,34 +220,7 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_MOUSEMOVE:
-		if (mouse.infinityMode == csTrue) {
-			winMouse.realx = LOWORD(lParam);  // MouseX
-			winMouse.realy = HIWORD(lParam);  // MouseY
-
-			if (winMouse.realx == 0) {
-				SetLocalCursorPos(windowsHelper.windowWidth - 2, winMouse.realy);
-				winMouse.pagex -= 1;
-			}
-
-			if (winMouse.realx == windowsHelper.windowWidth - 1) {
-				SetLocalCursorPos(1, winMouse.realy);
-				winMouse.pagex += 1;
-			}
-
-			if (winMouse.realy == 0) {
-				SetLocalCursorPos(winMouse.realx, windowsHelper.windowHeight - 2);
-				winMouse.pagey -= 1;
-			}
-
-			if (winMouse.realy == windowsHelper.windowHeight - 1) {
-				SetLocalCursorPos(winMouse.realx, 1);
-				winMouse.pagey += 1;
-			}
-
-			mouse.x = winMouse.realx + winMouse.pagex * (windowsHelper.windowWidth - 2);
-			mouse.y = winMouse.realy + winMouse.pagey * (windowsHelper.windowHeight - 2);
-		}
-		else {
+		if (mouse.infinityMode == csFalse) {
 			mouse.x = LOWORD(lParam);
 			mouse.y = HIWORD(lParam);
 		}
