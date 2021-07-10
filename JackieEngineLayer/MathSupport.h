@@ -42,8 +42,8 @@ public:
 	
 	// Methods
 	string     ToString()                   const;
-	f32        length()                     const;
-	FVector4D  normalized()                 const;
+	f32        Length()                     const;
+	FVector4D  Normalized()                 const;
 	void       Normalize();
 	void       DevideByW();
 
@@ -60,6 +60,9 @@ public:
 	friend const FVector4D operator-(const FVector4D& a, const FVector4D& b);
 	friend const f32       operator*(const FVector4D& a, const FVector4D& b);  // Dot   Product
 	friend const FVector4D operator%(const FVector4D& a, const FVector4D& b);  // Cross Product
+
+	// Interpolation
+	const FVector4D InterpolateTo(const FVector4D& b, f32 alpha) const;
 };
 
 

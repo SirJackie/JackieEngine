@@ -83,5 +83,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	fb.PrintLn(object.ToString());
 
 	// rasterizer.DrawFlatBottomTriangle(0.0f, 400.0f, 100.0f, 0.0f, 300.0f, 255, 255, 255);
-	rasterizer.DrawFlatTopTriangle(0.0f, 400.0f, 0.0f, 300.0f, 100.0f, 255, 255, 255);
+	// rasterizer.DrawFlatTopTriangle(0.0f, 400.0f, 0.0f, 300.0f, 100.0f, 255, 255, 255);
+	FVector4D a(0.0f, 0.0f, 0.0f, 1.0f), b(1.0f, 1.0f, 1.0f, 1.0f);
+	fb.PrintLn(a.InterpolateTo(b, 0.3f).ToString());
 }

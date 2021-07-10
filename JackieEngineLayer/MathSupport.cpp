@@ -86,13 +86,13 @@ string FVector4D::ToString() const {
 	return ss.str();
 }
 
-f32 FVector4D::length() const {
+f32 FVector4D::Length() const {
 	// Use the Pythagorean Theorem to calculate the length
 	return sqrtf(x*x + y*y + z*z);
 }
 
-FVector4D FVector4D::normalized() const {
-	f32 length = this->length();
+FVector4D FVector4D::Normalized() const {
+	f32 length = Length();
 	return FVector4D(
 		this->x / length,
 		this->y / length,
@@ -102,7 +102,7 @@ FVector4D FVector4D::normalized() const {
 }
 
 void FVector4D::Normalize() {
-	f32 length = this->length();
+	f32 length = Length();
 	this->x /= length;
 	this->y /= length;
 	this->z /= length;
@@ -180,6 +180,13 @@ const FVector4D operator%(const FVector4D& a, const FVector4D& b){
 		a.x * b.y - a.y * b.x,
 		a.z
 	);
+}
+
+// Interpolation
+const FVector4D FVector4D::InterpolateTo(const FVector4D& to, f32 alpha) const {
+	const FVector4D& from = *this;
+	FVector4D delta  = to - from;
+	return from + delta * alpha;
 }
 
 
