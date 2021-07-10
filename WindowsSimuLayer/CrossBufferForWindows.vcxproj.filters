@@ -76,23 +76,8 @@
     <ClInclude Include="..\CrossBufferLayer\MouseSupport.h">
       <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\CameraSupport.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\JackieEngine.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\MathSupport.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\ObjectSupport.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
-    </ClInclude>
     <ClInclude Include="..\CrossBufferLayer\BasicDataTypeDeclarations.h">
       <Filter>头文件\CrossBufferLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\JackieEngineLayer\RasterizingSupport.h">
-      <Filter>头文件\JackieEngineLayer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -26,6 +26,7 @@ clock_t thisTime;
 
 // Windows.h Loop Message Variable
 MSG msg;
+csbool isCursorShowingNow = csTrue;
 
 // Message Processing Function Declaration
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -75,6 +76,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	/* Main Loop */
 	while (msg.message != WM_QUIT)
 	{
+		if (isCursorShowingNow == csTrue && mouse.infinityMode == csTrue) {
+			isCursorShowingNow = csFalse;
+			ShowCursor(csFalse);
+		}
+
+		if (isCursorShowingNow == csFalse && mouse.infinityMode == csFalse) {
+			isCursorShowingNow = csTrue;
+			ShowCursor(csTrue);
+		}
+
 		if (mouse.x == 0 || mouse.y == 0) {
 			POINT pt;
 			GetCursorPos(&pt);
@@ -169,6 +180,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// Release All the Variables
 		windowsHelper.Unregister((wchar_t*)WindowTitle);
 		d3dHelper.Release();
+		if (isCursorShowingNow == csFalse) {
+			isCursorShowingNow = csTrue;
+			ShowCursor(csTrue);
+		}
 		return 0;
 	}
 }
