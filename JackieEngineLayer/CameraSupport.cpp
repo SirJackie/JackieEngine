@@ -55,7 +55,6 @@ FCamera::FCamera
 	frustum = FFrustum(n_, f_, fovY_, screenWidth_, screenHeight_);
 
 	frustum.CalculateFrustum();
-	CalcTotal();
 }
 
 void FCamera::CalcTranslation() {
@@ -94,6 +93,7 @@ string FCamera::ToString() {
 }
 
 void FCamera::ProjectObject(FObject& obj) {
+	CalcTotal();
 	obj.tmpVl = obj.vl;
 	for (ui32 i = 0; i < obj.tmpVl.size(); i++) {
 		obj.tmpVl[i] = obj.tmpVl[i] * TotalMatrix;
@@ -108,17 +108,14 @@ void FCamera::Walk(const FVector4D& direction_){
 	);
 	direction = direction * rotmat;
 	position = position + direction;
-	CalcTotal();
 }
 
 void FCamera::Elevator(f32 length_){
 	position.y += length_;
-	CalcTotal();
 }
 
 void FCamera::Rotate(f32 x_, f32 y_, f32 z_){
 	rotation.x += x_;
 	rotation.y += y_;
 	rotation.z += z_;
-	CalcTotal();
 }

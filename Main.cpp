@@ -5,7 +5,7 @@ FCamera           camera;
 FObject           object;
 FRasterizer       rasterizer;
 f32               walkSpeed = 0.01f;
-f32               mouseSensitivity = 30.0f;
+f32               mouseSensitivity = 40.0f;
 csbool            rotate = csFalse;
 
 
