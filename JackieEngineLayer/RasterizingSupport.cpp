@@ -106,15 +106,20 @@ void FRasterizer::DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const
 void FRasterizer::DrawFlatBottomTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b){
 	i32 ys = (i32)ceil(yStart - 0.5f);
 	i32 ye = (i32)ceil(yEnd   - 0.5f);
-	f32 nslope1 = (x1_ - x0_) / (ye - ys);
-	f32 nslope2 = (x2_ - x0_) / (ye - ys);
+
+	f32 xStartStep = (x1_ - x0_) / (yEnd - yStart);
+	f32 xEndStep   = (x2_ - x0_) / (yEnd - yStart);
 
 	f32 xStart = x0_;
 	f32 xEnd   = x0_;
 
+	// Pre-steping
+	xStart += ((float)ys + 0.5f - yStart) * xStartStep;
+	xEnd   += ((float)ys + 0.5f - yStart) * xEndStep;
+
 	for(i32 y = ys; y < ye; y++){
-		xStart += nslope1;
-		xEnd   += nslope2;
+		xStart += xStartStep;
+		xEnd   += xEndStep;
 
 		i32 xs = (i32)ceil(xStart - 0.5f);
 		i32 xe = (i32)ceil(xEnd   - 0.5f);
@@ -128,15 +133,20 @@ void FRasterizer::DrawFlatBottomTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_,
 void FRasterizer::DrawFlatTopTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b){
 	i32 ys = (i32)ceil(yStart - 0.5f);
 	i32 ye = (i32)ceil(yEnd   - 0.5f);
-	f32 nslope1 = (x2_ - x0_) / (ye - ys);
-	f32 nslope2 = (x2_ - x1_) / (ye - ys);
+
+	f32 xStartStep = (x2_ - x0_) / (yEnd - yStart);
+	f32 xEndStep   = (x2_ - x1_) / (yEnd - yStart);
 
 	f32 xStart = x0_;
 	f32 xEnd   = x1_;
 
+	// Pre-steping
+	xStart += ((float)ys + 0.5f - yStart) * xStartStep;
+	xEnd   += ((float)ys + 0.5f - yStart) * xEndStep;
+
 	for(i32 y = ys; y < ye; y++){
-		xStart += nslope1;
-		xEnd   += nslope2;
+		xStart += xStartStep;
+		xEnd   += xEndStep;
 
 		i32 xs = (i32)ceil(xStart - 0.5f);
 		i32 xe = (i32)ceil(xEnd   - 0.5f);
