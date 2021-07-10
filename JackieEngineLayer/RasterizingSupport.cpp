@@ -114,8 +114,8 @@ void FRasterizer::DrawFlatBottomTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_,
 	f32 xEnd   = x0_;
 
 	// Pre-steping
-	xStart += ((float)ys + 0.5f - yStart) * xStartStep;
-	xEnd   += ((float)ys + 0.5f - yStart) * xEndStep;
+	xStart += ((float)ys - 0.5f - yStart) * xStartStep;
+	xEnd   += ((float)ys - 0.5f - yStart) * xEndStep;
 
 	for(i32 y = ys; y < ye; y++){
 		xStart += xStartStep;
@@ -141,8 +141,8 @@ void FRasterizer::DrawFlatTopTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f3
 	f32 xEnd   = x1_;
 
 	// Pre-steping
-	xStart += ((float)ys + 0.5f - yStart) * xStartStep;
-	xEnd   += ((float)ys + 0.5f - yStart) * xEndStep;
+	xStart += ((float)ys - 0.5f - yStart) * xStartStep;
+	xEnd   += ((float)ys - 0.5f - yStart) * xEndStep;
 
 	for(i32 y = ys; y < ye; y++){
 		xStart += xStartStep;
