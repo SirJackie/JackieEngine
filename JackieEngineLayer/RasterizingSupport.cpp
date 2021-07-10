@@ -168,9 +168,9 @@ void FRasterizer::DrawPoint(FObject& obj_)
 void FRasterizer::DrawTriangle(FObject& obj_){
 	for(ui32 i = 0; i < obj_.il.size(); i+=3){
 		DrawTriangle(
-			obj_.tmpVl[i],
-			obj_.tmpVl[i + 1],
-			obj_.tmpVl[i + 2],
+			obj_.tmpVl[ obj_.il[i    ] ],
+			obj_.tmpVl[ obj_.il[i + 1] ],
+			obj_.tmpVl[ obj_.il[i + 2] ],
 			255, 255, 255
 		);
 	}
