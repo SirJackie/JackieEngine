@@ -55,6 +55,7 @@ void FRasterizer::DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const
 
 	if(v1->y == v2->y){
 		// ptrfb->PrintLn("Flat Bottom Triangle");
+		if(v1->x > v2->x) swap(v1, v2);
 		DrawFlatBottomTriangle(
 			v0->y, v2->y, v0->x, v1->x, v2->x, r, g, b
 		);
@@ -63,6 +64,7 @@ void FRasterizer::DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const
 
 	if(v0->y == v1->y){
 		// ptrfb->PrintLn("Flat Top Triangle");
+		if(v0->x > v1->x) swap(v0, v1);
 		DrawFlatTopTriangle(
 			v0->y, v2->y, v0->x, v1->x, v2->x, r, g, b
 		);
