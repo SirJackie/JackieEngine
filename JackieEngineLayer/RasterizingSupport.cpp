@@ -58,20 +58,23 @@ void FRasterizer::DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const
 		DrawFlatBottomTriangle(
 			v0->y, v2->y, v0->x, v1->x, v2->x, r, g, b
 		);
+		return;
 	}
 
-	else if(v0->y == v1->y){
+	if(v0->y == v1->y){
 		// ptrfb->PrintLn("Flat Top Triangle");
 		DrawFlatTopTriangle(
 			v0->y, v2->y, v0->x, v1->x, v2->x, r, g, b
 		);
+		return;
 	}
 
-	else if(v1->x > v2->x){
+	f32 m = v1->y - v0->y;
+	f32 n = v2->y - v0->y;
+	FVector4D vcenter = v0->InterpolateTo(*v2, m / n);
+	
+	if(vcenter.x < v1->x){
 		// ptrfb->PrintLn("Longside Left Triangle");
-		f32 m = v1->y - v0->y;
-		f32 n = v2->y - v1->y;
-		FVector4D vcenter = v0->InterpolateTo(*v2, m / (m + n));
 		DrawFlatBottomTriangle(
 			v0->y, v1->y,
 			v0->x, vcenter.x, v1->x,
@@ -86,9 +89,6 @@ void FRasterizer::DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const
 
 	else{
 		// ptrfb->PrintLn("Longside Right Triangle");
-		f32 m = v1->y - v0->y;
-		f32 n = v2->y - v1->y;
-		FVector4D vcenter = v0->InterpolateTo(*v2, m / (m + n));
 		DrawFlatBottomTriangle(
 			v0->y, v1->y,
 			v0->x, v1->x, vcenter.x,
