@@ -72,7 +72,20 @@ void FRasterizer::DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const
 	}
 
 	else{
-		ptrfb->PrintLn("Longside Right Triangle");
+		// ptrfb->PrintLn("Longside Right Triangle");
+		f32 m = v1->y - v0->y;
+		f32 n = v2->y - v0->y;
+		FVector4D vcenter = v0->InterpolateTo(*v2, m / (m + n));
+		DrawFlatBottomTriangle(
+			v0->y, v1->y,
+			v0->x, v1->x, vcenter.x,
+			r, g, b
+		);
+		DrawFlatTopTriangle(
+			v1->y, v2->y,
+			v1->x, vcenter.x, v2->x,
+			r, g, b
+		);
 	}
 
 }
