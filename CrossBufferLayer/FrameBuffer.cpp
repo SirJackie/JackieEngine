@@ -29,26 +29,22 @@ void CS_FrameBuffer::CopySameSizeBuffer(const CS_FrameBuffer& from, CS_FrameBuff
         return;  // Too small to copy
     }
 
-    ui8* toRedBuffPtr = to.redBuffer;
-    ui8* toGreenBuffPtr = to.greenBuffer;
-    ui8* toBlueBuffPtr = to.blueBuffer;
+    ui8* frEnd = (ui8*)(from.redBuffer + width * height);
 
-    ui8* fromRedBuffPtr = from.redBuffer;
-    ui8* fromGreenBuffPtr = from.greenBuffer;
-    ui8* fromBlueBuffPtr = from.blueBuffer;
+    for(
+        ui8 *fr = from.redBuffer,
+            *fg = from.greenBuffer,
+            *fb = from.blueBuffer,
+            *tr = to.redBuffer,
+            *tg = to.greenBuffer,
+            *tb = to.blueBuffer;
 
-    for (i32 i = 0; i < width * height; i++) {
-        *toRedBuffPtr = *fromRedBuffPtr;
-        *toGreenBuffPtr = *fromGreenBuffPtr;
-        *toBlueBuffPtr = *fromBlueBuffPtr;
-
-        toRedBuffPtr++;
-        toGreenBuffPtr++;
-        toBlueBuffPtr++;
-
-        fromRedBuffPtr++;
-        fromGreenBuffPtr++;
-        fromBlueBuffPtr++;
+        fr < frEnd;
+        fr++ && fg++ && fb++ && tr++ && tg++ && tb++
+    ){
+        *tr = *fr;
+        *tg = *fg;
+        *tb = *fb;
     }
 }
 
