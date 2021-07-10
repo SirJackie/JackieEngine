@@ -147,10 +147,6 @@
     <ClCompile Include="..\CrossBufferLayer\FrameBuffer.cpp" />
     <ClCompile Include="..\CrossBufferLayer\KeyboardSupport.cpp" />
     <ClCompile Include="..\CrossBufferLayer\MouseSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\MathSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\ObjectSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\RasterizingSupport.cpp" />
     <ClCompile Include="..\Main.cpp" />
     <ClCompile Include="CrossBufferForWindows.cpp" />
     <ClCompile Include="D3DHelper.cpp" />
@@ -172,11 +168,6 @@
     <ClInclude Include="..\CrossBufferLayer\FrameBuffer.h" />
     <ClInclude Include="..\CrossBufferLayer\KeyboardSupport.h" />
     <ClInclude Include="..\CrossBufferLayer\MouseSupport.h" />
-    <ClInclude Include="..\JackieEngineLayer\CameraSupport.h" />
-    <ClInclude Include="..\JackieEngineLayer\JackieEngine.h" />
-    <ClInclude Include="..\JackieEngineLayer\MathSupport.h" />
-    <ClInclude Include="..\JackieEngineLayer\ObjectSupport.h" />
-    <ClInclude Include="..\JackieEngineLayer\RasterizingSupport.h" />
     <ClInclude Include="..\Main.h" />
     <ClInclude Include="D3DHelper.h" />
     <ClInclude Include="KeyboardHelper.h" />

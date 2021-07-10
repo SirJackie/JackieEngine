@@ -42,6 +42,8 @@ int main( int argc, char* args[] )
     // While it's not the time to quit
     while(!quit)
     {
+        SDL_ShowCursor(!mouse.infinityMode);
+
         if(mouse.x == 0 || mouse.y == 0){
             i32 tmpx, tmpy;
             SDL_GetGlobalMouseState(&tmpx, &tmpy);
@@ -87,6 +89,7 @@ int main( int argc, char* args[] )
             // If exit
             if(e.type == SDL_QUIT)
             {
+                SDL_ShowCursor(csTrue);
                 quit = csTrue;
             }
 
