@@ -82,6 +82,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	/* Main Loop */
 	while (msg.message != WM_QUIT)
 	{
+		if (mouse.x == 0 || mouse.y == 0) {
+			POINT pt;
+			GetCursorPos(&pt);
+			mouse.x = pt.x - windowsHelper.leftMargin;
+			mouse.y = pt.y - windowsHelper.topMargin;
+		}
+
+		if (FirstTimeRunning == csTrue) {
+			mouse.lastX = mouse.x;
+			mouse.lastY = mouse.y;
+		}
+
 		if (winMouse.nowInfinityState == csFalse) {
 			if (mouse.infinityMode == csTrue) {
 				winMouse.nowInfinityState = csTrue;
@@ -127,6 +139,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		/* Process our Game Loop */
 
+		mouse.deltaX = mouse.x - mouse.lastX;
+		mouse.deltaY = mouse.y - mouse.lastY;
+
 		// Update Keyboard Status when there is or isn't a message
 		keyboardHelper.MoveWinBufIntoKeyBuf();
 		if (keyboardHelper.kb.IsKeyPressed(CSK_Esc)) {
@@ -163,6 +178,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// Update Time Counting Variables
 		// lastTime in next frame = thisTime in this frame
 		lastTime = thisTime;
+
+		mouse.lastX = mouse.x;
+		mouse.lastY = mouse.y;
 	}
 
 	/* After the Main Loop */
