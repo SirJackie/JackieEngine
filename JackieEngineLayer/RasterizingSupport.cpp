@@ -44,6 +44,35 @@ void FRasterizer::DrawRadiusCube(i32 x, i32 y, i32 radius){
 	);
 }
 
+void FRasterizer::DrawTriangle(const FVector4D& v0, const FVector4D& v1, const FVector4D& v2){
+	;
+}
+
+void FRasterizer::DrawFlatTopTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b){
+	i32 ys = (i32)ceil(yStart - 0.5f);
+	i32 ye = (i32)ceil(yEnd   - 0.5f);
+	f32 nslope1 = (x1_ - x0_) / (ye - ys);
+	f32 nslope2 = (x2_ - x0_) / (ye - ys);
+
+	// ptrfb->PrintLn(nslope1);
+	// ptrfb->PrintLn(nslope2);
+
+	f32 xStart = x0_;
+	f32 xEnd   = x0_;
+
+	for(i32 y = ys; y < ye; y++){
+		xStart += nslope1;
+		xEnd += nslope2;
+	}
+
+	ptrfb->PrintLn(xStart);
+	ptrfb->PrintLn(xEnd);
+}
+
+void FRasterizer::DrawFlatBottomTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b){
+	;
+}
+
 void FRasterizer::Draw3DPoint(FVector3D& point){
 	DrawRadiusCube(point.x, point.y, 5);
 }

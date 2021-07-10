@@ -87,6 +87,8 @@ using std::acos;
 using std::atan;
 using std::sqrt;
 using std::abs;
+using std::ceil;
+using std::floor;
 #define  PI          3.14159265f
 #define  _DEG2RAD_   PI / 180.0f
 #define  _RAD2DEG_   180.0f / PI
