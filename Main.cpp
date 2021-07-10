@@ -30,18 +30,18 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	object.Add(FVector4D(-1.0,  1.0, -1.0, 1.0));
 
 	// Create Cube's Indecies
-	object.Add(0, 1, 3);
-	object.Add(2, 3, 1);
-	object.Add(5, 4, 6);
-	object.Add(7, 6, 4);
-	object.Add(4, 0, 7);
-	object.Add(3, 7, 0);
-	object.Add(1, 5, 2);
-	object.Add(6, 2, 5);
-	object.Add(3, 2, 7);
-	object.Add(6, 7, 2);
-	object.Add(5, 0, 4);
-	object.Add(5, 1, 0);
+	// object.Add(0, 1, 3);  // n1
+	// object.Add(2, 3, 1);  // n2
+	// object.Add(5, 4, 6);  // f1
+	// object.Add(7, 6, 4);  // f2
+	// object.Add(4, 0, 7);  // l1
+	// object.Add(3, 7, 0);  // l2
+	// object.Add(1, 5, 2);  // r1
+	// object.Add(6, 2, 5);  // r2
+	// object.Add(3, 2, 7);  // t1
+	// object.Add(6, 7, 2);  // t2
+	object.Add(5, 0, 4);  // b1
+	object.Add(5, 1, 0);  // b2
 
 	// Open Mouse Locking
 	mouse.OpenInfinityMode();
