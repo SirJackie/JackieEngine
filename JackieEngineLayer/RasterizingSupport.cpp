@@ -53,8 +53,6 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 	if(v0->pos.y > v2->pos.y) swap(v0, v2);
 	if(v1->pos.y > v2->pos.y) swap(v1, v2);
 
-	ptrfb->PrintLn(v0_.ToString());
-
 	if(v1->pos.y == v2->pos.y){
 		// ptrfb->PrintLn("Flat Bottom Triangle");
 		if(v1->pos.x > v2->pos.x) swap(v1, v2);
@@ -128,10 +126,12 @@ void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex
 		for(i32 x = ceil(xLeft.pos.x - 0.5f); x < ceil(xRight.pos.x); x++){
 			CS_PutPixel(
 				*ptrfb, xNow.pos.x, xNow.pos.y,
-				(ui8)(xNow.tex.x),
-				(ui8)(xNow.tex.y),
+				(ui8)(xNow.tex.x * 255.0f),
+				(ui8)(xNow.tex.y * 255.0f),
 				255
 			);
+
+			ptrfb->PrintLn(xNow.tex.x);
 
 			xNow = xNow + xNowStep;
 		}
