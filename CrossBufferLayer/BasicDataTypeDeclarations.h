@@ -1,10 +1,15 @@
 #ifndef __CSBF_BasicDataTypeDeclarations__
 #define __CSBF_BasicDataTypeDeclarations__
 
+#define _CRT_SECURE_NO_WARNINGS
 
 /*
 ** Define Cross Platform Types
 */
+
+typedef    unsigned long long  ui64;     // Should be 32-bit 4-byte sign-less
+typedef    signed long long    si64;     // Should be 32-bit 4-byte sign-ful
+typedef    long long            i64;     // Should be 32-bit 4-byte auto
 
 typedef    unsigned int        ui32;     // Should be 32-bit 4-byte sign-less
 typedef    signed   int        si32;     // Should be 32-bit 4-byte sign-ful
@@ -75,8 +80,17 @@ using std::stringstream;
 using std::vector;
 
 #include <cstring>
+using std::strlen;
+using std::strcpy;
 using std::memset;
 #define CS_Memset(ptr, fillingContent, length) (memset(ptr, fillingContent, length))
+
+#include <cstdio>
+using std::fopen;
+using std::fread;
+using std::fwrite;
+using std::fclose;
+using std::FILE;
 
 #include <cmath>
 using std::sin;

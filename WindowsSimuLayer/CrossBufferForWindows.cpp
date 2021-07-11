@@ -51,6 +51,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
+	extern string CS_OperatingSystem;
+	CS_OperatingSystem = "Windows";
 
 	// Initialize CrossBufferLayer and WIndowsSimuLayer Objects
 	windowsHelper = WSL_WindowsHelper(MsgProc, hInstance, (wchar_t*)WindowTitle, (wchar_t*)WindowTitle);

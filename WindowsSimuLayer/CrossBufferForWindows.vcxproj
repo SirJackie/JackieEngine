@@ -143,14 +143,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\CrossBufferLayer\BasicDataTypeDeclarations.cpp" />
+    <ClCompile Include="..\CrossBufferLayer\FileSupport.cpp" />
     <ClCompile Include="..\CrossBufferLayer\FPSCalculator.cpp" />
     <ClCompile Include="..\CrossBufferLayer\FrameBuffer.cpp" />
     <ClCompile Include="..\CrossBufferLayer\KeyboardSupport.cpp" />
     <ClCompile Include="..\CrossBufferLayer\MouseSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\MathSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\ObjectSupport.cpp" />
-    <ClCompile Include="..\JackieEngineLayer\RasterizingSupport.cpp" />
     <ClCompile Include="..\Main.cpp" />
     <ClCompile Include="CrossBufferForWindows.cpp" />
     <ClCompile Include="D3DHelper.cpp" />
@@ -167,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="..\CrossBufferLayer\BasicDataTypeDeclarations.h" />
     <ClInclude Include="..\CrossBufferLayer\CrossBuffer.h" />
+    <ClInclude Include="..\CrossBufferLayer\FileSupport.h" />
     <ClInclude Include="..\CrossBufferLayer\FontSupport.h" />
     <ClInclude Include="..\CrossBufferLayer\FPSCalculator.h" />
     <ClInclude Include="..\CrossBufferLayer\FrameBuffer.h" />

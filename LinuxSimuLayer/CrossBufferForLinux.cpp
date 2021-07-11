@@ -32,6 +32,9 @@ csbool lastFrameInfinityState = csFalse;
 
 int main( int argc, char* args[] )
 {
+    extern string CS_OperatingSystem;
+    CS_OperatingSystem = "Linux";
+
     sdlHelper.CreateWindow(WindowTitle);
 
     i32 GlobalCenterX = sdlHelper.leftMargin + (sdlHelper.windowWidth  / 2);

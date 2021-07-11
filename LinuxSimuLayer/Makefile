@@ -1,9 +1,11 @@
 # Target and Object Declarations
 Target = CrossBufferForLinux
 Objects = ../Main.o
+Objects += ../CrossBufferLayer/FileSupport.o
 Objects += ../CrossBufferLayer/FrameBuffer.o
 Objects += ../CrossBufferLayer/MouseSupport.o
 Objects += ../CrossBufferLayer/KeyboardSupport.o
+Objects += ../CrossBufferLayer/BasicDataTypeDeclarations.o
 Objects += ../CrossBufferLayer/FPSCalculator.o
 Objects += ../JackieEngineLayer/ObjectSupport.o
 Objects += ../JackieEngineLayer/RasterizingSupport.o
