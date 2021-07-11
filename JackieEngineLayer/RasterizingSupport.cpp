@@ -57,7 +57,8 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		// ptrfb->PrintLn("Flat Bottom Triangle");
 		if(v1->pos.x > v2->pos.x) swap(v1, v2);
 		DrawFlatBottomTriangle(
-			v0->pos.y, v2->pos.y, v0->pos.x, v1->pos.x, v2->pos.x, r, g, b
+			*v0, *v1, *v2,
+			r, g, b
 		);
 		return;
 	}
@@ -66,7 +67,8 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		// ptrfb->PrintLn("Flat Top Triangle");
 		if(v0->pos.x > v1->pos.x) swap(v0, v1);
 		DrawFlatTopTriangle(
-			v0->pos.y, v2->pos.y, v0->pos.x, v1->pos.x, v2->pos.x, r, g, b
+			*v0, *v1, *v2,
+			r, g, b
 		);
 		return;
 	}
@@ -78,13 +80,11 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 	if(vcenter.pos.x < v1->pos.x){
 		// ptrfb->PrintLn("Longside Left Triangle");
 		DrawFlatBottomTriangle(
-			v0->pos.y, v1->pos.y,
-			v0->pos.x, vcenter.pos.x, v1->pos.x,
+			*v0, vcenter, *v1,
 			r, g, b
 		);
 		DrawFlatTopTriangle(
-			v1->pos.y, v2->pos.y,
-			vcenter.pos.x, v1->pos.x, v2->pos.x,
+			vcenter, *v1, *v2,
 			r, g, b
 		);
 	}
@@ -92,20 +92,24 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 	else{
 		// ptrfb->PrintLn("Longside Right Triangle");
 		DrawFlatBottomTriangle(
-			v0->pos.y, v1->pos.y,
-			v0->pos.x, v1->pos.x, vcenter.pos.x,
+			*v0, *v1, vcenter,
 			r, g, b
 		);
 		DrawFlatTopTriangle(
-			v1->pos.y, v2->pos.y,
-			v1->pos.x, vcenter.pos.x, v2->pos.x,
+			*v1, vcenter, *v2,
 			r, g, b
 		);
 	}
 
 }
 
-void FRasterizer::DrawFlatBottomTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b){
+void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b){
+	f32 yStart = v0_.pos.y;
+	f32 yEnd   = v2_.pos.y;
+	f32 x0_    = v0_.pos.x;
+	f32 x1_    = v1_.pos.x;
+	f32 x2_    = v2_.pos.x;
+	
 	i32 ys = (i32)ceil(yStart - 0.5f);
 	i32 ye = (i32)ceil(yEnd   - 0.5f);
 
@@ -132,7 +136,13 @@ void FRasterizer::DrawFlatBottomTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_,
 	}
 }
 
-void FRasterizer::DrawFlatTopTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b){
+void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b){
+	f32 yStart = v0_.pos.y;
+	f32 yEnd   = v2_.pos.y;
+	f32 x0_    = v0_.pos.x;
+	f32 x1_    = v1_.pos.x;
+	f32 x2_    = v2_.pos.x;
+	
 	i32 ys = (i32)ceil(yStart - 0.5f);
 	i32 ye = (i32)ceil(yEnd   - 0.5f);
 
