@@ -268,10 +268,25 @@ void CS_FrameBuffer::LoadFromBMP(string fileName){
     file.Close();
 
     BitmapHeader *header = (BitmapHeader*)(file.buffer);
-    Pixel        *pixel  = (Pixel*)(file.buffer + sizeof(header));
+    Pixel        *pixel  = (Pixel*)(file.buffer + sizeof(BitmapHeader));
 
-    this->PrintLn(sizeof(BitmapHeader));
-    this->PrintLn(header->biBitMode);
-    this->PrintLn(header->biWidth);
-    this->PrintLn(header->biHeight);
+    curX = CS_FB_INIT_CURX;
+    curY = CS_FB_INIT_CURY;
+
+    width = header->biWidth;
+    height = header->biHeight;
+
+    AllocateBuffer(width, height);
+    ClearSelfBuffer();
+
+    for (i32 y = 0; y < header->biHeight; y++) {
+        for (i32 x = 0; x < header->biWidth; x++) {
+            i32 position = y * width + x;
+            redBuffer[position] = pixel->r;
+            greenBuffer[position] = pixel->g;
+            blueBuffer[position] = pixel->b;
+
+            pixel++;
+        }
+    }
 }
