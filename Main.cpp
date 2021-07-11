@@ -7,12 +7,15 @@ FRasterizer       rasterizer;
 f32               walkSpeed = 0.01f;
 f32               mouseSensitivity = 40.0f;
 csbool            rotate = csFalse;
-CS_FrameBuffer    fb2(300, 300);
+CS_FrameBuffer    lena;
 
 FVector4D v0, v1, v2;
 
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
+	// Load Lena
+	lena.LoadFromBMP(CS_Path().join("..").join("Resources").join("Lena.bmp"));
+
 	// Initialize FrameBuffer-required Components
 	camera = FCamera(
 		0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f,
@@ -50,8 +53,6 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	v0 = FVector4D(100.0f, 0.0f, 0.0f, 0.0f);
 	v1 = FVector4D(0.0f, 400.0f, 0.0f, 0.0f);
 	v2 = FVector4D(300.0f, 500.0f, 0.0f, 0.0f);
-
-	fb2.LoadFromBMP(CS_Path().join("..").join("Resources").join("Lena.bmp"));
 }
 
 f32 positionX = 10.0f;
@@ -63,66 +64,68 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		object.Rotate(0.05f * deltaTime, -0.05f * deltaTime, 0.0f);
 	}
 
-	f32 sensitivity = 0.2f;
-	if(kb.IsKeyPressed(CSK_W)){
-		positionY -= sensitivity * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_S)){
-		positionY += sensitivity * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_A)){
-		positionX -= sensitivity * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_D)){
-		positionX += sensitivity * deltaTime;
-	}
-
-	fb.DrawBuffer(fb2, (i32)positionX, (i32)positionY);
+	// // Texture Loading Test
+	// f32 sensitivity = 0.2f;
 	// if(kb.IsKeyPressed(CSK_W)){
-	// 	camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 1.0f) * walkSpeed * deltaTime);
+	// 	positionY -= sensitivity * deltaTime;
 	// }
 	// if(kb.IsKeyPressed(CSK_S)){
-	// 	camera.Walk(FVector4D( 0.0f, 0.0f,  1.0f, 1.0f) * walkSpeed * deltaTime);
+	// 	positionY += sensitivity * deltaTime;
 	// }
 	// if(kb.IsKeyPressed(CSK_A)){
-	// 	camera.Walk(FVector4D(-1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+	// 	positionX -= sensitivity * deltaTime;
 	// }
 	// if(kb.IsKeyPressed(CSK_D)){
-	// 	camera.Walk(FVector4D( 1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+	// 	positionX += sensitivity * deltaTime;
 	// }
-	// if(kb.IsKeyPressed(CSK_Space)){
-	// 	camera.Elevator( walkSpeed * deltaTime);
-	// }
-	// if(kb.IsKeyPressed(CSK_Shift)){
-	// 	camera.Elevator(-walkSpeed * deltaTime);
-	// }
-	// if(kb.IsKeyFirstTimePressed(CSK_R)){
-	// 	rotate = !rotate;
-	// }
-	// camera.Rotate(
-	// 	(f32)mouse.deltaY / (f32)mouse.windowHeight * mouseSensitivity,
-	// 	(f32)mouse.deltaX / (f32)mouse.windowWidth  * mouseSensitivity,
-	// 	0.0f
-	// );
+
+	// fb.DrawBuffer(lena, (i32)positionX, (i32)positionY);
+
+	if(kb.IsKeyPressed(CSK_W)){
+		camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 1.0f) * walkSpeed * deltaTime);
+	}
+	if(kb.IsKeyPressed(CSK_S)){
+		camera.Walk(FVector4D( 0.0f, 0.0f,  1.0f, 1.0f) * walkSpeed * deltaTime);
+	}
+	if(kb.IsKeyPressed(CSK_A)){
+		camera.Walk(FVector4D(-1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+	}
+	if(kb.IsKeyPressed(CSK_D)){
+		camera.Walk(FVector4D( 1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+	}
+	if(kb.IsKeyPressed(CSK_Space)){
+		camera.Elevator( walkSpeed * deltaTime);
+	}
+	if(kb.IsKeyPressed(CSK_Shift)){
+		camera.Elevator(-walkSpeed * deltaTime);
+	}
+	if(kb.IsKeyFirstTimePressed(CSK_R)){
+		rotate = !rotate;
+	}
+	camera.Rotate(
+		(f32)mouse.deltaY / (f32)mouse.windowHeight * mouseSensitivity,
+		(f32)mouse.deltaX / (f32)mouse.windowWidth  * mouseSensitivity,
+		0.0f
+	);
 	
 
-	// // Projection and Rasterization
-	// camera.ProjectObject(object);
-	// rasterizer.DrawPoint(object);
-	// rasterizer.DrawTriangle(object);
+	// Projection and Rasterization
+	camera.ProjectObject(object);
+	rasterizer.DrawPoint(object);
+	rasterizer.DrawTriangle(object);
 
-	// // Count FPS and Print Things
-	// fpsCalculator.Count(deltaTime);
-	// fb.Print(mouse.ToString());
-	// fb.PrintLn(kb.ToString());
+	// Count FPS and Print Things
+	fpsCalculator.Count(deltaTime);
+	fb.Print(mouse.ToString());
+	fb.PrintLn(kb.ToString());
 
-	// fb.PrintLn(fpsCalculator.ToString());
+	fb.PrintLn(fpsCalculator.ToString());
 
-	// fb.PrintLn("Press WASD to Move, Rotate the Mouse to Look.");
-	// fb.PrintLn("Press R to Rotate the Cube, Space to Rise, Shift to Fall\n");
+	fb.PrintLn("Press WASD to Move, Rotate the Mouse to Look.");
+	fb.PrintLn("Press R to Rotate the Cube, Space to Rise, Shift to Fall\n");
 	
-	// fb.PrintLn(camera.ToString());
-	// fb.PrintLn(object.ToString());
+	fb.PrintLn(camera.ToString());
+	fb.PrintLn(object.ToString());
 
 	// // Interpolation test
 	// FVector4D a(0.0f, 0.0f, 0.0f, 1.0f), b(1.0f, 1.0f, 1.0f, 1.0f);
