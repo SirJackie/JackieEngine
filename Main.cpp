@@ -51,9 +51,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	v1 = FVector4D(0.0f, 400.0f, 0.0f, 0.0f);
 	v2 = FVector4D(300.0f, 500.0f, 0.0f, 0.0f);
 
-	fb2.ClearSelfBuffer(255, 0, 0);
-	fb2.PrintLn("The Second FrameBuffer.");
-	fb2.LoadFromBMP(CS_Path().join("..").join("Resources").join("TestingBitmap.bmp"));
+	fb2.LoadFromBMP(CS_Path().join("..").join("Resources").join("Lena.bmp"));
 }
 
 f32 positionX = 10.0f;
