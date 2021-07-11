@@ -257,6 +257,15 @@ const FVectorTex operator-(const FVectorTex& a, const FVectorTex& b){
 	);
 }
 
+// Interpolate To
+const FVectorTex FVectorTex::InterpolateTo(const FVectorTex& b, f32 alpha) const{
+	const FVectorTex& a = *this;
+	return FVectorTex(
+		a.pos.InterpolateTo(b.pos, alpha),
+		a.tex.InterpolateTo(b.tex, alpha)
+	);
+}
+
 
 /*
 ** FMatrix4D

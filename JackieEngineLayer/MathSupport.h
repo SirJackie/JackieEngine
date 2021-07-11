@@ -86,6 +86,9 @@ public:
 	// Vector-Vector Calculation
 	friend const FVectorTex operator+(const FVectorTex& a, const FVectorTex& b);
 	friend const FVectorTex operator-(const FVectorTex& a, const FVectorTex& b);
+
+	// Interpolation
+	const FVectorTex InterpolateTo(const FVectorTex& b, f32 alpha) const;
 };
 
 

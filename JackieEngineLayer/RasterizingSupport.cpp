@@ -44,47 +44,47 @@ void FRasterizer::DrawRadiusCube(i32 x, i32 y, i32 radius){
 	);
 }
 
-void FRasterizer::DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const FVector4D& v2_, ui8 r, ui8 g, ui8 b){
+void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b){
 	// Sort Y Order
-	FVector4D *v0 = (FVector4D*)&v0_;
-	FVector4D *v1 = (FVector4D*)&v1_;
-	FVector4D *v2 = (FVector4D*)&v2_;
-	if(v0->y > v1->y) swap(v0, v1);
-	if(v0->y > v2->y) swap(v0, v2);
-	if(v1->y > v2->y) swap(v1, v2);
+	FVectorTex *v0 = (FVectorTex*)&v0_;
+	FVectorTex *v1 = (FVectorTex*)&v1_;
+	FVectorTex *v2 = (FVectorTex*)&v2_;
+	if(v0->pos.y > v1->pos.y) swap(v0, v1);
+	if(v0->pos.y > v2->pos.y) swap(v0, v2);
+	if(v1->pos.y > v2->pos.y) swap(v1, v2);
 
-	if(v1->y == v2->y){
+	if(v1->pos.y == v2->pos.y){
 		// ptrfb->PrintLn("Flat Bottom Triangle");
-		if(v1->x > v2->x) swap(v1, v2);
+		if(v1->pos.x > v2->pos.x) swap(v1, v2);
 		DrawFlatBottomTriangle(
-			v0->y, v2->y, v0->x, v1->x, v2->x, r, g, b
+			v0->pos.y, v2->pos.y, v0->pos.x, v1->pos.x, v2->pos.x, r, g, b
 		);
 		return;
 	}
 
-	if(v0->y == v1->y){
+	if(v0->pos.y == v1->pos.y){
 		// ptrfb->PrintLn("Flat Top Triangle");
-		if(v0->x > v1->x) swap(v0, v1);
+		if(v0->pos.x > v1->pos.x) swap(v0, v1);
 		DrawFlatTopTriangle(
-			v0->y, v2->y, v0->x, v1->x, v2->x, r, g, b
+			v0->pos.y, v2->pos.y, v0->pos.x, v1->pos.x, v2->pos.x, r, g, b
 		);
 		return;
 	}
 
-	f32 m = v1->y - v0->y;
-	f32 n = v2->y - v0->y;
-	FVector4D vcenter = v0->InterpolateTo(*v2, m / n);
+	f32 m = v1->pos.y - v0->pos.y;
+	f32 n = v2->pos.y - v0->pos.y;
+	FVectorTex vcenter = v0->InterpolateTo(*v2, m / n);
 	
-	if(vcenter.x < v1->x){
+	if(vcenter.pos.x < v1->pos.x){
 		// ptrfb->PrintLn("Longside Left Triangle");
 		DrawFlatBottomTriangle(
-			v0->y, v1->y,
-			v0->x, vcenter.x, v1->x,
+			v0->pos.y, v1->pos.y,
+			v0->pos.x, vcenter.pos.x, v1->pos.x,
 			r, g, b
 		);
 		DrawFlatTopTriangle(
-			v1->y, v2->y,
-			vcenter.x, v1->x, v2->x,
+			v1->pos.y, v2->pos.y,
+			vcenter.pos.x, v1->pos.x, v2->pos.x,
 			r, g, b
 		);
 	}
@@ -92,13 +92,13 @@ void FRasterizer::DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const
 	else{
 		// ptrfb->PrintLn("Longside Right Triangle");
 		DrawFlatBottomTriangle(
-			v0->y, v1->y,
-			v0->x, v1->x, vcenter.x,
+			v0->pos.y, v1->pos.y,
+			v0->pos.x, v1->pos.x, vcenter.pos.x,
 			r, g, b
 		);
 		DrawFlatTopTriangle(
-			v1->y, v2->y,
-			v1->x, vcenter.x, v2->x,
+			v1->pos.y, v2->pos.y,
+			v1->pos.x, vcenter.pos.x, v2->pos.x,
 			r, g, b
 		);
 	}
@@ -180,9 +180,9 @@ void FRasterizer::DrawPoint(FObject& obj_)
 void FRasterizer::DrawTriangle(FObject& obj_){
 	for(ui32 i = 0; i < obj_.il.size(); i+=3){
 		DrawTriangle(
-			obj_.tmpVl[ obj_.il[i    ] ].pos,
-			obj_.tmpVl[ obj_.il[i + 1] ].pos,
-			obj_.tmpVl[ obj_.il[i + 2] ].pos,
+			obj_.tmpVl[ obj_.il[i    ] ],
+			obj_.tmpVl[ obj_.il[i + 1] ],
+			obj_.tmpVl[ obj_.il[i + 2] ],
 			255, 255, 255
 		);
 	}
