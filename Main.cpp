@@ -14,7 +14,7 @@ FVector4D v0, v1, v2;
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	// Load Lena
-	lena.LoadFromBMP(CS_Path().join("..").join("Resources").join("Lena.bmp"));
+	// lena.LoadFromBMP(CS_Path().join("..").join("Resources").join("Lena.bmp"));
 
 	// Initialize FrameBuffer-required Components
 	camera = FCamera(

@@ -64,6 +64,13 @@ const FVector3D operator-(const FVector3D& a, const FVector3D& b){
 	};
 }
 
+// Interpolation
+const FVector3D FVector3D::InterpolateTo(const FVector3D& to, f32 alpha) const {
+	const FVector3D& from = *this;
+	FVector3D delta  = to - from;
+	return from + delta * alpha;
+}
+
 
 /*
 ** FVector4D
@@ -189,6 +196,46 @@ const FVector4D FVector4D::InterpolateTo(const FVector4D& to, f32 alpha) const {
 	return from + delta * alpha;
 }
 
+
+/*
+** FVectorTex
+*/
+FVectorTex::FVectorTex(FVector4D pos_, FVector3D tex_){
+	;
+}
+
+// Vector-Scalar Calculation
+const FVectorTex operator+(const FVectorTex& a, const f32 b){
+	;
+}
+const FVectorTex operator+(const f32 b, const FVectorTex& a){
+	;
+}
+const FVectorTex operator-(const FVectorTex& a, const f32 b){
+	;
+}
+const FVectorTex operator-(const f32 b, const FVectorTex& a){
+	;
+}
+const FVectorTex operator*(const FVectorTex& a, const f32 b){
+	;
+}
+const FVectorTex operator*(const f32 b, const FVectorTex& a){
+	;
+}
+
+// Vector-Vector Calculation
+const FVectorTex operator+(const FVectorTex& a, const FVectorTex& b){
+	;
+}
+const FVectorTex operator-(const FVectorTex& a, const FVectorTex& b){
+	;
+}
+
+
+/*
+** FMatrix4D
+*/
 
 FMatrix4D::FMatrix4D(
 	f32 m11_, f32 m12_, f32 m13_, f32 m14_,
