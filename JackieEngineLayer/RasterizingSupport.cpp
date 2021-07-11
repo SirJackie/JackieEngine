@@ -44,7 +44,7 @@ void FRasterizer::DrawRadiusCube(i32 x, i32 y, i32 radius){
 	);
 }
 
-void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b){
+void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b, CS_FrameBuffer& texture){
 	// Sort Y Order
 	FVectorTex *v0 = (FVectorTex*)&v0_;
 	FVectorTex *v1 = (FVectorTex*)&v1_;
@@ -58,7 +58,8 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		if(v1->pos.x > v2->pos.x) swap(v1, v2);
 		DrawFlatBottomTriangle(
 			*v0, *v1, *v2,
-			r, g, b
+			r, g, b,
+			texture
 		);
 		return;
 	}
@@ -68,7 +69,8 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		if(v0->pos.x > v1->pos.x) swap(v0, v1);
 		DrawFlatTopTriangle(
 			*v0, *v1, *v2,
-			r, g, b
+			r, g, b,
+			texture
 		);
 		return;
 	}
@@ -81,11 +83,13 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		// ptrfb->PrintLn("Longside Left Triangle");
 		DrawFlatBottomTriangle(
 			*v0, vcenter, *v1,
-			r, g, b
+			r, g, b,
+			texture
 		);
 		DrawFlatTopTriangle(
 			vcenter, *v1, *v2,
-			r, g, b
+			r, g, b,
+			texture
 		);
 	}
 
@@ -93,17 +97,19 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		// ptrfb->PrintLn("Longside Right Triangle");
 		DrawFlatBottomTriangle(
 			*v0, *v1, vcenter,
-			r, g, b
+			r, g, b,
+			texture
 		);
 		DrawFlatTopTriangle(
 			*v1, vcenter, *v2,
-			r, g, b
+			r, g, b,
+			texture
 		);
 	}
 
 }
 
-void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b){
+void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b, CS_FrameBuffer& texture){
 	f32 yTop    = v0_.pos.y;
 	f32 yBottom = v2_.pos.y;
 
@@ -126,9 +132,9 @@ void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex
 		for(i32 x = ceil(xLeft.pos.x - 0.5f); x < ceil(xRight.pos.x); x++){
 			CS_PutPixel(
 				*ptrfb, xNow.pos.x, xNow.pos.y,
-				(ui8)(xNow.tex.x * 255.0f),
-				(ui8)(xNow.tex.y * 255.0f),
-				255
+				texture.redBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x],
+				texture.greenBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x],
+				texture.blueBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x]
 			);
 
 			xNow = xNow + xNowStep;
@@ -139,7 +145,7 @@ void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex
 	}
 }
 
-void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b){
+void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b, CS_FrameBuffer& texture){
 	f32 yTop    = v0_.pos.y;
 	f32 yBottom = v2_.pos.y;
 
@@ -162,9 +168,9 @@ void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v
 		for(i32 x = ceil(xLeft.pos.x - 0.5f); x < ceil(xRight.pos.x); x++){
 			CS_PutPixel(
 				*ptrfb, xNow.pos.x, xNow.pos.y,
-				(ui8)(xNow.tex.x * 255.0f),
-				(ui8)(xNow.tex.y * 255.0f),
-				255
+				texture.redBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x],
+				texture.greenBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x],
+				texture.blueBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x]
 			);
 
 			xNow = xNow + xNowStep;
@@ -193,13 +199,14 @@ void FRasterizer::DrawPoint(FObject& obj_)
 	}
 }
 
-void FRasterizer::DrawTriangle(FObject& obj_){
+void FRasterizer::DrawTriangle(FObject& obj_, CS_FrameBuffer& texture){
 	for(ui32 i = 0; i < obj_.il.size(); i+=3){
 		DrawTriangle(
 			obj_.tmpVl[ obj_.il[i    ] ],
 			obj_.tmpVl[ obj_.il[i + 1] ],
 			obj_.tmpVl[ obj_.il[i + 2] ],
-			255, 255, 255
+			255, 255, 255,
+			texture
 		);
 	}
 }

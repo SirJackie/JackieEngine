@@ -24,10 +24,10 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	rasterizer = FRasterizer(fb);
 
 	// Create Cube's Vertecies
-	object.Add(FVectorTex(FVector4D(-1.0, -1.0,  1.0, 1.0), FVector3D(1.0f, 0.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D( 1.0, -1.0,  1.0, 1.0), FVector3D(0.0f, 1.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D( 1.0,  1.0,  1.0, 1.0), FVector3D(1.0f, 0.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D(-1.0,  1.0,  1.0, 1.0), FVector3D(1.0f, 1.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D(-1.0, -1.0,  1.0, 1.0), FVector3D(   0.0f, 512.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D( 1.0, -1.0,  1.0, 1.0), FVector3D( 512.0f, 512.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D( 1.0,  1.0,  1.0, 1.0), FVector3D( 512.0f,   0.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D(-1.0,  1.0,  1.0, 1.0), FVector3D(   0.0f,   0.0f, 1.0f)));
 	object.Add(FVectorTex(FVector4D(-1.0, -1.0, -1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
 	object.Add(FVectorTex(FVector4D( 1.0, -1.0, -1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
 	object.Add(FVectorTex(FVector4D( 1.0,  1.0, -1.0, 1.0), FVector3D(0.0f, 1.0f, 1.0f)));
@@ -42,8 +42,8 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// object.Add(3, 7, 0);  // l2
 	// object.Add(1, 5, 2);  // r1
 	// object.Add(6, 2, 5);  // r2
-	object.Add(3, 2, 7);  // t1
-	object.Add(6, 7, 2);  // t2
+	// object.Add(3, 2, 7);  // t1
+	// object.Add(6, 7, 2);  // t2
 	// object.Add(5, 0, 4);  // b1
 	// object.Add(5, 1, 0);  // b2
 
@@ -112,7 +112,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Projection and Rasterization
 	camera.ProjectObject(object);
 	rasterizer.DrawPoint(object);
-	rasterizer.DrawTriangle(object);
+	rasterizer.DrawTriangle(object, lena);
 
 	// // Count FPS and Print Things
 	// fpsCalculator.Count(deltaTime);
