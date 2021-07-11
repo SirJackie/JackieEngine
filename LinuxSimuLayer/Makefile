@@ -1,5 +1,5 @@
 # Target and Object Declarations
-Target = CrossBufferForLinux
+Target = CrossBufferForLinux.out
 Objects = ../Main.o
 Objects += ../CrossBufferLayer/FileSupport.o
 Objects += ../CrossBufferLayer/FrameBuffer.o

@@ -1,4 +1,3 @@
-/LinuxSimuLayer/CrossBufferForLinux
+/LinuxSimuLayer/CrossBufferForLinux.out
 *.o
 /LinuxSimuLayer/.vscode/
-/.vscode/

@@ -10,7 +10,7 @@ def FindAllTheCpp():
 
 def GenerateMakefile(middleContent):
     topContent = '''# Target and Object Declarations
-Target = CrossBufferForLinux
+Target = CrossBufferForLinux.out
 '''
 
     bottomContent = '''
