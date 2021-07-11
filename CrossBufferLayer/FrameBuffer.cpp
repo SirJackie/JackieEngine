@@ -279,7 +279,7 @@ void CS_FrameBuffer::LoadFromBMP(string fileName){
     AllocateBuffer(width, height);
     ClearSelfBuffer();
 
-    for (i32 y = 0; y < header->biHeight; y++) {
+    for (i32 y = header->biHeight - 1; y >=0; y--) {
         for (i32 x = 0; x < header->biWidth; x++) {
             i32 position = y * width + x;
             redBuffer[position] = pixel->r;
