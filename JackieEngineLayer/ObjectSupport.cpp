@@ -36,5 +36,9 @@ string FObject::ToString(){
 		ss << tmpVl[i].pos.ToString();
 	}
 
+	for(i32 i = 0; i < vl.size(); i++){
+		ss << tmpVl[i].tex.ToString();
+	}
+
 	return ss.str();
 }

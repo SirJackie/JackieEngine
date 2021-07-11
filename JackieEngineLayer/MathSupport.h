@@ -77,6 +77,7 @@ public:
 	FVector4D pos;
 	FVector3D tex;
 
+	FVectorTex();
 	FVectorTex(FVector4D pos_, FVector3D tex_);
 
 	// Vector-Scalar Calculation
@@ -95,6 +96,8 @@ public:
 
 	// Interpolation
 	const FVectorTex InterpolateTo(const FVectorTex& b, f32 alpha) const;
+
+	string ToString() const;
 };
 
 

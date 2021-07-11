@@ -224,6 +224,12 @@ const FVector4D FVector4D::InterpolateTo(const FVector4D& to, f32 alpha) const {
 /*
 ** FVectorTex
 */
+
+FVectorTex::FVectorTex(){
+	pos = FVector4D(0.0f, 0.0f, 0.0f, 1.0f);
+	tex = FVector3D(0.0f, 0.0f, 1.0f);
+}
+
 FVectorTex::FVectorTex(FVector4D pos_, FVector3D tex_){
 	pos = pos_;
 	tex = tex_;
@@ -301,6 +307,10 @@ const FVectorTex FVectorTex::InterpolateTo(const FVectorTex& b, f32 alpha) const
 		a.pos.InterpolateTo(b.pos, alpha),
 		a.tex.InterpolateTo(b.tex, alpha)
 	);
+}
+
+string FVectorTex::ToString() const{
+	return pos.ToString() + tex.ToString();
 }
 
 
