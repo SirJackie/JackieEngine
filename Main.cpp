@@ -111,8 +111,8 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	// Projection and Rasterization
 	camera.ProjectObject(object);
-	// rasterizer.DrawPoint(object);
-	// rasterizer.DrawTriangle(object);
+	rasterizer.DrawPoint(object);
+	rasterizer.DrawTriangle(object);
 
 	// // Count FPS and Print Things
 	// fpsCalculator.Count(deltaTime);
@@ -164,49 +164,49 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// 	255, 255, 255
 	// );
 
-	f32 triangleMovingSpeed = 0.5f;
+	// f32 triangleMovingSpeed = 0.5f;
 
-	// WASD
-	if(kb.IsKeyPressed(CSK_W)){
-		v0.pos.y -= triangleMovingSpeed * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_S)){
-		v0.pos.y += triangleMovingSpeed * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_A)){
-		v0.pos.x -= triangleMovingSpeed * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_D)){
-		v0.pos.x += triangleMovingSpeed * deltaTime;
-	}
+	// // WASD
+	// if(kb.IsKeyPressed(CSK_W)){
+	// 	v0.pos.y -= triangleMovingSpeed * deltaTime;
+	// }
+	// if(kb.IsKeyPressed(CSK_S)){
+	// 	v0.pos.y += triangleMovingSpeed * deltaTime;
+	// }
+	// if(kb.IsKeyPressed(CSK_A)){
+	// 	v0.pos.x -= triangleMovingSpeed * deltaTime;
+	// }
+	// if(kb.IsKeyPressed(CSK_D)){
+	// 	v0.pos.x += triangleMovingSpeed * deltaTime;
+	// }
 
-	// TFGH
-	if(kb.IsKeyPressed(CSK_T)){
-		v1.pos.y -= triangleMovingSpeed * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_G)){
-		v1.pos.y += triangleMovingSpeed * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_F)){
-		v1.pos.x -= triangleMovingSpeed * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_H)){
-		v1.pos.x += triangleMovingSpeed * deltaTime;
-	}
+	// // TFGH
+	// if(kb.IsKeyPressed(CSK_T)){
+	// 	v1.pos.y -= triangleMovingSpeed * deltaTime;
+	// }
+	// if(kb.IsKeyPressed(CSK_G)){
+	// 	v1.pos.y += triangleMovingSpeed * deltaTime;
+	// }
+	// if(kb.IsKeyPressed(CSK_F)){
+	// 	v1.pos.x -= triangleMovingSpeed * deltaTime;
+	// }
+	// if(kb.IsKeyPressed(CSK_H)){
+	// 	v1.pos.x += triangleMovingSpeed * deltaTime;
+	// }
 
-	// IJKL
-	if(kb.IsKeyPressed(CSK_I)){
-		v2.pos.y -= triangleMovingSpeed * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_K)){
-		v2.pos.y += triangleMovingSpeed * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_J)){
-		v2.pos.x -= triangleMovingSpeed * deltaTime;
-	}
-	if(kb.IsKeyPressed(CSK_L)){
-		v2.pos.x += triangleMovingSpeed * deltaTime;
-	}
+	// // IJKL
+	// if(kb.IsKeyPressed(CSK_I)){
+	// 	v2.pos.y -= triangleMovingSpeed * deltaTime;
+	// }
+	// if(kb.IsKeyPressed(CSK_K)){
+	// 	v2.pos.y += triangleMovingSpeed * deltaTime;
+	// }
+	// if(kb.IsKeyPressed(CSK_J)){
+	// 	v2.pos.x -= triangleMovingSpeed * deltaTime;
+	// }
+	// if(kb.IsKeyPressed(CSK_L)){
+	// 	v2.pos.x += triangleMovingSpeed * deltaTime;
+	// }
 
-	rasterizer.DrawTriangle(v0, v1, v2, 255, 255, 255);
+	// rasterizer.DrawTriangle(v0, v1, v2, 255, 255, 255);
 }

@@ -131,15 +131,11 @@ void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex
 				255
 			);
 
-			ptrfb->PrintLn(xNow.tex.x);
-
 			xNow = xNow + xNowStep;
 		}
 		
 		xLeft  = xLeft  + xLeftStep;
 		xRight = xRight + xRightStep;
-
-		// ptrfb->PrintLn(xRight.tex.x);
 	}
 }
 

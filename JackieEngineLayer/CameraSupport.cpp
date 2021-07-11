@@ -96,8 +96,8 @@ void FCamera::ProjectObject(FObject& obj) {
 	CalcTotal();
 	obj.tmpVl = obj.vl;
 	for (ui32 i = 0; i < obj.tmpVl.size(); i++) {
-		obj.tmpVl[i] = obj.tmpVl[i] * TotalMatrix;
-		obj.tmpVl[i].DevideByW();
+		obj.tmpVl[i].pos = obj.tmpVl[i].pos * TotalMatrix;
+		obj.tmpVl[i].pos.DevideByW();
 	}
 }
 
