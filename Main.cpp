@@ -56,8 +56,8 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	fb2.LoadFromBMP(CS_Path().join("..").join("Resources").join("TestingBitmap.bmp"));
 }
 
-i32 positionX = 10;
-i32 positionY = 10;
+f32 positionX = 10.0f;
+f32 positionY = 10.0f;
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	// Rotation
@@ -65,21 +65,21 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		object.Rotate(0.05f * deltaTime, -0.05f * deltaTime, 0.0f);
 	}
 
-	i32 sensitivity = 2;
+	f32 sensitivity = 0.2f;
 	if(kb.IsKeyPressed(CSK_W)){
-		positionY -= sensitivity;
+		positionY -= sensitivity * deltaTime;
 	}
 	if(kb.IsKeyPressed(CSK_S)){
-		positionY += sensitivity;
+		positionY += sensitivity * deltaTime;
 	}
 	if(kb.IsKeyPressed(CSK_A)){
-		positionX -= sensitivity;
+		positionX -= sensitivity * deltaTime;
 	}
 	if(kb.IsKeyPressed(CSK_D)){
-		positionX += sensitivity;
+		positionX += sensitivity * deltaTime;
 	}
 
-	fb.DrawBuffer(fb2, positionX, positionY);
+	fb.DrawBuffer(fb2, (i32)positionX, (i32)positionY);
 	// if(kb.IsKeyPressed(CSK_W)){
 	// 	camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 1.0f) * walkSpeed * deltaTime);
 	// }

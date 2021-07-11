@@ -280,13 +280,17 @@ void CS_FrameBuffer::LoadFromBMP(string fileName){
     ClearSelfBuffer();
 
     for (i32 y = header->biHeight - 1; y >=0; y--) {
-        for (i32 x = 0; x < header->biWidth; x++) {
-            i32 position = y * width + x;
-            redBuffer[position] = pixel->r;
-            greenBuffer[position] = pixel->g;
-            blueBuffer[position] = pixel->b;
-
-            pixel++;
+        ui8* rpEnd = redBuffer + y * width + width;
+        for (
+            ui8 *rp = redBuffer + y * width,
+                *gp = greenBuffer + y * width,
+                *bp = blueBuffer + y * width;
+            rp < rpEnd;
+            rp++ && gp++ && bp++ && pixel++
+        ) {
+            *rp = pixel->r;
+            *gp = pixel->g;
+            *bp = pixel->b;
         }
     }
 }
