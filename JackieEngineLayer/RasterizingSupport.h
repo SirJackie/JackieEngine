@@ -18,9 +18,6 @@ public:
 	void DrawTriangle(const FVector4D& v0_, const FVector4D& v1_, const FVector4D& v2_, ui8 r, ui8 g, ui8 b);
 	void DrawFlatBottomTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b);
 	void DrawFlatTopTriangle(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b);
-	// void DrawTriangleTex(const FVector4D& v0_, const FVector4D& v1_, const FVector4D& v2_, ui8 r, ui8 g, ui8 b);
-	// void DrawFlatBottomTriangleTex(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b);
-	// void DrawFlatTopTriangleTex(f32 yStart, f32 yEnd, f32 x0_, f32 x1_, f32 x2_, ui8 r, ui8 g, ui8 b);
 
 	void Draw3DPoint(FVector3D& point);
 	void Draw4DPoint(FVector4D& point);

@@ -173,16 +173,16 @@ void FRasterizer::Draw4DPoint(FVector4D& point){
 void FRasterizer::DrawPoint(FObject& obj_)
 {
 	for (ui32 i = 0; i < obj_.tmpVl.size(); i++) {
-		Draw4DPoint(obj_.tmpVl[i]);
+		Draw4DPoint(obj_.tmpVl[i].pos);
 	}
 }
 
 void FRasterizer::DrawTriangle(FObject& obj_){
 	for(ui32 i = 0; i < obj_.il.size(); i+=3){
 		DrawTriangle(
-			obj_.tmpVl[ obj_.il[i    ] ],
-			obj_.tmpVl[ obj_.il[i + 1] ],
-			obj_.tmpVl[ obj_.il[i + 2] ],
+			obj_.tmpVl[ obj_.il[i    ] ].pos,
+			obj_.tmpVl[ obj_.il[i + 1] ].pos,
+			obj_.tmpVl[ obj_.il[i + 2] ].pos,
 			255, 255, 255
 		);
 	}

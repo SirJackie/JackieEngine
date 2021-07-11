@@ -14,7 +14,7 @@ FVector4D v0, v1, v2;
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	// Load Lena
-	// lena.LoadFromBMP(CS_Path().join("..").join("Resources").join("Lena.bmp"));
+	lena.LoadFromBMP(CS_Path().join("..").join("Resources").join("Lena.bmp"));
 
 	// Initialize FrameBuffer-required Components
 	camera = FCamera(
@@ -24,14 +24,14 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	rasterizer = FRasterizer(fb);
 
 	// Create Cube's Vertecies
-	object.Add(FVector4D(-1.0, -1.0,  1.0, 1.0));
-	object.Add(FVector4D( 1.0, -1.0,  1.0, 1.0));
-	object.Add(FVector4D( 1.0,  1.0,  1.0, 1.0));
-	object.Add(FVector4D(-1.0,  1.0,  1.0, 1.0));
-	object.Add(FVector4D(-1.0, -1.0, -1.0, 1.0));
-	object.Add(FVector4D( 1.0, -1.0, -1.0, 1.0));
-	object.Add(FVector4D( 1.0,  1.0, -1.0, 1.0));
-	object.Add(FVector4D(-1.0,  1.0, -1.0, 1.0));
+	object.Add(FVectorTex(FVector4D(-1.0, -1.0,  1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D( 1.0, -1.0,  1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D( 1.0,  1.0,  1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D(-1.0,  1.0,  1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D(-1.0, -1.0, -1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D( 1.0, -1.0, -1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D( 1.0,  1.0, -1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D(-1.0,  1.0, -1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
 
 	// Create Cube's Indecies
 	object.Add(0, 1, 3);  // n1
