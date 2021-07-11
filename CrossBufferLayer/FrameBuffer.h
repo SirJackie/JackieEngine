@@ -11,37 +11,34 @@
 #pragma pack(push,1)
 
 
-struct BitmapFileHeader {
+struct BitmapHeader {
     /*定义为'BM'，标识bmp文件*/
-    ui16 bfType;
+    ui8 bfID[2];
     /*整个BMP文件的大小*/
-    ui32 bfSize;
-    ui16 bfReserved1;
-    ui16 bfReserved2;
+    ui32 bfFileSize;
+    ui16 bfReserved[2];
     /*偏移数，即 位图文件头+位图信息头+调色板 的大小*/
-    ui32 bfOffBits;
-};
+    ui32 bfHeaderSize;
 
-struct BitmapInfoHeader {
     /*位图信息头的大小，为40*/
-    ui32 biSize;
+    ui32 biInfoSize;
     /*位图的宽度，单位是像素(像素结构体为tagRGBTRIPLE)*/
-    ui64 biWidth;
+    ui32 biWidth;
     /*位图的高度，单位是像素(像素结构体为tagRGBTRIPLE)*/
-    i64 biHeight;
+    i32 biHeight;
     /*目标设备的级别，必须为1(2字节)*/
     ui16 biPlanes;
     /*每个像素的位数1-黑白图，4-16色，8-256色，24-真彩色*/
     /*应该是根据这个选择后面的像素结构体*/
-    ui16 biBitCount;
+    ui16 biBitMode;
     /*压缩方式，BI_RGB(0)为不压缩*/
     ui32 biCompression;
     /*位图全部像素占用的字节数(所有像素结构体总和)，BI_RGB时可设为0*/
     ui32 biSizeImage;
     /*水平分辨率(像素/米) 0即可*/
-    ui64 biXPelsPerMeter;
+    ui32 biXPelsPerMeter;
     /*垂直分辨率(像素/米) 0即可*/
-    ui64 biYPelsPerMeter;
+    ui32 biYPelsPerMeter;
     /*位图使用的颜色数,如果为0，则颜色数为2的biBitCount次方。0即可*/
     ui32 biClrUsed;
     /*重要的颜色数，0代表所有颜色都重要。0即可*/
@@ -52,24 +49,6 @@ struct Pixel {
     ui8 b;
     ui8 g;
     ui8 r;
-};
-
-struct BitmapHeader {
-    char id[2];
-    long filesize;
-    short reserved[2]; //int reserved[2];
-    long headersize;
-    long infoSize;
-    long wd;
-    long dp;
-    short biPlanes; //int biPlans;
-    short bits; //int bits;
-    long biCompression;
-    long biSizeImage;
-    long biXPelsPerMeter;
-    long biYPelsPerMeter;
-    long biClrUsed;
-    long biClrImportant;
 };
 
 class CS_FrameBuffer

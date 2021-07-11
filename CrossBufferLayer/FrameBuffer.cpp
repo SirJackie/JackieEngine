@@ -267,13 +267,11 @@ void CS_FrameBuffer::LoadFromBMP(string fileName){
     file.Read();
     file.Close();
 
-    BitmapFileHeader *fileHeader = (BitmapFileHeader*)(file.buffer);
-    BitmapInfoHeader *infoHeader = (BitmapInfoHeader*)(fileHeader + sizeof(BitmapFileHeader));
-    Pixel            *pixel      = (Pixel*)(infoHeader + sizeof(BitmapInfoHeader));
-
-    BitmapHeader *header = (BitmapHeader*)file.buffer;
+    BitmapHeader *header = (BitmapHeader*)(file.buffer);
+    Pixel        *pixel  = (Pixel*)(file.buffer + sizeof(header));
 
     this->PrintLn(sizeof(BitmapHeader));
-    this->PrintLn(sizeof(BitmapInfoHeader) + sizeof(BitmapFileHeader));
-    this->PrintLn((i32)header->biSizeImage);
+    this->PrintLn(header->biBitMode);
+    this->PrintLn(header->biWidth);
+    this->PrintLn(header->biHeight);
 }
