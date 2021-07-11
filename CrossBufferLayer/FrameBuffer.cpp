@@ -204,12 +204,22 @@ void CS_FrameBuffer::DrawBuffer(CS_FrameBuffer& from, i32 toXStart, i32 toYStart
 
     // Drawing
     for(i32 toY = toYStart, fromY = fromYStart; toY < toYEnd; toY++ && fromY++){
-        for(i32 toX = toXStart, fromX = fromXStart; toX < toXEnd; toX++ && fromX++){
-            i32 toPosition = toY * to.width + toX;
-            i32 fromPosition = fromY * from.width + fromX;
-            to.redBuffer[toPosition] = from.redBuffer[fromPosition];
-            to.greenBuffer[toPosition] = from.greenBuffer[fromPosition];
-            to.blueBuffer[toPosition] = from.blueBuffer[fromPosition];
+        i32 toPosition = toY * to.width + toXStart;
+        i32 fromPosition = fromY * from.width + fromXStart;
+        i32 toPositionEnd = toY * to.width + toXEnd;
+        ui8 *trEnd = to.redBuffer + toPositionEnd;
+        for(
+            ui8 *tr = to.redBuffer + toPosition,
+                *tg = to.greenBuffer + toPosition,
+                *tb = to.blueBuffer + toPosition,
+                *fr = from.redBuffer + fromPosition,
+                *fg = from.greenBuffer + fromPosition,
+                *fb = from.blueBuffer + fromPosition;
+            tr < trEnd;
+            tr++ && tg++ && tb++ && fr++ && fg++ && fb++
+        ){
+            
+            *tr = *fr; *tg = *fg; *tb = *fb;
         }
     }
 }
