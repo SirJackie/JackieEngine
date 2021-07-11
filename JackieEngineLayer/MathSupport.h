@@ -27,6 +27,8 @@ public:
 	friend const FVector3D operator-(const f32 b, const FVector3D& a);
 	friend const FVector3D operator*(const FVector3D& a, const f32 b);
 	friend const FVector3D operator*(const f32 b, const FVector3D& a);
+	friend const FVector3D operator/(const FVector3D& a, const f32 b);
+	friend const FVector3D operator/(const f32 b, const FVector3D& a);
 
 	// Vector-Vector Calculation
 	friend const FVector3D operator+(const FVector3D& a, const FVector3D& b);
@@ -57,6 +59,8 @@ public:
 	friend const FVector4D operator-(const f32 b, const FVector4D& a);
 	friend const FVector4D operator*(const FVector4D& a, const f32 b);
 	friend const FVector4D operator*(const f32 b, const FVector4D& a);
+	friend const FVector4D operator/(const FVector4D& a, const f32 b);
+	friend const FVector4D operator/(const f32 b, const FVector4D& a);
 
 	// Vector-Vector Calculation
 	friend const FVector4D operator+(const FVector4D& a, const FVector4D& b);
@@ -82,6 +86,8 @@ public:
 	friend const FVectorTex operator-(const f32 b, const FVectorTex& a);
 	friend const FVectorTex operator*(const FVectorTex& a, const f32 b);
 	friend const FVectorTex operator*(const f32 b, const FVectorTex& a);
+	friend const FVectorTex operator/(const FVectorTex& a, const f32 b);
+	friend const FVectorTex operator/(const f32 b, const FVectorTex& a);
 
 	// Vector-Vector Calculation
 	friend const FVectorTex operator+(const FVectorTex& a, const FVectorTex& b);

@@ -106,32 +106,42 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b){
 	f32 yStart = v0_.pos.y;
 	f32 yEnd   = v2_.pos.y;
-	f32 x0_    = v0_.pos.x;
-	f32 x1_    = v1_.pos.x;
-	f32 x2_    = v2_.pos.x;
-	
 	i32 ys = (i32)ceil(yStart - 0.5f);
 	i32 ye = (i32)ceil(yEnd   - 0.5f);
 
-	f32 xStartStep = (x1_ - x0_) / (yEnd - yStart);
-	f32 xEndStep   = (x2_ - x0_) / (yEnd - yStart);
+	FVectorTex xStartStep = (v1_ - v0_) / (yEnd - yStart);
+	FVectorTex xEndStep   = (v2_ - v0_) / (yEnd - yStart);
 
-	f32 xStart = x0_;
-	f32 xEnd   = x0_;
+	FVectorTex xStart = v0_;
+	FVectorTex xEnd   = v0_;
 
 	// Pre-steping
-	xStart += ((float)ys - 0.5f - yStart) * xStartStep;
-	xEnd   += ((float)ys - 0.5f - yStart) * xEndStep;
+	xStart = xStart + ((float)ys - 0.5f - yStart) * xStartStep;
+	xEnd   = xEnd   + ((float)ys - 0.5f - yStart) * xEndStep;
 
 	for(i32 y = ys; y < ye; y++){
-		xStart += xStartStep;
-		xEnd   += xEndStep;
+		xStart = xStart + xStartStep;
+		xEnd   = xEnd   + xEndStep;
 
-		i32 xs = (i32)ceil(xStart - 0.5f);
-		i32 xe = (i32)ceil(xEnd   - 0.5f);
 
-		for(i32 x = xs; x < xe; x++){
-			CS_PutPixel(*ptrfb, x, y, r, g, b);
+
+		f32 xStep = xEnd.pos.x - xStart.pos.x;
+		FVectorTex xLineVecStep = (xEnd - xStart) / xStep;
+		FVectorTex xLineStartVec = xStart;
+
+		f32 xLineStart = xStart.pos.x;
+		f32 xLineEnd   = xEnd.pos.x;
+
+		i32 xs = (i32)ceil(xLineStart - 0.5f);
+		i32 xe = (i32)ceil(xLineEnd   - 0.5f);
+
+		// Pre-stepping
+		xLineStartVec = xLineStartVec + ((float)xs - 0.5f - xLineStart) * xStartStep;
+
+		for(i32 i = xs; i < xe; i++){
+			xLineStartVec = xLineStartVec + xLineVecStep;
+
+			CS_PutPixel(*ptrfb, xLineStartVec.pos.x, xLineStartVec.pos.y, r, g, b);
 		}
 	}
 }

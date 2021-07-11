@@ -51,6 +51,16 @@ const FVector3D operator*(const f32 b, const FVector3D& a){
 		a.x * b, a.y * b, a.z
 	);
 }
+const FVector3D operator/(const FVector3D& a, const f32 b){
+	return FVector3D(
+		a.x / b, a.y / b, a.z
+	);
+}
+const FVector3D operator/(const f32 b, const FVector3D& a){
+	return FVector3D(
+		b / a.x, b / a.y, a.z
+	);
+}
 
 // Vector-Vector Calculation
 const FVector3D operator+(const FVector3D& a, const FVector3D& b){
@@ -166,6 +176,20 @@ const FVector4D operator*(const f32 b, const FVector4D& a)
 	);
 }
 
+const FVector4D operator/(const FVector4D& a, const f32 b)
+{
+	return FVector4D(
+		a.x / b, a.y / b, a.z / b, a.w
+	);
+}
+
+const FVector4D operator/(const f32 b, const FVector4D& a)
+{
+	return FVector4D(
+		b / a.x, b / a.y, b / a.z, a.w
+	);
+}
+
 // Vector-Vector Calculation
 const FVector4D operator+(const FVector4D& a, const FVector4D& b){
 	return FVector4D(
@@ -240,6 +264,19 @@ const FVectorTex operator*(const f32 b, const FVectorTex& a){
 	return FVectorTex(
 		a.pos * b,
 		a.tex * b
+	);
+}
+
+const FVectorTex operator/(const FVectorTex& a, const f32 b){
+	return FVectorTex(
+		a.pos / b,
+		a.tex / b
+	);
+}
+const FVectorTex operator/(const f32 b, const FVectorTex& a){
+	return FVectorTex(
+		b / a.pos,
+		b / a.pos
 	);
 }
 
