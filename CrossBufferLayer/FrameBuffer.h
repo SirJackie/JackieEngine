@@ -31,6 +31,8 @@ public:
          ();
     void ClearSelfBuffer
          ();
+    void ClearSelfBuffer
+         (ui8 r, ui8 g, ui8 b);
     void CopySameSizeBuffer
          (const CS_FrameBuffer& from, CS_FrameBuffer& to);
 
@@ -50,6 +52,7 @@ public:
         const i8* str, const i32 x, const i32 y,
         const ui8 r, const ui8 g, const ui8 b
     );
+    void DrawBuffer(CS_FrameBuffer& from, i32 toXStart, i32 toYStart);
     void Print(const i8* str);
     void Print(string str);
     void Print(csbool csb);

@@ -23,6 +23,13 @@ void CS_FrameBuffer::ClearSelfBuffer()
     CS_Memset(blueBuffer, 0, width * height);
 }
 
+void CS_FrameBuffer::ClearSelfBuffer(ui8 r, ui8 g, ui8 b)
+{
+    CS_Memset(redBuffer, r, width * height);
+    CS_Memset(greenBuffer, g, width * height);
+    CS_Memset(blueBuffer, b, width * height);
+}
+
 void CS_FrameBuffer::CopySameSizeBuffer(const CS_FrameBuffer& from, CS_FrameBuffer& to)
 {
     if(  (from.width * from.height)  <  (to.width * to.height)  ){
@@ -163,6 +170,46 @@ void CS_FrameBuffer::DrawString
         }
         else {
             xNow+= CS_FONT_WIDTH;
+        }
+    }
+}
+
+void CS_FrameBuffer::DrawBuffer(CS_FrameBuffer& from, i32 toXStart, i32 toYStart){
+    CS_FrameBuffer& to = *this;
+    i32 fromXStart = 0;
+    i32 fromYStart = 0;
+
+    // Start Calculating Borders
+    i32 toYEnd, toXEnd;
+
+    if(toYStart < 0){
+        i32 deltaY = -toYStart;
+        toYStart = 0;
+        fromYStart += deltaY;
+        toYEnd = CS_iclamp(toYStart, toYStart + from.height - deltaY, to.height);
+    }
+    else{
+        toYEnd = CS_iclamp(toYStart, toYStart + from.height, to.height);
+    }
+
+    if(toXStart < 0){
+        i32 deltaX = -toXStart;
+        toXStart = 0;
+        fromXStart += deltaX;
+        toXEnd = CS_iclamp(toXStart, toXStart + from.width - deltaX, to.width);
+    }
+    else{
+        toXEnd = CS_iclamp(toXStart, toXStart + from.width, to.width);
+    }
+
+    // Drawing
+    for(i32 toY = toYStart, fromY = fromYStart; toY < toYEnd; toY++ && fromY++){
+        for(i32 toX = toXStart, fromX = fromXStart; toX < toXEnd; toX++ && fromX++){
+            i32 toPosition = toY * to.width + toX;
+            i32 fromPosition = fromY * from.width + fromX;
+            to.redBuffer[toPosition] = from.redBuffer[fromPosition];
+            to.greenBuffer[toPosition] = from.greenBuffer[fromPosition];
+            to.blueBuffer[toPosition] = from.blueBuffer[fromPosition];
         }
     }
 }

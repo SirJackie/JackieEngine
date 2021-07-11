@@ -7,6 +7,7 @@ FRasterizer       rasterizer;
 f32               walkSpeed = 0.01f;
 f32               mouseSensitivity = 40.0f;
 csbool            rotate = csFalse;
+CS_FrameBuffer    fb2(300, 300);
 
 FVector4D v0, v1, v2;
 
@@ -49,7 +50,13 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	v0 = FVector4D(100.0f, 0.0f, 0.0f, 0.0f);
 	v1 = FVector4D(0.0f, 400.0f, 0.0f, 0.0f);
 	v2 = FVector4D(300.0f, 500.0f, 0.0f, 0.0f);
+
+	fb2.ClearSelfBuffer(255, 0, 0);
+	fb2.PrintLn("The Second FrameBuffer.");
 }
+
+i32 positionX = 10;
+i32 positionY = 10;
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	// Rotation
@@ -57,57 +64,72 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		object.Rotate(0.05f * deltaTime, -0.05f * deltaTime, 0.0f);
 	}
 
+	i32 sensitivity = 2;
 	if(kb.IsKeyPressed(CSK_W)){
-		camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 1.0f) * walkSpeed * deltaTime);
+		positionY -= sensitivity;
 	}
 	if(kb.IsKeyPressed(CSK_S)){
-		camera.Walk(FVector4D( 0.0f, 0.0f,  1.0f, 1.0f) * walkSpeed * deltaTime);
+		positionY += sensitivity;
 	}
 	if(kb.IsKeyPressed(CSK_A)){
-		camera.Walk(FVector4D(-1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+		positionX -= sensitivity;
 	}
 	if(kb.IsKeyPressed(CSK_D)){
-		camera.Walk(FVector4D( 1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+		positionX += sensitivity;
 	}
-	if(kb.IsKeyPressed(CSK_Space)){
-		camera.Elevator( walkSpeed * deltaTime);
-	}
-	if(kb.IsKeyPressed(CSK_Shift)){
-		camera.Elevator(-walkSpeed * deltaTime);
-	}
-	if(kb.IsKeyFirstTimePressed(CSK_R)){
-		rotate = !rotate;
-	}
-	camera.Rotate(
-		(f32)mouse.deltaY / (f32)mouse.windowHeight * mouseSensitivity,
-		(f32)mouse.deltaX / (f32)mouse.windowWidth  * mouseSensitivity,
-		0.0f
-	);
+
+	fb.DrawBuffer(fb2, positionX, positionY);
+	// if(kb.IsKeyPressed(CSK_W)){
+	// 	camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 1.0f) * walkSpeed * deltaTime);
+	// }
+	// if(kb.IsKeyPressed(CSK_S)){
+	// 	camera.Walk(FVector4D( 0.0f, 0.0f,  1.0f, 1.0f) * walkSpeed * deltaTime);
+	// }
+	// if(kb.IsKeyPressed(CSK_A)){
+	// 	camera.Walk(FVector4D(-1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+	// }
+	// if(kb.IsKeyPressed(CSK_D)){
+	// 	camera.Walk(FVector4D( 1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+	// }
+	// if(kb.IsKeyPressed(CSK_Space)){
+	// 	camera.Elevator( walkSpeed * deltaTime);
+	// }
+	// if(kb.IsKeyPressed(CSK_Shift)){
+	// 	camera.Elevator(-walkSpeed * deltaTime);
+	// }
+	// if(kb.IsKeyFirstTimePressed(CSK_R)){
+	// 	rotate = !rotate;
+	// }
+	// camera.Rotate(
+	// 	(f32)mouse.deltaY / (f32)mouse.windowHeight * mouseSensitivity,
+	// 	(f32)mouse.deltaX / (f32)mouse.windowWidth  * mouseSensitivity,
+	// 	0.0f
+	// );
 	
 
-	// Projection and Rasterization
-	camera.ProjectObject(object);
-	rasterizer.DrawPoint(object);
-	rasterizer.DrawTriangle(object);
+	// // Projection and Rasterization
+	// camera.ProjectObject(object);
+	// rasterizer.DrawPoint(object);
+	// rasterizer.DrawTriangle(object);
 
-	// Count FPS and Print Things
-	fpsCalculator.Count(deltaTime);
-	fb.Print(mouse.ToString());
-	fb.PrintLn(kb.ToString());
+	// // Count FPS and Print Things
+	// fpsCalculator.Count(deltaTime);
+	// fb.Print(mouse.ToString());
+	// fb.PrintLn(kb.ToString());
 
-	fb.PrintLn(fpsCalculator.ToString());
+	// fb.PrintLn(fpsCalculator.ToString());
 
-	fb.PrintLn("Press WASD to Move, Rotate the Mouse to Look.");
-	fb.PrintLn("Press R to Rotate the Cube, Space to Rise, Shift to Fall\n");
+	// fb.PrintLn("Press WASD to Move, Rotate the Mouse to Look.");
+	// fb.PrintLn("Press R to Rotate the Cube, Space to Rise, Shift to Fall\n");
 	
-	fb.PrintLn(camera.ToString());
-	fb.PrintLn(object.ToString());
+	// fb.PrintLn(camera.ToString());
+	// fb.PrintLn(object.ToString());
 
-	// Interpolation test
+	// // Interpolation test
 	// FVector4D a(0.0f, 0.0f, 0.0f, 1.0f), b(1.0f, 1.0f, 1.0f, 1.0f);
 	// fb.PrintLn(a.InterpolateTo(b, 0.3f).ToString());
 
-	// Draw Triangle Test
+	// // Draw Triangle Test
 	// // Flat Triangles Seperated
 	// rasterizer.DrawFlatBottomTriangle(0.0f, 400.0f, 100.0f, 0.0f, 300.0f, 255, 255, 255);
 	// rasterizer.DrawFlatTopTriangle(0.0f, 400.0f, 0.0f, 300.0f, 100.0f, 255, 255, 255);
