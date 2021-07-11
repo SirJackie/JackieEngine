@@ -104,45 +104,40 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 }
 
 void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b){
-	f32 yStart = v0_.pos.y;
-	f32 yEnd   = v2_.pos.y;
-	i32 ys = (i32)ceil(yStart - 0.5f);
-	i32 ye = (i32)ceil(yEnd   - 0.5f);
+	f32 yTop    = v0_.pos.y;
+	f32 yBottom = v2_.pos.y;
 
-	FVectorTex xStartStep = (v1_ - v0_) / (yEnd - yStart);
-	FVectorTex xEndStep   = (v2_ - v0_) / (yEnd - yStart);
+	FVectorTex xLeftStep  = (v1_ - v0_) / (yBottom - yTop);
+	FVectorTex xRightStep = (v2_ - v0_) / (yBottom - yTop);
 
-	FVectorTex xStart = v0_;
-	FVectorTex xEnd   = v0_;
+	FVectorTex xLeft  = v0_;
+	FVectorTex xRight = v0_;
 
 	// Pre-steping
-	xStart = xStart + ((float)ys - 0.5f - yStart) * xStartStep;
-	xEnd   = xEnd   + ((float)ys - 0.5f - yStart) * xEndStep;
+	xLeft  = xLeft  + (ceil(yTop - 0.5f) + 0.5f - yTop) * xLeftStep;
+	xRight = xRight + (ceil(yTop - 0.5f) + 0.5f - yTop) * xRightStep;
 
-	for(i32 y = ys; y < ye; y++){
-		xStart = xStart + xStartStep;
-		xEnd   = xEnd   + xEndStep;
+	for(i32 y = ceil(yTop - 0.5f); y < ceil(yBottom - 0.5f); y++){
 
+		FVectorTex xNowStep = (xRight - xLeft) / (xRight.pos.x - xLeft.pos.x);
+		FVectorTex xNow     = xLeft;
+		xNow = xNow + (ceil(xLeft.pos.x - 0.5f) + 0.5f - xLeft.pos.x) * xNowStep; // Pre-stepping
 
+		for(i32 x = ceil(xLeft.pos.x - 0.5f); x < ceil(xRight.pos.x); x++){
+			CS_PutPixel(
+				*ptrfb, xNow.pos.x, xNow.pos.y,
+				(ui8)(xNow.tex.x),
+				(ui8)(xNow.tex.y),
+				255
+			);
 
-		f32 xStep = xEnd.pos.x - xStart.pos.x;
-		FVectorTex xLineVecStep = (xEnd - xStart) / xStep;
-		FVectorTex xLineStartVec = xStart;
-
-		f32 xLineStart = xStart.pos.x;
-		f32 xLineEnd   = xEnd.pos.x;
-
-		i32 xs = (i32)ceil(xLineStart - 0.5f);
-		i32 xe = (i32)ceil(xLineEnd   - 0.5f);
-
-		// Pre-stepping
-		xLineStartVec = xLineStartVec + ((float)xs - 0.5f - xLineStart) * xStartStep;
-
-		for(i32 i = xs; i < xe; i++){
-			xLineStartVec = xLineStartVec + xLineVecStep;
-
-			CS_PutPixel(*ptrfb, xLineStartVec.pos.x, xLineStartVec.pos.y, r, g, b);
+			xNow = xNow + xNowStep;
 		}
+		
+		xLeft  = xLeft  + xLeftStep;
+		xRight = xRight + xRightStep;
+
+		ptrfb->PrintLn(xRight.tex.x);
 	}
 }
 
