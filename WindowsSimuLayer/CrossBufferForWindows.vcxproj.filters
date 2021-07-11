@@ -25,6 +25,12 @@
     <Filter Include="源文件\WindowsSimuLayer">
       <UniqueIdentifier>{de2754aa-126a-4230-a8d2-c50208a68c07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\JackieEngineLayer">
+      <UniqueIdentifier>{b8e31f1b-b411-440c-92ba-67c72aadcf57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\JackieEngineLayer">
+      <UniqueIdentifier>{9c9e94bb-c95c-4367-bf76-cfba49f67350}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CrossBufferForWindows.rc">
@@ -76,6 +82,21 @@
     <ClInclude Include="..\CrossBufferLayer\MouseSupport.h">
       <Filter>头文件\CrossBufferLayer</Filter>
     </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\CameraSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\JackieEngine.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\MathSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\ObjectSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JackieEngineLayer\RasterizingSupport.h">
+      <Filter>头文件\JackieEngineLayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrossBufferForWindows.cpp">
@@ -110,6 +131,18 @@
     </ClCompile>
     <ClCompile Include="..\CrossBufferLayer\MouseSupport.cpp">
       <Filter>源文件\CrossBufferLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\CameraSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\MathSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\ObjectSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\RasterizingSupport.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
