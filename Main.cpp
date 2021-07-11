@@ -53,6 +53,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	fb2.ClearSelfBuffer(255, 0, 0);
 	fb2.PrintLn("The Second FrameBuffer.");
+	fb2.LoadFromBMP(CS_Path().join("..").join("Resources").join("TestingBitmap.bmp"));
 }
 
 i32 positionX = 10;

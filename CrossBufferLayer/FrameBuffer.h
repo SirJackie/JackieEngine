@@ -3,6 +3,7 @@
 
 #include "BasicDataTypeDeclarations.h"
 #include "FontSupport.h"
+#include "FileSupport.h"
 
 #define CS_FB_INIT_CURX 10
 #define CS_FB_INIT_CURY 10
@@ -47,15 +48,18 @@ public:
         const char& ch, const i32 xStart, const i32 yStart,
         const ui8 r, const ui8 g, const ui8 b
     );
+
     void DrawString
     (
         const i8* str, const i32 x, const i32 y,
         const ui8 r, const ui8 g, const ui8 b
     );
+
     void DrawBuffer(CS_FrameBuffer& from, i32 toXStart, i32 toYStart);
     void Print(const i8* str);
     void Print(string str);
     void Print(csbool csb);
+
     template<class T>
     void Print(T x)
     {
@@ -72,6 +76,8 @@ public:
         Print(x);
         Print("\n");
     }
+
+    void LoadFromBMP(string fileName);
 };
 
 inline void CS_PutPixel

@@ -2,7 +2,6 @@
 #define __CSBF_FileSupport__
 
 #include "BasicDataTypeDeclarations.h"
-#include "FrameBuffer.h"
 
 typedef char csFileMode;
 const csFileMode csReadBinary = 0;
