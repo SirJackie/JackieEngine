@@ -24,14 +24,14 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	rasterizer = FRasterizer(fb);
 
 	// Create Cube's Vertecies
-	object.Add(FVectorTex(FVector4D(-1.0, -1.0,  1.0, 1.0), FVector3D(   0.0f, 512.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D( 1.0, -1.0,  1.0, 1.0), FVector3D( 512.0f, 512.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D( 1.0,  1.0,  1.0, 1.0), FVector3D( 512.0f,   0.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D(-1.0,  1.0,  1.0, 1.0), FVector3D(   0.0f,   0.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D(-1.0, -1.0, -1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D( 1.0, -1.0, -1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D( 1.0,  1.0, -1.0, 1.0), FVector3D(0.0f, 1.0f, 1.0f)));
-	object.Add(FVectorTex(FVector4D(-1.0,  1.0, -1.0, 1.0), FVector3D(1.0f, 1.0f, 1.0f)));
+	object.Add(FVectorTex(FVector4D(-1.0, -1.0,  1.0, 1.0), FVector3D(0.0f, 1.0f, 1.0f)));  // v0
+	object.Add(FVectorTex(FVector4D( 1.0, -1.0,  1.0, 1.0), FVector3D(1.0f, 1.0f, 1.0f)));  // v1
+	object.Add(FVectorTex(FVector4D( 1.0,  1.0,  1.0, 1.0), FVector3D(1.0f, 0.0f, 1.0f)));  // v2
+	object.Add(FVectorTex(FVector4D(-1.0,  1.0,  1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));  // v3
+	object.Add(FVectorTex(FVector4D(-1.0, -1.0, -1.0, 1.0), FVector3D(1.0f, 1.0f, 1.0f)));  // v4
+	object.Add(FVectorTex(FVector4D( 1.0, -1.0, -1.0, 1.0), FVector3D(0.0f, 1.0f, 1.0f)));  // v5
+	object.Add(FVectorTex(FVector4D( 1.0,  1.0, -1.0, 1.0), FVector3D(0.0f, 0.0f, 1.0f)));  // v6
+	object.Add(FVectorTex(FVector4D(-1.0,  1.0, -1.0, 1.0), FVector3D(1.0f, 0.0f, 1.0f)));  // v7
 
 	// Create Cube's Indecies
 	object.Add(0, 1, 3);  // n1
@@ -42,8 +42,8 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	//object.Add(3, 7, 0);  // l2
 	//object.Add(1, 5, 2);  // r1
 	//object.Add(6, 2, 5);  // r2
-	//object.Add(3, 2, 7);  // t1
-	//object.Add(6, 7, 2);  // t2
+	object.Add(3, 2, 7);  // t1
+	object.Add(6, 7, 2);  // t2
 	//object.Add(5, 0, 4);  // b1
 	//object.Add(5, 1, 0);  // b2
 
