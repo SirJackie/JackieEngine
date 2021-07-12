@@ -89,7 +89,7 @@ void FCamera::CalcTotal() {
 }
 
 string FCamera::ToString() {
-	return "FCamera:\n" + TotalMatrix.ToString();
+	return "FCamera:\n" + position.ToString() + rotation.ToString();
 }
 
 void FCamera::ProjectObject(FObject& obj) {

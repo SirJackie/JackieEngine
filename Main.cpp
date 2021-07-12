@@ -18,7 +18,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	// Initialize FrameBuffer-required Components
 	camera = FCamera(
-		0.0f, 0.0f, 5.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 5.0f, -1.85897f, 0.217391f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
 	);
 	rasterizer = FRasterizer(fb);
@@ -115,17 +115,17 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	rasterizer.DrawTriangle(object, lena);
 
 	// // Count FPS and Print Things
-	// fpsCalculator.Count(deltaTime);
-	// fb.Print(mouse.ToString());
-	// fb.PrintLn(kb.ToString());
+	fpsCalculator.Count(deltaTime);
+	fb.Print(mouse.ToString());
+	fb.PrintLn(kb.ToString());
 
-	// fb.PrintLn(fpsCalculator.ToString());
+	fb.PrintLn(fpsCalculator.ToString());
 
-	// fb.PrintLn("Press WASD to Move, Rotate the Mouse to Look.");
-	// fb.PrintLn("Press R to Rotate the Cube, Space to Rise, Shift to Fall\n");
+	fb.PrintLn("Press WASD to Move, Rotate the Mouse to Look.");
+	fb.PrintLn("Press R to Rotate the Cube, Space to Rise, Shift to Fall\n");
 	
-	// fb.PrintLn(camera.ToString());
-	// fb.PrintLn(object.ToString());
+	fb.PrintLn(camera.ToString());
+	fb.PrintLn(object.ToString());
 
 	// // Interpolation test
 	// FVector4D a(0.0f, 0.0f, 0.0f, 1.0f), b(1.0f, 1.0f, 1.0f, 1.0f);
