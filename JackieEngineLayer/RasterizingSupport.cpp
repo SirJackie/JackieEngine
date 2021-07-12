@@ -190,11 +190,24 @@ void FRasterizer::DrawPoint(FObject& obj_)
 
 void FRasterizer::DrawTriangle(FObject& obj_, CS_FrameBuffer& texture){
 	for(ui32 i = 0; i < obj_.il.size(); i+=3){
-		DrawTriangle(
-			obj_.tmpVl[ obj_.il[i    ] ],
-			obj_.tmpVl[ obj_.il[i + 1] ],
-			obj_.tmpVl[ obj_.il[i + 2] ],
-			texture
-		);
+		
+		FVectorTex& v0 = obj_.tmpVl[obj_.il[i    ]];
+		FVectorTex& v1 = obj_.tmpVl[obj_.il[i + 1]];
+		FVectorTex& v2 = obj_.tmpVl[obj_.il[i + 2]];
+
+		FVector4D vSide1 = (v1 - v0).pos;
+		FVector4D vSide2 = (v2 - v0).pos;
+		FVector4D vNormol = vSide1 % vSide2;
+		FVector4D& fp = v0.pos;
+		f32 dotProduct = vNormol * fp;
+
+		if (dotProduct > 0.0f) {
+			DrawTriangle(
+				v0,
+				v1,
+				v2,
+				texture
+			);
+		}
 	}
 }
