@@ -18,7 +18,7 @@ public:
 	void DrawTriangle           (const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture);
 	void DrawFlatBottomTriangle (const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture);
 	void DrawFlatTopTriangle    (const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture);
-	void DrawFlatTriangle       (i32 yStart, i32 yEnd, FVectorTex xLeft, FVectorTex xRight, const FVectorTex& xLeftStep, const FVectorTex& xRightStep);
+	void DrawFlatTriangle       (i32 yTop, i32 yBottom, FVectorTex xLeft, FVectorTex xRight, const FVectorTex& xLeftStep, const FVectorTex& xRightStep, CS_FrameBuffer& texture);
 
 	void Draw3DPoint(FVector3D& point);
 	void Draw4DPoint(FVector4D& point);

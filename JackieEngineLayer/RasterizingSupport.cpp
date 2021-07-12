@@ -104,80 +104,71 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 }
 
 void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture){
-	f32 yTop    = v0_.pos.y;
-	f32 yBottom = v2_.pos.y;
+	const f32& yTop    = v0_.pos.y;
+	const f32& yBottom = v2_.pos.y;
 
 	FVectorTex xLeftStep  = (v1_ - v0_) / (yBottom - yTop);
 	FVectorTex xRightStep = (v2_ - v0_) / (yBottom - yTop);
 
-	FVectorTex xLeft  = v0_;
-	FVectorTex xRight = v0_;
-
-	// Pre-steping
-	xLeft  = xLeft  + (ceil(yTop - 0.5f) + 0.5f - yTop) * xLeftStep;
-	xRight = xRight + (ceil(yTop - 0.5f) + 0.5f - yTop) * xRightStep;
-
-	for(i32 y = ceil(yTop - 0.5f); y < ceil(yBottom - 0.5f); y++){
-
-		FVectorTex xNowStep = (xRight - xLeft) / (xRight.pos.x - xLeft.pos.x);
-		FVectorTex xNow     = xLeft;
-		xNow = xNow + (ceil(xLeft.pos.x - 0.5f) + 0.5f - xLeft.pos.x) * xNowStep; // Pre-stepping
-
-		for(i32 x = ceil(xLeft.pos.x - 0.5f); x < ceil(xRight.pos.x); x++){
-			CS_PutPixel(
-				*ptrfb, xNow.pos.x, xNow.pos.y,
-				texture.redBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x],
-				texture.greenBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x],
-				texture.blueBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x]
-			);
-
-			xNow = xNow + xNowStep;
-		}
-		
-		xLeft  = xLeft  + xLeftStep;
-		xRight = xRight + xRightStep;
-	}
+	DrawFlatTriangle(
+		ceil(yTop - 0.5f),
+		ceil(yBottom - 0.5f),
+		v0_,  // xLeft
+		v0_,  // xRight
+		xLeftStep,
+		xRightStep,
+		texture
+	);
 }
 
 void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture){
-	f32 yTop    = v0_.pos.y;
-	f32 yBottom = v2_.pos.y;
+	const f32& yTop    = v0_.pos.y;
+	const f32& yBottom = v2_.pos.y;
 
 	FVectorTex xLeftStep  = (v2_ - v0_) / (yBottom - yTop);
 	FVectorTex xRightStep = (v2_ - v1_) / (yBottom - yTop);
 
-	FVectorTex xLeft  = v0_;
-	FVectorTex xRight = v1_;
+	DrawFlatTriangle(
+		ceil(yTop - 0.5f),
+		ceil(yBottom - 0.5f),
+		v0_,  // xLeft
+		v1_,  // xRight
+		xLeftStep,
+		xRightStep,
+		texture
+	);
+}
 
+void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVectorTex xRight, const FVectorTex& xLeftStep, const FVectorTex& xRightStep, CS_FrameBuffer& texture)
+{
 	// Pre-steping
-	xLeft  = xLeft  + (ceil(yTop - 0.5f) + 0.5f - yTop) * xLeftStep;
-	xRight = xRight + (ceil(yTop - 0.5f) + 0.5f - yTop) * xRightStep;
+	xLeft  = xLeft +  ((float)yTop + 0.5f - yTop) * xLeftStep;
+	xRight = xRight + ((float)yTop + 0.5f - yTop) * xRightStep;
 
-	for(i32 y = ceil(yTop - 0.5f); y < ceil(yBottom - 0.5f); y++){
+	for (i32 y = yTop; y < yBottom; y++) {
 
 		FVectorTex xNowStep = (xRight - xLeft) / (xRight.pos.x - xLeft.pos.x);
-		FVectorTex xNow     = xLeft;
-		xNow = xNow + (ceil(xLeft.pos.x - 0.5f) + 0.5f - xLeft.pos.x) * xNowStep; // Pre-stepping
+		FVectorTex xNow = xLeft;
+		xNow = xNow + (xLeft.pos.x + 0.5f - xLeft.pos.x) * xNowStep; // Pre-stepping
 
-		for(i32 x = ceil(xLeft.pos.x - 0.5f); x < ceil(xRight.pos.x); x++){
+		for (i32 x = ceil(xLeft.pos.x - 0.5f); x < ceil(xRight.pos.x); x++) {
+			i32 position = CS_iclamp(0, xNow.tex.y, texture.height - 1) *
+						   texture.width +
+						   CS_iclamp(0, xNow.tex.x, texture.width - 1);
+
 			CS_PutPixel(
 				*ptrfb, xNow.pos.x, xNow.pos.y,
-				texture.redBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x],
-				texture.greenBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x],
-				texture.blueBuffer[(i32)xNow.tex.y * texture.width + (i32)xNow.tex.x]
+				texture.redBuffer   [position],
+				texture.greenBuffer [position],
+				texture.blueBuffer  [position]
 			);
 
 			xNow = xNow + xNowStep;
 		}
-		
-		xLeft  = xLeft  + xLeftStep;
+
+		xLeft = xLeft + xLeftStep;
 		xRight = xRight + xRightStep;
 	}
-}
-
-void FRasterizer::DrawFlatTriangle(i32 yStart, i32 yEnd, FVectorTex xLeft, FVectorTex xRight, const FVectorTex& xLeftStep, const FVectorTex& xRightStep)
-{
-	;
 }
 
 void FRasterizer::Draw3DPoint(FVector3D& point){
