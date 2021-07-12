@@ -113,8 +113,8 @@ void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex
 	DrawFlatTriangle(
 		ceil(yTop - 0.5f),
 		ceil(yBottom - 0.5f),
-		v0_,  // xLeft
-		v0_,  // xRight
+		v0_ + (ceil(yTop - 0.5f) + 0.5f - yTop) * xLeftStep,   // xLeft  with Pre-stepping
+		v0_ + (ceil(yTop - 0.5f) + 0.5f - yTop) * xRightStep,  // xRight with Pre-stepping
 		xLeftStep,
 		xRightStep,
 		texture
@@ -131,8 +131,8 @@ void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v
 	DrawFlatTriangle(
 		ceil(yTop - 0.5f),
 		ceil(yBottom - 0.5f),
-		v0_,  // xLeft
-		v1_,  // xRight
+		v0_ + (ceil(yTop - 0.5f) + 0.5f - yTop) * xLeftStep,   // xLeft  with Pre-stepping
+		v1_ + (ceil(yTop - 0.5f) + 0.5f - yTop) * xRightStep,  // xRight with Pre-stepping
 		xLeftStep,
 		xRightStep,
 		texture
@@ -141,10 +141,6 @@ void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v
 
 void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVectorTex xRight, const FVectorTex& xLeftStep, const FVectorTex& xRightStep, CS_FrameBuffer& texture)
 {
-	// Pre-steping
-	xLeft  = xLeft +  ((float)yTop + 0.5f - yTop) * xLeftStep;
-	xRight = xRight + ((float)yTop + 0.5f - yTop) * xRightStep;
-
 	for (i32 y = yTop; y < yBottom; y++) {
 
 		FVectorTex xNowStep = (xRight - xLeft) / (xRight.pos.x - xLeft.pos.x);
