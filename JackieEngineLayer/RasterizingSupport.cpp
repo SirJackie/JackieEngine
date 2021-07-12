@@ -44,7 +44,7 @@ void FRasterizer::DrawRadiusCube(i32 x, i32 y, i32 radius){
 	);
 }
 
-void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b, CS_FrameBuffer& texture){
+void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture){
 	// Sort Y Order
 	FVectorTex *v0 = (FVectorTex*)&v0_;
 	FVectorTex *v1 = (FVectorTex*)&v1_;
@@ -58,7 +58,6 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		if(v1->pos.x > v2->pos.x) swap(v1, v2);
 		DrawFlatBottomTriangle(
 			*v0, *v1, *v2,
-			r, g, b,
 			texture
 		);
 		return;
@@ -69,7 +68,6 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		if(v0->pos.x > v1->pos.x) swap(v0, v1);
 		DrawFlatTopTriangle(
 			*v0, *v1, *v2,
-			r, g, b,
 			texture
 		);
 		return;
@@ -83,12 +81,10 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		// ptrfb->PrintLn("Longside Left Triangle");
 		DrawFlatBottomTriangle(
 			*v0, vcenter, *v1,
-			r, g, b,
 			texture
 		);
 		DrawFlatTopTriangle(
 			vcenter, *v1, *v2,
-			r, g, b,
 			texture
 		);
 	}
@@ -97,19 +93,17 @@ void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, con
 		// ptrfb->PrintLn("Longside Right Triangle");
 		DrawFlatBottomTriangle(
 			*v0, *v1, vcenter,
-			r, g, b,
 			texture
 		);
 		DrawFlatTopTriangle(
 			*v1, vcenter, *v2,
-			r, g, b,
 			texture
 		);
 	}
 
 }
 
-void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b, CS_FrameBuffer& texture){
+void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture){
 	f32 yTop    = v0_.pos.y;
 	f32 yBottom = v2_.pos.y;
 
@@ -145,7 +139,7 @@ void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex
 	}
 }
 
-void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, ui8 r, ui8 g, ui8 b, CS_FrameBuffer& texture){
+void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture){
 	f32 yTop    = v0_.pos.y;
 	f32 yBottom = v2_.pos.y;
 
@@ -181,6 +175,11 @@ void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v
 	}
 }
 
+void FRasterizer::DrawFlatTriangle(i32 yStart, i32 yEnd, FVectorTex xLeft, FVectorTex xRight, const FVectorTex& xLeftStep, const FVectorTex& xRightStep)
+{
+	;
+}
+
 void FRasterizer::Draw3DPoint(FVector3D& point){
 	DrawRadiusCube(point.x, point.y, 5);
 }
@@ -205,7 +204,6 @@ void FRasterizer::DrawTriangle(FObject& obj_, CS_FrameBuffer& texture){
 			obj_.tmpVl[ obj_.il[i    ] ],
 			obj_.tmpVl[ obj_.il[i + 1] ],
 			obj_.tmpVl[ obj_.il[i + 2] ],
-			255, 255, 255,
 			texture
 		);
 	}
