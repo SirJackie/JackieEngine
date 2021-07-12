@@ -143,11 +143,14 @@ void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVec
 {
 	for (i32 y = yTop; y < yBottom; y++) {
 
+		i32 xLeftInt  = ceil(xLeft.pos.x  - 0.5f);
+		i32 xRightInt = ceil(xRight.pos.x - 0.5f);
+
 		FVectorTex xNowStep = (xRight - xLeft) / (xRight.pos.x - xLeft.pos.x);
 		FVectorTex xNow = xLeft;
-		xNow = xNow + (xLeft.pos.x + 0.5f - xLeft.pos.x) * xNowStep; // Pre-stepping
+		xNow = xNow + ((float)xLeftInt + 0.5f - xLeft.pos.x) * xNowStep;  // Pre-stepping
 
-		for (i32 x = ceil(xLeft.pos.x - 0.5f); x < ceil(xRight.pos.x); x++) {
+		for (i32 x = xLeftInt; x < xRightInt; x++) {
 			i32 position = CS_iclamp(0, xNow.tex.y, texture.height - 1) *
 						   texture.width +
 						   CS_iclamp(0, xNow.tex.x, texture.width - 1);
