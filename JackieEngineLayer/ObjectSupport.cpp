@@ -4,6 +4,10 @@ FObject::FObject() {
 	;
 }
 
+FObject::FObject(string textureFileName) {
+	texture.LoadFromBMP(textureFileName);
+}
+
 void FObject::Add(const FVectorTex& vec) {
 	FVectorTex veccpy = vec;
 	vl.push_back(veccpy);

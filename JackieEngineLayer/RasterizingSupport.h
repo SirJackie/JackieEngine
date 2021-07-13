@@ -23,7 +23,7 @@ public:
 	void Draw3DPoint(FVector3D& point);
 	void Draw4DPoint(FVector4D& point);
 	void DrawPoint(FObject& obj_);
-	void DrawTriangle(FObject& obj_, CS_FrameBuffer& texture);
+	void DrawTriangle(FObject& obj_);
 };
 
 #endif

@@ -3,10 +3,6 @@
 
 #include "./CrossBufferLayer/CrossBuffer.h"
 #include "./JackieEngineLayer/JackieEngine.h"
-#include <vector>
-#include <sstream>
-using std::vector;
-using std::stringstream;
 
 /* Define Window Class Properties */
 #define WindowTitle (i32*)L"Jackie Engine"

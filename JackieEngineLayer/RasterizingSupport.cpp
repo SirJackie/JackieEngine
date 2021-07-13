@@ -188,7 +188,7 @@ void FRasterizer::DrawPoint(FObject& obj_)
 	}
 }
 
-void FRasterizer::DrawTriangle(FObject& obj_, CS_FrameBuffer& texture){
+void FRasterizer::DrawTriangle(FObject& obj_){
 	for(ui32 i = 0; i < obj_.il.size(); i+=3){
 		
 		FVectorTex& v0 = obj_.tmpVl[obj_.il[i    ]];
@@ -201,7 +201,7 @@ void FRasterizer::DrawTriangle(FObject& obj_, CS_FrameBuffer& texture){
 				v0,
 				v1,
 				v2,
-				texture
+				obj_.texture
 			);
 		}
 	}

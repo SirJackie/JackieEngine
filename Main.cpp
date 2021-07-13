@@ -7,21 +7,16 @@ FRasterizer       rasterizer;
 f32               walkSpeed = 0.01f;
 f32               mouseSensitivity = 40.0f;
 csbool            rotate = csFalse;
-CS_FrameBuffer    lena;
-
-FVectorTex v0, v1, v2;
-
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	// Load Lena
-	lena.LoadFromBMP(CS_Path().join("..").join("Resources").join("Lena.bmp"));
-
 	// Initialize FrameBuffer-required Components
 	camera = FCamera(
 		0.0f, 0.0f, 5.0f, -1.85897f, 0.217391f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
 	);
 	rasterizer = FRasterizer(fb);
+
+	object = FObject(CS_Path().join("..").join("Resources").join("Lena.bmp"));
 
 	// Create Cube's Vertecies
 	object.Add(FVectorTex(FVector4D(-1.0, -1.0,  1.0, 1.0), FVector3D(0.0f, 1.0f, 1.0f)));  // v0
@@ -49,10 +44,6 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	// Open Mouse Locking
 	mouse.OpenInfinityMode();
-
-	v0 = FVectorTex(FVector4D(100.0f,   0.0f, 0.0f, 1.0f), FVector3D(1.0f, 0.0f, 1.0f));
-	v1 = FVectorTex(FVector4D(  0.0f, 400.0f, 0.0f, 1.0f), FVector3D(0.0f, 1.0f, 1.0f));
-	v2 = FVectorTex(FVector4D(300.0f, 500.0f, 0.0f, 1.0f), FVector3D(1.0f, 1.0f, 1.0f));
 }
 
 f32 positionX = 10.0f;
@@ -113,7 +104,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	camera.ProjectObject(object);
 	rasterizer.DrawPoint(object);
 	// ui32 a = object.tmpVl.size();  // cause crash
-	rasterizer.DrawTriangle(object, lena);
+	rasterizer.DrawTriangle(object);
 
 	// // Count FPS and Print Things
 	fpsCalculator.Count(deltaTime);
