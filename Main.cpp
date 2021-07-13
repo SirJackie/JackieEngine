@@ -86,7 +86,6 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Projection and Rasterization
 	camera.ProjectObject(object);
 	rasterizer.DrawPoint(object);
-	// ui32 a = object.tmpVl.size();  // cause crash
 	rasterizer.DrawTriangle(object);
 
 	// Count FPS and Print Things
