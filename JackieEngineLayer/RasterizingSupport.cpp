@@ -195,13 +195,9 @@ void FRasterizer::DrawTriangle(FObject& obj_, CS_FrameBuffer& texture){
 		FVectorTex& v1 = obj_.tmpVl[obj_.il[i + 1]];
 		FVectorTex& v2 = obj_.tmpVl[obj_.il[i + 2]];
 
-		FVector4D vSide1 = (v1 - v0).pos;
-		FVector4D vSide2 = (v2 - v0).pos;
-		FVector4D vNormol = vSide1 % vSide2;
-		FVector4D& fp = v0.pos;
-		f32 dotProduct = vNormol * fp;
+		if (((v1 - v0).pos % (v2 - v0).pos * v0.pos) > 0.0f) {
+			// Passed the Back Face Culling, Draw this triangle
 
-		if (dotProduct > 0.0f) {
 			DrawTriangle(
 				v0,
 				v1,
