@@ -112,6 +112,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Projection and Rasterization
 	camera.ProjectObject(object);
 	rasterizer.DrawPoint(object);
+	fb.PrintLn(object.il.size());
 	rasterizer.DrawTriangle(object, lena);
 
 	// // Count FPS and Print Things

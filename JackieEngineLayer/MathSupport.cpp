@@ -311,7 +311,12 @@ FVectorTex::FVectorTex(){
 	tex = FVector3D(0.0f, 0.0f, 1.0f);
 }
 
-FVectorTex::FVectorTex(FVector4D pos_, FVector3D tex_){
+FVectorTex::FVectorTex(const FVectorTex& fvt){
+	pos = fvt.pos;
+	tex = fvt.tex;
+}
+
+FVectorTex::FVectorTex(const FVector4D& pos_, const FVector3D& tex_){
 	pos = pos_;
 	tex = tex_;
 }

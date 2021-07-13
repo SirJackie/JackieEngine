@@ -90,7 +90,8 @@ public:
 	FVector3D tex;
 
 	FVectorTex();
-	FVectorTex(FVector4D pos_, FVector3D tex_);
+	FVectorTex(const FVectorTex& fvt);
+	FVectorTex(const FVector4D& pos_, const FVector3D& tex_);
 
 	// Vector-Scalar Calculation
 	friend const FVectorTex operator+(const FVectorTex& a, const f32 b);
@@ -101,17 +102,16 @@ public:
 	friend const FVectorTex operator*(const f32 b, const FVectorTex& a);
 	friend const FVectorTex operator/(const FVectorTex& a, const f32 b);
 	friend const FVectorTex operator/(const f32 b, const FVectorTex& a);
-	virtual FVectorTex& operator+=(const f32& b);
-	virtual FVectorTex& operator-=(const f32& b);
-	virtual FVectorTex& operator*=(const f32& b);
-	virtual FVectorTex& operator/=(const f32& b);
+	FVectorTex& operator+=(const f32& b);
+	FVectorTex& operator-=(const f32& b);
+	FVectorTex& operator*=(const f32& b);
+	FVectorTex& operator/=(const f32& b);
 
 	// Vector-Vector Calculation
 	friend const FVectorTex operator+(const FVectorTex& a, const FVectorTex& b);
 	friend const FVectorTex operator-(const FVectorTex& a, const FVectorTex& b);
-	virtual FVectorTex& operator+=(const FVectorTex& b);
-	virtual FVectorTex& operator-=(const FVectorTex& b);
-	
+	FVectorTex& operator+=(const FVectorTex& b);
+	FVectorTex& operator-=(const FVectorTex& b);
 
 	// Interpolation
 	const FVectorTex InterpolateTo(const FVectorTex& b, f32 alpha) const;
