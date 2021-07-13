@@ -14,7 +14,7 @@ public:
 	Indexlist il;
 
 	FObject();
-	void    Add(FVectorTex vec);
+	void    Add(const FVectorTex &vec);
 	void    Add(i32 index1, i32 index2, i32 index3);
 	void    Translate(f32 x_, f32 y_, f32 z_);
 	void    Rotate(f32 x_, f32 y_, f32 z_);

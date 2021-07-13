@@ -162,11 +162,11 @@ void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVec
 				texture.blueBuffer  [position]
 			);
 
-			xNow = xNow + xNowStep;
+			xNow += xNowStep;
 		}
 
-		xLeft = xLeft + xLeftStep;
-		xRight = xRight + xRightStep;
+		xLeft += xLeftStep;
+		xRight += xRightStep;
 	}
 }
 
