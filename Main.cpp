@@ -112,7 +112,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Projection and Rasterization
 	camera.ProjectObject(object);
 	rasterizer.DrawPoint(object);
-	fb.PrintLn(object.il.size());
+	// fb.PrintLn(object.vl.size());  // cause crash
 	rasterizer.DrawTriangle(object, lena);
 
 	// // Count FPS and Print Things
@@ -127,6 +127,10 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	
 	fb.PrintLn(camera.ToString());
 	fb.PrintLn(object.ToString());
+
+	// FObject obj;
+	// obj.Add(FVectorTex(FVector4D(1.0f, 2.0f, 3.0f, 1.0f), FVector3D(1.0f, 2.0f, 1.0f)));
+	// fb.PrintLn(obj.ToString());
 
 	// // Interpolation test
 	// FVector4D a(0.0f, 0.0f, 0.0f, 1.0f), b(1.0f, 1.0f, 1.0f, 1.0f);

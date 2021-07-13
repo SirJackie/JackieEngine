@@ -197,7 +197,6 @@ void FRasterizer::DrawTriangle(FObject& obj_, CS_FrameBuffer& texture){
 
 		if (((v1 - v0).pos % (v2 - v0).pos * v0.pos) > 0.0f) {
 			// Passed the Back Face Culling, Draw this triangle
-
 			DrawTriangle(
 				v0,
 				v1,

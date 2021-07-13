@@ -4,9 +4,12 @@ FObject::FObject() {
 	;
 }
 
-void FObject::Add(const FVectorTex& vec) {
-	// vl.push_back(vec);
-	vl.push_back(FVectorTex(vec.pos, vec.tex));
+void FObject::Add(FVectorTex vec) {
+	vl.emplace_back(vec);
+	// if(vec.pos.x != 0){
+	// 	vl.push_back(FVectorTex(vec.pos, vec.tex));
+	// }
+	
 }
 
 void FObject::Add(i32 index1, i32 index2, i32 index3){
