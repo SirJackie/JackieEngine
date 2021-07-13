@@ -29,10 +29,16 @@ public:
 	friend const FVector3D operator*(const f32 b, const FVector3D& a);
 	friend const FVector3D operator/(const FVector3D& a, const f32 b);
 	friend const FVector3D operator/(const f32 b, const FVector3D& a);
+	virtual FVector3D& operator+=(const f32& b);
+	virtual FVector3D& operator-=(const f32& b);
+	virtual FVector3D& operator*=(const f32& b);
+	virtual FVector3D& operator/=(const f32& b);
 
 	// Vector-Vector Calculation
 	friend const FVector3D operator+(const FVector3D& a, const FVector3D& b);
 	friend const FVector3D operator-(const FVector3D& a, const FVector3D& b);
+	virtual FVector3D& operator+=(const FVector3D& b);
+	virtual FVector3D& operator-=(const FVector3D& b);
 
 	// Interpolation
 	virtual const FVector3D InterpolateTo(const FVector3D& b, f32 alpha) const;
@@ -61,12 +67,18 @@ public:
 	friend const FVector4D operator*(const f32 b, const FVector4D& a);
 	friend const FVector4D operator/(const FVector4D& a, const f32 b);
 	friend const FVector4D operator/(const f32 b, const FVector4D& a);
+	virtual FVector4D& operator+=(const f32& b);
+	virtual FVector4D& operator-=(const f32& b);
+	virtual FVector4D& operator*=(const f32& b);
+	virtual FVector4D& operator/=(const f32& b);
 
 	// Vector-Vector Calculation
 	friend const FVector4D operator+(const FVector4D& a, const FVector4D& b);
 	friend const FVector4D operator-(const FVector4D& a, const FVector4D& b);
 	friend const f32       operator*(const FVector4D& a, const FVector4D& b);  // Dot   Product
 	friend const FVector4D operator%(const FVector4D& a, const FVector4D& b);  // Cross Product
+	virtual FVector4D& operator+=(const FVector4D& b);
+	virtual FVector4D& operator-=(const FVector4D& b);
 
 	// Interpolation
 	virtual const FVector4D InterpolateTo(const FVector4D& b, f32 alpha) const;
@@ -89,10 +101,17 @@ public:
 	friend const FVectorTex operator*(const f32 b, const FVectorTex& a);
 	friend const FVectorTex operator/(const FVectorTex& a, const f32 b);
 	friend const FVectorTex operator/(const f32 b, const FVectorTex& a);
+	virtual FVectorTex& operator+=(const f32& b);
+	virtual FVectorTex& operator-=(const f32& b);
+	virtual FVectorTex& operator*=(const f32& b);
+	virtual FVectorTex& operator/=(const f32& b);
 
 	// Vector-Vector Calculation
 	friend const FVectorTex operator+(const FVectorTex& a, const FVectorTex& b);
 	friend const FVectorTex operator-(const FVectorTex& a, const FVectorTex& b);
+	virtual FVectorTex& operator+=(const FVectorTex& b);
+	virtual FVectorTex& operator-=(const FVectorTex& b);
+	
 
 	// Interpolation
 	const FVectorTex InterpolateTo(const FVectorTex& b, f32 alpha) const;

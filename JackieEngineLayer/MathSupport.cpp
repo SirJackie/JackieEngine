@@ -62,6 +62,22 @@ const FVector3D operator/(const f32 b, const FVector3D& a){
 	);
 }
 
+FVector3D& FVector3D::operator+=(const f32& b){
+	;
+}
+
+FVector3D& FVector3D::operator-=(const f32& b){
+	;
+}
+
+FVector3D& FVector3D::operator*=(const f32& b){
+	;
+}
+
+FVector3D& FVector3D::operator/=(const f32& b){
+	;
+}
+
 // Vector-Vector Calculation
 const FVector3D operator+(const FVector3D& a, const FVector3D& b){
 	return FVector3D(
@@ -72,6 +88,14 @@ const FVector3D operator-(const FVector3D& a, const FVector3D& b){
 	return FVector3D{
 		a.x - b.x, a.y - b.y, a.z - b.z
 	};
+}
+
+FVector3D& FVector3D::operator+=(const FVector3D& b){
+	;
+}
+
+FVector3D& FVector3D::operator-=(const FVector3D& b){
+	;
 }
 
 // Interpolation
@@ -190,20 +214,39 @@ const FVector4D operator/(const f32 b, const FVector4D& a)
 	);
 }
 
+FVector4D& FVector4D::operator+=(const f32& b){
+	;
+}
+
+FVector4D& FVector4D::operator-=(const f32& b){
+	;
+}
+
+FVector4D& FVector4D::operator*=(const f32& b){
+	;
+}
+
+FVector4D& FVector4D::operator/=(const f32& b){
+	;
+}
+
 // Vector-Vector Calculation
 const FVector4D operator+(const FVector4D& a, const FVector4D& b){
 	return FVector4D(
 		a.x + b.x, a.y + b.y, a.z + b.z, a.w
 	);
 }
+
 const FVector4D operator-(const FVector4D& a, const FVector4D& b){
 	return FVector4D(
 		a.x - b.x, a.y - b.y, a.z - b.z, a.w
 	);
 }
+
 const f32 operator*(const FVector4D& a, const FVector4D& b){
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
+
 const FVector4D operator%(const FVector4D& a, const FVector4D& b){
 	return FVector4D(
 		a.y * b.z - b.y * a.z,
@@ -211,6 +254,14 @@ const FVector4D operator%(const FVector4D& a, const FVector4D& b){
 		a.x * b.y - a.y * b.x,
 		a.z
 	);
+}
+
+FVector4D& FVector4D::operator+=(const FVector4D& b){
+	;
+}
+
+FVector4D& FVector4D::operator-=(const FVector4D& b){
+	;
 }
 
 // Interpolation
@@ -286,6 +337,22 @@ const FVectorTex operator/(const f32 b, const FVectorTex& a){
 	);
 }
 
+FVectorTex& FVectorTex::operator+=(const f32& b){
+	;
+}
+
+FVectorTex& FVectorTex::operator-=(const f32& b){
+	;
+}
+
+FVectorTex& FVectorTex::operator*=(const f32& b){
+	;
+}
+
+FVectorTex& FVectorTex::operator/=(const f32& b){
+	;
+}
+
 // Vector-Vector Calculation
 const FVectorTex operator+(const FVectorTex& a, const FVectorTex& b){
 	return FVectorTex(
@@ -298,6 +365,14 @@ const FVectorTex operator-(const FVectorTex& a, const FVectorTex& b){
 		a.pos - b.pos,
 		a.tex - b.tex
 	);
+}
+
+FVectorTex& FVectorTex::operator+=(const FVectorTex& b){
+	;
+}
+
+FVectorTex& FVectorTex::operator-=(const FVectorTex& b){
+	;
 }
 
 // Interpolate To
