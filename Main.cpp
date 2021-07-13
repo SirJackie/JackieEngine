@@ -54,24 +54,6 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	if(rotate){
 		object.Rotate(0.05f * deltaTime, -0.05f * deltaTime, 0.0f);
 	}
-
-	// // Texture Loading Test
-	// f32 sensitivity = 0.2f;
-	// if(kb.IsKeyPressed(CSK_W)){
-	// 	positionY -= sensitivity * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_S)){
-	// 	positionY += sensitivity * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_A)){
-	// 	positionX -= sensitivity * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_D)){
-	// 	positionX += sensitivity * deltaTime;
-	// }
-
-	// fb.DrawBuffer(lena, (i32)positionX, (i32)positionY);
-
 	if(kb.IsKeyPressed(CSK_W)){
 		camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 1.0f) * walkSpeed * deltaTime);
 	}
@@ -93,6 +75,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	if(kb.IsKeyFirstTimePressed(CSK_R)){
 		rotate = !rotate;
 	}
+
 	camera.Rotate(
 		(f32)mouse.deltaY / (f32)mouse.windowHeight * mouseSensitivity,
 		(f32)mouse.deltaX / (f32)mouse.windowWidth  * mouseSensitivity,
@@ -106,7 +89,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// ui32 a = object.tmpVl.size();  // cause crash
 	rasterizer.DrawTriangle(object);
 
-	// // Count FPS and Print Things
+	// Count FPS and Print Things
 	fpsCalculator.Count(deltaTime);
 	fb.Print(mouse.ToString());
 	fb.PrintLn(kb.ToString());
@@ -118,91 +101,4 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	
 	fb.PrintLn(camera.ToString());
 	fb.PrintLn(object.ToString());
-
-	// FObject obj;
-	// obj.Add(FVectorTex(FVector4D(1.0f, 2.0f, 3.0f, 1.0f), FVector3D(1.0f, 2.0f, 1.0f)));
-	// fb.PrintLn(obj.ToString());
-
-	// // Interpolation test
-	// FVector4D a(0.0f, 0.0f, 0.0f, 1.0f), b(1.0f, 1.0f, 1.0f, 1.0f);
-	// fb.PrintLn(a.InterpolateTo(b, 0.3f).ToString());
-
-	// // Draw Triangle Test
-	// // Flat Triangles Seperated
-	// rasterizer.DrawFlatBottomTriangle(0.0f, 400.0f, 100.0f, 0.0f, 300.0f, 255, 255, 255);
-	// rasterizer.DrawFlatTopTriangle(0.0f, 400.0f, 0.0f, 300.0f, 100.0f, 255, 255, 255);
-	// // Flat Bottom Triangle
-	// rasterizer.DrawTriangle(
-	// 	FVector4D(100.0f, 0.0f, 0.0f, 0.0f),
-	// 	FVector4D(0.0f, 400.0f, 0.0f, 0.0f),
-	// 	FVector4D(300.0f, 400.0f, 0.0f, 0.0f),
-	// 	255, 255, 255
-	// );
-	// // Flat Top Triangle
-	// rasterizer.DrawTriangle(
-	// 	FVector4D(0.0f, 0.0f, 0.0f, 0.0f),
-	// 	FVector4D(300.0f, 0.0f, 0.0f, 0.0f),
-	// 	FVector4D(100.0f, 400.0f, 0.0f, 0.0f),
-	// 	255, 255, 255
-	// );
-	// // Longside Left
-	// rasterizer.DrawTriangle(
-	// 	FVector4D(100.0f, 0.0f, 0.0f, 0.0f),
-	// 	FVector4D(0.0f, 500.0f, 0.0f, 0.0f),
-	// 	FVector4D(300.0f, 400.0f, 0.0f, 0.0f),
-	// 	255, 255, 255
-	// );
-	// // Longside Right
-	// rasterizer.DrawTriangle(
-	// 	FVector4D(100.0f, 0.0f, 0.0f, 0.0f),
-	// 	FVector4D(0.0f, 400.0f, 0.0f, 0.0f),
-	// 	FVector4D(300.0f, 500.0f, 0.0f, 0.0f),
-	// 	255, 255, 255
-	// );
-
-	// f32 triangleMovingSpeed = 0.5f;
-
-	// // WASD
-	// if(kb.IsKeyPressed(CSK_W)){
-	// 	v0.pos.y -= triangleMovingSpeed * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_S)){
-	// 	v0.pos.y += triangleMovingSpeed * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_A)){
-	// 	v0.pos.x -= triangleMovingSpeed * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_D)){
-	// 	v0.pos.x += triangleMovingSpeed * deltaTime;
-	// }
-
-	// // TFGH
-	// if(kb.IsKeyPressed(CSK_T)){
-	// 	v1.pos.y -= triangleMovingSpeed * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_G)){
-	// 	v1.pos.y += triangleMovingSpeed * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_F)){
-	// 	v1.pos.x -= triangleMovingSpeed * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_H)){
-	// 	v1.pos.x += triangleMovingSpeed * deltaTime;
-	// }
-
-	// // IJKL
-	// if(kb.IsKeyPressed(CSK_I)){
-	// 	v2.pos.y -= triangleMovingSpeed * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_K)){
-	// 	v2.pos.y += triangleMovingSpeed * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_J)){
-	// 	v2.pos.x -= triangleMovingSpeed * deltaTime;
-	// }
-	// if(kb.IsKeyPressed(CSK_L)){
-	// 	v2.pos.x += triangleMovingSpeed * deltaTime;
-	// }
-
-	// rasterizer.DrawTriangle(v0, v1, v2, 255, 255, 255);
 }
