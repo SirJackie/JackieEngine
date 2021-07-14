@@ -16,12 +16,12 @@ void FZBuffer::FillBuffer()
 	//for (f32* ptr = bufptr; ptr < ptrEnd; ptr++) {
 	//	*ptr = -1.0f;
 	//}
-	for (i32 y = 0; y < height; y++) {
-		for (i32 x = 0; x < width; x++) {
-			bufptr[y * width + x] = -1.0f;
-		}
-	}
-	//CS_Memset
+	// for (i32 y = 0; y < height; y++) {
+	// 	for (i32 x = 0; x < width; x++) {
+	// 		bufptr[y * width + x] = -1.0f;
+	// 	}
+	// }
+	CS_Memset(bufptr, 128, 4 * width * height);
 }
 
 void FZBuffer::Resize(i32 width_, i32 height_)
