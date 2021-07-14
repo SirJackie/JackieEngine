@@ -12,16 +12,10 @@ void FZBuffer::Alloc()
 
 void FZBuffer::FillBuffer()
 {
-	//f32* ptrEnd = (f32*)(bufptr + width * height);
-	//for (f32* ptr = bufptr; ptr < ptrEnd; ptr++) {
-	//	*ptr = -1.0f;
-	//}
-	// for (i32 y = 0; y < height; y++) {
-	// 	for (i32 x = 0; x < width; x++) {
-	// 		bufptr[y * width + x] = -1.0f;
-	// 	}
-	// }
-	CS_Memset(bufptr, 128, 4 * width * height);
+	f32* ptrEnd = (f32*)(bufptr + width * height);
+	for (f32* ptr = bufptr; ptr < ptrEnd; ptr++) {
+		*ptr = -1.0f;
+	}
 }
 
 void FZBuffer::Resize(i32 width_, i32 height_)
@@ -108,7 +102,7 @@ FRasterizer::FRasterizer(){
 
 FRasterizer::FRasterizer(CS_FrameBuffer& fb_){
 	ptrfb = &fb_;
-	//zb.Resize(ptrfb->width, ptrfb->height);
+	zb.Resize(ptrfb->width, ptrfb->height);
 }
 
 FRasterizer::FRasterizer(const FRasterizer& rst)
@@ -287,15 +281,7 @@ void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVec
 					texture.greenBuffer [position],
 					texture.blueBuffer  [position]
 				);
-
-				/*i32 color = (-zbPos - 0.9f) * 2550;
-
-				CS_PutPixel(
-					*ptrfb, xNow.pos.x, xNow.pos.y,
-					color, color, color
-				);*/
-
-				//zbPos = xNow.pos.z;
+				zbPos = xNow.pos.z;
 			}
 
 			xNow += xNowStep;
@@ -331,7 +317,7 @@ void FRasterizer::DrawTriangle(FObject& obj_){
 		FVectorTex& v1 = obj_.tmpVl[obj_.il[i + 1]];
 		FVectorTex& v2 = obj_.tmpVl[obj_.il[i + 2]];
 
-		if (((v1 - v0).pos % (v2 - v0).pos * v0.pos) > 0.0f) {
+		//if (((v1 - v0).pos % (v2 - v0).pos * v0.pos) > 0.0f) {
 			// Passed the Back Face Culling, Draw this triangle
 			DrawTriangle(
 				v0,
@@ -339,6 +325,6 @@ void FRasterizer::DrawTriangle(FObject& obj_){
 				v2,
 				obj_.texture
 			);
-		}
+		//}
 	}
 }
