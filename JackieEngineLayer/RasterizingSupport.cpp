@@ -73,10 +73,10 @@ void FZBuffer::Resize(i32 width_, i32 height_)
 }
 
 FZBuffer::FZBuffer() {
-	width = 10;
-	height = 10;
-	//Resize(10, 10);
-	bufptr = nullptr;
+	width  = 1;
+	height = 1;
+	bufptr = nullptr;  // Prevent the unexpected delete[]
+	Resize(width, height);
 }
 
 FZBuffer::~FZBuffer(){
