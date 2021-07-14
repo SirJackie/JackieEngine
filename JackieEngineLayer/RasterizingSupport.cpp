@@ -12,10 +12,16 @@ void FZBuffer::Alloc()
 
 void FZBuffer::FillBuffer()
 {
-	f32* ptrEnd = (f32*)(bufptr + width * height);
-	for (f32* ptr = bufptr; ptr < ptrEnd; ptr++) {
-		*ptr = -1.0f;
+	//f32* ptrEnd = (f32*)(bufptr + width * height);
+	//for (f32* ptr = bufptr; ptr < ptrEnd; ptr++) {
+	//	*ptr = -1.0f;
+	//}
+	for (i32 y = 0; y < height; y++) {
+		for (i32 x = 0; x < width; x++) {
+			bufptr[y * width + x] = -1.0f;
+		}
 	}
+	//CS_Memset
 }
 
 void FZBuffer::Resize(i32 width_, i32 height_)
@@ -268,7 +274,9 @@ void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVec
 		xNow = xNow + ((float)xLeftInt + 0.5f - xLeft.pos.x) * xNowStep;  // Pre-stepping
 
 		for (i32 x = xLeftInt; x < xRightInt; x++) {
-			//if(zb.bufptr[(i32)(xNow.pos.y * zb.width + xNow.pos.x)] < xNow.pos.z){
+			f32& zbPos = zb.bufptr[((i32)xNow.pos.y * zb.width + (i32)xNow.pos.x)];
+
+			if(zbPos < xNow.pos.z){
 				i32 position = CS_iclamp(0, xNow.tex.y * texture.width,  texture.height - 1) *
 							   texture.width +
 							   CS_iclamp(0, xNow.tex.x * texture.height, texture.width  - 1);
@@ -279,10 +287,16 @@ void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVec
 					texture.greenBuffer [position],
 					texture.blueBuffer  [position]
 				);
-			//	zb.bufptr[(i32)(xNow.pos.y * zb.width + xNow.pos.x)] = xNow.pos.z;
-			//}
 
-			
+				/*i32 color = (-zbPos - 0.9f) * 2550;
+
+				CS_PutPixel(
+					*ptrfb, xNow.pos.x, xNow.pos.y,
+					color, color, color
+				);*/
+
+				//zbPos = xNow.pos.z;
+			}
 
 			xNow += xNowStep;
 		}
