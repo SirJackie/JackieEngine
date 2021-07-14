@@ -101,5 +101,5 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	fb.PrintLn(camera.ToString());
 	fb.PrintLn(object.ToString());
 
-	fb.PrintLn(object.vl.size());
+	//fb.PrintLn(object.vl.size());
 }

@@ -1,51 +1,9 @@
 #include "RasterizingSupport.h"
 
-FZBuffer::FZBuffer(const FZBuffer& zb) {
-	width = zb.width;
-	height = zb.height;
 
-	if (bufptr != nullptr) {
-		delete[] bufptr;
-		bufptr = csNullPtr;
-	}
-	Alloc();
-
-	f32* ptrEnd = (f32*)(bufptr + width * height);
-	for (
-		f32 *ptr = bufptr, *fromPtr = zb.bufptr;
-		ptr < ptrEnd;
-		ptr++, fromPtr++
-	)
-	{
-		*ptr = -1.0f;
-	}
-}
-
-FZBuffer& FZBuffer::operator=(const FZBuffer& zb)
-{
-	if (this != &zb) {
-		width = zb.width;
-		height = zb.height;
-
-		if (bufptr != nullptr) {
-			delete[] bufptr;
-			bufptr = csNullPtr;
-		}
-		Alloc();
-
-		f32* ptrEnd = (f32*)(bufptr + width * height);
-		for (
-			f32* ptr = bufptr, *fromPtr = zb.bufptr;
-			ptr < ptrEnd;
-			ptr++, fromPtr++
-			)
-		{
-			*ptr = -1.0f;
-		}
-	}
-
-	return *this;
-}
+/*
+** FZBuffer
+*/
 
 void FZBuffer::Alloc()
 {
@@ -79,12 +37,64 @@ FZBuffer::FZBuffer() {
 	Resize(width, height);
 }
 
+FZBuffer::FZBuffer(const FZBuffer& zb) {
+	width = zb.width;
+	height = zb.height;
+
+	if (bufptr != nullptr) {
+		delete[] bufptr;
+		bufptr = csNullPtr;
+	}
+	Alloc();
+
+	f32* ptrEnd = (f32*)(bufptr + width * height);
+	for (
+		f32* ptr = bufptr, *fromPtr = zb.bufptr;
+		ptr < ptrEnd;
+		ptr++, fromPtr++
+		)
+	{
+		*ptr = -1.0f;
+	}
+}
+
+FZBuffer& FZBuffer::operator=(const FZBuffer& zb)
+{
+	if (this != &zb) {
+		width = zb.width;
+		height = zb.height;
+
+		if (bufptr != nullptr) {
+			delete[] bufptr;
+			bufptr = csNullPtr;
+		}
+		Alloc();
+
+		f32* ptrEnd = (f32*)(bufptr + width * height);
+		for (
+			f32* ptr = bufptr, *fromPtr = zb.bufptr;
+			ptr < ptrEnd;
+			ptr++, fromPtr++
+			)
+		{
+			*ptr = -1.0f;
+		}
+	}
+
+	return *this;
+}
+
 FZBuffer::~FZBuffer(){
 	if (bufptr != nullptr) {
 		delete[] bufptr;
 		bufptr = csNullPtr;
 	}
 }
+
+
+/*
+** FRasterizer
+*/
 
 FRasterizer::FRasterizer(){
 	ptrfb = csNullPtr;
@@ -95,11 +105,16 @@ FRasterizer::FRasterizer(CS_FrameBuffer& fb_){
 	//zb.Resize(ptrfb->width, ptrfb->height);
 }
 
+FRasterizer::FRasterizer(const FRasterizer& rst)
+{
+	ptrfb = rst.ptrfb;  // Shallow Copy is just OK
+}
+
 FRasterizer& FRasterizer::operator=(const FRasterizer& rst)
 {
 	if (this != &rst) {
 		ptrfb = rst.ptrfb;  // Shallow Copy is just OK
-		//zb.Resize(rst.zb.width, rst.zb.height);
+		zb.Resize(rst.zb.width, rst.zb.height);
 	}
 
 	return *this;
@@ -107,7 +122,7 @@ FRasterizer& FRasterizer::operator=(const FRasterizer& rst)
 
 FRasterizer::~FRasterizer()
 {
-	;
+	;  // Nothing to do
 }
 
 void FRasterizer::DrawProtectedCube(i32 x0, i32 y0, i32 x1, i32 y1, ui8 r_, ui8 g_, ui8 b_){

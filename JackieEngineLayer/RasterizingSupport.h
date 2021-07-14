@@ -8,10 +8,6 @@
 
 
 class FZBuffer {
-private:
-	// Block the using of Copy Constructor and operator= using private
-	FZBuffer(const FZBuffer& zb);
-	FZBuffer& operator=(const FZBuffer& zb);
 public:
 	f32 *bufptr;
 	i32  width;
@@ -20,7 +16,10 @@ public:
 	void Alloc();
 	void FillBuffer();
 	void Resize(i32 width_, i32 height_);
+
 	FZBuffer();
+	FZBuffer(const FZBuffer& zb);
+	FZBuffer& operator=(const FZBuffer& zb);
 	~FZBuffer();
 };
 
@@ -32,6 +31,7 @@ public:
 
 	FRasterizer();
 	FRasterizer(CS_FrameBuffer& fb_);
+	FRasterizer(const FRasterizer& rst);
 	FRasterizer& operator=(const FRasterizer& rst);
 	~FRasterizer();
 
