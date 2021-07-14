@@ -4,7 +4,10 @@ FZBuffer::FZBuffer(const FZBuffer& zb) {
 	width = zb.width;
 	height = zb.height;
 
-	Release();
+	if (bufptr != nullptr) {
+		delete[] bufptr;
+		bufptr = csNullPtr;
+	}
 	Alloc();
 
 	f32* ptrEnd = (f32*)(bufptr + width * height);
@@ -24,7 +27,10 @@ FZBuffer& FZBuffer::operator=(const FZBuffer& zb)
 		width = zb.width;
 		height = zb.height;
 
-		Release();
+		if (bufptr != nullptr) {
+			delete[] bufptr;
+			bufptr = csNullPtr;
+		}
 		Alloc();
 
 		f32* ptrEnd = (f32*)(bufptr + width * height);
@@ -39,14 +45,6 @@ FZBuffer& FZBuffer::operator=(const FZBuffer& zb)
 	}
 
 	return *this;
-}
-
-void FZBuffer::Release()
-{
-	if (bufptr != nullptr) {
-		delete[] bufptr;
-		bufptr = csNullPtr;
-	}
 }
 
 void FZBuffer::Alloc()
@@ -75,11 +73,17 @@ void FZBuffer::Resize(i32 width_, i32 height_)
 }
 
 FZBuffer::FZBuffer() {
-	//Resize(1, 1);
+	width = 10;
+	height = 10;
+	//Resize(10, 10);
+	bufptr = nullptr;
 }
 
 FZBuffer::~FZBuffer(){
-	Release();
+	if (bufptr != nullptr) {
+		delete[] bufptr;
+		bufptr = csNullPtr;
+	}
 }
 
 FRasterizer::FRasterizer(){

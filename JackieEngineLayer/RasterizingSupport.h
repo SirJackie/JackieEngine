@@ -17,7 +17,6 @@ public:
 	i32  width;
 	i32  height;
 
-	void Release();
 	void Alloc();
 	void FillBuffer();
 	void Resize(i32 width_, i32 height_);
@@ -29,7 +28,7 @@ public:
 class FRasterizer {
 public:
 	CS_FrameBuffer* ptrfb;
-	//FZBuffer        zb;
+	FZBuffer zb;
 
 	FRasterizer();
 	FRasterizer(CS_FrameBuffer& fb_);
