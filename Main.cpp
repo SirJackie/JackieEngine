@@ -102,6 +102,4 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	fb.PrintLn(object.ToString());
 
 	rasterizer.zb.FillBuffer();
-
-	//fb.PrintLn(object.vl.size());
 }

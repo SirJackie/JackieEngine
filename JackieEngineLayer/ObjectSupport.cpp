@@ -1,7 +1,9 @@
 #include "ObjectSupport.h"
 
 FObject::FObject() {
-	;
+	vl.clear();
+	tmpVl.clear();
+	il.clear();
 }
 
 FObject::FObject(string textureFileName) {
@@ -9,7 +11,7 @@ FObject::FObject(string textureFileName) {
 }
 
 void FObject::Add(const FVectorTex& vec) {
-	FVectorTex veccpy = vec;
+	FVectorTex& veccpy = *(new FVectorTex(vec));
 	vl.push_back(veccpy);
 }
 
@@ -35,7 +37,7 @@ void FObject::Rotate(f32 x_, f32 y_, f32 z_){
 
 string FObject::ToString(){
 	stringstream ss;
-	ss << "FObject: " << endl;
+	ss << "FObject: Vector=" << vl.size() << "; Index=" << il.size() << endl;
 
 	for(i32 i = 0; i < vl.size(); i++){
 		ss << tmpVl[i].pos.ToString();
