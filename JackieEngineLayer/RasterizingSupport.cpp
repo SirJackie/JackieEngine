@@ -317,7 +317,7 @@ void FRasterizer::DrawTriangle(FObject& obj_){
 		FVectorTex& v1 = obj_.tmpVl[obj_.il[i + 1]];
 		FVectorTex& v2 = obj_.tmpVl[obj_.il[i + 2]];
 
-		//if (((v1 - v0).pos % (v2 - v0).pos * v0.pos) > 0.0f) {
+		if (((v1 - v0).pos % (v2 - v0).pos * v0.pos) > 0.0f) {
 			// Passed the Back Face Culling, Draw this triangle
 			DrawTriangle(
 				v0,
@@ -325,6 +325,6 @@ void FRasterizer::DrawTriangle(FObject& obj_){
 				v2,
 				obj_.texture
 			);
-		//}
+		}
 	}
 }
