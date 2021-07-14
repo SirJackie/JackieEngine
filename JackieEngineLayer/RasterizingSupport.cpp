@@ -1,11 +1,39 @@
 #include "RasterizingSupport.h"
 
+FZBuffer::FZBuffer(){
+	width = 1;
+	height = 1;
+	bufptr = new f32[width * height];
+	for(i32 y = 0; y < height; y++){
+		for(i32 x = 0; x < width; x++){
+			bufptr[y * width + x] = -1.0f;
+		}
+	}
+}
+
+FZBuffer::FZBuffer(i32 width_, i32 height_){
+	width = width_;
+	height = height_;
+	bufptr = new f32[width * height];
+	for(i32 y = 0; y < height; y++){
+		for(i32 x = 0; x < width; x++){
+			bufptr[y * width + x] = -1.0f;
+		}
+	}
+}
+
+FZBuffer::~FZBuffer(){
+	delete[] bufptr;
+}
+
 FRasterizer::FRasterizer(){
 	ptrfb = csNullPtr;
 }
 
 FRasterizer::FRasterizer(CS_FrameBuffer& fb_){
 	ptrfb = &fb_;
+	zb.~FZBuffer();
+	zb = FZBuffer(ptrfb->width, ptrfb->height);
 }
 
 void FRasterizer::DrawProtectedCube(i32 x0, i32 y0, i32 x1, i32 y1, ui8 r_, ui8 g_, ui8 b_){
@@ -151,16 +179,21 @@ void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVec
 		xNow = xNow + ((float)xLeftInt + 0.5f - xLeft.pos.x) * xNowStep;  // Pre-stepping
 
 		for (i32 x = xLeftInt; x < xRightInt; x++) {
-			i32 position = CS_iclamp(0, xNow.tex.y * texture.width,  texture.height - 1) *
-						   texture.width +
-						   CS_iclamp(0, xNow.tex.x * texture.height, texture.width  - 1);
+			if(zb.bufptr[(i32)(xNow.pos.y * zb.width + xNow.pos.x)] < xNow.pos.z){
+				i32 position = CS_iclamp(0, xNow.tex.y * texture.width,  texture.height - 1) *
+							   texture.width +
+							   CS_iclamp(0, xNow.tex.x * texture.height, texture.width  - 1);
 
-			CS_PutPixel(
-				*ptrfb, xNow.pos.x, xNow.pos.y,
-				texture.redBuffer   [position],
-				texture.greenBuffer [position],
-				texture.blueBuffer  [position]
-			);
+				CS_PutPixel(
+					*ptrfb, xNow.pos.x, xNow.pos.y,
+					texture.redBuffer   [position],
+					texture.greenBuffer [position],
+					texture.blueBuffer  [position]
+				);
+				zb.bufptr[(i32)(xNow.pos.y * zb.width + xNow.pos.x)] = xNow.pos.z;
+			}
+
+			
 
 			xNow += xNowStep;
 		}

@@ -71,6 +71,9 @@ inline f32 CS_fmax3(f32 a, f32 b, f32 c)
 #include <iostream>
 using std::endl;
 
+#include <limits>
+using std::numeric_limits;
+
 #include <string>
 #include <sstream>
 using std::string;
@@ -104,6 +107,7 @@ using std::abs;
 using std::ceil;
 using std::floor;
 using std::swap;
+
 #define  PI          3.14159265f
 #define  _DEG2RAD_   PI / 180.0f
 #define  _RAD2DEG_   180.0f / PI

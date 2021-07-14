@@ -6,9 +6,23 @@
 #include "MathSupport.h"
 #include "ObjectSupport.h"
 
+
+class FZBuffer {
+public:
+	f32 *bufptr;
+	i32  width;
+	i32  height;
+
+	FZBuffer();
+	FZBuffer(i32 width_, i32 height_);
+	~FZBuffer();
+};
+
+
 class FRasterizer {
 public:
 	CS_FrameBuffer* ptrfb;
+	FZBuffer        zb;
 
 	FRasterizer();
 	FRasterizer(CS_FrameBuffer& fb_);
