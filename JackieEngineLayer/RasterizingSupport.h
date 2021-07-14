@@ -29,7 +29,7 @@ public:
 class FRasterizer {
 public:
 	CS_FrameBuffer* ptrfb;
-	FZBuffer        zb;
+	//FZBuffer        zb;
 
 	FRasterizer();
 	FRasterizer(CS_FrameBuffer& fb_);
