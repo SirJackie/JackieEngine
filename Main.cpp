@@ -14,7 +14,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		0.0f, 0.0f, 5.0f, -1.85897f, 0.217391f, 0.0f,
 		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
 	);
-	rasterizer = FRasterizer(fb);
+	rasterizer.Bind(fb);
 
 	object = FObject(CS_Path().join("..").join("Resources").join("Lena.bmp"));
 
@@ -43,7 +43,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	object.Add(5, 1, 0);  // b2
 
 	// Open Mouse Locking
-	mouse.OpenInfinityMode();
+	//mouse.OpenInfinityMode();
 }
 
 f32 positionX = 10.0f;
@@ -76,11 +76,11 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		rotate = !rotate;
 	}
 
-	camera.Rotate(
-		(f32)mouse.deltaY / (f32)mouse.windowHeight * mouseSensitivity,
-		(f32)mouse.deltaX / (f32)mouse.windowWidth  * mouseSensitivity,
-		0.0f
-	);
+	//camera.Rotate(
+	//	(f32)mouse.deltaY / (f32)mouse.windowHeight * mouseSensitivity,
+	//	(f32)mouse.deltaX / (f32)mouse.windowWidth  * mouseSensitivity,
+	//	0.0f
+	//);
 	
 
 	// Projection and Rasterization

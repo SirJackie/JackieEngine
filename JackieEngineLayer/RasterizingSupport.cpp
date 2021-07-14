@@ -1,29 +1,85 @@
 #include "RasterizingSupport.h"
 
-FZBuffer::FZBuffer(){
-	width = 1;
-	height = 1;
-	bufptr = new f32[width * height];
-	for(i32 y = 0; y < height; y++){
-		for(i32 x = 0; x < width; x++){
-			bufptr[y * width + x] = -1.0f;
-		}
+FZBuffer::FZBuffer(const FZBuffer& zb) {
+	width = zb.width;
+	height = zb.height;
+
+	Release();
+	Alloc();
+
+	f32* ptrEnd = (f32*)(bufptr + width * height);
+	for (
+		f32 *ptr = bufptr, *fromPtr = zb.bufptr;
+		ptr < ptrEnd;
+		ptr++, fromPtr++
+	)
+	{
+		*ptr = -1.0f;
 	}
 }
 
-FZBuffer::FZBuffer(i32 width_, i32 height_){
-	width = width_;
-	height = height_;
-	bufptr = new f32[width * height];
-	for(i32 y = 0; y < height; y++){
-		for(i32 x = 0; x < width; x++){
-			bufptr[y * width + x] = -1.0f;
+FZBuffer& FZBuffer::operator=(const FZBuffer& zb)
+{
+	if (this != &zb) {
+		width = zb.width;
+		height = zb.height;
+
+		Release();
+		Alloc();
+
+		f32* ptrEnd = (f32*)(bufptr + width * height);
+		for (
+			f32* ptr = bufptr, *fromPtr = zb.bufptr;
+			ptr < ptrEnd;
+			ptr++, fromPtr++
+			)
+		{
+			*ptr = -1.0f;
 		}
 	}
+
+	return *this;
+}
+
+void FZBuffer::Release()
+{
+	if (bufptr != nullptr) {
+		delete[] bufptr;
+		bufptr = csNullPtr;
+	}
+}
+
+void FZBuffer::Alloc()
+{
+	bufptr = new f32[width * height];
+}
+
+void FZBuffer::FillBuffer()
+{
+	f32* ptrEnd = (f32*)(bufptr + width * height);
+	for (f32* ptr = bufptr; ptr < ptrEnd; ptr++) {
+		*ptr = -1.0f;
+	}
+}
+
+void FZBuffer::Resize(i32 width_, i32 height_)
+{
+	width = width_;
+	height = height_;
+	if (bufptr != nullptr) {
+		delete[] bufptr;
+		bufptr = csNullPtr;
+	}
+	Alloc();
+	FillBuffer();
+}
+
+FZBuffer::FZBuffer() {
+	//Resize(1, 1);
 }
 
 FZBuffer::~FZBuffer(){
-	delete[] bufptr;
+	Release();
 }
 
 FRasterizer::FRasterizer(){
@@ -32,8 +88,22 @@ FRasterizer::FRasterizer(){
 
 FRasterizer::FRasterizer(CS_FrameBuffer& fb_){
 	ptrfb = &fb_;
-	zb.~FZBuffer();
-	zb = FZBuffer(ptrfb->width, ptrfb->height);
+	//zb.Resize(ptrfb->width, ptrfb->height);
+}
+
+FRasterizer& FRasterizer::operator=(const FRasterizer& rst)
+{
+	if (this != &rst) {
+		ptrfb = rst.ptrfb;  // Shallow Copy is just OK
+		//zb.Resize(rst.zb.width, rst.zb.height);
+	}
+
+	return *this;
+}
+
+FRasterizer::~FRasterizer()
+{
+	;
 }
 
 void FRasterizer::DrawProtectedCube(i32 x0, i32 y0, i32 x1, i32 y1, ui8 r_, ui8 g_, ui8 b_){
@@ -179,7 +249,7 @@ void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVec
 		xNow = xNow + ((float)xLeftInt + 0.5f - xLeft.pos.x) * xNowStep;  // Pre-stepping
 
 		for (i32 x = xLeftInt; x < xRightInt; x++) {
-			if(zb.bufptr[(i32)(xNow.pos.y * zb.width + xNow.pos.x)] < xNow.pos.z){
+			//if(zb.bufptr[(i32)(xNow.pos.y * zb.width + xNow.pos.x)] < xNow.pos.z){
 				i32 position = CS_iclamp(0, xNow.tex.y * texture.width,  texture.height - 1) *
 							   texture.width +
 							   CS_iclamp(0, xNow.tex.x * texture.height, texture.width  - 1);
@@ -190,8 +260,8 @@ void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVec
 					texture.greenBuffer [position],
 					texture.blueBuffer  [position]
 				);
-				zb.bufptr[(i32)(xNow.pos.y * zb.width + xNow.pos.x)] = xNow.pos.z;
-			}
+			//	zb.bufptr[(i32)(xNow.pos.y * zb.width + xNow.pos.x)] = xNow.pos.z;
+			//}
 
 			
 

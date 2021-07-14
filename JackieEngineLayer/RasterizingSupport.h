@@ -8,13 +8,20 @@
 
 
 class FZBuffer {
+private:
+	// Block the using of Copy Constructor and operator= using private
+	FZBuffer(const FZBuffer& zb);
+	FZBuffer& operator=(const FZBuffer& zb);
 public:
 	f32 *bufptr;
 	i32  width;
 	i32  height;
 
+	void Release();
+	void Alloc();
+	void FillBuffer();
+	void Resize(i32 width_, i32 height_);
 	FZBuffer();
-	FZBuffer(i32 width_, i32 height_);
 	~FZBuffer();
 };
 
@@ -26,6 +33,8 @@ public:
 
 	FRasterizer();
 	FRasterizer(CS_FrameBuffer& fb_);
+	FRasterizer& operator=(const FRasterizer& rst);
+	~FRasterizer();
 
 	void DrawProtectedCube(i32 x0, i32 y0, i32 x1, i32 y1, ui8 r_, ui8 g_, ui8 b_);
 	void DrawRadiusCube(i32 x, i32 y, i32 radius);
