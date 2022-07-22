@@ -9,7 +9,7 @@
 
 ![dx1](dx1.png)
 
-2.安装路径**<u>务必</u>**安装到到C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)，**<u>否则你就需要重新配置Visual Studio项目</u>**（重新配置的教程见[ProjectConfigurations.md](./ProjectConfigurations.md)）。默认地址就是这个。
+2.安装路径**<u>务必</u>**安装到到C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)，**<u>否则你就需要重新配置Visual Studio项目</u>**（重新配置的教程见下文）。默认地址就是这个。
 
 ![dx2](dx2.png)
 
@@ -21,7 +21,7 @@
 
 4.安装完成后打开仓库中的CrossBufferForWindow.vcxproj，就会自动在VS中打开CrossBufferForWindow项目。点击画面上方的“本地Windows调试器”进行编译运行。不出所料的话，你应该会看到下图所示的Demo。Windows7环境轻松60帧，Windows10环境只能跑到48-50帧，这可能是因为系统的实现不同导致的。
 
-![Demo](../../Resources/Demo.png)
+![Demo](./Demo.png)
 
 # 重新配置Visual Studio项目
 
