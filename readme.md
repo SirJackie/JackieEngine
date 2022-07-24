@@ -1,30 +1,32 @@
 # JackieEngine
 
+## 简介
+
 一个完全基于数学运算的软渲染3D引擎，不依赖GPU硬件加速，完全基于CPU运算实现的软件渲染。
 
 注意！这个引擎正在开发中，尚未完成。不保证每一个Commit都能正常运行。
 
-# Demos
+## 效果展示
 
-## Demo1
+### Demo1
 
 使用`git checkout demo1`查看：
 
-![Demo1](./ReadmeDocumentImages/Demo1.png)
+![Demo1](Resources/Demo1.png)
 
-## Demo2
+### Demo2
 
 使用`git checkout demo2`查看：
 
 ![Demo2](Resources/Demo2.png)
 
-# 如何编译并运行Demo？
+## 如何编译并运行Demo？
 
 [如何编译并运行Demo？ (Windows 平台)](./WindowsSimuLayer/ConfigurationDocument/ConfigurationDocument.md)
 
 [如何编译并运行Demo？ (Linux 平台)](./LinuxSimuLayer/ConfigurationDocument/ConfigurationDocument.md)
 
-# 关于开源协议
+## 关于开源协议
 
 仓库中JackieEngine本身，以及通过该程序衍生得产品，如Demo视频，均属于开源软件，遵守GNU通用公共许可证，即GNU GPL。
 
