@@ -4,9 +4,19 @@
 
 注意！这个引擎正在开发中，尚未完成。不保证每一个Commit都能正常运行。
 
+# Demos
+
+## Demo1
+
+使用`git checkout demo1`查看：
+
 ![Demo1](./ReadmeDocumentImages/Demo1.png)
 
-Demo1（版本ec6728a839f6140bbf1829559b30cc8b2504758b）
+## Demo2
+
+使用`git checkout demo2`查看：
+
+![Demo2](Resources/Demo2.png)
 
 # 如何编译并运行Demo？
 
