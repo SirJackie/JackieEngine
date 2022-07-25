@@ -5,8 +5,11 @@
 
 
 class CS_Keyboard {
-public:
+
+private:
 	i32 keyBuffer[256];
+	
+public:
 	CS_Keyboard();
 	csbool IsKeyPressed(i8 key);
 	csbool IsKeyFirstTimePressed(i8 key);

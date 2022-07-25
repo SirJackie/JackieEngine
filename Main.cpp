@@ -77,8 +77,8 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	}
 
 	camera.Rotate(
-		(f32)mouse.deltaY / (f32)mouse.windowHeight * mouseSensitivity,
-		(f32)mouse.deltaX / (f32)mouse.windowWidth  * mouseSensitivity,
+		(f32)mouse.GetDeltaY() / (f32)mouse.GetWindowHeight() * mouseSensitivity,
+		(f32)mouse.GetDeltaX() / (f32)mouse.GetWindowWidth()  * mouseSensitivity,
 		0.0f
 	);
 	
