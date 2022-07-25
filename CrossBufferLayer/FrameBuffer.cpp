@@ -267,8 +267,8 @@ void CS_FrameBuffer::LoadFromBMP(string fileName){
     file.Read();
     file.Close();
 
-    BitmapHeader *header = (BitmapHeader*)(file.buffer);
-    Pixel        *pixel  = (Pixel*)(file.buffer + sizeof(BitmapHeader));
+    BitmapHeader *header = (BitmapHeader*)(file.GetBufferPointer());
+    Pixel        *pixel  = (Pixel*)(file.GetBufferPointer() + sizeof(BitmapHeader));
 
     curX = CS_FB_INIT_CURX;
     curY = CS_FB_INIT_CURY;

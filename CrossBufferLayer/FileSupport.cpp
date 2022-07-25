@@ -102,6 +102,11 @@ void CS_File::Close(){
     }
 }
 
+ui8 * CS_File::GetBufferPointer()
+{
+	return buffer;
+}
+
 CS_File::~CS_File(){
     Close();
 }
