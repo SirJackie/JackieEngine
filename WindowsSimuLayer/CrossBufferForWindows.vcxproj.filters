@@ -144,5 +144,14 @@
     <ClCompile Include="..\JackieEngineLayer\RasterizingSupport.cpp">
       <Filter>源文件\JackieEngineLayer</Filter>
     </ClCompile>
+    <ClCompile Include="..\JackieEngineLayer\JackieEngine.cpp">
+      <Filter>源文件\JackieEngineLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CrossBufferLayer\CrossBuffer.cpp">
+      <Filter>源文件\CrossBufferLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CrossBufferLayer\FontSupport.cpp">
+      <Filter>源文件\CrossBufferLayer</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
