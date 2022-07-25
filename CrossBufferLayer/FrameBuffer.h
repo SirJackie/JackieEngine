@@ -56,15 +56,19 @@ class CS_FrameBuffer
 
 private:
 	// Private Member Variables for Internal Useages
-    i32 width;
-    i32 height;
-
-    ui8* redBuffer;
-    ui8* greenBuffer;
-    ui8* blueBuffer;
-
     i32 curX;
     i32 curY;
+
+public:
+	// It's pretty dirty here to expose these buffers to the outside
+	// But I just gonna do it because it can make the program runs faster
+	// Than create a Getter Function seperately
+	i32 width;
+	i32 height;
+
+	ui8* redBuffer;
+	ui8* greenBuffer;
+	ui8* blueBuffer;
 
 private:
 	// Private Member Function for Internal Usages
@@ -76,15 +80,6 @@ private:
 		 (const CS_FrameBuffer& from, CS_FrameBuffer& to);
 
 public:
-	// Public Getters and Setters for Internal Usage
-	// DO NOT USE THE FOLLOWING GETTERS AND SETTERS IF YOU ARE A USER !!!
-	ui8* GetRedBufferPointer();
-	ui8* GetGreenBufferPointer();
-	ui8* GetBlueBufferPointer();
-	i32  GetWidth();
-	i32  GetHeight();
-
-public:
 	// Constructors and Destructors
 	CS_FrameBuffer();
 	CS_FrameBuffer(i32 Width_, i32 Height_);
@@ -94,6 +89,8 @@ public:
 
 public:
 	// Member Functions for Users
+	i32 GetWidth();
+	i32 GetHeight();
 
 	inline void PutPixel
 	(

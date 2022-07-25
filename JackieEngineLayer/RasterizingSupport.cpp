@@ -102,7 +102,7 @@ FRasterizer::FRasterizer(){
 
 FRasterizer::FRasterizer(CS_FrameBuffer& fb_){
 	ptrfb = &fb_;
-	zb.Resize(ptrfb->GetWidth(), ptrfb->GetHeight());
+	zb.Resize(ptrfb->width, ptrfb->height);
 }
 
 FRasterizer::FRasterizer(const FRasterizer& rst)
@@ -136,13 +136,13 @@ void FRasterizer::DrawProtectedCube(i32 x0, i32 y0, i32 x1, i32 y1, ui8 r_, ui8 
 	y1 = CS_iclamp(y0, y1, height);
 
 	for(i32 y = y0; y < y1; y++){
-		ui8*  rEnd = (ui8*)(ptrfb->GetRedBufferPointer()   + y * width + x1);
-		ui8*  gEnd = (ui8*)(ptrfb->GetGreenBufferPointer() + y * width + x1);
-		ui8*  bEnd = (ui8*)(ptrfb->GetBlueBufferPointer()  + y * width + x1);
+		ui8*  rEnd = (ui8*)(ptrfb->redBuffer   + y * width + x1);
+		ui8*  gEnd = (ui8*)(ptrfb->greenBuffer + y * width + x1);
+		ui8*  bEnd = (ui8*)(ptrfb->blueBuffer  + y * width + x1);
 		for(
-			ui8 *r = (ui8*)(ptrfb->GetRedBufferPointer()   + y * width + x0),
-			    *g = (ui8*)(ptrfb->GetGreenBufferPointer() + y * width + x0),
-			    *b = (ui8*)(ptrfb->GetBlueBufferPointer()  + y * width + x0);
+			ui8 *r = (ui8*)(ptrfb->redBuffer   + y * width + x0),
+			    *g = (ui8*)(ptrfb->greenBuffer + y * width + x0),
+			    *b = (ui8*)(ptrfb->blueBuffer  + y * width + x0);
 			r<rEnd;
 			r++ && g++ && b++ 
 		){
@@ -271,15 +271,15 @@ void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVec
 			f32& zbPos = zb.bufptr[((i32)xNow.pos.y * zb.width + (i32)xNow.pos.x)];
 
 			if(zbPos < xNow.pos.z){
-				i32 position = CS_iclamp(0, xNow.tex.y * texture.GetWidth(),  texture.GetHeight() - 1) *
-							   texture.GetWidth() +
-							   CS_iclamp(0, xNow.tex.x * texture.GetHeight(), texture.GetWidth()  - 1);
+				i32 position = CS_iclamp(0, xNow.tex.y * texture.width,  texture.height - 1) *
+							   texture.width +
+							   CS_iclamp(0, xNow.tex.x * texture.height, texture.width  - 1);
 
 				ptrfb->PutPixel(
 					xNow.pos.x, xNow.pos.y,
-					(texture.GetRedBufferPointer())   [position],
-					(texture.GetGreenBufferPointer()) [position],
-					(texture.GetBlueBufferPointer())  [position]
+					texture.redBuffer   [position],
+					texture.greenBuffer [position],
+					texture.blueBuffer  [position]
 				);
 				zbPos = xNow.pos.z;
 			}

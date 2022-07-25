@@ -54,12 +54,12 @@ void WSL_D3DHelper::PaintFrameBufferHere(CS_FrameBuffer& fb)
 {
 	i32* pBitsNow = (i32*)(rect.pBits);
 	i32  bufferPitch = (rect.Pitch) >> 2;
-	ui8* pRed = fb.GetRedBufferPointer();
-	ui8* pGreen = fb.GetGreenBufferPointer();
-	ui8* pBlue = fb.GetBlueBufferPointer();
+	ui8* pRed = fb.redBuffer;
+	ui8* pGreen = fb.greenBuffer;
+	ui8* pBlue = fb.blueBuffer;
 
-	for (i32 y = 0; y < fb.GetHeight(); y++) {
-		for (i32 x = 0; x < fb.GetWidth(); x++) {
+	for (i32 y = 0; y < fb.height; y++) {
+		for (i32 x = 0; x < fb.width; x++) {
 			*pBitsNow =
 				(i32)
 				(
@@ -73,7 +73,7 @@ void WSL_D3DHelper::PaintFrameBufferHere(CS_FrameBuffer& fb)
 			pBlue++;
 			pBitsNow++;
 		}
-		pBitsNow += bufferPitch - fb.GetWidth();
+		pBitsNow += bufferPitch - fb.width;
 	}
 }
 

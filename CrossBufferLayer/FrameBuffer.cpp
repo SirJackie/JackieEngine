@@ -54,21 +54,6 @@ void CS_FrameBuffer::CopySameSizeBuffer(const CS_FrameBuffer& from, CS_FrameBuff
     }
 }
 
-ui8 * CS_FrameBuffer::GetRedBufferPointer()
-{
-	return redBuffer;
-}
-
-ui8 * CS_FrameBuffer::GetGreenBufferPointer()
-{
-	return greenBuffer;
-}
-
-ui8 * CS_FrameBuffer::GetBlueBufferPointer()
-{
-	return blueBuffer;
-}
-
 i32 CS_FrameBuffer::GetWidth()
 {
 	return width;

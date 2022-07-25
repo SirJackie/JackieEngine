@@ -12,7 +12,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Initialize FrameBuffer-required Components
 	camera = FCamera(
 		0.0f, 0.0f, 5.0f, -1.85897f, 0.217391f, 0.0f,
-		-0.1f, -1000.0f, 60.0f, fb.GetWidth(), fb.GetHeight()
+		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
 	);
 	rasterizer = FRasterizer(fb);
 
