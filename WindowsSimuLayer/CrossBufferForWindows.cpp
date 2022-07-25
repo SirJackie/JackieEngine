@@ -92,10 +92,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			POINT pt;
 			GetCursorPos(&pt);
 
-			mouse.SetX(pt.x - windowsHelper.leftMargin);
-			mouse.SetY(pt.y - windowsHelper.topMargin);
-			mouse.SetLastX(mouse.GetX());
-			mouse.SetLastY(mouse.GetY());
+			mouse.__DONT_USE__SetX(pt.x - windowsHelper.leftMargin);
+			mouse.__DONT_USE__SetY(pt.y - windowsHelper.topMargin);
+			mouse.__DONT_USE__SetLastX(mouse.GetX());
+			mouse.__DONT_USE__SetLastY(mouse.GetY());
 		}
 
 		if (lastFrameInfinityState == csFalse && mouse.IsInfinityModeOpened() == csTrue) {
@@ -118,8 +118,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			POINT pt;
 			GetCursorPos(&pt);
 
-			mouse.SetX(mouse.GetX() + (pt.x - GlobalCenterX));
-			mouse.SetY(mouse.GetY() + (pt.y - GlobalCenterY));
+			mouse.__DONT_USE__SetX(mouse.GetX() + (pt.x - GlobalCenterX));
+			mouse.__DONT_USE__SetY(mouse.GetY() + (pt.y - GlobalCenterY));
 
 			SetCursorPos(GlobalCenterX, GlobalCenterY);
 		}
@@ -140,8 +140,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			SendMessage(windowsHelper.hWnd, WM_CLOSE, 0, 0);
 		}
 
-		mouse.SetDeltaX(mouse.GetX() - mouse.GetLastX());
-		mouse.SetDeltaY(mouse.GetY() - mouse.GetLastY());
+		mouse.__DONT_USE__SetDeltaX(mouse.GetX() - mouse.GetLastX());
+		mouse.__DONT_USE__SetDeltaY(mouse.GetY() - mouse.GetLastY());
 
 		// Update Time Counting Variables
 		thisTime = clock();
@@ -174,8 +174,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// lastTime in next frame = thisTime in this frame
 		lastTime = thisTime;
 
-		mouse.SetLastX(mouse.GetX());
-		mouse.SetLastY(mouse.GetY());
+		mouse.__DONT_USE__SetLastX(mouse.GetX());
+		mouse.__DONT_USE__SetLastY(mouse.GetY());
 	}
 
 	/* After the Main Loop */
@@ -214,33 +214,33 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_LBUTTONDOWN:
-		mouse.SetLBtnState(csTrue);
+		mouse.__DONT_USE__SetLBtnState(csTrue);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_LBUTTONUP:
-		mouse.SetLBtnState(csFalse);
+		mouse.__DONT_USE__SetLBtnState(csFalse);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_MBUTTONDOWN:
-		mouse.SetMBtnState(csTrue);
+		mouse.__DONT_USE__SetMBtnState(csTrue);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_MBUTTONUP:
-		mouse.SetMBtnState(csFalse);
+		mouse.__DONT_USE__SetMBtnState(csFalse);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_RBUTTONDOWN:
-		mouse.SetRBtnState(csTrue);
+		mouse.__DONT_USE__SetRBtnState(csTrue);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_RBUTTONUP:
-		mouse.SetRBtnState(csFalse);
+		mouse.__DONT_USE__SetRBtnState(csFalse);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_MOUSEMOVE:
 		if (mouse.IsInfinityModeOpened() == csFalse) {
-			mouse.SetX(LOWORD(lParam));
-			mouse.SetY(HIWORD(lParam));
+			mouse.__DONT_USE__SetX(LOWORD(lParam));
+			mouse.__DONT_USE__SetY(HIWORD(lParam));
 		}
 
 		return DefWindowProc(hWnd, msg, wParam, lParam);

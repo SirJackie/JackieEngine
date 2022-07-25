@@ -44,15 +44,15 @@ public:
 	// Setters
 	// The following setters are only for the framework to use internally
 	// DO NOT USE THE FOLLOWING SETTERS IN YOUR PROGRAM !!!
-	void SetX(i32 x_);
-	void SetY(i32 y_);
-	void SetLastX(i32 lastX_);
-	void SetLastY(i32 lastY_);
-	void SetDeltaX(i32 deltaX_);
-	void SetDeltaY(i32 deltaY_);
-	void SetLBtnState(csbool lBtnState_);
-	void SetMBtnState(csbool mBtnState_);
-	void SetRBtnState(csbool rBtnState_);
+	void __DONT_USE__SetX(i32 x_);
+	void __DONT_USE__SetY(i32 y_);
+	void __DONT_USE__SetLastX(i32 lastX_);
+	void __DONT_USE__SetLastY(i32 lastY_);
+	void __DONT_USE__SetDeltaX(i32 deltaX_);
+	void __DONT_USE__SetDeltaY(i32 deltaY_);
+	void __DONT_USE__SetLBtnState(csbool lBtnState_);
+	void __DONT_USE__SetMBtnState(csbool mBtnState_);
+	void __DONT_USE__SetRBtnState(csbool rBtnState_);
 };
 
 #endif

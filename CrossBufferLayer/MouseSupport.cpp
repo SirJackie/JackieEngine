@@ -137,47 +137,47 @@ csbool CS_Mouse::IsInfinityModeOpened()
     return infinityMode;
 }
 
-void CS_Mouse::SetX(i32 x_)
+void CS_Mouse::__DONT_USE__SetX(i32 x_)
 {
 	x = x_;
 }
 
-void CS_Mouse::SetY(i32 y_)
+void CS_Mouse::__DONT_USE__SetY(i32 y_)
 {
 	y = y_;
 }
 
-void CS_Mouse::SetLastX(i32 lastX_)
+void CS_Mouse::__DONT_USE__SetLastX(i32 lastX_)
 {
 	lastX = lastX_;
 }
 
-void CS_Mouse::SetLastY(i32 lastY_)
+void CS_Mouse::__DONT_USE__SetLastY(i32 lastY_)
 {
 	lastY = lastY_;
 }
 
-void CS_Mouse::SetDeltaX(i32 deltaX_)
+void CS_Mouse::__DONT_USE__SetDeltaX(i32 deltaX_)
 {
 	deltaX = deltaX_;
 }
 
-void CS_Mouse::SetDeltaY(i32 deltaY_)
+void CS_Mouse::__DONT_USE__SetDeltaY(i32 deltaY_)
 {
 	deltaY = deltaY_;
 }
 
-void CS_Mouse::SetLBtnState(csbool lBtnState_)
+void CS_Mouse::__DONT_USE__SetLBtnState(csbool lBtnState_)
 {
 	lBtnState = lBtnState_;
 }
 
-void CS_Mouse::SetMBtnState(csbool mBtnState_)
+void CS_Mouse::__DONT_USE__SetMBtnState(csbool mBtnState_)
 {
 	mBtnState = mBtnState_;
 }
 
-void CS_Mouse::SetRBtnState(csbool rBtnState_)
+void CS_Mouse::__DONT_USE__SetRBtnState(csbool rBtnState_)
 {
 	rBtnState = rBtnState_;
 }
