@@ -16,7 +16,7 @@ public:
 	WSL_D3DHelper(HWND& hWnd);
 	void LockBuffer();
 	void UnlockBuffer();
-	void PaintFrameBufferHere(const CS_FrameBuffer& fb);
+	void PaintFrameBufferHere(CS_FrameBuffer& fb);
 	void Release();
 };
 

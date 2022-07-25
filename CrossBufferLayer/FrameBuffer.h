@@ -8,8 +8,8 @@
 #define CS_FB_INIT_CURX 10
 #define CS_FB_INIT_CURY 10
 
+// Make sure the struct 'BitmapHeader' has no empty line-up things between two member variables
 #pragma pack(push,1)
-
 
 struct BitmapHeader {
     /*定义为'BM'，标识bmp文件*/
@@ -53,9 +53,9 @@ struct Pixel {
 
 class CS_FrameBuffer
 {
-public:
 
-    // Properties
+private:
+	// Private Member Variables for Internal Useages
     i32 width;
     i32 height;
 
@@ -66,25 +66,52 @@ public:
     i32 curX;
     i32 curY;
 
-
-    // Methods
+private:
+	// Private Member Function for Internal Usages
     void AllocateBuffer
          (i32 width, i32 height);
     void DisAllocateBuffer
          ();
+	void CopySameSizeBuffer
+		 (const CS_FrameBuffer& from, CS_FrameBuffer& to);
+
+public:
+	// Public Getters and Setters for Internal Usage
+	// DO NOT USE THE FOLLOWING GETTERS AND SETTERS IF YOU ARE A USER !!!
+	ui8* GetRedBufferPointer();
+	ui8* GetGreenBufferPointer();
+	ui8* GetBlueBufferPointer();
+	i32  GetWidth();
+	i32  GetHeight();
+
+public:
+	// Constructors and Destructors
+	CS_FrameBuffer();
+	CS_FrameBuffer(i32 Width_, i32 Height_);
+	CS_FrameBuffer(const CS_FrameBuffer& fb);
+	CS_FrameBuffer& operator=(const CS_FrameBuffer& fb);
+	~CS_FrameBuffer();
+
+public:
+	// Member Functions for Users
+
+	inline void PutPixel
+	(
+		const i32& x, const i32& y,
+		const i32& r, const i32& g, const i32& b
+	)
+	{
+		i32 pos = y * width + x;
+		redBuffer[pos] = r;
+		greenBuffer[pos] = g;
+		blueBuffer[pos] = b;
+	}
+
     void ClearSelfBuffer
          ();
     void ClearSelfBuffer
          (ui8 r, ui8 g, ui8 b);
-    void CopySameSizeBuffer
-         (const CS_FrameBuffer& from, CS_FrameBuffer& to);
-
-    CS_FrameBuffer();
-    CS_FrameBuffer(i32 Width_, i32 Height_);
-    CS_FrameBuffer(const CS_FrameBuffer& fb);
-    CS_FrameBuffer& operator=(const CS_FrameBuffer& fb);
-    ~CS_FrameBuffer();
-
+    
     void DrawChar
     (
         const char& ch, const i32 xStart, const i32 yStart,
@@ -98,9 +125,9 @@ public:
     );
 
     void DrawBuffer(CS_FrameBuffer& from, i32 toXStart, i32 toYStart);
-    void Print(const i8* str);
-    void Print(string str);
-    void Print(csbool csb);
+    void Print(const i8* str);  // Print C-String
+    void Print(string str);     // Print std::string
+    void Print(csbool csb);     // Print Cross-Buffer-Standard Boolean Variable
 
     template<class T>
     void Print(T x)
@@ -121,17 +148,5 @@ public:
 
     void LoadFromBMP(string fileName);
 };
-
-inline void CS_PutPixel
-(
-    CS_FrameBuffer& fb, const i32& x, const i32& y,
-    const i32& r, const i32& g, const i32& b
-)
-{
-    i32 pos = (y)*fb.width + (x);
-    fb.redBuffer[pos] = r;
-    fb.greenBuffer[pos] = g;
-    fb.blueBuffer[pos] = b;
-}
 
 #endif

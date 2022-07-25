@@ -54,6 +54,31 @@ void CS_FrameBuffer::CopySameSizeBuffer(const CS_FrameBuffer& from, CS_FrameBuff
     }
 }
 
+ui8 * CS_FrameBuffer::GetRedBufferPointer()
+{
+	return redBuffer;
+}
+
+ui8 * CS_FrameBuffer::GetGreenBufferPointer()
+{
+	return greenBuffer;
+}
+
+ui8 * CS_FrameBuffer::GetBlueBufferPointer()
+{
+	return blueBuffer;
+}
+
+i32 CS_FrameBuffer::GetWidth()
+{
+	return width;
+}
+
+i32 CS_FrameBuffer::GetHeight()
+{
+	return height;
+}
+
 CS_FrameBuffer::CS_FrameBuffer()
 {
     curX = CS_FB_INIT_CURX;
@@ -168,7 +193,7 @@ void CS_FrameBuffer::DrawString
             xNow = x;
         }
         else {
-            xNow+= CS_FONT_WIDTH;
+            xNow += CS_FONT_WIDTH;
         }
     }
 }
@@ -279,7 +304,7 @@ void CS_FrameBuffer::LoadFromBMP(string fileName){
     AllocateBuffer(width, height);
     ClearSelfBuffer();
 
-    for (i32 y = header->biHeight - 1; y >=0; y--) {
+    for (i32 y = header->biHeight - 1; y >= 0; y--) {
         ui8* rpEnd = redBuffer + y * width + width;
         for (
             ui8 *rp = redBuffer + y * width,
