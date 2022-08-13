@@ -122,11 +122,11 @@ public:
 		return Vec3(x / len, y / len, z / len);
 	}
 
-	//// Vector-Scalar Operators
-	//Vec2  operator*  (const float rhs);
-	//Vec2& operator*= (const float rhs);
-	//Vec2  operator/  (const float rhs);
-	//Vec2& operator/= (const float rhs);
+	// Vector-Scalar Operators
+	Vec3  operator*  (const float rhs);
+	Vec3& operator*= (const float rhs);
+	Vec3  operator/  (const float rhs);
+	Vec3& operator/= (const float rhs);
 
 	//// Vector-Vector Operators
 	//Vec2  operator+  (const Vec2& rhs);
