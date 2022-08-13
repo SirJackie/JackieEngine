@@ -3,6 +3,9 @@
 
 #include "../CrossBufferLayer/BasicDataTypeDeclarations.h"
 
+#include <cmath>
+using std::sqrt;
+
 
 /*
 ** Vectors
@@ -27,6 +30,16 @@ public:
 		x = rhs.x;
 		y = rhs.y;
 		return *this;
+	}
+
+	// LenSq
+	float LenSq() {
+		return x * x + y * y;
+	}
+
+	// Len
+	float Len() {
+		return sqrt(LenSq());
 	}
 
 
