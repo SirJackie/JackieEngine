@@ -62,10 +62,10 @@ public:
 	Vec2& operator/= (const float rhs);
 
 	// Vector-Vector Operators
-	//Vec2  operator+  (const Vec2& rhs);
-	//Vec2& operator+= (const Vec2& rhs);
-	//Vec2  operator-  (const Vec2& rhs);
-	//Vec2& operator-= (const Vec2& rhs);
+	Vec2  operator+  (const Vec2& rhs);
+	Vec2& operator+= (const Vec2& rhs);
+	Vec2  operator-  (const Vec2& rhs);
+	Vec2& operator-= (const Vec2& rhs);
 
 
 

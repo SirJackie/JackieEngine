@@ -29,25 +29,29 @@ Vec2 & Vec2::operator/=(const float rhs)
 	return *this;
 }
 
-//Vec2 Vec2::operator+(const Vec2 & rhs)
-//{
-//	return Vec2();
-//}
-//
-//Vec2 & Vec2::operator+=(const Vec2 & rhs)
-//{
-//	// TODO: 在此处插入 return 语句
-//}
-//
-//Vec2 Vec2::operator-(const Vec2 & rhs)
-//{
-//	return Vec2();
-//}
-//
-//Vec2 & Vec2::operator-=(const Vec2 & rhs)
-//{
-//	// TODO: 在此处插入 return 语句
-//}
+Vec2 Vec2::operator+(const Vec2 & rhs)
+{
+	return Vec2(*this) += rhs;
+}
+
+Vec2 & Vec2::operator+=(const Vec2 & rhs)
+{
+	x += rhs.x;
+	y += rhs.y;
+	return *this;
+}
+
+Vec2 Vec2::operator-(const Vec2 & rhs)
+{
+	return Vec2(*this) -= rhs;
+}
+
+Vec2 & Vec2::operator-=(const Vec2 & rhs)
+{
+	x -= rhs.x;
+	y -= rhs.y;
+	return *this;
+}
 
 
 /*
