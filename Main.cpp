@@ -1,7 +1,6 @@
 #include "Main.h"
 
 CS_FPSCalculator  fpsCalculator;
-FCamera           camera;
 FObject           object;
 FRasterizer       rasterizer;
 f32               walkSpeed = 0.01f;
@@ -10,10 +9,6 @@ csbool            rotate = csFalse;
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	// Initialize FrameBuffer-required Components
-	camera = FCamera(
-		0.0f, 0.0f, 5.0f, -1.85897f, 0.217391f, 0.0f,
-		-0.1f, -1000.0f, 60.0f, fb.width, fb.height
-	);
 	rasterizer = FRasterizer(fb);
 
 	object = FObject(CS_Path().join("..").join("Resources").join("Lena.bmp"));
@@ -42,8 +37,8 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	object.Add(5, 0, 4);  // b1
 	object.Add(5, 1, 0);  // b2
 
-	// Open Mouse Locking
-	mouse.OpenInfinityMode();
+	// Close Mouse Locking
+	mouse.CloseInfinityMode();
 }
 
 f32 positionX = 10.0f;
@@ -55,51 +50,51 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		object.Rotate(0.05f * deltaTime, -0.05f * deltaTime, 0.0f);
 	}
 	if(kb.IsKeyPressed(CSK_W)){
-		camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 1.0f) * walkSpeed * deltaTime);
+		//camera.Walk(FVector4D( 0.0f, 0.0f, -1.0f, 1.0f) * walkSpeed * deltaTime);
 	}
 	if(kb.IsKeyPressed(CSK_S)){
-		camera.Walk(FVector4D( 0.0f, 0.0f,  1.0f, 1.0f) * walkSpeed * deltaTime);
+		//camera.Walk(FVector4D( 0.0f, 0.0f,  1.0f, 1.0f) * walkSpeed * deltaTime);
 	}
 	if(kb.IsKeyPressed(CSK_A)){
-		camera.Walk(FVector4D(-1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+		//camera.Walk(FVector4D(-1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
 	}
 	if(kb.IsKeyPressed(CSK_D)){
-		camera.Walk(FVector4D( 1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
+		//camera.Walk(FVector4D( 1.0f, 0.0f,  0.0f, 1.0f) * walkSpeed * deltaTime);
 	}
 	if(kb.IsKeyPressed(CSK_Space)){
-		camera.Elevator( walkSpeed * deltaTime);
+		//camera.Elevator( walkSpeed * deltaTime);
 	}
 	if(kb.IsKeyPressed(CSK_Shift)){
-		camera.Elevator(-walkSpeed * deltaTime);
+		//camera.Elevator(-walkSpeed * deltaTime);
 	}
 	if(kb.IsKeyFirstTimePressed(CSK_R)){
 		rotate = !rotate;
 	}
 
-	camera.Rotate(
+	/*camera.Rotate(
 		(f32)mouse.GetDeltaY() / (f32)mouse.GetWindowHeight() * mouseSensitivity,
 		(f32)mouse.GetDeltaX() / (f32)mouse.GetWindowWidth()  * mouseSensitivity,
 		0.0f
-	);
+	);*/
 	
 
-	// Projection and Rasterization
-	camera.ProjectObject(object);
-	rasterizer.DrawPoint(object);
-	rasterizer.DrawTriangle(object);
+	//// Projection and Rasterization
+	//camera.ProjectObject(object);
+	//rasterizer.DrawPoint(object);
+	//rasterizer.DrawTriangle(object);
 
-	// Count FPS and Print Things
-	fpsCalculator.Count(deltaTime);
-	fb.Print(mouse.ToString());
-	fb.PrintLn(kb.ToString());
+	//// Count FPS and Print Things
+	//fpsCalculator.Count(deltaTime);
+	//fb.Print(mouse.ToString());
+	//fb.PrintLn(kb.ToString());
 
-	fb.PrintLn(fpsCalculator.ToString());
+	//fb.PrintLn(fpsCalculator.ToString());
 
-	fb.PrintLn("Press WASD to Move, Rotate the Mouse to Look.");
-	fb.PrintLn("Press R to Rotate the Cube, Space to Rise, Shift to Fall\n");
-	
-	fb.PrintLn(camera.ToString());
-	fb.PrintLn(object.ToString());
+	//fb.PrintLn("Press WASD to Move, Rotate the Mouse to Look.");
+	//fb.PrintLn("Press R to Rotate the Cube, Space to Rise, Shift to Fall\n");
+	//
+	//fb.PrintLn(camera.ToString());
+	//fb.PrintLn(object.ToString());
 
-	rasterizer.zb.FillBuffer();
+	//rasterizer.zb.FillBuffer();
 }
