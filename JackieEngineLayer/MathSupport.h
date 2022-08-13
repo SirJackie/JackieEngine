@@ -70,40 +70,74 @@ public:
 	// Negative Operator
 	Vec2  operator-  ();
 
-
-
-	//Vec2() : x(0.0f), y(0.0f), z(0.0f) {}
-	//Vec2(f32 x_, f32 y_, f32 z_) : x(x_), y(y_), z(z_) {}
-
-	//// Methods
-	//string     ToString()                   const;
-
-	//// Vector-Scalar Calculation
-	//friend const Vec2 operator+(const Vec2& a, const f32 b);
-	//friend const Vec2 operator+(const f32 b, const Vec2& a);
-	//friend const Vec2 operator-(const Vec2& a, const f32 b);
-	//friend const Vec2 operator-(const f32 b, const Vec2& a);
-	//friend const Vec2 operator*(const Vec2& a, const f32 b);
-	//friend const Vec2 operator*(const f32 b, const Vec2& a);
-	//friend const Vec2 operator/(const Vec2& a, const f32 b);
-	//friend const Vec2 operator/(const f32 b, const Vec2& a);
-	//virtual Vec2& operator+=(const f32& b);
-	//virtual Vec2& operator-=(const f32& b);
-	//virtual Vec2& operator*=(const f32& b);
-	//virtual Vec2& operator/=(const f32& b);
-
-	//// Vector-Vector Calculation
-	//friend const Vec2 operator+(const Vec2& a, const Vec2& b);
-	//friend const Vec2 operator-(const Vec2& a, const Vec2& b);
-	//virtual Vec2& operator+=(const Vec2& b);
-	//virtual Vec2& operator-=(const Vec2& b);
-
-	//// Interpolation
-	//virtual const Vec2 InterpolateTo(const Vec2& b, f32 alpha) const;
-
 public:
 	float x;
 	float y;
+};
+
+
+class Vec3 : public Vec2 {
+public:
+
+	// Default Constructor
+	Vec3() { x = 0.0f; y = 0.0f; z = 0.0f; }
+
+	// Custom Constructor
+	Vec3(float x_, float y_, float z_) { x = x_; y = y_; z = z_; }
+
+	// Copy Constructor
+	Vec3(const Vec3& rhs) {
+		*this = rhs;
+	}
+
+	// Copy Assignment
+	Vec3& operator=(const Vec3& rhs) {
+		x = rhs.x;
+		y = rhs.y;
+		z = rhs.z;
+		return *this;
+	}
+
+	//// LenSq
+	//float LenSq() {
+	//	return x * x + y * y;
+	//}
+
+	//// Len
+	//float Len() {
+	//	return sqrt(LenSq());
+	//}
+
+	//// Normalize
+	//void Normalize() {
+	//	float len = Len();
+	//	this->x /= len;
+	//	this->y /= len;
+	//}
+
+	//// GetNormalized
+	//Vec2 GetNormalized() {
+	//	float len = Len();
+	//	return Vec2(x / len, y / len);
+	//}
+
+	//// Vector-Scalar Operators
+	//Vec2  operator*  (const float rhs);
+	//Vec2& operator*= (const float rhs);
+	//Vec2  operator/  (const float rhs);
+	//Vec2& operator/= (const float rhs);
+
+	//// Vector-Vector Operators
+	//Vec2  operator+  (const Vec2& rhs);
+	//Vec2& operator+= (const Vec2& rhs);
+	//Vec2  operator-  (const Vec2& rhs);
+	//Vec2& operator-= (const Vec2& rhs);
+
+	//// Negative Operator
+	//Vec2  operator-  ();
+
+public:
+	float z;
 };
 
 //
