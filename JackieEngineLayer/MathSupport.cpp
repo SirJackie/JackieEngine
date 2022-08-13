@@ -89,6 +89,44 @@ Vec3 & Vec3::operator/=(const float rhs)
 	return *this;
 }
 
+Vec3 Vec3::operator+(const Vec3 & rhs)
+{
+	return Vec3(*this) += rhs;
+}
+
+Vec3 & Vec3::operator+=(const Vec3 & rhs)
+{
+	x += rhs.x;
+	y += rhs.y;
+	z += rhs.z;
+	return *this;
+}
+
+Vec3 Vec3::operator-(const Vec3 & rhs)
+{
+	return Vec3(*this) -= rhs;
+}
+
+Vec3 & Vec3::operator-=(const Vec3 & rhs)
+{
+	x -= rhs.x;
+	y -= rhs.y;
+	z -= rhs.z;
+	return *this;
+}
+
+float Vec3::operator*(const Vec3 & rhs)
+{
+	return x * rhs.x + y * rhs.y + z * rhs.z;
+}
+
+Vec3 Vec3::operator-()
+{
+	return Vec3(-x, -y, -z);
+}
+
+
+
 //
 ///*
 //** Vec3

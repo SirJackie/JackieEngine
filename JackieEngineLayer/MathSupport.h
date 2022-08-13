@@ -128,14 +128,17 @@ public:
 	Vec3  operator/  (const float rhs);
 	Vec3& operator/= (const float rhs);
 
-	//// Vector-Vector Operators
-	//Vec2  operator+  (const Vec2& rhs);
-	//Vec2& operator+= (const Vec2& rhs);
-	//Vec2  operator-  (const Vec2& rhs);
-	//Vec2& operator-= (const Vec2& rhs);
+	// Vector-Vector Operators
+	Vec3  operator+  (const Vec3& rhs);
+	Vec3& operator+= (const Vec3& rhs);
+	Vec3  operator-  (const Vec3& rhs);
+	Vec3& operator-= (const Vec3& rhs);
 
-	//// Negative Operator
-	//Vec2  operator-  ();
+	// Vector-Vector Dot Product
+	float operator*  (const Vec3& rhs);
+
+	// Negative Operator
+	Vec3  operator-  ();
 
 public:
 	float z;
