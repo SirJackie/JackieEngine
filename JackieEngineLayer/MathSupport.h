@@ -67,6 +67,9 @@ public:
 	Vec2  operator-  (const Vec2& rhs);
 	Vec2& operator-= (const Vec2& rhs);
 
+	// Negative Operator
+	Vec2  operator-  ();
+
 
 
 	//Vec2() : x(0.0f), y(0.0f), z(0.0f) {}

@@ -53,6 +53,11 @@ Vec2 & Vec2::operator-=(const Vec2 & rhs)
 	return *this;
 }
 
+Vec2 Vec2::operator-()
+{
+	return Vec2(-x, -y);
+}
+
 
 /*
 ** Vec2
