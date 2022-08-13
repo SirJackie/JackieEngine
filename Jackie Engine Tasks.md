@@ -12,6 +12,8 @@ framebuffer字体渲染使用模板重载
 
 0xffu, add u after bitwise operation
 
+重构整个项目的project file，解决include lib 代码生成 平台，等等问题
+
 # 着急的
 
 √ 换上640*640分辨率
