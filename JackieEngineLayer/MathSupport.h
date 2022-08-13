@@ -19,12 +19,15 @@ public:
 
 	// Copy Constructor
 	Vec2(const Vec2& rhs) {
-		x = rhs.x;
-		y = rhs.y;
+		*this = rhs;
 	}
 
 	// Copy Assignment
-	Vec2& operator=(const Vec2& rhs) = default;
+	Vec2& operator=(const Vec2& rhs) {
+		x = rhs.x;
+		y = rhs.y;
+		return *this;
+	}
 
 
 
