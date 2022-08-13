@@ -19,8 +19,10 @@ WSL_WindowsHelper::WSL_WindowsHelper()
 	GetScreenResolution(screenWidth, screenHeight);
 	unit = screenHeight / 30;
 
-	windowHeight = 26 * unit;
-	windowWidth = CS_iclamp(0, windowHeight / 9 * 16, screenWidth - 10);
+	// windowHeight = 26 * unit;
+	// windowWidth = CS_iclamp(0, windowHeight / 9 * 16, screenWidth - 10);
+	windowHeight = 640;
+	windowWidth = 640;
 
 	leftMargin = (screenWidth - windowWidth) / 2;
 	topMargin = (screenHeight - windowHeight) / 2;
@@ -35,8 +37,10 @@ WSL_WindowsHelper::WSL_WindowsHelper
 	GetScreenResolution(screenWidth, screenHeight);
 	unit = screenHeight / 30;
 
-	windowHeight = 26 * unit;
-	windowWidth = CS_iclamp(0, windowHeight / 9 * 16, screenWidth - 10);
+	// windowHeight = 26 * unit;
+	// windowWidth = CS_iclamp(0, windowHeight / 9 * 16, screenWidth - 10);
+	windowHeight = 640;
+	windowWidth  = 640;
 
 	leftMargin = (screenWidth - windowWidth) / 2;
 	topMargin = (screenHeight - windowHeight) / 2;
