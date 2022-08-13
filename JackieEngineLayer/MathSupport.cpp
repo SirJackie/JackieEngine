@@ -2,14 +2,14 @@
 
 
 /*
-** FVector3D
+** Vec2
 */
 
 // Methods
-string FVector3D::ToString() const{
+string Vec2::ToString() const{
 	stringstream ss;
 
-	ss << "FVector3D [";
+	ss << "Vec2 [";
 	ss << this->x;
 	ss << ", ";
 	ss << this->y;
@@ -21,112 +21,112 @@ string FVector3D::ToString() const{
 }
 
 // Vector-Scalar Calculation
-const FVector3D operator+(const FVector3D& a, const f32 b){
-	return FVector3D(
+const Vec2 operator+(const Vec2& a, const f32 b){
+	return Vec2(
 		a.x + b, a.y + b, a.z
 	);
 }
-const FVector3D operator+(const f32 b, const FVector3D& a){
-	return FVector3D(
+const Vec2 operator+(const f32 b, const Vec2& a){
+	return Vec2(
 		a.x + b, a.y + b, a.z
 	);
 }
-const FVector3D operator-(const FVector3D& a, const f32 b){
-	return FVector3D(
+const Vec2 operator-(const Vec2& a, const f32 b){
+	return Vec2(
 		a.x - b, a.y - b, a.z
 	);
 }
-const FVector3D operator-(const f32 b, const FVector3D& a){
-	return FVector3D(
+const Vec2 operator-(const f32 b, const Vec2& a){
+	return Vec2(
 		a.x - b, a.y - b, a.z
 	);
 }
-const FVector3D operator*(const FVector3D& a, const f32 b){
-	return FVector3D(
+const Vec2 operator*(const Vec2& a, const f32 b){
+	return Vec2(
 		a.x * b, a.y * b, a.z
 	);
 }
-const FVector3D operator*(const f32 b, const FVector3D& a){
-	return FVector3D(
+const Vec2 operator*(const f32 b, const Vec2& a){
+	return Vec2(
 		a.x * b, a.y * b, a.z
 	);
 }
-const FVector3D operator/(const FVector3D& a, const f32 b){
-	return FVector3D(
+const Vec2 operator/(const Vec2& a, const f32 b){
+	return Vec2(
 		a.x / b, a.y / b, a.z
 	);
 }
-const FVector3D operator/(const f32 b, const FVector3D& a){
-	return FVector3D(
+const Vec2 operator/(const f32 b, const Vec2& a){
+	return Vec2(
 		b / a.x, b / a.y, a.z
 	);
 }
 
-FVector3D& FVector3D::operator+=(const f32& b){
+Vec2& Vec2::operator+=(const f32& b){
 	x += b;
 	y += b;
 	return *this;
 }
 
-FVector3D& FVector3D::operator-=(const f32& b){
+Vec2& Vec2::operator-=(const f32& b){
 	x -= b;
 	y -= b;
 	return *this;
 }
 
-FVector3D& FVector3D::operator*=(const f32& b){
+Vec2& Vec2::operator*=(const f32& b){
 	x *= b;
 	y *= b;
 	return *this;
 }
 
-FVector3D& FVector3D::operator/=(const f32& b){
+Vec2& Vec2::operator/=(const f32& b){
 	x /= b;
 	y /= b;
 	return *this;
 }
 
 // Vector-Vector Calculation
-const FVector3D operator+(const FVector3D& a, const FVector3D& b){
-	return FVector3D(
+const Vec2 operator+(const Vec2& a, const Vec2& b){
+	return Vec2(
 		a.x + b.x, a.y + b.y, a.z
 	);
 }
-const FVector3D operator-(const FVector3D& a, const FVector3D& b){
-	return FVector3D{
+const Vec2 operator-(const Vec2& a, const Vec2& b){
+	return Vec2{
 		a.x - b.x, a.y - b.y, a.z
 	};
 }
 
-FVector3D& FVector3D::operator+=(const FVector3D& b){
+Vec2& Vec2::operator+=(const Vec2& b){
 	x += b.x;
 	y += b.y;
 	return *this;
 }
 
-FVector3D& FVector3D::operator-=(const FVector3D& b){
+Vec2& Vec2::operator-=(const Vec2& b){
 	x -= b.x;
 	y -= b.y;
 	return *this;
 }
 
 // Interpolation
-const FVector3D FVector3D::InterpolateTo(const FVector3D& to, f32 alpha) const {
-	const FVector3D& from = *this;
-	FVector3D delta  = to - from;
+const Vec2 Vec2::InterpolateTo(const Vec2& to, f32 alpha) const {
+	const Vec2& from = *this;
+	Vec2 delta  = to - from;
 	return from + delta * alpha;
 }
 
 
 /*
-** FVector4D
+** Vec3
 */
 
 // Methods
-string FVector4D::ToString() const {
+string Vec3::ToString() const {
 	stringstream ss;
 
-	ss << "FVector4D [";
+	ss << "Vec3 [";
 	ss << this->x;
 	ss << ", ";
 	ss << this->y;
@@ -139,14 +139,14 @@ string FVector4D::ToString() const {
 	return ss.str();
 }
 
-f32 FVector4D::Length() const {
+f32 Vec3::Length() const {
 	// Use the Pythagorean Theorem to calculate the length
 	return sqrtf(x*x + y*y + z*z);
 }
 
-FVector4D FVector4D::Normalized() const {
+Vec3 Vec3::Normalized() const {
 	f32 length = Length();
-	return FVector4D(
+	return Vec3(
 		this->x / length,
 		this->y / length,
 		this->z / length,
@@ -154,7 +154,7 @@ FVector4D FVector4D::Normalized() const {
 	);
 }
 
-void FVector4D::Normalize() {
+void Vec3::Normalize() {
 	f32 length = Length();
 	this->x /= length;
 	this->y /= length;
@@ -162,7 +162,7 @@ void FVector4D::Normalize() {
 	// W-Axis is Meaningless, So Do Nothing
 }
 
-void FVector4D::DevideByW(){
+void Vec3::DevideByW(){
 	x /= w;
 	y /= w;
 	z /= w;
@@ -170,84 +170,84 @@ void FVector4D::DevideByW(){
 }
 
 // Vector-Scalar Calculation
-const FVector4D operator+(const FVector4D& a, const f32 b)
+const Vec3 operator+(const Vec3& a, const f32 b)
 {
-	return FVector4D(
+	return Vec3(
 		a.x + b, a.y + b, a.z + b, a.w
 	);
 }
-const FVector4D operator+(const f32 b, const FVector4D& a)
+const Vec3 operator+(const f32 b, const Vec3& a)
 {
-	return FVector4D
+	return Vec3
 	(
 		a.x + b, a.y + b, a.z + b, a.w
 	);
 }
 
-const FVector4D operator-(const FVector4D& a, const f32 b)
+const Vec3 operator-(const Vec3& a, const f32 b)
 {
-	return FVector4D(
+	return Vec3(
 		a.x - b, a.y - b, a.z - b, a.w
 	);
 }
 
-const FVector4D operator-(const f32 b, const FVector4D& a)
+const Vec3 operator-(const f32 b, const Vec3& a)
 {
-	return FVector4D(
+	return Vec3(
 		a.x - b, a.y - b, a.z - b, a.w
 	);
 }
 
-const FVector4D operator*(const FVector4D& a, const f32 b)
+const Vec3 operator*(const Vec3& a, const f32 b)
 {
-	return FVector4D(
+	return Vec3(
 		a.x * b, a.y * b, a.z * b, a.w
 	);
 }
 
-const FVector4D operator*(const f32 b, const FVector4D& a)
+const Vec3 operator*(const f32 b, const Vec3& a)
 {
-	return FVector4D(
+	return Vec3(
 		a.x * b, a.y * b, a.z * b, a.w
 	);
 }
 
-const FVector4D operator/(const FVector4D& a, const f32 b)
+const Vec3 operator/(const Vec3& a, const f32 b)
 {
-	return FVector4D(
+	return Vec3(
 		a.x / b, a.y / b, a.z / b, a.w
 	);
 }
 
-const FVector4D operator/(const f32 b, const FVector4D& a)
+const Vec3 operator/(const f32 b, const Vec3& a)
 {
-	return FVector4D(
+	return Vec3(
 		b / a.x, b / a.y, b / a.z, a.w
 	);
 }
 
-FVector4D& FVector4D::operator+=(const f32& b){
+Vec3& Vec3::operator+=(const f32& b){
 	x += b;
 	y += b;
 	z += b;
 	return *this;
 }
 
-FVector4D& FVector4D::operator-=(const f32& b){
+Vec3& Vec3::operator-=(const f32& b){
 	x -= b;
 	y -= b;
 	z -= b;
 	return *this;
 }
 
-FVector4D& FVector4D::operator*=(const f32& b){
+Vec3& Vec3::operator*=(const f32& b){
 	x *= b;
 	y *= b;
 	z *= b;
 	return *this;
 }
 
-FVector4D& FVector4D::operator/=(const f32& b){
+Vec3& Vec3::operator/=(const f32& b){
 	x /= b;
 	y /= b;
 	z /= b;
@@ -255,24 +255,24 @@ FVector4D& FVector4D::operator/=(const f32& b){
 }
 
 // Vector-Vector Calculation
-const FVector4D operator+(const FVector4D& a, const FVector4D& b){
-	return FVector4D(
+const Vec3 operator+(const Vec3& a, const Vec3& b){
+	return Vec3(
 		a.x + b.x, a.y + b.y, a.z + b.z, a.w
 	);
 }
 
-const FVector4D operator-(const FVector4D& a, const FVector4D& b){
-	return FVector4D(
+const Vec3 operator-(const Vec3& a, const Vec3& b){
+	return Vec3(
 		a.x - b.x, a.y - b.y, a.z - b.z, a.w
 	);
 }
 
-const f32 operator*(const FVector4D& a, const FVector4D& b){
+const f32 operator*(const Vec3& a, const Vec3& b){
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-const FVector4D operator%(const FVector4D& a, const FVector4D& b){
-	return FVector4D(
+const Vec3 operator%(const Vec3& a, const Vec3& b){
+	return Vec3(
 		a.y * b.z - b.y * a.z,
 		a.z * b.x - a.x * b.z,
 		a.x * b.y - a.y * b.x,
@@ -280,14 +280,14 @@ const FVector4D operator%(const FVector4D& a, const FVector4D& b){
 	);
 }
 
-FVector4D& FVector4D::operator+=(const FVector4D& b){
+Vec3& Vec3::operator+=(const Vec3& b){
 	x += b.x;
 	y += b.y;
 	z += b.z;
 	return *this;
 }
 
-FVector4D& FVector4D::operator-=(const FVector4D& b){
+Vec3& Vec3::operator-=(const Vec3& b){
 	x -= b.x;
 	y -= b.y;
 	z -= b.z;
@@ -295,152 +295,18 @@ FVector4D& FVector4D::operator-=(const FVector4D& b){
 }
 
 // Interpolation
-const FVector4D FVector4D::InterpolateTo(const FVector4D& to, f32 alpha) const {
-	const FVector4D& from = *this;
-	FVector4D delta  = to - from;
+const Vec3 Vec3::InterpolateTo(const Vec3& to, f32 alpha) const {
+	const Vec3& from = *this;
+	Vec3 delta  = to - from;
 	return from + delta * alpha;
 }
 
 
 /*
-** FVectorTex
+** Mat3
 */
 
-FVectorTex::FVectorTex(){
-	pos = FVector4D(0.0f, 0.0f, 0.0f, 1.0f);
-	tex = FVector3D(0.0f, 0.0f, 1.0f);
-}
-
-FVectorTex::FVectorTex(const FVectorTex& fvt){
-	pos = fvt.pos;
-	tex = fvt.tex;
-}
-
-FVectorTex::FVectorTex(const FVector4D& pos_, const FVector3D& tex_){
-	pos = pos_;
-	tex = tex_;
-}
-
-// Vector-Scalar Calculation
-const FVectorTex operator+(const FVectorTex& a, const f32 b){
-	return FVectorTex(
-		a.pos + b,
-		a.tex + b
-	);
-}
-const FVectorTex operator+(const f32 b, const FVectorTex& a){
-	return FVectorTex(
-		a.pos + b,
-		a.tex + b
-	);
-}
-const FVectorTex operator-(const FVectorTex& a, const f32 b){
-	return FVectorTex(
-		a.pos - b,
-		a.tex - b
-	);
-}
-const FVectorTex operator-(const f32 b, const FVectorTex& a){
-	return FVectorTex(
-		a.pos - b,
-		a.tex - b
-	);
-}
-const FVectorTex operator*(const FVectorTex& a, const f32 b){
-	return FVectorTex(
-		a.pos * b,
-		a.tex * b
-	);
-}
-const FVectorTex operator*(const f32 b, const FVectorTex& a){
-	return FVectorTex(
-		a.pos * b,
-		a.tex * b
-	);
-}
-
-const FVectorTex operator/(const FVectorTex& a, const f32 b){
-	return FVectorTex(
-		a.pos / b,
-		a.tex / b
-	);
-}
-const FVectorTex operator/(const f32 b, const FVectorTex& a){
-	return FVectorTex(
-		b / a.pos,
-		b / a.pos
-	);
-}
-
-FVectorTex& FVectorTex::operator+=(const f32& b){
-	pos += b;
-	tex += b;
-	return *this;
-}
-
-FVectorTex& FVectorTex::operator-=(const f32& b){
-	pos -= b;
-	tex -= b;
-	return *this;
-}
-
-FVectorTex& FVectorTex::operator*=(const f32& b){
-	pos *= b;
-	tex *= b;
-	return *this;
-}
-
-FVectorTex& FVectorTex::operator/=(const f32& b){
-	pos /= b;
-	tex /= b;
-	return *this;
-}
-
-// Vector-Vector Calculation
-const FVectorTex operator+(const FVectorTex& a, const FVectorTex& b){
-	return FVectorTex(
-		a.pos + b.pos,
-		a.tex + b.tex
-	);
-}
-const FVectorTex operator-(const FVectorTex& a, const FVectorTex& b){
-	return FVectorTex(
-		a.pos - b.pos,
-		a.tex - b.tex
-	);
-}
-
-FVectorTex& FVectorTex::operator+=(const FVectorTex& b){
-	pos += b.pos;
-	tex += b.tex;
-	return *this;
-}
-
-FVectorTex& FVectorTex::operator-=(const FVectorTex& b){
-	pos -= b.pos;
-	tex -= b.tex;
-	return *this;
-}
-
-// Interpolate To
-const FVectorTex FVectorTex::InterpolateTo(const FVectorTex& b, f32 alpha) const{
-	const FVectorTex& a = *this;
-	return FVectorTex(
-		a.pos.InterpolateTo(b.pos, alpha),
-		a.tex.InterpolateTo(b.tex, alpha)
-	);
-}
-
-string FVectorTex::ToString() const{
-	return pos.ToString() + tex.ToString();
-}
-
-
-/*
-** FMatrix4D
-*/
-
-FMatrix4D::FMatrix4D(
+Mat3::Mat3(
 	f32 m11_, f32 m12_, f32 m13_, f32 m14_,
 	f32 m21_, f32 m22_, f32 m23_, f32 m24_,
 	f32 m31_, f32 m32_, f32 m33_, f32 m34_,
@@ -467,7 +333,7 @@ FMatrix4D::FMatrix4D(
 	this->m44 = m44_;
 }
 
-FMatrix4D::FMatrix4D() {
+Mat3::Mat3() {
 	this->m11 = 0;
 	this->m12 = 0;
 	this->m13 = 0;
@@ -489,10 +355,10 @@ FMatrix4D::FMatrix4D() {
 	this->m44 = 0;
 }
 
-string FMatrix4D::ToString() const {
+string Mat3::ToString() const {
 	stringstream ss;
 
-	ss  << "FMatrix4D [\n";
+	ss  << "Mat3 [\n";
 	ss  << this->m11 << ", " << this->m12 << ", "
 		<< this->m13 << ", " << this->m14 << ", " << "\n";
 	ss  << this->m21 << ", " << this->m22 << ", "
@@ -506,9 +372,9 @@ string FMatrix4D::ToString() const {
 	return ss.str();
 }
 
-FMatrix4D FMatrix4D::GenerateTranslationMatrix(f32 x, f32 y, f32 z)
+Mat3 Mat3::GenerateTranslationMatrix(f32 x, f32 y, f32 z)
 {
-	return FMatrix4D
+	return Mat3
 	(
 		1.0f, 0.0f, 0.0f, -1.0f * x,
 		0.0f, 1.0f, 0.0f, -1.0f * y,
@@ -517,23 +383,23 @@ FMatrix4D FMatrix4D::GenerateTranslationMatrix(f32 x, f32 y, f32 z)
 	);
 }
 
-FMatrix4D FMatrix4D::GenerateRotationMatrix(f32 x, f32 y, f32 z)
+Mat3 Mat3::GenerateRotationMatrix(f32 x, f32 y, f32 z)
 {
-	FMatrix4D MrotationX = FMatrix4D(
+	Mat3 MrotationX = Mat3(
 		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, CS_cos(x), -1.0f * CS_sin(x), 0.0f,
 		0.0f, CS_sin(x), CS_cos(x), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	FMatrix4D MrotationY = FMatrix4D(
+	Mat3 MrotationY = Mat3(
 		CS_cos(y), 0.0f, CS_sin(y), 0.0f,
 		0.0f, 1.0f, 0.0f, 0.0f,
 		-1.0f * CS_sin(y), 0.0f, CS_cos(y), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	FMatrix4D MrotationZ = FMatrix4D(
+	Mat3 MrotationZ = Mat3(
 		CS_cos(z), -1.0f * CS_sin(z), 0.0f, 0.0f,
 		CS_sin(z), CS_cos(z), 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
@@ -543,8 +409,8 @@ FMatrix4D FMatrix4D::GenerateRotationMatrix(f32 x, f32 y, f32 z)
 	return MrotationZ * MrotationY * MrotationX;
 }
 
-const FVector4D operator*(const FVector4D& v, const FMatrix4D& m) {
-	FVector4D result;
+const Vec3 operator*(const Vec3& v, const Mat3& m) {
+	Vec3 result;
 
 	result.x = m.m11 * v.x + m.m12 * v.y + m.m13 * v.z + m.m14 * v.w;
 	result.y = m.m21 * v.x + m.m22 * v.y + m.m23 * v.z + m.m24 * v.w;
@@ -554,8 +420,8 @@ const FVector4D operator*(const FVector4D& v, const FMatrix4D& m) {
 	return result;
 }
 
-const FMatrix4D operator*(const FMatrix4D& a, const FMatrix4D& b) {
-	FMatrix4D result;
+const Mat3 operator*(const Mat3& a, const Mat3& b) {
+	Mat3 result;
 
 	result.m11 = b.m11 * a.m11 + b.m12 * a.m21 + b.m13 * a.m31 + b.m14 * a.m41;
 	result.m21 = b.m21 * a.m11 + b.m22 * a.m21 + b.m23 * a.m31 + b.m24 * a.m41;
