@@ -98,28 +98,29 @@ public:
 		return *this;
 	}
 
-	//// LenSq
-	//float LenSq() {
-	//	return x * x + y * y;
-	//}
+	// LenSq
+	float LenSq() {
+		return x * x + y * y + z * z;
+	}
 
-	//// Len
-	//float Len() {
-	//	return sqrt(LenSq());
-	//}
+	// Len
+	float Len() {
+		return sqrt(LenSq());
+	}
 
-	//// Normalize
-	//void Normalize() {
-	//	float len = Len();
-	//	this->x /= len;
-	//	this->y /= len;
-	//}
+	// Normalize
+	void Normalize() {
+		float len = Len();
+		this->x /= len;
+		this->y /= len;
+		this->z /= len;
+	}
 
-	//// GetNormalized
-	//Vec2 GetNormalized() {
-	//	float len = Len();
-	//	return Vec2(x / len, y / len);
-	//}
+	// GetNormalized
+	Vec3 GetNormalized() {
+		float len = Len();
+		return Vec3(x / len, y / len, z / len);
+	}
 
 	//// Vector-Scalar Operators
 	//Vec2  operator*  (const float rhs);
