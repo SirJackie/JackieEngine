@@ -42,6 +42,19 @@ public:
 		return sqrt(LenSq());
 	}
 
+	// Normalize
+	void Normalize() {
+		float len = Len();
+		this->x /= len;
+		this->y /= len;
+	}
+
+	// GetNormalized
+	Vec2 GetNormalized() {
+		float len = Len();
+		return Vec2(x / len, y / len);
+	}
+
 
 
 	//Vec2() : x(0.0f), y(0.0f), z(0.0f) {}
