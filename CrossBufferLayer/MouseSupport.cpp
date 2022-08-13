@@ -132,6 +132,21 @@ i32 CS_Mouse::GetWindowHeight()
 	return windowHeight;
 }
 
+bool CS_Mouse::GetLBtnState()
+{
+	return lBtnState;
+}
+
+bool CS_Mouse::GetMBtnState()
+{
+	return mBtnState;
+}
+
+bool CS_Mouse::GetRBtnState()
+{
+	return rBtnState;
+}
+
 csbool CS_Mouse::IsInfinityModeOpened()
 {
     return infinityMode;

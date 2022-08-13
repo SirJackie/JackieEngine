@@ -38,6 +38,9 @@ public:
 	i32 GetDeltaY();
 	i32 GetWindowWidth();
 	i32 GetWindowHeight();
+	bool GetLBtnState();
+	bool GetMBtnState();
+	bool GetRBtnState();
 	csbool IsInfinityModeOpened();
 
 public:
