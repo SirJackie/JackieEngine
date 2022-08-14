@@ -74,9 +74,9 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	for (int i = 0; i < triangles.indices.size(); i+=3) {
 		DrawTriangle(
 			fb,
-			triangles.vertices[i + 0],
-			triangles.vertices[i + 1],
-			triangles.vertices[i + 2]
+			triangles.vertices[  triangles.indices[i + 0]  ],
+			triangles.vertices[  triangles.indices[i + 1]  ],
+			triangles.vertices[  triangles.indices[i + 2]  ]
 		);
 	}
 

@@ -101,9 +101,9 @@ void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & i
 		int xStart = (int)ceil(itEdge0.pos.x - 0.5f);
 		int xEnd = (int)ceil(itEdge1.pos.x - 0.5f); // the pixel AFTER the last pixel drawn
 
-														  // create scanline interpolant startpoint
-														  // (some waste for interpolating x,y,z, but makes life easier not having
-														  //  to split them off, and z will be needed in the future anyways...)
+		// create scanline interpolant startpoint
+		// (some waste for interpolating x,y,z, but makes life easier not having
+		//  to split them off, and z will be needed in the future anyways...)
 		auto iLine = itEdge0;
 
 		// calculate delta scanline interpolant / dx

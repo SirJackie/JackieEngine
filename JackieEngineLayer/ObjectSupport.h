@@ -47,6 +47,14 @@ public:
 				Vec2(1.0f, 1.0f)
 			)
 		);
+
+		// 3 // bottom-left
+		vertices.emplace_back(
+			Vertex(
+				Vec3(-side, -side, -side),
+				Vec2(0.0f, 1.0f)
+			)
+		);
 	}
 	IndexedLineList GetLines() const
 	{
@@ -65,7 +73,7 @@ public:
 		return{
 			vertices,
 			{
-				0, 1, 2
+				0,1,2, 2,3,0
 			}
 		};
 	}
