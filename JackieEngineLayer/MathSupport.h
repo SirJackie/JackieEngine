@@ -236,9 +236,9 @@ public:
 		return *this;
 	}
 
-	//// Matrix-Scalar Operators
-	//Mat2  operator*  (float rhs);
-	//Mat2& operator*= (float rhs);
+	// Matrix-Scalar Operators
+	Mat3  operator*  (float rhs);
+	Mat3& operator*= (float rhs);
 
 	//// Matrix-Matrix Operators
 	//Mat2  operator*  (const Mat2& rhs);

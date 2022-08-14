@@ -195,6 +195,26 @@ Mat2 Mat2::Rotation(float theta)
 }
 
 
+/*
+** Mat3
+*/
+
+Mat3 Mat3::operator*(float rhs)
+{
+	return Mat3(*this) *= rhs;
+}
+
+Mat3 & Mat3::operator*=(float rhs)
+{
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			elements[y][x] *= rhs;
+		}
+	}
+	return *this;
+}
+
+
 ///*
 //** Mat3
 //*/
