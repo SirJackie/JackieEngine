@@ -141,3 +141,51 @@ void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & i
 		}
 	}
 }
+
+void DrawBresenhamLine(CS_FrameBuffer& fb, int x0, int y0, int x1, int y1, unsigned char r, unsigned char g, unsigned char b) {
+	// Crucial 1 : 45 - 90 deg support
+	// Crucial 2 : the 3rd quadrant support
+	// Crucial 3 : the 2nd and 4th quadrant support
+
+	// -----------------------------------------------
+
+	// Crucial 1
+	bool steep = abs(y1 - y0) > abs(x1 - x0);
+	if (steep) {
+		std::swap(x0, y0);
+		std::swap(x1, y1);
+	}
+
+	// Crucial 2
+	if (x0 > x1) {
+		std::swap(x0, x1);
+		std::swap(y0, y1);
+	}
+
+	int dx = x1 - x0;
+	int dy = abs(y1 - y0);  // Crucial 3
+	int y = y0;
+	int p = 2 * dy - dx;
+
+	int stepY = y0 > y1 ? -1 : 1;  // Crucial 3
+
+	for (int x = x0; x < x1; x++) {
+
+		// Crucial 1
+		if (steep) {
+			fb.PutPixel(y, x, r, g, b);
+		}
+		else {
+			fb.PutPixel(x, y, r, g, b);
+		}
+
+		if (p < 0) {
+			p += 2 * dy;
+		}
+		else {
+			p += 2 * dy - 2 * dx;
+			y += stepY;  // Crucial 3
+		}
+	}
+
+}

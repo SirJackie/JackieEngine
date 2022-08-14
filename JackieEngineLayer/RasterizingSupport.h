@@ -5,6 +5,8 @@
 #include "../CrossBufferLayer/CrossBuffer.h"
 #include "MathSupport.h"
 #include "ObjectSupport.h"
+#include <algorithm>
+using std::swap;
 
 extern CS_FrameBuffer texImage;
 
@@ -76,5 +78,7 @@ void DrawFlatTriangle(
 	Vertex& dv1,
 	Vertex itEdge1
 );
+
+void DrawBresenhamLine(CS_FrameBuffer& fb, int x0, int y0, int x1, int y1, unsigned char r, unsigned char g, unsigned char b);
 
 #endif
