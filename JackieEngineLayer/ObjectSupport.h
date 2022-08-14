@@ -11,6 +11,12 @@ struct IndexedLineList
 	std::vector<size_t> indices;
 };
 
+struct IndexedTriangleList
+{
+	std::vector<Vertex> vertices;
+	std::vector<size_t> indices;
+};
+
 class Cube
 {
 public:
@@ -44,11 +50,23 @@ public:
 	}
 	IndexedLineList GetLines() const
 	{
-		return{
-			vertices,{
+		return {
+			vertices,
+			{
 				0,1,  1,3,  3,2,  2,0,
 				0,4,  1,5,	3,7,  2,6,
-				4,5,  5,7,	7,6,  6,4 }
+				4,5,  5,7,	7,6,  6,4
+			}
+		};
+	}
+
+	IndexedTriangleList GetTriangles() const
+	{
+		return{
+			vertices,
+			{
+				0, 1, 2
+			}
 		};
 	}
 private:
