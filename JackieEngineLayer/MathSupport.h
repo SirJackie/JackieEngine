@@ -150,10 +150,13 @@ public:
 
 class Mat2 {
 public:
+
+	// Default Constructor
 	Mat2() {
 		memset(elements, 0, sizeof(elements));
 	}
 
+	// Custom Constructor
 	Mat2(float m00, float m01, float m10, float m11) {
 		elements[0][0] = m00;
 		elements[0][1] = m01;
@@ -161,10 +164,20 @@ public:
 		elements[1][1] = m11;
 	}
 
+	// Copy Constructor
+	Mat2(const Mat2& rhs) {
+		*this = rhs;
+	}
+
+	// Copy Assignment
 	Mat2& operator=(const Mat2& rhs) {
 		memcpy(elements, rhs.elements, sizeof(elements));
 		return *this;
 	}
+
+	// Matrix-Scalar Operators
+	/*Mat2  operator*  (float rhs);
+	Mat2& operator*= (float rhs);*/
 
 public:
 	float elements[2][2];
