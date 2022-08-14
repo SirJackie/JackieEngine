@@ -12,25 +12,25 @@
 
 使用`git checkout demo1`查看：
 
-![Demo1](Resources/Demo1.png)
+![Demo1](readme.assets/Demo1.png)
 
 ### Demo2
 
 使用`git checkout demo2`查看：
 
-![Demo2](Resources/Demo2.png)
+![Demo2](readme.assets/Demo2.png)
 
 ### Demo3
 
 使用`git checkout demo3`查看：
 
-![Demo3](Resources/Demo3.png)
+![Demo3](readme.assets/Demo3.png)
 
 ## 如何编译并运行Demo？
 
-[如何编译并运行Demo？ (Windows 平台)](./WindowsSimuLayer/ConfigurationDocument/ConfigurationDocument.md)
+[如何编译并运行Demo？ (Windows 平台)](readme.assets/WindowsConfigurationDocument/ConfigurationDocument.md)
 
-[如何编译并运行Demo？ (Linux 平台)](./LinuxSimuLayer/ConfigurationDocument/ConfigurationDocument.md)
+[如何编译并运行Demo？ (Linux 平台)](readme.assets/LinuxConfigurationDocument/ConfigurationDocument.md)
 
 ## 关于开源协议
 

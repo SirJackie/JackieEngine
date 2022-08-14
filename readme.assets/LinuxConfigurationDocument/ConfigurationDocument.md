@@ -4,7 +4,7 @@
 
 2. 进入到LinuxSimuLayer文件夹，右键，选择"在终端中打开"。你也可以使用其他自己喜欢的方式打开终端。
 
-   ![OpenTerminal](OpenTerminal.png)
+   ![OpenTerminal](ConfigurationDocument.assets/OpenTerminal.png)
 
 3. 输入如下指令并按回车键执行：
 
