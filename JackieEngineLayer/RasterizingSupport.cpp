@@ -126,8 +126,8 @@ void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & i
 
 			//fb.PutPixel(x, y, (int)(attr.tex.x * 255), (int)(attr.tex.y * 255), 255);
 
-			int pixelX = (int)min(attr.tex.x * 100, 99.0f);
-			int pixelY = (int)min(attr.tex.y * 100, 99.0f);
+			int pixelX = (int) min (  attr.tex.x*(float)texImage.width , (float)(texImage.width -1));
+			int pixelY = (int) min (  attr.tex.y*(float)texImage.height, (float)(texImage.height-1));
 
 			fb.PutPixel(
 				x,

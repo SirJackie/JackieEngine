@@ -328,6 +328,10 @@ public:
 		);
 	}
 
+	Vertex& operator*=(float& rhs) {
+		return (*this) = (*this) * rhs;
+	}
+
 	Vertex operator/(float rhs) {
 		return Vertex(
 			pos / rhs,

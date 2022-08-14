@@ -7,7 +7,7 @@
 
 struct IndexedLineList
 {
-	std::vector<Vec3> vertices;
+	std::vector<Vertex> vertices;
 	std::vector<size_t> indices;
 };
 
@@ -17,9 +17,30 @@ public:
 	Cube(float size)
 	{
 		const float side = size / 2.0f;
-		vertices.emplace_back(-side, side, -side); // 0 // top-left
-		vertices.emplace_back(side, side, -side);  // 1 // top-right
-		vertices.emplace_back(side, -side, -side); // 2 // bottom-right
+
+		// 0 // top-left
+		vertices.emplace_back(
+			Vertex(
+				Vec3(-side, side, -side),
+				Vec2(0.0f, 0.0f)
+			)
+		); 
+
+		// 1 // top-right
+		vertices.emplace_back(
+			Vertex(
+				Vec3(side, side, -side),
+				Vec2(1.0f, 0.0f)
+			)
+		);
+
+		// 2 // bottom-right
+		vertices.emplace_back(
+			Vertex(
+				Vec3(side, -side, -side),
+				Vec2(1.0f, 1.0f)
+			)
+		);
 	}
 	IndexedLineList GetLines() const
 	{
@@ -31,7 +52,7 @@ public:
 		};
 	}
 private:
-	std::vector<Vec3> vertices;
+	std::vector<Vertex> vertices;
 };
 
 #endif

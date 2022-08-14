@@ -63,8 +63,8 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		Mat3::RotationZ(theta_z);
 
 	for (auto& v : lines.vertices) {
-		v *= rotation;
-		v += Vec3(0.0f, 0.0f, offset_z);
+		v.pos *= rotation;
+		v.pos += Vec3(0.0f, 0.0f, offset_z);
 		pst.Transform(v);
 
 		//fb.PutPixel((int)v.x, (int)v.y, 255, 255, 255);
@@ -72,8 +72,8 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	DrawTriangle(
 		fb,
-		Vertex(lines.vertices[0], Vec2(0.0f, 0.0f)),
-		Vertex(lines.vertices[1], Vec2(1.0f, 0.0f)),
-		Vertex(lines.vertices[2], Vec2(1.0f, 1.0f))
+		lines.vertices[0],
+		lines.vertices[1],
+		lines.vertices[2]
 	);
 }
