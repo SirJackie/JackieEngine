@@ -26,9 +26,9 @@ framebuffer 去除所有的std namespace pollutions
 
 √ 换上行向量，vec类重构，vec3继承vec2
 
-换上从左往右乘的矩阵，mat类重构
+√ 换上从左往右乘的矩阵，mat类重构
 
-换上右手坐标系，Z轴指向屏幕里面
+√ 换上右手坐标系，Z轴指向屏幕里面
 
 实现 TT04 的线框3D
 
