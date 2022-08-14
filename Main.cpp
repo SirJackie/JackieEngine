@@ -1,5 +1,6 @@
 #include "Main.h"
 #include "JackieEngineLayer/MathSupport.h"
+#include "JackieEngineLayer/RasterizingSupport.h"
 
 const float dt = 1.0f / 60.0f;
 static constexpr float dTheta = PI;
@@ -12,6 +13,7 @@ PubeScreenTransformer pst;
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	pst.SetWidthHeight(fb.width, fb.height);
+	texImage.LoadFromBMP("./Images/sauron-bhole-100x100.bmp");
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {

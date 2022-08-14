@@ -1,5 +1,7 @@
 #include "RasterizingSupport.h"
 
+CS_FrameBuffer texImage;
+
 void DrawTriangle(CS_FrameBuffer & fb, Vertex & v0, Vertex & v1, Vertex & v2)
 {
 	// using pointers so we can swap (for sorting purposes)

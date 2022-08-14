@@ -6,6 +6,8 @@
 #include "MathSupport.h"
 #include "ObjectSupport.h"
 
+extern CS_FrameBuffer texImage;
+
 
 class PubeScreenTransformer
 {
