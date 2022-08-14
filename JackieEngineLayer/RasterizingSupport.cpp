@@ -1,5 +1,8 @@
 #include "RasterizingSupport.h"
 
+#include <algorithm>
+using std::min;
+
 CS_FrameBuffer texImage;
 
 void DrawTriangle(CS_FrameBuffer & fb, Vertex & v0, Vertex & v1, Vertex & v2)
@@ -121,7 +124,19 @@ void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & i
 			// invoke pixel shader with interpolated vertex attributes
 			// and use result to set the pixel color on the screen
 
-			fb.PutPixel(x, y, (int)(attr.tex.x * 255), (int)(attr.tex.y * 255), 255);
+			//fb.PutPixel(x, y, (int)(attr.tex.x * 255), (int)(attr.tex.y * 255), 255);
+
+			int pixelX = (int)min(attr.tex.x * 100, 99.0f);
+			int pixelY = (int)min(attr.tex.y * 100, 99.0f);
+
+			fb.PutPixel(
+				x,
+				y,
+				texImage.redBuffer   [pixelY * texImage.width + pixelX],
+				texImage.greenBuffer [pixelY * texImage.width + pixelX],
+				texImage.blueBuffer  [pixelY * texImage.width + pixelX]
+			);
+
 			//gfx.PutPixel(x, y, effect.ps(attr));
 		}
 	}
