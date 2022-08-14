@@ -240,9 +240,9 @@ public:
 	Mat3  operator*  (float rhs);
 	Mat3& operator*= (float rhs);
 
-	//// Matrix-Matrix Operators
-	//Mat2  operator*  (const Mat2& rhs);
-	//Mat2& operator*= (const Mat2& rhs);
+	// Matrix-Matrix Operators
+	Mat3  operator*  (const Mat3& rhs);
+	Mat3& operator*= (const Mat3& rhs);
 
 	//// Special Matrix Getters
 	//static Mat2 Identity();

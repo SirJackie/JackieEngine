@@ -214,6 +214,28 @@ Mat3 & Mat3::operator*=(float rhs)
 	return *this;
 }
 
+Mat3 Mat3::operator*(const Mat3 & rhs)
+{
+	Mat3 result;
+
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			float sum = 0.0f;
+			for (int i = 0; i < 3; i++) {
+				sum += elements[y][i] * rhs.elements[i][x];
+			}
+			result.elements[y][x] = sum;
+		}
+	}
+
+	return result;
+}
+
+Mat3 & Mat3::operator*=(const Mat3 & rhs)
+{
+	return (*this) = (*this) * rhs;
+}
+
 
 ///*
 //** Mat3
