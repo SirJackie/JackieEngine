@@ -11,9 +11,15 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		3, 4
 	};
 
-	Mat2 m2 = m1 * 2.0f;
-	Mat2 m3 = m1;
-	m3 *= 2.0f;
+	Mat2 m2 = {
+		5, 6,
+		7, 8
+	};
+
+	Mat2 m3 = m1 * m2;
+
+	Mat2 m4 = m1;
+	m4 *= m2;
 
 	int a = 0;
 }

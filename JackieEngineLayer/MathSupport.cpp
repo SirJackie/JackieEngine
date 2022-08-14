@@ -145,6 +145,28 @@ Mat2 & Mat2::operator*=(float rhs)
 	return *this;
 }
 
+Mat2 Mat2::operator*(const Mat2 & rhs)
+{
+	Mat2 result;
+
+	for (int y = 0; y < 2; y++) {
+		for (int x = 0; x < 2; x++) {
+			float sum = 0.0f;
+			for (int i = 0; i < 2; i++) {
+				sum += elements[y][i] * rhs.elements[i][x];
+			}
+			result.elements[y][x] = sum;
+		}
+	}
+
+	return result;
+}
+
+Mat2 & Mat2::operator*=(const Mat2 & rhs)
+{
+	return (*this) = (*this) * rhs;
+}
+
 
 ///*
 //** Mat3

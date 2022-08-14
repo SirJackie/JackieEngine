@@ -179,6 +179,10 @@ public:
 	Mat2  operator*  (float rhs);
 	Mat2& operator*= (float rhs);
 
+	// Matrix-Matrix Operators
+	Mat2  operator*  (const Mat2& rhs);
+	Mat2& operator*= (const Mat2& rhs);
+
 public:
 	float elements[2][2];
 };
