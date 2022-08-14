@@ -70,12 +70,24 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		//fb.PutPixel((int)v.x, (int)v.y, 255, 255, 255);
 	}
 
+	// Draw Triangles
 	for (int i = 0; i < triangles.indices.size(); i+=3) {
 		DrawTriangle(
 			fb,
 			triangles.vertices[i + 0],
 			triangles.vertices[i + 1],
 			triangles.vertices[i + 2]
+		);
+	}
+
+	// Draw Verticies
+	for (int i = 0; i < triangles.vertices.size(); i++) {
+		fb.PutPixel(
+			(int)triangles.vertices[i].pos.x,
+			(int)triangles.vertices[i].pos.y,
+			255,
+			255,
+			255
 		);
 	}
 }
