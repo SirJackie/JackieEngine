@@ -13,7 +13,7 @@ PubeScreenTransformer pst;
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	pst.SetWidthHeight(fb.width, fb.height);
-	texImage.LoadFromBMP("../Images/sauron-bhole-100x100.bmp");
+	texImage.LoadFromBMP("../Images/TestingTexture_512x512.bmp");
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
@@ -74,13 +74,6 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		fb,
 		Vertex(lines.vertices[0], Vec2(0.0f, 0.0f)),
 		Vertex(lines.vertices[1], Vec2(1.0f, 0.0f)),
-		Vertex(lines.vertices[2], Vec2(0.0f, 1.0f))
-	);
-
-	DrawTriangle(
-		fb,
-		Vertex(lines.vertices[3], Vec2(1.0f, 1.0f)),
-		Vertex(lines.vertices[1], Vec2(1.0f, 0.0f)),
-		Vertex(lines.vertices[2], Vec2(0.0f, 1.0f))
+		Vertex(lines.vertices[2], Vec2(1.0f, 1.0f))
 	);
 }

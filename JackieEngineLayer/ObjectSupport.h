@@ -17,14 +17,9 @@ public:
 	Cube(float size)
 	{
 		const float side = size / 2.0f;
-		vertices.emplace_back(-side, -side, -side);
-		vertices.emplace_back(side, -side, -side);
-		vertices.emplace_back(-side, side, -side);
-		vertices.emplace_back(side, side, -side);
-		vertices.emplace_back(-side, -side, side);
-		vertices.emplace_back(side, -side, side);
-		vertices.emplace_back(-side, side, side);
-		vertices.emplace_back(side, side, side);
+		vertices.emplace_back(-side, side, -side); // 0 // top-left
+		vertices.emplace_back(side, side, -side);  // 1 // top-right
+		vertices.emplace_back(side, -side, -side); // 2 // bottom-right
 	}
 	IndexedLineList GetLines() const
 	{
