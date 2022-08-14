@@ -310,6 +310,10 @@ public:
 		);
 	}
 
+	Vertex& operator+=(const Vertex& rhs) {
+		return (*this) = (*this) + rhs;
+	}
+
 	Vertex operator-(const Vertex& rhs) {
 		return Vertex(
 			pos - rhs.pos,
@@ -321,6 +325,13 @@ public:
 		return Vertex(
 			pos * rhs,
 			tex * rhs
+		);
+	}
+
+	Vertex operator/(float rhs) {
+		return Vertex(
+			pos / rhs,
+			tex / rhs
 		);
 	}
 

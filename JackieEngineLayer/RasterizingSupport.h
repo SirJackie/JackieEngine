@@ -54,4 +54,14 @@ void DrawFlatBottomTriangle(
 	Vertex& it2
 );
 
+void DrawFlatTriangle(
+	CS_FrameBuffer& fb,
+	Vertex& it0,
+	Vertex& it1,
+	Vertex& it2,
+	Vertex& dv0,
+	Vertex& dv1,
+	Vertex itEdge1
+);
+
 #endif
