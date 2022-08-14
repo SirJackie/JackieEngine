@@ -119,7 +119,7 @@ void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & i
 			// invoke pixel shader with interpolated vertex attributes
 			// and use result to set the pixel color on the screen
 
-			fb.PutPixel(x, y, attr.tex.x, attr.tex.y, 255);
+			fb.PutPixel(x, y, (int)(attr.tex.x * 255), (int)(attr.tex.y * 255), 255);
 			//gfx.PutPixel(x, y, effect.ps(attr));
 		}
 	}
