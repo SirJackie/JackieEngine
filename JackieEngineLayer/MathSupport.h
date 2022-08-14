@@ -10,6 +10,9 @@ using std::sinf;
 using std::memcpy;
 using std::memset;
 
+#include <algorithm>
+using std::swap;
+
 
 /*
 ** Vectors
@@ -299,9 +302,42 @@ public:
 		return *this;
 	}
 
+	// Vertex-Vertex Operators
+	Vertex operator+(const Vertex& rhs) {
+		return Vertex(
+			pos + rhs.pos,
+			tex + rhs.tex
+		);
+	}
+
+	Vertex operator-(const Vertex& rhs) {
+		return Vertex(
+			pos - rhs.pos,
+			tex - rhs.tex
+		);
+	}
+
+	Vertex operator*(float rhs) {
+		return Vertex(
+			pos * rhs,
+			tex * rhs
+		);
+	}
+
 public:
 	Vec3 pos;
 	Vec2 tex;
 };
+
+
+/*
+** Interpolator
+*/
+
+template<typename T>
+inline T interpolate(T& src, T& dst, float alpha)
+{
+	return src + (dst - src) * alpha;
+}
 
 #endif
