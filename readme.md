@@ -20,6 +20,12 @@
 
 ![Demo2](Resources/Demo2.png)
 
+### Demo3
+
+使用`git checkout demo3`查看：
+
+![Demo3](Resources/Demo3.png)
+
 ## 如何编译并运行Demo？
 
 [如何编译并运行Demo？ (Windows 平台)](./WindowsSimuLayer/ConfigurationDocument/ConfigurationDocument.md)
