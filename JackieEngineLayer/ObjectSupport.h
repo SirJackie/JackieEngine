@@ -55,15 +55,47 @@ public:
 				Vec2(0.0f, 1.0f)
 			)
 		);
+
+		// 4 // top-left(far)
+		vertices.emplace_back(
+			Vertex(
+				Vec3(-side, side, side),
+				Vec2(0.0f, 0.0f)
+			)
+		);
+
+		// 5 // top-right(far)
+		vertices.emplace_back(
+			Vertex(
+				Vec3(side, side, side),
+				Vec2(1.0f, 0.0f)
+			)
+		);
+
+		// 6 // bottom-right(far)
+		vertices.emplace_back(
+			Vertex(
+				Vec3(side, -side, side),
+				Vec2(1.0f, 1.0f)
+			)
+		);
+
+		// 7 // bottom-left(far)
+		vertices.emplace_back(
+			Vertex(
+				Vec3(-side, -side, side),
+				Vec2(0.0f, 1.0f)
+			)
+		);
 	}
 	IndexedLineList GetLines() const
 	{
 		return {
 			vertices,
 			{
-				0,1,  1,3,  3,2,  2,0,
-				0,4,  1,5,	3,7,  2,6,
-				4,5,  5,7,	7,6,  6,4
+				0,1, 1,2, 2,3, 3,0,
+				4,5, 5,6, 6,7, 7,0,
+				0,4, 1,5, 2,6, 3,7
 			}
 		};
 	}

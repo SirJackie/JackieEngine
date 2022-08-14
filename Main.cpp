@@ -55,6 +55,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	// 3D Transform
 
+	auto lines = cube.GetLines();
 	auto triangles = cube.GetTriangles();
 
 	Mat3 rotation =
@@ -66,8 +67,6 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		v.pos *= rotation;
 		v.pos += Vec3(0.0f, 0.0f, offset_z);
 		pst.Transform(v);
-
-		//fb.PutPixel((int)v.x, (int)v.y, 255, 255, 255);
 	}
 
 	// Draw Triangles
@@ -80,14 +79,33 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		);
 	}
 
-	// Draw Verticies
-	for (int i = 0; i < triangles.vertices.size(); i++) {
+	// Draw Indicies
+	for (int i = 0; i < lines.indices.size(); i += 2) {
 		fb.PutPixel(
-			(int)triangles.vertices[i].pos.x,
-			(int)triangles.vertices[i].pos.y,
+			(int)triangles.vertices[ lines.indices[i + 0] ].pos.x,
+			(int)triangles.vertices[ lines.indices[i + 0] ].pos.y,
+			255,
+			255,
+			255
+		);
+
+		fb.PutPixel(
+			(int)triangles.vertices[lines.indices[i + 1]].pos.x,
+			(int)triangles.vertices[lines.indices[i + 1]].pos.y,
 			255,
 			255,
 			255
 		);
 	}
+
+	//// Draw Verticies
+	//for (int i = 0; i < triangles.vertices.size(); i++) {
+	//	fb.PutPixel(
+	//		(int)triangles.vertices[i].pos.x,
+	//		(int)triangles.vertices[i].pos.y,
+	//		255,
+	//		255,
+	//		255
+	//	);
+	//}
 }
