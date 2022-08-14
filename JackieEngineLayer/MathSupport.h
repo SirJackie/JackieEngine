@@ -176,8 +176,8 @@ public:
 	}
 
 	// Matrix-Scalar Operators
-	/*Mat2  operator*  (float rhs);
-	Mat2& operator*= (float rhs);*/
+	Mat2  operator*  (float rhs);
+	Mat2& operator*= (float rhs);
 
 public:
 	float elements[2][2];

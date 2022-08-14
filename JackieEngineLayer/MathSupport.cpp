@@ -130,19 +130,20 @@ Vec3 Vec3::operator-()
 ** Mat2
 */
 
-//Mat2 Mat2::operator*(float rhs)
-//{
-//	return Mat2();
-//}
-//
-//Mat2 & Mat2::operator*=(float rhs)
-//{
-//	for (int i = 0; i < 2; i++) {
-//		for (int j = 0; j < 2; j++) {
-//			elements[i][j] *= rhs;
-//		}
-//	}
-//}
+Mat2 Mat2::operator*(float rhs)
+{
+	return Mat2(*this) *= rhs;
+}
+
+Mat2 & Mat2::operator*=(float rhs)
+{
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++) {
+			elements[i][j] *= rhs;
+		}
+	}
+	return *this;
+}
 
 
 ///*

@@ -6,17 +6,14 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	Mat2 m1;
-
-	Mat2 m2 = {
+	Mat2 m1 = {
 		1, 2,
 		3, 4
 	};
 
-	Mat2 m3(m2);
-
-	Mat2 m4;
-	m4 = m2;
+	Mat2 m2 = m1 * 2.0f;
+	Mat2 m3 = m1;
+	m3 *= 2.0f;
 
 	int a = 0;
 }
