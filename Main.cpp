@@ -6,11 +6,17 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	Mat3 mat_identity = Mat3::Identity();
-	Mat3 mat_scaling = Mat3::Scaling(5.0f);
-	Mat3 mat_rotationZ = Mat3::RotationZ(1.0f);
-	Mat3 mat_rotationY = Mat3::RotationY(1.0f);
-	Mat3 mat_rotationX = Mat3::RotationX(1.0f);
+	Vec3 vec(1.0f, 1.0f, 1.0f);
+
+	Mat3 mat(
+		1.0f, 2.0f, 3.0f,
+		4.0f, 5.0f, 6.0f,
+		7.0f, 8.0f, 9.0f
+	);
+
+	Vec3 result1 = vec * mat;
+	Vec3 result2 = vec;
+	result2 *= mat;
 
 	int a = 0;
 }

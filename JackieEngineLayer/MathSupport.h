@@ -263,6 +263,9 @@ public:
 Vec2  operator*  (const Vec2& lhs, const Mat2& rhs);
 Vec2& operator*= (Vec2& lhs, const Mat2& rhs);
 
+Vec3  operator*  (const Vec3& lhs, const Mat3& rhs);
+Vec3& operator*= (Vec3& lhs, const Mat3& rhs);
+
 
 ///*
 //** Mat3

@@ -447,3 +447,18 @@ Vec2 & operator*=(Vec2 & lhs, const Mat2 & rhs)
 {
 	return lhs = lhs * rhs;
 }
+
+Vec3 operator*(const Vec3 & lhs, const Mat3 & rhs)
+{
+	return Vec3(
+		lhs.x * rhs.elements[0][0] + lhs.y * rhs.elements[1][0] + lhs.z * rhs.elements[2][0],
+		lhs.x * rhs.elements[0][1] + lhs.y * rhs.elements[1][1] + lhs.z * rhs.elements[2][1],
+		lhs.x * rhs.elements[0][2] + lhs.y * rhs.elements[1][2] + lhs.z * rhs.elements[2][2]
+	);
+}
+
+Vec3 & operator*=(Vec3 & lhs, const Mat3 & rhs)
+{
+	return lhs = lhs * rhs;
+}
+
