@@ -244,10 +244,12 @@ public:
 	Mat3  operator*  (const Mat3& rhs);
 	Mat3& operator*= (const Mat3& rhs);
 
-	//// Special Matrix Getters
-	//static Mat2 Identity();
-	//static Mat2 Scaling(float factor);
-	//static Mat2 Rotation(float theta);
+	// Special Matrix Getters
+	static Mat3 Identity();
+	static Mat3 Scaling(float factor);
+	static Mat3 RotationZ(float theta);
+	static Mat3 RotationY(float theta);
+	static Mat3 RotationX(float theta);
 
 public:
 	float elements[3][3];

@@ -236,6 +236,60 @@ Mat3 & Mat3::operator*=(const Mat3 & rhs)
 	return (*this) = (*this) * rhs;
 }
 
+Mat3 Mat3::Identity()
+{
+	return Mat3(
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f
+	);
+}
+
+Mat3 Mat3::Scaling(float factor)
+{
+	return Mat3(
+		factor, 0.0f, 0.0f,
+		0.0f, factor, 0.0f,
+		0.0f, 0.0f, factor
+	);
+}
+
+Mat3 Mat3::RotationZ(float theta)
+{
+	float cosTheta = cos(theta);
+	float sinTheta = sin(theta);
+
+	return Mat3(
+		cosTheta, sinTheta, 0.0f,
+		-sinTheta, cosTheta, 0.0f,
+		0.0f, 0.0f, 1.0f
+	);
+}
+
+Mat3 Mat3::RotationY(float theta)
+{
+	float cosTheta = cos(theta);
+	float sinTheta = sin(theta);
+
+	return Mat3(
+		cosTheta, 0.0f, -sinTheta,
+		0.0f, 1.0f, 0.0f,
+		sinTheta, 0.0f, cosTheta
+	);
+}
+
+Mat3 Mat3::RotationX(float theta)
+{
+	float cosTheta = cos(theta);
+	float sinTheta = sin(theta);
+
+	return Mat3(
+		1.0f, 0.0f, 0.0f,
+		0.0f, cosTheta, sinTheta,
+		0.0f, -sinTheta, cosTheta
+	);
+}
+
 
 ///*
 //** Mat3
