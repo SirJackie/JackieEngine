@@ -6,9 +6,15 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	Mat2 mat_identity = Mat2::Identity();
-	Mat2 mat_scaling = Mat2::Scaling(5.0f);
-	Mat2 mat_rotation = Mat2::Rotation(1.0f);
+	Vec2 vec(1.0f, 1.0f);
+	Mat2 mat(
+		1, 2,
+		3, 4
+	);
+
+	Vec2 result1 = vec * mat;
+	Vec2 result2 = vec;
+	result2 *= mat;
 
 	int a = 0;
 }

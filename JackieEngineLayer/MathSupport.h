@@ -148,6 +148,11 @@ public:
 	float z;
 };
 
+
+/*
+** Matrices
+*/
+
 class Mat2 {
 public:
 
@@ -191,6 +196,15 @@ public:
 public:
 	float elements[2][2];
 };
+
+
+/*
+** Vector-Matrix Operators
+*/
+
+Vec2  operator*  (const Vec2& lhs, const Mat2& rhs);
+Vec2& operator*= (Vec2& lhs, const Mat2& rhs);
+
 
 ///*
 //** Mat3

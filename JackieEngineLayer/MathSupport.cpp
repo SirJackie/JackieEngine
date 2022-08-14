@@ -338,3 +338,16 @@ Mat2 Mat2::Rotation(float theta)
 //
 //	return result;
 //}
+
+Vec2 operator*(const Vec2 & lhs, const Mat2 & rhs)
+{
+	return Vec2(
+		lhs.x * rhs.elements[0][0] + lhs.y * rhs.elements[1][0],
+		lhs.x * rhs.elements[0][1] + lhs.y * rhs.elements[1][1]
+	);
+}
+
+Vec2 & operator*=(Vec2 & lhs, const Mat2 & rhs)
+{
+	return lhs = lhs * rhs;
+}

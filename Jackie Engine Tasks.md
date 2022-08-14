@@ -18,6 +18,8 @@ framebuffer 去除所有的warnings
 
 framebuffer 去除所有的std namespace pollutions
 
+尽可能移除`BasicDataTypeDeclarations.h|cpp`
+
 # 着急的
 
 √ 换上640*640分辨率
