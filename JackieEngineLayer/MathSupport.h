@@ -1,10 +1,10 @@
 #ifndef __JKEG_MathSupport__
 #define __JKEG_MathSupport__
 
-#include "../CrossBufferLayer/BasicDataTypeDeclarations.h"
-
 #include <cmath>
 using std::sqrt;
+using std::cosf;
+using std::sinf;
 
 #include <cstring>;
 using std::memcpy;
@@ -182,6 +182,11 @@ public:
 	// Matrix-Matrix Operators
 	Mat2  operator*  (const Mat2& rhs);
 	Mat2& operator*= (const Mat2& rhs);
+
+	// Special Matrix Getters
+	static Mat2 Identity();
+	static Mat2 Scaling(float factor);
+	static Mat2 Rotation(float theta);
 
 public:
 	float elements[2][2];

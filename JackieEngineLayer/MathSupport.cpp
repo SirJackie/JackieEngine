@@ -167,6 +167,33 @@ Mat2 & Mat2::operator*=(const Mat2 & rhs)
 	return (*this) = (*this) * rhs;
 }
 
+Mat2 Mat2::Identity()
+{
+	return Mat2(
+		1.0f, 0.0f,
+		0.0f, 1.0f
+	);
+}
+
+Mat2 Mat2::Scaling(float factor)
+{
+	return Mat2(
+		factor, 0.0f,
+		0.0f, factor
+	);
+}
+
+Mat2 Mat2::Rotation(float theta)
+{
+	float cosTheta = cosf(theta);
+	float sinTheta = sinf(theta);
+
+	return Mat2(
+		cosTheta, sinTheta,
+		-sinTheta, cosTheta
+	);
+}
+
 
 ///*
 //** Mat3
