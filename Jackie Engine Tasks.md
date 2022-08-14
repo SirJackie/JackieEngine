@@ -30,9 +30,9 @@ framebuffer 去除所有的std namespace pollutions
 
 √ 换上右手坐标系，Z轴指向屏幕里面
 
-实现 TT04 的线框3D
+√ 实现 TT04 的线框3D
 
-jkeg和chili调整出两个一样的Mesh
+√ jkeg和chili调整出两个一样的Mesh
 
 实现 TT10 的透视纠正
 

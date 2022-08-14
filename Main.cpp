@@ -13,7 +13,7 @@ PubeScreenTransformer pst;
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	pst.SetWidthHeight(fb.width, fb.height);
-	texImage.LoadFromBMP("./Images/sauron-bhole-100x100.bmp");
+	texImage.LoadFromBMP("../Images/sauron-bhole-100x100.bmp");
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
