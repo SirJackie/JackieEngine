@@ -2,7 +2,6 @@
 #include "JackieEngineLayer/MathSupport.h"
 #include "JackieEngineLayer/RasterizingSupport.h"
 
-const float dt = 1.0f / 60.0f;
 static constexpr float dTheta = PI;
 float offset_z = 2.0f;
 float theta_x = 0.0f;
@@ -17,9 +16,11 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
+
+	// Delta-Time Calculation
+	const float dt = (float)deltaTime / 1000.0f;
 	
 	// Keyboard Control
-
 	if (kb.IsKeyPressed('Q'))
 	{
 		theta_x = theta_x + dTheta * dt;
