@@ -6,15 +6,17 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	Vec2 vec(1.0f, 1.0f);
-	Mat2 mat(
-		1, 2,
-		3, 4
+	Mat3 m1;
+
+	Mat3 m2(
+		1, 2, 3,
+		4, 5, 6,
+		7, 8, 9
 	);
 
-	Vec2 result1 = vec * mat;
-	Vec2 result2 = vec;
-	result2 *= mat;
+	Mat3 m3 = m2;
+	Mat3 m4;
+	m4 = m2;
 
 	int a = 0;
 }

@@ -198,6 +198,62 @@ public:
 };
 
 
+class Mat3 {
+public:
+
+	// Default Constructor
+	Mat3() {
+		memset(elements, 0, sizeof(elements));
+	}
+
+	// Custom Constructor
+	Mat3(
+		float m00, float m01, float m02,
+		float m10, float m11, float m12,
+		float m20, float m21, float m22
+	) {
+		elements[0][0] = m00;
+		elements[0][1] = m01;
+		elements[0][2] = m02;
+
+		elements[1][0] = m10;
+		elements[1][1] = m11;
+		elements[1][2] = m12;
+
+		elements[2][0] = m20;
+		elements[2][1] = m21;
+		elements[2][2] = m22;
+	}
+
+	// Copy Constructor
+	Mat3(const Mat3& rhs) {
+		*this = rhs;
+	}
+
+	// Copy Assignment
+	Mat3& operator=(const Mat3& rhs) {
+		memcpy(elements, rhs.elements, sizeof(elements));
+		return *this;
+	}
+
+	//// Matrix-Scalar Operators
+	//Mat2  operator*  (float rhs);
+	//Mat2& operator*= (float rhs);
+
+	//// Matrix-Matrix Operators
+	//Mat2  operator*  (const Mat2& rhs);
+	//Mat2& operator*= (const Mat2& rhs);
+
+	//// Special Matrix Getters
+	//static Mat2 Identity();
+	//static Mat2 Scaling(float factor);
+	//static Mat2 Rotation(float theta);
+
+public:
+	float elements[3][3];
+};
+
+
 /*
 ** Vector-Matrix Operators
 */
