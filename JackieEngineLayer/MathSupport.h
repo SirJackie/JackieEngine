@@ -266,4 +266,42 @@ Vec2& operator*= (Vec2& lhs, const Mat2& rhs);
 Vec3  operator*  (const Vec3& lhs, const Mat3& rhs);
 Vec3& operator*= (Vec3& lhs, const Mat3& rhs);
 
+
+/*
+** Vertex
+*/
+
+class Vertex {
+public:
+
+	// Default Constructor
+	Vertex() {
+		pos = Vec3();
+		tex = Vec2();
+	}
+
+	// Custom Constructor
+	Vertex(const Vec3& pos_, const Vec2& tex_) {
+		pos = pos_;
+		tex = tex_;
+	}
+
+	// Copy Constructor
+	Vertex(const Vertex& rhs) {
+		pos = rhs.pos;
+		tex = rhs.tex;
+	}
+
+	// Copy Assignment
+	Vertex& operator=(const Vertex& rhs) {
+		pos = rhs.pos;
+		tex = rhs.tex;
+		return *this;
+	}
+
+public:
+	Vec3 pos;
+	Vec2 tex;
+};
+
 #endif
