@@ -8,19 +8,19 @@
 
 ## 效果展示
 
-### Demo1
+### Demo1（仅限Windows平台）
 
 使用`git checkout demo1`查看：
 
 ![Demo1](readme.assets/Demo1.png)
 
-### Demo2
+### Demo2（支持Windows、Linux平台）
 
 使用`git checkout demo2`查看：
 
 ![Demo2](readme.assets/Demo2.png)
 
-### Demo3
+### Demo3（仅限Windows平台）
 
 使用`git checkout demo3`查看：
 
