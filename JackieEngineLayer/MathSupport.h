@@ -266,31 +266,4 @@ Vec2& operator*= (Vec2& lhs, const Mat2& rhs);
 Vec3  operator*  (const Vec3& lhs, const Mat3& rhs);
 Vec3& operator*= (Vec3& lhs, const Mat3& rhs);
 
-
-///*
-//** Mat3
-//*/
-//
-//class Mat3 {
-//public:
-//	f32 m11, m12, m13, m14;
-//	f32 m21, m22, m23, m24;
-//	f32 m31, m32, m33, m34;
-//	f32 m41, m42, m43, m44;
-//
-//	Mat3(
-//		f32 m11, f32 m12, f32 m13, f32 m14,
-//		f32 m21, f32 m22, f32 m23, f32 m24,
-//		f32 m31, f32 m32, f32 m33, f32 m34,
-//		f32 m41, f32 m42, f32 m43, f32 m44
-//	);
-//	Mat3();
-//
-//	string ToString() const;
-//	friend const Vec3 operator*(const Vec3& v, const Mat3& m);
-//	friend const Mat3 operator*(const Mat3& a, const Mat3& b);
-//
-//	static Mat3 GenerateTranslationMatrix (f32 x, f32 y, f32 z);
-//	static Mat3 GenerateRotationMatrix    (f32 x, f32 y, f32 z);
-//};
 #endif
