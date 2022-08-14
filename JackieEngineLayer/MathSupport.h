@@ -6,6 +6,10 @@
 #include <cmath>
 using std::sqrt;
 
+#include <cstring>;
+using std::memcpy;
+using std::memset;
+
 
 /*
 ** Vectors
@@ -144,48 +148,28 @@ public:
 	float z;
 };
 
-//
-//class Vec3 : public Vec2 {
-//public:
-//	f32 w;
-//
-//	Vec3() : Vec2(), w(0.0f) {}
-//	Vec3(f32 x_, f32 y_, f32 z_, f32 w_) : Vec2(x_, y_, z_), w(w_) {}
-//	
-//	// Methods
-//	string     ToString()                   const;
-//	f32        Length()                     const;
-//	Vec3  Normalized()                 const;
-//	void       Normalize();
-//	void       DevideByW();
-//
-//	// Vector-Scalar Calculation
-//	friend const Vec3 operator+(const Vec3& a, const f32 b);
-//	friend const Vec3 operator+(const f32 b, const Vec3& a);
-//	friend const Vec3 operator-(const Vec3& a, const f32 b);
-//	friend const Vec3 operator-(const f32 b, const Vec3& a);
-//	friend const Vec3 operator*(const Vec3& a, const f32 b);
-//	friend const Vec3 operator*(const f32 b, const Vec3& a);
-//	friend const Vec3 operator/(const Vec3& a, const f32 b);
-//	friend const Vec3 operator/(const f32 b, const Vec3& a);
-//	virtual Vec3& operator+=(const f32& b);
-//	virtual Vec3& operator-=(const f32& b);
-//	virtual Vec3& operator*=(const f32& b);
-//	virtual Vec3& operator/=(const f32& b);
-//
-//	// Vector-Vector Calculation
-//	friend const Vec3 operator+(const Vec3& a, const Vec3& b);
-//	friend const Vec3 operator-(const Vec3& a, const Vec3& b);
-//	friend const f32       operator*(const Vec3& a, const Vec3& b);  // Dot   Product
-//	friend const Vec3 operator%(const Vec3& a, const Vec3& b);  // Cross Product
-//	virtual Vec3& operator+=(const Vec3& b);
-//	virtual Vec3& operator-=(const Vec3& b);
-//
-//	// Interpolation
-//	virtual const Vec3 InterpolateTo(const Vec3& b, f32 alpha) const;
-//};
-//
-//
+class Mat2 {
+public:
+	Mat2() {
+		memset(elements, 0, sizeof(elements));
+	}
+
+	Mat2(float m00, float m01, float m10, float m11) {
+		elements[0][0] = m00;
+		elements[0][1] = m01;
+		elements[1][0] = m10;
+		elements[1][1] = m11;
+	}
+
+	Mat2& operator=(const Mat2& rhs) {
+		memcpy(elements, rhs.elements, sizeof(elements));
+		return *this;
+	}
+
+public:
+	float elements[2][2];
+};
+
 ///*
 //** Mat3
 //*/
