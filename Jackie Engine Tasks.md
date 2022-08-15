@@ -2,7 +2,11 @@
 
 ## 着急的
 
-√ 暂无
+创建上、下、左、右面的Raster Clipping
+
+创建Near Plane的简单剔除Clipping
+
+创建Near Plane的Geometry Clipping
 
 ## 不着急的
 
