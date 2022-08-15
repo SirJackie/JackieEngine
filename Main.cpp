@@ -2,6 +2,10 @@
 #include "JackieEngineLayer/MathSupport.h"
 #include "JackieEngineLayer/RasterizingSupport.h"
 
+#include <algorithm>
+using std::min;
+using std::max;
+
 static constexpr float dTheta = PI;
 float offset_z = 1.1f;
 float theta_x = 0.6f;
@@ -85,16 +89,19 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	//	);
 	//}
 
-	//// Draw Verticies
-	//for (int i = 0; i < triangles.vertices.size(); i++) {
-	//	fb.PutPixel(
-	//		(int)triangles.vertices[i].pos.x,
-	//		(int)triangles.vertices[i].pos.y,
-	//		255,
-	//		0,
-	//		0
-	//	);
-	//}
+	// Draw Verticies
+	for (int i = 0; i < triangles.vertices.size(); i++) {
+		int x = (int)triangles.vertices[i].pos.x;
+		int y = (int)triangles.vertices[i].pos.y;
+
+		fb.PutPixel(
+			min( fb.width,  max( 0, x )),
+			min( fb.height, max( 0, y )),
+			255,
+			0,
+			0
+		);
+	}
 
 	// Draw Triangles
 	for (int i = 0; i < triangles.indices.size(); i += 3) {
