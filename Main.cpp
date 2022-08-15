@@ -74,9 +74,8 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		pst.Transform(v);
 	}
 
-	Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
-
 	// Draw Indicies
+	Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
 	for (int i = 0; i < lines.indices.size(); i += 2) {
 		LineClip(
 			fb, &screenRect,
@@ -85,7 +84,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 			(int)triangles.vertices[lines.indices[i + 0]].pos.y,  // x1
 
 			(int)triangles.vertices[lines.indices[i + 1]].pos.x,  // y0
-			(int)triangles.vertices[lines.indices[i + 1]].pos.y,  // y1,
+			(int)triangles.vertices[lines.indices[i + 1]].pos.y,  // y1
 
 			255, 255, 255  // rgb
 		);
