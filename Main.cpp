@@ -3,8 +3,8 @@
 #include "JackieEngineLayer/RasterizingSupport.h"
 
 static constexpr float dTheta = PI;
-float offset_z = 2.0f;
-float theta_x = 0.0f;
+float offset_z = 1.1f;
+float theta_x = 0.6f;
 float theta_y = 0.0f;
 float theta_z = 0.0f;
 Cube cube(1.0f);
