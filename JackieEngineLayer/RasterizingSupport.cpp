@@ -2,6 +2,7 @@
 
 #include <algorithm>
 using std::min;
+using std::max;
 
 CS_FrameBuffer texImage;
 
@@ -88,18 +89,18 @@ void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & i
 	auto itEdge0 = it0;
 
 	// calculate start and end scanlines
-	int yStart = (int)ceil(it0.pos.y - 0.5f);
-	int yEnd = (int)ceil(it2.pos.y - 0.5f); // the scanline AFTER the last line drawn
+	int yStart = max(0, (int)ceil(it0.pos.y - 0.5f) );
+	int yEnd = min( fb.height - 1, (int)ceil(it2.pos.y - 0.5f) ); // the scanline AFTER the last line drawn
 
-												  // do interpolant prestep
+	// do interpolant prestep
 	itEdge0 += dv0 * (float(yStart) + 0.5f - it0.pos.y);
 	itEdge1 += dv1 * (float(yStart) + 0.5f - it0.pos.y);
 
 	for (int y = yStart; y < yEnd; y++, itEdge0 += dv0, itEdge1 += dv1)
 	{
 		// calculate start and end pixels
-		int xStart = (int)ceil(itEdge0.pos.x - 0.5f);
-		int xEnd = (int)ceil(itEdge1.pos.x - 0.5f); // the pixel AFTER the last pixel drawn
+		int xStart = max( 0, (int)ceil(itEdge0.pos.x - 0.5f) );
+		int xEnd = min( fb.width - 1, (int)ceil(itEdge1.pos.x - 0.5f) ); // the pixel AFTER the last pixel drawn
 
 		// create scanline interpolant startpoint
 		// (some waste for interpolating x,y,z, but makes life easier not having

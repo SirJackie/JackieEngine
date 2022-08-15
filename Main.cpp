@@ -70,31 +70,31 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		pst.Transform(v);
 	}
 
-	// Draw Indicies
-	for (int i = 0; i < lines.indices.size(); i += 2) {
-		DrawBresenhamLine(
-			fb,
+	//// Draw Indicies
+	//for (int i = 0; i < lines.indices.size(); i += 2) {
+	//	DrawBresenhamLine(
+	//		fb,
 
-			(int)triangles.vertices[lines.indices[i + 0]].pos.x,  // x0
-			(int)triangles.vertices[lines.indices[i + 0]].pos.y,  // x1
+	//		(int)triangles.vertices[lines.indices[i + 0]].pos.x,  // x0
+	//		(int)triangles.vertices[lines.indices[i + 0]].pos.y,  // x1
 
-			(int)triangles.vertices[lines.indices[i + 1]].pos.x,  // y0
-			(int)triangles.vertices[lines.indices[i + 1]].pos.y,  // y1,
+	//		(int)triangles.vertices[lines.indices[i + 1]].pos.x,  // y0
+	//		(int)triangles.vertices[lines.indices[i + 1]].pos.y,  // y1,
 
-			255, 255, 255  // rgb
-		);
-	}
+	//		255, 255, 255  // rgb
+	//	);
+	//}
 
-	// Draw Verticies
-	for (int i = 0; i < triangles.vertices.size(); i++) {
-		fb.PutPixel(
-			(int)triangles.vertices[i].pos.x,
-			(int)triangles.vertices[i].pos.y,
-			255,
-			0,
-			0
-		);
-	}
+	//// Draw Verticies
+	//for (int i = 0; i < triangles.vertices.size(); i++) {
+	//	fb.PutPixel(
+	//		(int)triangles.vertices[i].pos.x,
+	//		(int)triangles.vertices[i].pos.y,
+	//		255,
+	//		0,
+	//		0
+	//	);
+	//}
 
 	// Draw Triangles
 	for (int i = 0; i < triangles.indices.size(); i += 3) {
