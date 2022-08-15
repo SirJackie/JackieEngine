@@ -81,4 +81,18 @@ void DrawFlatTriangle(
 
 void DrawBresenhamLine(CS_FrameBuffer& fb, int x0, int y0, int x1, int y1, unsigned char r, unsigned char g, unsigned char b);
 
+#define LEFT_EDGE   1
+#define RIGHT_EDGE  2
+#define BOTTOM_EDGE 4
+#define TOP_EDGE    8
+
+struct Rectangle
+{
+	int xmin, xmax, ymin, ymax;
+};
+
+void initRectangle(struct Rectangle* rect, int xmin, int ymin, int xmax, int ymax);
+int CompCode(int x, int y, struct Rectangle* rect);
+int LineClip(CS_FrameBuffer& fb, struct Rectangle* rect, int x0, int y0, int x1, int y1, unsigned char r, unsigned char g, unsigned char b);
+
 #endif
