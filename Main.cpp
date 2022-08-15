@@ -74,7 +74,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		pst.Transform(v);
 	}
 
-	Rectangle screenRect = { 0, fb.width, 0, fb.height };
+	Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
 
 	// Draw Indicies
 	for (int i = 0; i < lines.indices.size(); i += 2) {
@@ -97,8 +97,8 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		int y = (int)triangles.vertices[i].pos.y;
 
 		fb.PutPixel(
-			min( fb.width,  max( 0, x )),
-			min( fb.height, max( 0, y )),
+			min( fb.width - 1,  max( 0, x )),
+			min( fb.height - 1, max( 0, y )),
 			255,
 			0,
 			0
