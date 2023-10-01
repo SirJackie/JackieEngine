@@ -1,149 +1,358 @@
 #ifndef __JKEG_MathSupport__
 #define __JKEG_MathSupport__
 
-#include "../CrossBufferLayer/BasicDataTypeDeclarations.h"
+#include <cmath>
+using std::sqrt;
+using std::cosf;
+using std::sinf;
+
+#include <cstring>;
+using std::memcpy;
+using std::memset;
+
+#include <algorithm>
+using std::swap;
 
 
 /*
-** FVector4D
+** Vectors
 */
 
-class FVector3D{
+class Vec2{
 public:
-	f32 x;
-	f32 y;
-	f32 z;
 
-	FVector3D() : x(0.0f), y(0.0f), z(0.0f) {}
-	FVector3D(f32 x_, f32 y_, f32 z_) : x(x_), y(y_), z(z_) {}
+	// Default Constructor
+	Vec2() { x = 0.0f; y = 0.0f; }
 
-	// Methods
-	string     ToString()                   const;
+	// Custom Constructor
+	Vec2(float x_, float y_) { x = x_; y = y_; }
 
-	// Vector-Scalar Calculation
-	friend const FVector3D operator+(const FVector3D& a, const f32 b);
-	friend const FVector3D operator+(const f32 b, const FVector3D& a);
-	friend const FVector3D operator-(const FVector3D& a, const f32 b);
-	friend const FVector3D operator-(const f32 b, const FVector3D& a);
-	friend const FVector3D operator*(const FVector3D& a, const f32 b);
-	friend const FVector3D operator*(const f32 b, const FVector3D& a);
-	friend const FVector3D operator/(const FVector3D& a, const f32 b);
-	friend const FVector3D operator/(const f32 b, const FVector3D& a);
-	virtual FVector3D& operator+=(const f32& b);
-	virtual FVector3D& operator-=(const f32& b);
-	virtual FVector3D& operator*=(const f32& b);
-	virtual FVector3D& operator/=(const f32& b);
+	// Copy Constructor
+	Vec2(const Vec2& rhs) {
+		*this = rhs;
+	}
 
-	// Vector-Vector Calculation
-	friend const FVector3D operator+(const FVector3D& a, const FVector3D& b);
-	friend const FVector3D operator-(const FVector3D& a, const FVector3D& b);
-	virtual FVector3D& operator+=(const FVector3D& b);
-	virtual FVector3D& operator-=(const FVector3D& b);
+	// Copy Assignment
+	Vec2& operator=(const Vec2& rhs) {
+		x = rhs.x;
+		y = rhs.y;
+		return *this;
+	}
 
-	// Interpolation
-	virtual const FVector3D InterpolateTo(const FVector3D& b, f32 alpha) const;
+	// LenSq
+	float LenSq() {
+		return x * x + y * y;
+	}
+
+	// Len
+	float Len() {
+		return sqrt(LenSq());
+	}
+
+	// Normalize
+	void Normalize() {
+		float len = Len();
+		this->x /= len;
+		this->y /= len;
+	}
+
+	// GetNormalized
+	Vec2 GetNormalized() {
+		float len = Len();
+		return Vec2(x / len, y / len);
+	}
+
+	// Vector-Scalar Operators
+	Vec2  operator*  (const float rhs);
+	Vec2& operator*= (const float rhs);
+	Vec2  operator/  (const float rhs);
+	Vec2& operator/= (const float rhs);
+
+	// Vector-Vector Operators
+	Vec2  operator+  (const Vec2& rhs);
+	Vec2& operator+= (const Vec2& rhs);
+	Vec2  operator-  (const Vec2& rhs);
+	Vec2& operator-= (const Vec2& rhs);
+
+	// Negative Operator
+	Vec2  operator-  ();
+
+public:
+	float x;
+	float y;
 };
 
-class FVector4D : public FVector3D {
+
+class Vec3 : public Vec2 {
 public:
-	f32 w;
 
-	FVector4D() : FVector3D(), w(0.0f) {}
-	FVector4D(f32 x_, f32 y_, f32 z_, f32 w_) : FVector3D(x_, y_, z_), w(w_) {}
-	
-	// Methods
-	string     ToString()                   const;
-	f32        Length()                     const;
-	FVector4D  Normalized()                 const;
-	void       Normalize();
-	void       DevideByW();
+	// Default Constructor
+	Vec3() { x = 0.0f; y = 0.0f; z = 0.0f; }
 
-	// Vector-Scalar Calculation
-	friend const FVector4D operator+(const FVector4D& a, const f32 b);
-	friend const FVector4D operator+(const f32 b, const FVector4D& a);
-	friend const FVector4D operator-(const FVector4D& a, const f32 b);
-	friend const FVector4D operator-(const f32 b, const FVector4D& a);
-	friend const FVector4D operator*(const FVector4D& a, const f32 b);
-	friend const FVector4D operator*(const f32 b, const FVector4D& a);
-	friend const FVector4D operator/(const FVector4D& a, const f32 b);
-	friend const FVector4D operator/(const f32 b, const FVector4D& a);
-	virtual FVector4D& operator+=(const f32& b);
-	virtual FVector4D& operator-=(const f32& b);
-	virtual FVector4D& operator*=(const f32& b);
-	virtual FVector4D& operator/=(const f32& b);
+	// Custom Constructor
+	Vec3(float x_, float y_, float z_) { x = x_; y = y_; z = z_; }
 
-	// Vector-Vector Calculation
-	friend const FVector4D operator+(const FVector4D& a, const FVector4D& b);
-	friend const FVector4D operator-(const FVector4D& a, const FVector4D& b);
-	friend const f32       operator*(const FVector4D& a, const FVector4D& b);  // Dot   Product
-	friend const FVector4D operator%(const FVector4D& a, const FVector4D& b);  // Cross Product
-	virtual FVector4D& operator+=(const FVector4D& b);
-	virtual FVector4D& operator-=(const FVector4D& b);
+	// Copy Constructor
+	Vec3(const Vec3& rhs) {
+		*this = rhs;
+	}
 
-	// Interpolation
-	virtual const FVector4D InterpolateTo(const FVector4D& b, f32 alpha) const;
-};
+	// Copy Assignment
+	Vec3& operator=(const Vec3& rhs) {
+		x = rhs.x;
+		y = rhs.y;
+		z = rhs.z;
+		return *this;
+	}
 
-class FVectorTex{
+	// LenSq
+	float LenSq() {
+		return x * x + y * y + z * z;
+	}
+
+	// Len
+	float Len() {
+		return sqrt(LenSq());
+	}
+
+	// Normalize
+	void Normalize() {
+		float len = Len();
+		this->x /= len;
+		this->y /= len;
+		this->z /= len;
+	}
+
+	// GetNormalized
+	Vec3 GetNormalized() {
+		float len = Len();
+		return Vec3(x / len, y / len, z / len);
+	}
+
+	// Vector-Scalar Operators
+	Vec3  operator*  (const float rhs);
+	Vec3& operator*= (const float rhs);
+	Vec3  operator/  (const float rhs);
+	Vec3& operator/= (const float rhs);
+
+	// Vector-Vector Operators
+	Vec3  operator+  (const Vec3& rhs);
+	Vec3& operator+= (const Vec3& rhs);
+	Vec3  operator-  (const Vec3& rhs);
+	Vec3& operator-= (const Vec3& rhs);
+
+	// Vector-Vector Dot Product
+	float operator*  (const Vec3& rhs);
+
+	// Negative Operator
+	Vec3  operator-  ();
+
 public:
-	FVector4D pos;
-	FVector3D tex;
-
-	FVectorTex();
-	FVectorTex(const FVectorTex& fvt);
-	FVectorTex(const FVector4D& pos_, const FVector3D& tex_);
-
-	// Vector-Scalar Calculation
-	friend const FVectorTex operator+(const FVectorTex& a, const f32 b);
-	friend const FVectorTex operator+(const f32 b, const FVectorTex& a);
-	friend const FVectorTex operator-(const FVectorTex& a, const f32 b);
-	friend const FVectorTex operator-(const f32 b, const FVectorTex& a);
-	friend const FVectorTex operator*(const FVectorTex& a, const f32 b);
-	friend const FVectorTex operator*(const f32 b, const FVectorTex& a);
-	friend const FVectorTex operator/(const FVectorTex& a, const f32 b);
-	friend const FVectorTex operator/(const f32 b, const FVectorTex& a);
-	FVectorTex& operator+=(const f32& b);
-	FVectorTex& operator-=(const f32& b);
-	FVectorTex& operator*=(const f32& b);
-	FVectorTex& operator/=(const f32& b);
-
-	// Vector-Vector Calculation
-	friend const FVectorTex operator+(const FVectorTex& a, const FVectorTex& b);
-	friend const FVectorTex operator-(const FVectorTex& a, const FVectorTex& b);
-	FVectorTex& operator+=(const FVectorTex& b);
-	FVectorTex& operator-=(const FVectorTex& b);
-
-	// Interpolation
-	const FVectorTex InterpolateTo(const FVectorTex& b, f32 alpha) const;
-
-	string ToString() const;
+	float z;
 };
 
 
 /*
-** FMatrix4D
+** Matrices
 */
 
-class FMatrix4D {
+class Mat2 {
 public:
-	f32 m11, m12, m13, m14;
-	f32 m21, m22, m23, m24;
-	f32 m31, m32, m33, m34;
-	f32 m41, m42, m43, m44;
 
-	FMatrix4D(
-		f32 m11, f32 m12, f32 m13, f32 m14,
-		f32 m21, f32 m22, f32 m23, f32 m24,
-		f32 m31, f32 m32, f32 m33, f32 m34,
-		f32 m41, f32 m42, f32 m43, f32 m44
-	);
-	FMatrix4D();
+	// Default Constructor
+	Mat2() {
+		memset(elements, 0, sizeof(elements));
+	}
 
-	string ToString() const;
-	friend const FVector4D operator*(const FVector4D& v, const FMatrix4D& m);
-	friend const FMatrix4D operator*(const FMatrix4D& a, const FMatrix4D& b);
+	// Custom Constructor
+	Mat2(float m00, float m01, float m10, float m11) {
+		elements[0][0] = m00;
+		elements[0][1] = m01;
+		elements[1][0] = m10;
+		elements[1][1] = m11;
+	}
 
-	static FMatrix4D GenerateTranslationMatrix (f32 x, f32 y, f32 z);
-	static FMatrix4D GenerateRotationMatrix    (f32 x, f32 y, f32 z);
+	// Copy Constructor
+	Mat2(const Mat2& rhs) {
+		*this = rhs;
+	}
+
+	// Copy Assignment
+	Mat2& operator=(const Mat2& rhs) {
+		memcpy(elements, rhs.elements, sizeof(elements));
+		return *this;
+	}
+
+	// Matrix-Scalar Operators
+	Mat2  operator*  (float rhs);
+	Mat2& operator*= (float rhs);
+
+	// Matrix-Matrix Operators
+	Mat2  operator*  (const Mat2& rhs);
+	Mat2& operator*= (const Mat2& rhs);
+
+	// Special Matrix Getters
+	static Mat2 Identity();
+	static Mat2 Scaling(float factor);
+	static Mat2 Rotation(float theta);
+
+public:
+	float elements[2][2];
 };
+
+
+class Mat3 {
+public:
+
+	// Default Constructor
+	Mat3() {
+		memset(elements, 0, sizeof(elements));
+	}
+
+	// Custom Constructor
+	Mat3(
+		float m00, float m01, float m02,
+		float m10, float m11, float m12,
+		float m20, float m21, float m22
+	) {
+		elements[0][0] = m00;
+		elements[0][1] = m01;
+		elements[0][2] = m02;
+
+		elements[1][0] = m10;
+		elements[1][1] = m11;
+		elements[1][2] = m12;
+
+		elements[2][0] = m20;
+		elements[2][1] = m21;
+		elements[2][2] = m22;
+	}
+
+	// Copy Constructor
+	Mat3(const Mat3& rhs) {
+		*this = rhs;
+	}
+
+	// Copy Assignment
+	Mat3& operator=(const Mat3& rhs) {
+		memcpy(elements, rhs.elements, sizeof(elements));
+		return *this;
+	}
+
+	// Matrix-Scalar Operators
+	Mat3  operator*  (float rhs);
+	Mat3& operator*= (float rhs);
+
+	// Matrix-Matrix Operators
+	Mat3  operator*  (const Mat3& rhs);
+	Mat3& operator*= (const Mat3& rhs);
+
+	// Special Matrix Getters
+	static Mat3 Identity();
+	static Mat3 Scaling(float factor);
+	static Mat3 RotationZ(float theta);
+	static Mat3 RotationY(float theta);
+	static Mat3 RotationX(float theta);
+
+public:
+	float elements[3][3];
+};
+
+
+/*
+** Vector-Matrix Operators
+*/
+
+Vec2  operator*  (const Vec2& lhs, const Mat2& rhs);
+Vec2& operator*= (Vec2& lhs, const Mat2& rhs);
+
+Vec3  operator*  (const Vec3& lhs, const Mat3& rhs);
+Vec3& operator*= (Vec3& lhs, const Mat3& rhs);
+
+
+/*
+** Vertex
+*/
+
+class Vertex {
+public:
+
+	// Default Constructor
+	Vertex() {
+		pos = Vec3();
+		tex = Vec2();
+	}
+
+	// Custom Constructor
+	Vertex(const Vec3& pos_, const Vec2& tex_) {
+		pos = pos_;
+		tex = tex_;
+	}
+
+	// Copy Constructor
+	Vertex(const Vertex& rhs) {
+		pos = rhs.pos;
+		tex = rhs.tex;
+	}
+
+	// Copy Assignment
+	Vertex& operator=(const Vertex& rhs) {
+		pos = rhs.pos;
+		tex = rhs.tex;
+		return *this;
+	}
+
+	// Vertex-Vertex Operators
+	Vertex operator+(const Vertex& rhs) {
+		return Vertex(
+			pos + rhs.pos,
+			tex + rhs.tex
+		);
+	}
+
+	Vertex& operator+=(const Vertex& rhs) {
+		return (*this) = (*this) + rhs;
+	}
+
+	Vertex operator-(const Vertex& rhs) {
+		return Vertex(
+			pos - rhs.pos,
+			tex - rhs.tex
+		);
+	}
+
+	Vertex operator*(float rhs) {
+		return Vertex(
+			pos * rhs,
+			tex * rhs
+		);
+	}
+
+	Vertex& operator*=(float& rhs) {
+		return (*this) = (*this) * rhs;
+	}
+
+	Vertex operator/(float rhs) {
+		return Vertex(
+			pos / rhs,
+			tex / rhs
+		);
+	}
+
+public:
+	Vec3 pos;
+	Vec2 tex;
+};
+
+
+/*
+** Interpolator
+*/
+
+template<typename T>
+inline T interpolate(T& src, T& dst, float alpha)
+{
+	return src + (dst - src) * alpha;
+}
+
 #endif

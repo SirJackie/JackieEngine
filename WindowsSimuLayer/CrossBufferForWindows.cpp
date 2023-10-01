@@ -78,47 +78,48 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	/* Main Loop */
 	while (msg.message != WM_QUIT)
 	{
-		if (isCursorShowingNow == csTrue && mouse.infinityMode == csTrue) {
+		if (isCursorShowingNow == csTrue && mouse.IsInfinityModeOpened() == csTrue) {
 			isCursorShowingNow = csFalse;
 			ShowCursor(csFalse);
 		}
 
-		if (isCursorShowingNow == csFalse && mouse.infinityMode == csFalse) {
+		if (isCursorShowingNow == csFalse && mouse.IsInfinityModeOpened() == csFalse) {
 			isCursorShowingNow = csTrue;
 			ShowCursor(csTrue);
 		}
 
-		if (mouse.x == 0 || mouse.y == 0) {
+		if (mouse.GetX() == 0 || mouse.GetY() == 0) {
 			POINT pt;
 			GetCursorPos(&pt);
-			mouse.x = pt.x - windowsHelper.leftMargin;
-			mouse.y = pt.y - windowsHelper.topMargin;
-			mouse.lastX = mouse.x;
-			mouse.lastY = mouse.y;
+
+			mouse.__DONT_USE__SetX(pt.x - windowsHelper.leftMargin);
+			mouse.__DONT_USE__SetY(pt.y - windowsHelper.topMargin);
+			mouse.__DONT_USE__SetLastX(mouse.GetX());
+			mouse.__DONT_USE__SetLastY(mouse.GetY());
 		}
 
-		if (lastFrameInfinityState == csFalse && mouse.infinityMode == csTrue) {
+		if (lastFrameInfinityState == csFalse && mouse.IsInfinityModeOpened() == csTrue) {
 			// Make the next frame mouse.x|y equals to this frame
 			SetCursorPos(GlobalCenterX, GlobalCenterY);
 
 			lastFrameInfinityState = csTrue;
 		}
 
-		else if (lastFrameInfinityState == csTrue && mouse.infinityMode == csFalse) {
+		else if (lastFrameInfinityState == csTrue && mouse.IsInfinityModeOpened() == csFalse) {
 			SetLocalCursorPos
 			(
-				CS_iclamp(0, mouse.x, windowsHelper.windowWidth),
-				CS_iclamp(0, mouse.y, windowsHelper.windowHeight)
+				CS_iclamp(0, mouse.GetX(), windowsHelper.windowWidth),
+				CS_iclamp(0, mouse.GetY(), windowsHelper.windowHeight)
 			);
 			lastFrameInfinityState = csFalse;
 		}
 
-		else if (lastFrameInfinityState == csTrue && mouse.infinityMode == csTrue) {
+		else if (lastFrameInfinityState == csTrue && mouse.IsInfinityModeOpened() == csTrue) {
 			POINT pt;
 			GetCursorPos(&pt);
 
-			mouse.x += pt.x - GlobalCenterX;
-			mouse.y += pt.y - GlobalCenterY;
+			mouse.__DONT_USE__SetX(mouse.GetX() + (pt.x - GlobalCenterX));
+			mouse.__DONT_USE__SetY(mouse.GetY() + (pt.y - GlobalCenterY));
 
 			SetCursorPos(GlobalCenterX, GlobalCenterY);
 		}
@@ -139,8 +140,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			SendMessage(windowsHelper.hWnd, WM_CLOSE, 0, 0);
 		}
 
-		mouse.deltaX = mouse.x - mouse.lastX;
-		mouse.deltaY = mouse.y - mouse.lastY;
+		mouse.__DONT_USE__SetDeltaX(mouse.GetX() - mouse.GetLastX());
+		mouse.__DONT_USE__SetDeltaY(mouse.GetY() - mouse.GetLastY());
 
 		// Update Time Counting Variables
 		thisTime = clock();
@@ -173,8 +174,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// lastTime in next frame = thisTime in this frame
 		lastTime = thisTime;
 
-		mouse.lastX = mouse.x;
-		mouse.lastY = mouse.y;
+		mouse.__DONT_USE__SetLastX(mouse.GetX());
+		mouse.__DONT_USE__SetLastY(mouse.GetY());
 	}
 
 	/* After the Main Loop */
@@ -213,33 +214,33 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_LBUTTONDOWN:
-		mouse.lBtnState = csTrue;
+		mouse.__DONT_USE__SetLBtnState(csTrue);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_LBUTTONUP:
-		mouse.lBtnState = csFalse;
+		mouse.__DONT_USE__SetLBtnState(csFalse);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_MBUTTONDOWN:
-		mouse.mBtnState = csTrue;
+		mouse.__DONT_USE__SetMBtnState(csTrue);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_MBUTTONUP:
-		mouse.mBtnState = csFalse;
+		mouse.__DONT_USE__SetMBtnState(csFalse);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_RBUTTONDOWN:
-		mouse.rBtnState = csTrue;
+		mouse.__DONT_USE__SetRBtnState(csTrue);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_RBUTTONUP:
-		mouse.rBtnState = csFalse;
+		mouse.__DONT_USE__SetRBtnState(csFalse);
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 	case WM_MOUSEMOVE:
-		if (mouse.infinityMode == csFalse) {
-			mouse.x = LOWORD(lParam);
-			mouse.y = HIWORD(lParam);
+		if (mouse.IsInfinityModeOpened() == csFalse) {
+			mouse.__DONT_USE__SetX(LOWORD(lParam));
+			mouse.__DONT_USE__SetY(HIWORD(lParam));
 		}
 
 		return DefWindowProc(hWnd, msg, wParam, lParam);

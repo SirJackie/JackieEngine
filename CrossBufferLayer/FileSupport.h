@@ -8,34 +8,37 @@ const csFileMode csReadBinary = 0;
 const csFileMode csWriteBinary = 1;
 
 class CS_Path{
-public:
+private:
     string nowpath;
+public:
     CS_Path();
     CS_Path& join(const string name);
     operator string();
 };
 
 class CS_File{
-public:
+
+private:
     FILE *file;
     csFileMode fileMode;
     i32 fileLength;
     ui8 *buffer;
     i32 bufferLength;
-
-    CS_File();
-
+    
+private:
     void ResizeAndClearBuffer(i32 size);
     i32  GetPositionNow();
     void GoToHead();
     void GoToEnd();
     void GoTo(i32 position);
 
+public:
+	CS_File();
     void Open(string fileName_, csFileMode fileMode_);
     void Read();
     void Write();
     void Close();
-
+	ui8* GetBufferPointer();
     ~CS_File();
 };
 

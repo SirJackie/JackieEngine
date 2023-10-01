@@ -5,47 +5,80 @@
 #include "../CrossBufferLayer/CrossBuffer.h"
 #include "MathSupport.h"
 #include "ObjectSupport.h"
+#include <algorithm>
+using std::swap;
+
+extern CS_FrameBuffer texImage;
 
 
-class FZBuffer {
+class PubeScreenTransformer
+{
 public:
-	f32 *bufptr;
-	i32  width;
-	i32  height;
+	PubeScreenTransformer()
+		:
+		xFactor(0.0f),
+		yFactor(0.0f)
+	{}
 
-	void Alloc();
-	void FillBuffer();
-	void Resize(i32 width_, i32 height_);
+	void SetWidthHeight(int screenWidth, int screenHeight)
+	{
+		xFactor = float(screenWidth) / 2.0f;
+		yFactor = float(screenHeight) / 2.0f;
+	}
 
-	FZBuffer();
-	FZBuffer(const FZBuffer& zb);
-	FZBuffer& operator=(const FZBuffer& zb);
-	~FZBuffer();
+	Vertex& Transform(Vertex& v) const
+	{
+		float zInv = 1.0f / v.pos.z;
+		// divide all position components and attributes by z
+		// (we want to be interpolating our attributes in the
+		//  same space where the x,y interpolation is taking
+		//  place to prevent distortion)
+		v *= zInv;
+		// adjust position x,y from perspective normalized space
+		// to screen dimension space after perspective divide
+		v.pos.x = (v.pos.x + 1.0f) * xFactor;
+		v.pos.y = (-v.pos.y + 1.0f) * yFactor;
+		// store 1/z in z (we will need the interpolated 1/z
+		// so that we can recover the attributes after interp.)
+		v.pos.z = zInv;
+
+		return v;
+	}
+	Vertex GetTransformed(const Vertex& v) const
+	{
+		return Transform(Vertex(v));
+	}
+private:
+	float xFactor;
+	float yFactor;
 };
 
+void DrawTriangle(CS_FrameBuffer& fb, Vertex& v0, Vertex& v1, Vertex& v2);
 
-class FRasterizer {
-public:
-	CS_FrameBuffer* ptrfb;
-	FZBuffer zb;
+void DrawFlatTopTriangle(
+	CS_FrameBuffer& fb,
+	Vertex& it0,
+	Vertex& it1,
+	Vertex& it2
+);
 
-	FRasterizer();
-	FRasterizer(CS_FrameBuffer& fb_);
-	FRasterizer(const FRasterizer& rst);
-	FRasterizer& operator=(const FRasterizer& rst);
-	~FRasterizer();
+void DrawFlatBottomTriangle(
+	CS_FrameBuffer& fb,
+	Vertex& it0,
+	Vertex& it1,
+	Vertex& it2
+);
 
-	void DrawProtectedCube(i32 x0, i32 y0, i32 x1, i32 y1, ui8 r_, ui8 g_, ui8 b_);
-	void DrawRadiusCube(i32 x, i32 y, i32 radius);
-	void DrawTriangle           (const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture);
-	void DrawFlatBottomTriangle (const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture);
-	void DrawFlatTopTriangle    (const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture);
-	void DrawFlatTriangle       (i32 yTop, i32 yBottom, FVectorTex xLeft, FVectorTex xRight, const FVectorTex& xLeftStep, const FVectorTex& xRightStep, CS_FrameBuffer& texture);
+void DrawFlatTriangle(
+	CS_FrameBuffer& fb,
+	Vertex& it0,
+	Vertex& it1,
+	Vertex& it2,
+	Vertex& dv0,
+	Vertex& dv1,
+	Vertex itEdge1
+);
 
-	void Draw3DPoint(FVector3D& point);
-	void Draw4DPoint(FVector4D& point);
-	void DrawPoint(FObject& obj_);
-	void DrawTriangle(FObject& obj_);
-};
+void DrawBresenhamLine(CS_FrameBuffer& fb, int x0, int y0, int x1, int y1, unsigned char r, unsigned char g, unsigned char b);
 
 #endif

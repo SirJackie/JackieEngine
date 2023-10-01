@@ -5,10 +5,12 @@
 
 
 class CS_FPSCalculator {
+
 private:
 	f32 fps;
 	i32 deltaTimeCount;
 	i32 frameCount;
+
 public:
 	CS_FPSCalculator();
 	void    Count(i32 deltaTime);

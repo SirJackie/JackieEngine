@@ -203,8 +203,6 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-# (Personal Preference) Solution Files
-*.sln
-
-# (Personal Preference) Intellisense Database Files
+# (Personal Preference) VS2015 Intellisense Database Files
 *.VC.db
+*.VC.VC.opendb

@@ -1,330 +1,191 @@
 #include "RasterizingSupport.h"
 
+#include <algorithm>
+using std::min;
 
-/*
-** FZBuffer
-*/
+CS_FrameBuffer texImage;
 
-void FZBuffer::Alloc()
+void DrawTriangle(CS_FrameBuffer & fb, Vertex & v0, Vertex & v1, Vertex & v2)
 {
-	bufptr = new f32[width * height];
-}
+	// using pointers so we can swap (for sorting purposes)
+	Vertex* pv0 = &v0;
+	Vertex* pv1 = &v1;
+	Vertex* pv2 = &v2;
 
-void FZBuffer::FillBuffer()
-{
-	f32* ptrEnd = (f32*)(bufptr + width * height);
-	for (f32* ptr = bufptr; ptr < ptrEnd; ptr++) {
-		*ptr = -1.0f;
-	}
-}
+	// sorting vertices by y
+	if (pv1->pos.y < pv0->pos.y) std::swap(pv0, pv1);
+	if (pv2->pos.y < pv1->pos.y) std::swap(pv1, pv2);
+	if (pv1->pos.y < pv0->pos.y) std::swap(pv0, pv1);
 
-void FZBuffer::Resize(i32 width_, i32 height_)
-{
-	width = width_;
-	height = height_;
-	if (bufptr != nullptr) {
-		delete[] bufptr;
-		bufptr = csNullPtr;
-	}
-	Alloc();
-	FillBuffer();
-}
-
-FZBuffer::FZBuffer() {
-	width  = 1;
-	height = 1;
-	bufptr = nullptr;  // Prevent the unexpected delete[]
-	Resize(width, height);
-}
-
-FZBuffer::FZBuffer(const FZBuffer& zb) {
-	width = zb.width;
-	height = zb.height;
-
-	if (bufptr != nullptr) {
-		delete[] bufptr;
-		bufptr = csNullPtr;
-	}
-	Alloc();
-
-	f32* ptrEnd = (f32*)(bufptr + width * height);
-	for (
-		f32* ptr = bufptr, *fromPtr = zb.bufptr;
-		ptr < ptrEnd;
-		ptr++, fromPtr++
-		)
+	if (pv0->pos.y == pv1->pos.y) // natural flat top
 	{
-		*ptr = -1.0f;
+		// sorting top vertices by x
+		if (pv1->pos.x < pv0->pos.x) std::swap(pv0, pv1);
+
+		DrawFlatTopTriangle(fb, *pv0, *pv1, *pv2);
 	}
-}
+	else if (pv1->pos.y == pv2->pos.y) // natural flat bottom
+	{
+		// sorting bottom vertices by x
+		if (pv2->pos.x < pv1->pos.x) std::swap(pv1, pv2);
 
-FZBuffer& FZBuffer::operator=(const FZBuffer& zb)
-{
-	if (this != &zb) {
-		width = zb.width;
-		height = zb.height;
+		DrawFlatBottomTriangle(fb, *pv0, *pv1, *pv2);
+	}
+	else // general triangle
+	{
+		// find splitting vertex interpolant
+		float alphaSplit =
+			(pv1->pos.y - pv0->pos.y) /
+			(pv2->pos.y - pv0->pos.y);
+		auto vi = interpolate(*pv0, *pv2, alphaSplit);
 
-		if (bufptr != nullptr) {
-			delete[] bufptr;
-			bufptr = csNullPtr;
-		}
-		Alloc();
-
-		f32* ptrEnd = (f32*)(bufptr + width * height);
-		for (
-			f32* ptr = bufptr, *fromPtr = zb.bufptr;
-			ptr < ptrEnd;
-			ptr++, fromPtr++
-			)
+		if (pv1->pos.x < vi.pos.x) // major right
 		{
-			*ptr = -1.0f;
+			DrawFlatBottomTriangle(fb, *pv0, *pv1, vi);
+			DrawFlatTopTriangle(fb, *pv1, vi, *pv2);
+		}
+		else // major left
+		{
+			DrawFlatBottomTriangle(fb, *pv0, vi, *pv1);
+			DrawFlatTopTriangle(fb, vi, *pv1, *pv2);
 		}
 	}
-
-	return *this;
 }
 
-FZBuffer::~FZBuffer(){
-	if (bufptr != nullptr) {
-		delete[] bufptr;
-		bufptr = csNullPtr;
-	}
-}
-
-
-/*
-** FRasterizer
-*/
-
-FRasterizer::FRasterizer(){
-	ptrfb = csNullPtr;
-}
-
-FRasterizer::FRasterizer(CS_FrameBuffer& fb_){
-	ptrfb = &fb_;
-	zb.Resize(ptrfb->width, ptrfb->height);
-}
-
-FRasterizer::FRasterizer(const FRasterizer& rst)
+void DrawFlatTopTriangle(CS_FrameBuffer & fb, Vertex & it0, Vertex & it1, Vertex & it2)
 {
-	ptrfb = rst.ptrfb;  // Shallow Copy is just OK
+	// calulcate dVertex / dy
+	// change in interpolant for every 1 change in y
+	float delta_y = it2.pos.y - it0.pos.y;
+	auto dit0 = (it2 - it0) / delta_y;
+	auto dit1 = (it2 - it1) / delta_y;
+
+	// create right edge interpolant
+	auto itEdge1 = it1;
+
+	// call the flat triangle render routine
+	DrawFlatTriangle(fb, it0, it1, it2, dit0, dit1, itEdge1);
 }
 
-FRasterizer& FRasterizer::operator=(const FRasterizer& rst)
+void DrawFlatBottomTriangle(CS_FrameBuffer & fb, Vertex & it0, Vertex & it1, Vertex & it2)
 {
-	if (this != &rst) {
-		ptrfb = rst.ptrfb;  // Shallow Copy is just OK
-		zb.Resize(rst.zb.width, rst.zb.height);
-	}
+	// calulcate dVertex / dy
+	// change in interpolant for every 1 change in y
+	float delta_y = it2.pos.y - it0.pos.y;
+	auto dit0 = (it1 - it0) / delta_y;
+	auto dit1 = (it2 - it0) / delta_y;
 
-	return *this;
+	// create right edge interpolant
+	auto itEdge1 = it0;
+
+	// call the flat triangle render routine
+	DrawFlatTriangle(fb, it0, it1, it2, dit0, dit1, itEdge1);
 }
 
-FRasterizer::~FRasterizer()
+void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & it2, Vertex & dv0, Vertex & dv1, Vertex itEdge1)
 {
-	;  // Nothing to do
-}
+	// create edge interpolant for left edge (always v0)
+	auto itEdge0 = it0;
 
-void FRasterizer::DrawProtectedCube(i32 x0, i32 y0, i32 x1, i32 y1, ui8 r_, ui8 g_, ui8 b_){
-	i32 width  = ptrfb->width;
-	i32 height = ptrfb->height;
+	// calculate start and end scanlines
+	int yStart = (int)ceil(it0.pos.y - 0.5f);
+	int yEnd = (int)ceil(it2.pos.y - 0.5f); // the scanline AFTER the last line drawn
 
-	x0 = CS_iclamp(0, x0, width);
-	x1 = CS_iclamp(x0, x1, width);
+												  // do interpolant prestep
+	itEdge0 += dv0 * (float(yStart) + 0.5f - it0.pos.y);
+	itEdge1 += dv1 * (float(yStart) + 0.5f - it0.pos.y);
 
-	y0 = CS_iclamp(0, y0, height);
-	y1 = CS_iclamp(y0, y1, height);
+	for (int y = yStart; y < yEnd; y++, itEdge0 += dv0, itEdge1 += dv1)
+	{
+		// calculate start and end pixels
+		int xStart = (int)ceil(itEdge0.pos.x - 0.5f);
+		int xEnd = (int)ceil(itEdge1.pos.x - 0.5f); // the pixel AFTER the last pixel drawn
 
-	for(i32 y = y0; y < y1; y++){
-		ui8*  rEnd = (ui8*)(ptrfb->redBuffer   + y * width + x1);
-		ui8*  gEnd = (ui8*)(ptrfb->greenBuffer + y * width + x1);
-		ui8*  bEnd = (ui8*)(ptrfb->blueBuffer  + y * width + x1);
-		for(
-			ui8 *r = (ui8*)(ptrfb->redBuffer   + y * width + x0),
-			    *g = (ui8*)(ptrfb->greenBuffer + y * width + x0),
-			    *b = (ui8*)(ptrfb->blueBuffer  + y * width + x0);
-			r<rEnd;
-			r++ && g++ && b++ 
-		){
-			*r = r_;
-			*g = g_;
-			*b = b_;
-		}
-	}	
-}
+		// create scanline interpolant startpoint
+		// (some waste for interpolating x,y,z, but makes life easier not having
+		//  to split them off, and z will be needed in the future anyways...)
+		auto iLine = itEdge0;
 
-void FRasterizer::DrawRadiusCube(i32 x, i32 y, i32 radius){
-	DrawProtectedCube(
-		x - radius, y - radius,
-		x + radius, y + radius,
-		255, 255, 255
-	);
-}
+		// calculate delta scanline interpolant / dx
+		float dx = itEdge1.pos.x - itEdge0.pos.x;
+		auto diLine = (itEdge1 - iLine) / dx;
 
-void FRasterizer::DrawTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture){
-	// Sort Y Order
-	FVectorTex *v0 = (FVectorTex*)&v0_;
-	FVectorTex *v1 = (FVectorTex*)&v1_;
-	FVectorTex *v2 = (FVectorTex*)&v2_;
-	if(v0->pos.y > v1->pos.y) swap(v0, v1);
-	if(v0->pos.y > v2->pos.y) swap(v0, v2);
-	if(v1->pos.y > v2->pos.y) swap(v1, v2);
+		// prestep scanline interpolant
+		iLine += diLine * (float(xStart) + 0.5f - itEdge0.pos.x);
 
-	if(v1->pos.y == v2->pos.y){
-		// ptrfb->PrintLn("Flat Bottom Triangle");
-		if(v1->pos.x > v2->pos.x) swap(v1, v2);
-		DrawFlatBottomTriangle(
-			*v0, *v1, *v2,
-			texture
-		);
-		return;
-	}
+		for (int x = xStart; x < xEnd; x++, iLine += diLine)
+		{
+			// recover interpolated z from interpolated 1/z
+			float z = 1.0f / iLine.pos.z;
+			// recover interpolated attributes
+			// (wasted effort in multiplying pos (x,y,z) here, but
+			//  not a huge deal, not worth the code complication to fix)
+			auto attr = iLine * z;
+			// invoke pixel shader with interpolated vertex attributes
+			// and use result to set the pixel color on the screen
 
-	if(v0->pos.y == v1->pos.y){
-		// ptrfb->PrintLn("Flat Top Triangle");
-		if(v0->pos.x > v1->pos.x) swap(v0, v1);
-		DrawFlatTopTriangle(
-			*v0, *v1, *v2,
-			texture
-		);
-		return;
-	}
+			//fb.PutPixel(x, y, (int)(attr.tex.x * 255), (int)(attr.tex.y * 255), 255);
 
-	f32 m = v1->pos.y - v0->pos.y;
-	f32 n = v2->pos.y - v0->pos.y;
-	FVectorTex vcenter = v0->InterpolateTo(*v2, m / n);
-	
-	if(vcenter.pos.x < v1->pos.x){
-		// ptrfb->PrintLn("Longside Left Triangle");
-		DrawFlatBottomTriangle(
-			*v0, vcenter, *v1,
-			texture
-		);
-		DrawFlatTopTriangle(
-			vcenter, *v1, *v2,
-			texture
-		);
-	}
+			int pixelX = (int) min (  attr.tex.x*(float)texImage.width , (float)(texImage.width -1));
+			int pixelY = (int) min (  attr.tex.y*(float)texImage.height, (float)(texImage.height-1));
 
-	else{
-		// ptrfb->PrintLn("Longside Right Triangle");
-		DrawFlatBottomTriangle(
-			*v0, *v1, vcenter,
-			texture
-		);
-		DrawFlatTopTriangle(
-			*v1, vcenter, *v2,
-			texture
-		);
-	}
-
-}
-
-void FRasterizer::DrawFlatBottomTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture){
-	const f32& yTop    = v0_.pos.y;
-	const f32& yBottom = v2_.pos.y;
-
-	FVectorTex xLeftStep  = (v1_ - v0_) / (yBottom - yTop);
-	FVectorTex xRightStep = (v2_ - v0_) / (yBottom - yTop);
-
-	DrawFlatTriangle(
-		ceil(yTop - 0.5f),
-		ceil(yBottom - 0.5f),
-		v0_ + (ceil(yTop - 0.5f) + 0.5f - yTop) * xLeftStep,   // xLeft  with Pre-stepping
-		v0_ + (ceil(yTop - 0.5f) + 0.5f - yTop) * xRightStep,  // xRight with Pre-stepping
-		xLeftStep,
-		xRightStep,
-		texture
-	);
-}
-
-void FRasterizer::DrawFlatTopTriangle(const FVectorTex& v0_, const FVectorTex& v1_, const FVectorTex& v2_, CS_FrameBuffer& texture){
-	const f32& yTop    = v0_.pos.y;
-	const f32& yBottom = v2_.pos.y;
-
-	FVectorTex xLeftStep  = (v2_ - v0_) / (yBottom - yTop);
-	FVectorTex xRightStep = (v2_ - v1_) / (yBottom - yTop);
-
-	DrawFlatTriangle(
-		ceil(yTop - 0.5f),
-		ceil(yBottom - 0.5f),
-		v0_ + (ceil(yTop - 0.5f) + 0.5f - yTop) * xLeftStep,   // xLeft  with Pre-stepping
-		v1_ + (ceil(yTop - 0.5f) + 0.5f - yTop) * xRightStep,  // xRight with Pre-stepping
-		xLeftStep,
-		xRightStep,
-		texture
-	);
-}
-
-void FRasterizer::DrawFlatTriangle(i32 yTop, i32 yBottom, FVectorTex xLeft, FVectorTex xRight, const FVectorTex& xLeftStep, const FVectorTex& xRightStep, CS_FrameBuffer& texture)
-{
-	for (i32 y = yTop; y < yBottom; y++) {
-
-		i32 xLeftInt  = ceil(xLeft.pos.x  - 0.5f);
-		i32 xRightInt = ceil(xRight.pos.x - 0.5f);
-
-		FVectorTex xNowStep = (xRight - xLeft) / (xRight.pos.x - xLeft.pos.x);
-		FVectorTex xNow = xLeft;
-		xNow = xNow + ((float)xLeftInt + 0.5f - xLeft.pos.x) * xNowStep;  // Pre-stepping
-
-		for (i32 x = xLeftInt; x < xRightInt; x++) {
-			f32& zbPos = zb.bufptr[((i32)xNow.pos.y * zb.width + (i32)xNow.pos.x)];
-
-			if(zbPos < xNow.pos.z){
-				i32 position = CS_iclamp(0, xNow.tex.y * texture.width,  texture.height - 1) *
-							   texture.width +
-							   CS_iclamp(0, xNow.tex.x * texture.height, texture.width  - 1);
-
-				CS_PutPixel(
-					*ptrfb, xNow.pos.x, xNow.pos.y,
-					texture.redBuffer   [position],
-					texture.greenBuffer [position],
-					texture.blueBuffer  [position]
-				);
-				zbPos = xNow.pos.z;
-			}
-
-			xNow += xNowStep;
-		}
-
-		xLeft += xLeftStep;
-		xRight += xRightStep;
-	}
-}
-
-void FRasterizer::Draw3DPoint(FVector3D& point){
-	DrawRadiusCube(point.x, point.y, 5);
-}
-
-void FRasterizer::Draw4DPoint(FVector4D& point){
-	DrawRadiusCube(
-		point.x, point.y,
-		(1.0f + point.z) * 200.0f
-	);
-}
-
-void FRasterizer::DrawPoint(FObject& obj_)
-{
-	for (ui32 i = 0; i < obj_.tmpVl.size(); i++) {
-		Draw4DPoint(obj_.tmpVl[i].pos);
-	}
-}
-
-void FRasterizer::DrawTriangle(FObject& obj_){
-	for(ui32 i = 0; i < obj_.il.size(); i+=3){
-		
-		FVectorTex& v0 = obj_.tmpVl[obj_.il[i    ]];
-		FVectorTex& v1 = obj_.tmpVl[obj_.il[i + 1]];
-		FVectorTex& v2 = obj_.tmpVl[obj_.il[i + 2]];
-
-		if (((v1 - v0).pos % (v2 - v0).pos * v0.pos) > 0.0f) {
-			// Passed the Back Face Culling, Draw this triangle
-			DrawTriangle(
-				v0,
-				v1,
-				v2,
-				obj_.texture
+			fb.PutPixel(
+				x,
+				y,
+				texImage.redBuffer   [pixelY * texImage.width + pixelX],
+				texImage.greenBuffer [pixelY * texImage.width + pixelX],
+				texImage.blueBuffer  [pixelY * texImage.width + pixelX]
 			);
+
+			//gfx.PutPixel(x, y, effect.ps(attr));
 		}
 	}
+}
+
+void DrawBresenhamLine(CS_FrameBuffer& fb, int x0, int y0, int x1, int y1, unsigned char r, unsigned char g, unsigned char b) {
+	// Crucial 1 : 45 - 90 deg support
+	// Crucial 2 : the 3rd quadrant support
+	// Crucial 3 : the 2nd and 4th quadrant support
+
+	// -----------------------------------------------
+
+	// Crucial 1
+	bool steep = abs(y1 - y0) > abs(x1 - x0);
+	if (steep) {
+		std::swap(x0, y0);
+		std::swap(x1, y1);
+	}
+
+	// Crucial 2
+	if (x0 > x1) {
+		std::swap(x0, x1);
+		std::swap(y0, y1);
+	}
+
+	int dx = x1 - x0;
+	int dy = abs(y1 - y0);  // Crucial 3
+	int y = y0;
+	int p = 2 * dy - dx;
+
+	int stepY = y0 > y1 ? -1 : 1;  // Crucial 3
+
+	for (int x = x0; x < x1; x++) {
+
+		// Crucial 1
+		if (steep) {
+			fb.PutPixel(y, x, r, g, b);
+		}
+		else {
+			fb.PutPixel(x, y, r, g, b);
+		}
+
+		if (p < 0) {
+			p += 2 * dy;
+		}
+		else {
+			p += 2 * dy - 2 * dx;
+			y += stepY;  // Crucial 3
+		}
+	}
+
 }

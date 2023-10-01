@@ -54,6 +54,16 @@ void CS_FrameBuffer::CopySameSizeBuffer(const CS_FrameBuffer& from, CS_FrameBuff
     }
 }
 
+i32 CS_FrameBuffer::GetWidth()
+{
+	return width;
+}
+
+i32 CS_FrameBuffer::GetHeight()
+{
+	return height;
+}
+
 CS_FrameBuffer::CS_FrameBuffer()
 {
     curX = CS_FB_INIT_CURX;
@@ -168,7 +178,7 @@ void CS_FrameBuffer::DrawString
             xNow = x;
         }
         else {
-            xNow+= CS_FONT_WIDTH;
+            xNow += CS_FONT_WIDTH;
         }
     }
 }
@@ -267,8 +277,8 @@ void CS_FrameBuffer::LoadFromBMP(string fileName){
     file.Read();
     file.Close();
 
-    BitmapHeader *header = (BitmapHeader*)(file.buffer);
-    Pixel        *pixel  = (Pixel*)(file.buffer + sizeof(BitmapHeader));
+    BitmapHeader *header = (BitmapHeader*)(file.GetBufferPointer());
+    Pixel        *pixel  = (Pixel*)(file.GetBufferPointer() + sizeof(BitmapHeader));
 
     curX = CS_FB_INIT_CURX;
     curY = CS_FB_INIT_CURY;
@@ -279,7 +289,7 @@ void CS_FrameBuffer::LoadFromBMP(string fileName){
     AllocateBuffer(width, height);
     ClearSelfBuffer();
 
-    for (i32 y = header->biHeight - 1; y >=0; y--) {
+    for (i32 y = header->biHeight - 1; y >= 0; y--) {
         ui8* rpEnd = redBuffer + y * width + width;
         for (
             ui8 *rp = redBuffer + y * width,

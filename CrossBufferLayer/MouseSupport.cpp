@@ -92,7 +92,107 @@ void CS_Mouse::CloseInfinityMode(){
     infinityMode = csFalse;
 }
 
+i32 CS_Mouse::GetX()
+{
+	return x;
+}
+
+i32 CS_Mouse::GetY()
+{
+	return y;
+}
+
+i32 CS_Mouse::GetLastX()
+{
+	return lastX;
+}
+
+i32 CS_Mouse::GetLastY()
+{
+	return lastY;
+}
+
+i32 CS_Mouse::GetDeltaX()
+{
+	return deltaX;
+}
+
+i32 CS_Mouse::GetDeltaY()
+{
+	return deltaY;
+}
+
+i32 CS_Mouse::GetWindowWidth()
+{
+	return windowWidth;
+}
+
+i32 CS_Mouse::GetWindowHeight()
+{
+	return windowHeight;
+}
+
+bool CS_Mouse::GetLBtnState()
+{
+	return lBtnState;
+}
+
+bool CS_Mouse::GetMBtnState()
+{
+	return mBtnState;
+}
+
+bool CS_Mouse::GetRBtnState()
+{
+	return rBtnState;
+}
+
 csbool CS_Mouse::IsInfinityModeOpened()
 {
     return infinityMode;
+}
+
+void CS_Mouse::__DONT_USE__SetX(i32 x_)
+{
+	x = x_;
+}
+
+void CS_Mouse::__DONT_USE__SetY(i32 y_)
+{
+	y = y_;
+}
+
+void CS_Mouse::__DONT_USE__SetLastX(i32 lastX_)
+{
+	lastX = lastX_;
+}
+
+void CS_Mouse::__DONT_USE__SetLastY(i32 lastY_)
+{
+	lastY = lastY_;
+}
+
+void CS_Mouse::__DONT_USE__SetDeltaX(i32 deltaX_)
+{
+	deltaX = deltaX_;
+}
+
+void CS_Mouse::__DONT_USE__SetDeltaY(i32 deltaY_)
+{
+	deltaY = deltaY_;
+}
+
+void CS_Mouse::__DONT_USE__SetLBtnState(csbool lBtnState_)
+{
+	lBtnState = lBtnState_;
+}
+
+void CS_Mouse::__DONT_USE__SetMBtnState(csbool mBtnState_)
+{
+	mBtnState = mBtnState_;
+}
+
+void CS_Mouse::__DONT_USE__SetRBtnState(csbool rBtnState_)
+{
+	rBtnState = rBtnState_;
 }
