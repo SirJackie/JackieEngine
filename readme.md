@@ -37,6 +37,12 @@
 
 ## 如何编译并运行Demo？
 
+从**v1.1.1版本开始**，依赖库已经使用相对路径嵌入到Git项目中，实现了**“开箱即用”**。
+
+只需安装VS2015后，双击`.\WindowsSimuLayer\CrossBufferForWindows.vcxproj`，即可打开项目。点击“编译”按钮，**无需配置，直接编译**。
+
+如果你遇到无法编译的问题，或者是安装了VS2017或更高版本，才需要根据下面的文章，进行额外编译配置。
+
 [如何编译并运行Demo？ (Windows 平台)](README.assets/WindowsConfigurationDocument/ConfigurationDocument.md)
 
 [如何编译并运行Demo？ (Linux 平台)](README.assets/LinuxConfigurationDocument/ConfigurationDocument.md)
