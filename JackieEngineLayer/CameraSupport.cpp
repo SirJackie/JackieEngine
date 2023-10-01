@@ -1,3 +1,0 @@
-#include "CameraSupport.h"
-
-// Empty

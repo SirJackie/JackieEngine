@@ -8,29 +8,38 @@
 
 ## 效果展示
 
-### Demo1（仅限Windows平台）
+### v0.1.0（仅限Windows平台）
 
-使用`git checkout demo1`查看：
+- 实现了基于深度坐标的着色示例
 
-![Demo1](readme.assets/Demo1.png)
 
-### Demo2（支持Windows、Linux平台）
+![Demo1](README.assets/Demo1.png)
 
-使用`git checkout demo2`查看：
+### v0.2.0（支持Windows、Linux平台）
 
-![Demo2](readme.assets/Demo2.png)
+- 实现了仿射纹理插值
 
-### Demo3（仅限Windows平台）
 
-使用`git checkout demo3`查看：
+![Demo2](README.assets/Demo2.png)
 
-![Demo3](readme.assets/Demo3.png)
+### v1.0.0（支持Windows，Linux平台未测试）
+
+- 大版本迭代，架构更换
+- 数学类重写，效率优化
+- 从右手系坐标(RHS)，切换为左手系坐标(RHS)
+- 实现了效果更好的透视纹理插值
+
+![Demo3](README.assets/Demo3.png)
+
+### v1.1.0（支持Windows，Linux平台未测试）
+
+- 新增光栅化裁剪功能（Raster Clipping），可以使几何物体在碰到屏幕边缘之后，不会被过度绘制（Overdraw），从而保证程序不会内存溢出而闪退
 
 ## 如何编译并运行Demo？
 
-[如何编译并运行Demo？ (Windows 平台)](readme.assets/WindowsConfigurationDocument/ConfigurationDocument.md)
+[如何编译并运行Demo？ (Windows 平台)](README.assets/WindowsConfigurationDocument/ConfigurationDocument.md)
 
-[如何编译并运行Demo？ (Linux 平台)](readme.assets/LinuxConfigurationDocument/ConfigurationDocument.md)
+[如何编译并运行Demo？ (Linux 平台)](README.assets/LinuxConfigurationDocument/ConfigurationDocument.md)
 
 ## 关于开源协议
 
