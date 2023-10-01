@@ -17,17 +17,28 @@ public:
 	PubeScreenTransformer()
 		:
 		xFactor(0.0f),
-		yFactor(0.0f)
+		yFactor(0.0f),
+		screenWidth(0),
+		screenHeight(0)
 	{}
 
-	void SetWidthHeight(int screenWidth, int screenHeight)
+	void SetWidthHeight(int screenWidth_, int screenHeight_)
 	{
-		xFactor = float(screenWidth) / 2.0f;
-		yFactor = float(screenHeight) / 2.0f;
+		// Define the Aspect Ration and fovY here for now (pretty dirty)
+		float fovY = PI / 6.0f;  // 30 degrees
+		float aspectRatio = ((float)screenWidth_) / ((float)screenHeight_);
+
+		yFactor = 1.0f * tan(fovY);
+		xFactor = yFactor * aspectRatio;
+
+		screenWidth = screenWidth_;
+		screenHeight = screenHeight_;
 	}
 
 	Vertex& Transform(Vertex& v) const
 	{
+		
+
 		float zInv = 1.0f / v.pos.z;
 		// divide all position components and attributes by z
 		// (we want to be interpolating our attributes in the
@@ -36,8 +47,8 @@ public:
 		v *= zInv;
 		// adjust position x,y from perspective normalized space
 		// to screen dimension space after perspective divide
-		v.pos.x = (v.pos.x + 1.0f) * xFactor;
-		v.pos.y = (-v.pos.y + 1.0f) * yFactor;
+		v.pos.x = ((v.pos.x + xFactor) / (2.0f * xFactor)) * (float)screenWidth;
+		v.pos.y = ((-v.pos.y + yFactor) / (2.0f * yFactor)) * (float)screenHeight;
 		// store 1/z in z (we will need the interpolated 1/z
 		// so that we can recover the attributes after interp.)
 		v.pos.z = zInv;
@@ -51,6 +62,8 @@ public:
 private:
 	float xFactor;
 	float yFactor;
+	float screenWidth;
+	float screenHeight;
 };
 
 void DrawTriangle(CS_FrameBuffer& fb, Vertex& v0, Vertex& v1, Vertex& v2);
