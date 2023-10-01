@@ -2,9 +2,13 @@
 #include "JackieEngineLayer/MathSupport.h"
 #include "JackieEngineLayer/RasterizingSupport.h"
 
+#include <algorithm>
+using std::min;
+using std::max;
+
 static constexpr float dTheta = PI;
-float offset_z = 2.0f;
-float theta_x = 0.0f;
+float offset_z = 1.1f;
+float theta_x = 0.6f;
 float theta_y = 0.0f;
 float theta_z = 0.0f;
 Cube cube(1.0f);
@@ -71,15 +75,16 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	}
 
 	// Draw Indicies
+	Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
 	for (int i = 0; i < lines.indices.size(); i += 2) {
-		DrawBresenhamLine(
-			fb,
+		LineClip(
+			fb, &screenRect,
 
 			(int)triangles.vertices[lines.indices[i + 0]].pos.x,  // x0
 			(int)triangles.vertices[lines.indices[i + 0]].pos.y,  // x1
 
 			(int)triangles.vertices[lines.indices[i + 1]].pos.x,  // y0
-			(int)triangles.vertices[lines.indices[i + 1]].pos.y,  // y1,
+			(int)triangles.vertices[lines.indices[i + 1]].pos.y,  // y1
 
 			255, 255, 255  // rgb
 		);
@@ -87,9 +92,12 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	// Draw Verticies
 	for (int i = 0; i < triangles.vertices.size(); i++) {
+		int x = (int)triangles.vertices[i].pos.x;
+		int y = (int)triangles.vertices[i].pos.y;
+
 		fb.PutPixel(
-			(int)triangles.vertices[i].pos.x,
-			(int)triangles.vertices[i].pos.y,
+			min( fb.width - 1,  max( 0, x )),
+			min( fb.height - 1, max( 0, y )),
 			255,
 			0,
 			0
