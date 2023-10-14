@@ -122,20 +122,44 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	fbHalfRes.PrintLn("This is a test.");
 
-	/*for (int y = 0; y < fb.height; y++) {
-		for (int x = 0; x < fb.width; x++) {
-			int xH = x / 2;
-			int yH = y / 2;
+	for (int y = 0; y < fbHalfRes.height; y++) {
+		for (int x = 0; x < fbHalfRes.width; x++) {
+			int xB = x + x;
+			int yB = y + y;
+
+			int place = y * fbHalfRes.width + x;
 
 			fb.PutPixel(
-				x,
-				y,
-				fbHalfRes.redBuffer[yH * fbHalfRes.width + xH],
-				fbHalfRes.greenBuffer[yH * fbHalfRes.width + xH],
-				fbHalfRes.blueBuffer[yH * fbHalfRes.width + xH]
+				xB,
+				yB,
+				fbHalfRes.redBuffer[place],
+				fbHalfRes.greenBuffer[place],
+				fbHalfRes.blueBuffer[place]
+			);
+
+			fb.PutPixel(
+				xB,
+				yB+1,
+				fbHalfRes.redBuffer[place],
+				fbHalfRes.greenBuffer[place],
+				fbHalfRes.blueBuffer[place]
+			);
+
+			fb.PutPixel(
+				xB+1,
+				yB,
+				fbHalfRes.redBuffer[place],
+				fbHalfRes.greenBuffer[place],
+				fbHalfRes.blueBuffer[place]
+			);
+
+			fb.PutPixel(
+				xB+1,
+				yB+1,
+				fbHalfRes.redBuffer[place],
+				fbHalfRes.greenBuffer[place],
+				fbHalfRes.blueBuffer[place]
 			);
 		}
-	}*/
-
-	fb.DrawBuffer(fbHalfRes, 0, 0);
+	}
 }
