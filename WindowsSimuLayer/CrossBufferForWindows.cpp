@@ -58,8 +58,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	windowsHelper = WSL_WindowsHelper(MsgProc, hInstance, (wchar_t*)WindowTitle, (wchar_t*)WindowTitle);
 
 	// IMPORTANT! Lowered the logical resolution to speedup when HighDPI
-	windowsHelper.windowWidth /= 2;
-	windowsHelper.windowHeight /= 2;
+	windowsHelper.windowWidth /= HIGH_DPI_SCALING_FACTOR;
+	windowsHelper.windowHeight /= HIGH_DPI_SCALING_FACTOR;
 
 	d3dHelper = WSL_D3DHelper(windowsHelper.hWnd);
 	keyboardHelper = WSL_KeyboardHelper();

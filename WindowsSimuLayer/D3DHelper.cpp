@@ -1,7 +1,5 @@
 #include "D3DHelper.h"
 
-#define HIGH_DPI_SCALING_FACTOR 2
-
 WSL_D3DHelper::WSL_D3DHelper()
 {
 	pDirect3D   = csNullPtr;
@@ -55,10 +53,11 @@ void WSL_D3DHelper::UnlockBuffer()
 void WSL_D3DHelper::PaintFrameBufferHere(CS_FrameBuffer& fb)
 {
 	i32  bufferPitch = (rect.Pitch) >> 2;
-	int twoFbWidth = fb.width * 2;
-	int lineUpDelta = bufferPitch - (fb.width * 2);  // for lining-up when screenWidth < bufferPitch, not really creating new line.
+	int realScreenWidth = fb.width * HIGH_DPI_SCALING_FACTOR;
+	int lineUpDelta = bufferPitch - realScreenWidth;  // for lining-up when screenWidth < bufferPitch, not really creating new line.
+	int hdsfMinusOne = HIGH_DPI_SCALING_FACTOR - 1;
 
-	for (int ii = 0; ii < HIGH_DPI_SCALING_FACTOR; ii++) {
+	for (int iLine = 0; iLine < HIGH_DPI_SCALING_FACTOR; iLine++) {
 
 		// DPI Scaling
 		// #1 to #n pixel in #ii line
@@ -67,8 +66,9 @@ void WSL_D3DHelper::PaintFrameBufferHere(CS_FrameBuffer& fb)
 		ui8* pGreen = fb.greenBuffer;
 		ui8* pBlue = fb.blueBuffer;
 
-		for (int iii = 0; iii < ii; iii++) {
-			pBitsNow += twoFbWidth;   // skip ii line first, which mutally complementary with preceding lines
+		for (int iSkip = 0; iSkip < iLine; iSkip++) {
+			pBitsNow += realScreenWidth;  // skip ii line first, which mutally complementary with preceding lines
+			pBitsNow += lineUpDelta;      // for lining-up when screenWidth < bufferPitch, not really creating new line.
 		}
 
 		for (i32 y = 0; y < fb.height; y++) {
@@ -91,8 +91,12 @@ void WSL_D3DHelper::PaintFrameBufferHere(CS_FrameBuffer& fb)
 				pGreen++;
 				pBlue++;
 			}
-			pBitsNow += lineUpDelta;  // for lining-up when screenWidth < bufferPitch, not really creating new line.
-			pBitsNow += twoFbWidth;   // skip one line
+			pBitsNow += lineUpDelta;      // for lining-up when screenWidth < bufferPitch, not really creating new line.
+			
+			for (int iSkip = 0; iSkip < hdsfMinusOne; iSkip++) {
+				pBitsNow += realScreenWidth;  // skip ii line first, which mutally complementary with preceding lines
+				pBitsNow += lineUpDelta;      // for lining-up when screenWidth < bufferPitch, not really creating new line.
+			}
 		}
 	}
 }
