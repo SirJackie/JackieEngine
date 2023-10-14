@@ -60,6 +60,7 @@ void WSL_D3DHelper::PaintFrameBufferHere(CS_FrameBuffer& fb)
 
 	for (i32 y = 0; y < fb.height; y++) {
 		for (i32 x = 0; x < fb.width; x++) {
+			// 1st pixel
 			*pBitsNow =
 				(i32)
 				(
@@ -67,13 +68,25 @@ void WSL_D3DHelper::PaintFrameBufferHere(CS_FrameBuffer& fb)
 					(((*pRed) & 0xff) << 16) |
 					(((*pGreen) & 0xff) << 8) |
 					((*pBlue) & 0xff)
-					);
+				);
+			pBitsNow++;
+
+			// 2nd pixel
+			*pBitsNow =
+				(i32)
+				(
+					(0xff << 24) |
+					(((*pRed) & 0xff) << 16) |
+					(((*pGreen) & 0xff) << 8) |
+					((*pBlue) & 0xff)
+				);
+			pBitsNow++;
+
 			pRed++;
 			pGreen++;
 			pBlue++;
-			pBitsNow++;
 		}
-		pBitsNow += bufferPitch - fb.width;
+		pBitsNow += bufferPitch - fb.width * 2;
 	}
 }
 
