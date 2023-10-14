@@ -13,17 +13,13 @@ float theta_y = -0.5f;
 float theta_z = 0.0f;
 Cube cube(1.0f);
 PubeScreenTransformer pst;
-CS_FrameBuffer fbHalfRes;
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-	fbHalfRes = CS_FrameBuffer(fb.width / 2, fb.height / 2);
-	pst.SetWidthHeight(fbHalfRes.width, fbHalfRes.height);
+	pst.SetWidthHeight(fb.width, fb.height);
 	texImage.LoadFromBMP("../Images/TestingTexture_512x512.bmp");
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
-
-	fbHalfRes.ClearSelfBuffer();
 
 	// Delta-Time Calculation
 	const float dt = (float)deltaTime / 1000.0f;
@@ -81,10 +77,10 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	}
 
 	// Draw Indicies
-	Rectangle screenRect = { 0, fbHalfRes.width - 1, 0, fbHalfRes.height - 1 };
+	Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
 	for (int i = 0; i < lines.indices.size(); i += 2) {
 		LineClip(
-			fbHalfRes, &screenRect,
+			fb, &screenRect,
 
 			(int)triangles.vertices[lines.indices[i + 0]].pos.x,  // x0
 			(int)triangles.vertices[lines.indices[i + 0]].pos.y,  // x1
@@ -101,9 +97,9 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		int x = (int)triangles.vertices[i].pos.x;
 		int y = (int)triangles.vertices[i].pos.y;
 
-		fbHalfRes.PutPixel(
-			min( fbHalfRes.width - 1,  max( 0, x )),
-			min( fbHalfRes.height - 1, max( 0, y )),
+		fb.PutPixel(
+			min( fb.width - 1,  max( 0, x )),
+			min( fb.height - 1, max( 0, y )),
 			255,
 			0,
 			0
@@ -113,53 +109,12 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Draw Triangles
 	for (int i = 0; i < triangles.indices.size(); i += 3) {
 		DrawTriangle(
-			fbHalfRes,
+			fb,
 			triangles.vertices[triangles.indices[i + 0]],
 			triangles.vertices[triangles.indices[i + 1]],
 			triangles.vertices[triangles.indices[i + 2]]
 		);
 	}
 
-	fbHalfRes.PrintLn("This is a test.");
-
-	for (int y = 0; y < fbHalfRes.height; y++) {
-		for (int x = 0; x < fbHalfRes.width; x++) {
-			int xB = x + x;
-			int yB = y + y;
-
-			int place = y * fbHalfRes.width + x;
-
-			fb.PutPixel(
-				xB,
-				yB,
-				fbHalfRes.redBuffer[place],
-				fbHalfRes.greenBuffer[place],
-				fbHalfRes.blueBuffer[place]
-			);
-
-			fb.PutPixel(
-				xB,
-				yB+1,
-				fbHalfRes.redBuffer[place],
-				fbHalfRes.greenBuffer[place],
-				fbHalfRes.blueBuffer[place]
-			);
-
-			fb.PutPixel(
-				xB+1,
-				yB,
-				fbHalfRes.redBuffer[place],
-				fbHalfRes.greenBuffer[place],
-				fbHalfRes.blueBuffer[place]
-			);
-
-			fb.PutPixel(
-				xB+1,
-				yB+1,
-				fbHalfRes.redBuffer[place],
-				fbHalfRes.greenBuffer[place],
-				fbHalfRes.blueBuffer[place]
-			);
-		}
-	}
+	fb.PrintLn("This is a test.");
 }
