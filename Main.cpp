@@ -122,7 +122,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	fbHalfRes.PrintLn("This is a test.");
 
-	for (int y = 0; y < fb.height; y++) {
+	/*for (int y = 0; y < fb.height; y++) {
 		for (int x = 0; x < fb.width; x++) {
 			int xH = x / 2;
 			int yH = y / 2;
@@ -135,5 +135,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 				fbHalfRes.blueBuffer[yH * fbHalfRes.width + xH]
 			);
 		}
-	}
+	}*/
+
+	fb.DrawBuffer(fbHalfRes, 0, 0);
 }
