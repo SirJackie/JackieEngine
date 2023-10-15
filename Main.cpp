@@ -203,14 +203,14 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Draw Triangles
 	CS_Memset(zBuffer, 0.0f, fb.width * fb.height * sizeof(float));  // We're wroking on 1/z space, so it's 0.0f instead of +Infinity
 
-	/*for (int i = 0; i < triangles.indices.size(); i += 3) {
+	for (int i = 0; i < obj.triAi.size(); i += 3) {
 		DrawTriangle(
 			fb,
-			triangles.vertices[triangles.indices[i + 0]],
-			triangles.vertices[triangles.indices[i + 1]],
-			triangles.vertices[triangles.indices[i + 2]]
+			obj.vec[obj.triAi[i]],
+			obj.vec[obj.triBi[i]],
+			obj.vec[obj.triCi[i]]
 		);
-	}*/
+	}
 
 	fps.Count(deltaTime);
 	fb.PrintLn(fps.ToString());
