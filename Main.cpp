@@ -13,7 +13,6 @@ float theta_y = 0.5f;
 float theta_z = 0.0f;
 float deltaTheta = 0.0005f;
 bool autoRotate = true;
-//Cube cube(1.0f);
 ObjectHolder obj;
 PubeScreenTransformer pst;
 CS_FPSCalculator fps;
@@ -163,8 +162,6 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 
 	// 3D Transform
 
-	//auto lines = cube.GetLines();
-	//auto triangles = cube.GetTriangles();
 	obj.Duplicate();
 
 	Mat3 rotation =
