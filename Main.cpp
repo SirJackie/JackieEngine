@@ -7,13 +7,12 @@ using std::min;
 using std::max;
 
 static constexpr float dTheta = PI;
-float offset_z = 2.0f;
-//float offset_z = 0.566f;
+float offset_z = 1.6f;
 float theta_x = 0.5f;
 float theta_y = 0.5f;
 float theta_z = 0.0f;
 float deltaTheta = 0.0005f;
-int autoRotate = 0;
+int autoRotate = 1;
 ObjectHolder obj;
 PubeScreenTransformer pst;
 CS_FPSCalculator fps;
@@ -99,25 +98,25 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// BDC
 	obj.triAi_o.emplace_back(1); obj.triBi_o.emplace_back(3); obj.triCi_o.emplace_back(2);
 	// FGH
-	//obj.triAi_o.emplace_back(5); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(7);
+	obj.triAi_o.emplace_back(5); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(7);
 	// FHE
-	//obj.triAi_o.emplace_back(5); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(4);
+	obj.triAi_o.emplace_back(5); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(4);
 	// BCG
 	obj.triAi_o.emplace_back(1); obj.triBi_o.emplace_back(2); obj.triCi_o.emplace_back(6);
 	// BGF
 	obj.triAi_o.emplace_back(1); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(5);
 	// AEH
-	//obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(4); obj.triCi_o.emplace_back(7);
+	obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(4); obj.triCi_o.emplace_back(7);
 	// AHD
-	//obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(3);
+	obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(3);
 	// DHG
-	//obj.triAi_o.emplace_back(3); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(6);
+	obj.triAi_o.emplace_back(3); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(6);
 	// DGC
-	//obj.triAi_o.emplace_back(3); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(2);
+	obj.triAi_o.emplace_back(3); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(2);
 	// ABF
-	//obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(1); obj.triCi_o.emplace_back(5);
+	obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(1); obj.triCi_o.emplace_back(5);
 	// AFE
-	//obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(5); obj.triCi_o.emplace_back(4);
+	obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(5); obj.triCi_o.emplace_back(4);
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
@@ -187,27 +186,27 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Draw Lines
 	Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
 	 
-	for (int i = 0; i < obj.triAi.size(); i++) {
-		if (obj.triAi[i] != -1 || obj.triBi[i] != -1 || obj.triCi[i] != -1) {
-			DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triBi[i]]);
-			DrawVertexLine(fb, screenRect, obj.vec[obj.triBi[i]], obj.vec[obj.triCi[i]]);
-			DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triCi[i]]);
-		}
-	}
+	//for (int i = 0; i < obj.triAi.size(); i++) {
+	//	if (obj.triAi[i] != -1 || obj.triBi[i] != -1 || obj.triCi[i] != -1) {
+	//		DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triBi[i]]);
+	//		DrawVertexLine(fb, screenRect, obj.vec[obj.triBi[i]], obj.vec[obj.triCi[i]]);
+	//		DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triCi[i]]);
+	//	}
+	//}
 
 	// Draw Triangles
 	CS_Memset(zBuffer, 0.0f, fb.width * fb.height * sizeof(float));  // We're wroking on 1/z space, so it's 0.0f instead of +Infinity
 
-	//for (int i = 0; i < obj.triAi.size(); i++) {
-	//	if (obj.triAi[i] != -1 || obj.triBi[i] != -1 || obj.triCi[i] != -1) {
-	//		DrawTriangle(
-	//			fb,
-	//			obj.vec[obj.triAi[i]],
-	//			obj.vec[obj.triBi[i]],
-	//			obj.vec[obj.triCi[i]]
-	//		);
-	//	}
-	//}
+	for (int i = 0; i < obj.triAi.size(); i++) {
+		if (obj.triAi[i] != -1 || obj.triBi[i] != -1 || obj.triCi[i] != -1) {
+			DrawTriangle(
+				fb,
+				obj.vec[obj.triAi[i]],
+				obj.vec[obj.triBi[i]],
+				obj.vec[obj.triCi[i]]
+			);
+		}
+	}
 
 	fps.Count(deltaTime);
 	fb.PrintLn("WASDQE to Rotate, RF to Zoom, G to Enable/Disable Auto Rotation.");
