@@ -12,14 +12,14 @@ float theta_x = 0.5f;
 float theta_y = 0.5f;
 float theta_z = 0.0f;
 float deltaTheta = 0.0005f;
-bool autoRotate = true;
+int autoRotate = 1;
 ObjectHolder obj;
 PubeScreenTransformer pst;
 CS_FPSCalculator fps;
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	pst.SetWidthHeight(fb.width, fb.height);
-	texImage.LoadFromBMP("../Images/TestingTexture_512x512.bmp");
+	texImage.LoadFromBMP("../Images/Lena.bmp");
 
 	// Init Z-Buffer
 	zBuffer = new float[fb.width * fb.height];
@@ -198,19 +198,43 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	}
 
 	fps.Count(deltaTime);
+	fb.PrintLn("WASDQE to Rotate, RF to Zoom, G to Enable/Disable Auto Rotation.");
 	fb.Print(fps.ToString());
-	fb.Print("theta_x=");
+	fb.Print("autoRotate = ");
+	fb.Print((int)autoRotate);
+	fb.Print("\ntheta_x = ");
 	fb.Print(theta_x);
-	fb.Print("\ntheta_y=");
+	fb.Print("\ntheta_y = ");
 	fb.Print(theta_y);
-	fb.Print("\ntheta_z=");
+	fb.Print("\ntheta_z = ");
 	fb.Print(theta_z);
-	fb.Print("\noffset_z=");
+	fb.Print("\noffset_z = ");
 	fb.Print(offset_z);
 
-	if (autoRotate) {
+	if (autoRotate >= 1) {
 		theta_x += deltaTheta * deltaTime;
 		theta_y += deltaTheta * deltaTime;
 		//theta_z += deltaTheta * deltaTime;
+	}
+
+	int Deadzone = 250 / deltaTime;  // 1/4 seconds
+
+	if (kb.IsKeyPressed(CSK_G)) {
+		if (autoRotate == 1) {
+			autoRotate = -Deadzone;  // Disable, And Also Maintain 15 frames of Key-Press-Dead-Zone
+		}
+		else if (autoRotate == 0) {
+			autoRotate += Deadzone;  // Enable, And Also Maintain 15 frames of Key-Press-Dead-Zone
+		}
+		else {
+			;  // Inside the Key-Press-Dead-Zone, do nothing
+		}
+	}
+
+	if (autoRotate > 1) {
+		autoRotate--;  // Decrement Key-Press-Dead-Zone Negatively
+	}
+	else if (autoRotate < 0) {
+		autoRotate++;  // Decrement Key-Press-Dead-Zone Positively
 	}
 }
