@@ -7,10 +7,12 @@ using std::min;
 using std::max;
 
 static constexpr float dTheta = PI;
-float offset_z = 1.5f;
-float theta_x = -0.28f;
-float theta_y = -0.024f;
+float offset_z = 2.0f;
+float theta_x = 0.5f;
+float theta_y = 0.5f;
 float theta_z = 0.0f;
+float deltaTheta = 0.0005f;
+bool autoRotate = true;
 //Cube cube(1.0f);
 ObjectHolder obj;
 PubeScreenTransformer pst;
@@ -177,34 +179,19 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		pst.Transform(obj.vec[i]);
 	}
 
-	// Draw Indicies
-	Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
-	
-	for (int i = 0; i < obj.triAi.size(); i++) {
-		DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triBi[i]]);
-		DrawVertexLine(fb, screenRect, obj.vec[obj.triBi[i]], obj.vec[obj.triCi[i]]);
-		DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triCi[i]]);
-	}
-
-	//// Draw Verticies
-	//for (int i = 0; i < triangles.vertices.size(); i++) {
-	//	int x = (int)triangles.vertices[i].pos.x;
-	//	int y = (int)triangles.vertices[i].pos.y;
-
-	//	fb.PutPixel(
-	//		min( fb.width - 1,  max( 0, x )),
-	//		min( fb.height - 1, max( 0, y )),
-	//		255,
-	//		0,
-	//		0
-	//	);
-	//}
+	// // Draw Lines
+	// Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
+	// 
+	// for (int i = 0; i < obj.triAi.size(); i++) {
+	//     DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triBi[i]]);
+	//     DrawVertexLine(fb, screenRect, obj.vec[obj.triBi[i]], obj.vec[obj.triCi[i]]);
+	// 	   DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triCi[i]]);
+	// }
 
 	// Draw Triangles
 	CS_Memset(zBuffer, 0.0f, fb.width * fb.height * sizeof(float));  // We're wroking on 1/z space, so it's 0.0f instead of +Infinity
 
-	//for (int i = 0; i < obj.triAi.size(); i += 3) {
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < obj.triAi.size(); i++) {
 		DrawTriangle(
 			fb,
 			obj.vec[obj.triAi[i]],
@@ -223,4 +210,10 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	fb.Print(theta_z);
 	fb.Print("\noffset_z=");
 	fb.Print(offset_z);
+
+	if (autoRotate) {
+		theta_x += deltaTheta * deltaTime;
+		theta_y += deltaTheta * deltaTime;
+		//theta_z += deltaTheta * deltaTime;
+	}
 }
