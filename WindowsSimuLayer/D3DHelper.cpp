@@ -1,5 +1,7 @@
 #include "D3DHelper.h"
 
+int HIGH_DPI_SCALING_FACTOR;
+
 WSL_D3DHelper::WSL_D3DHelper()
 {
 	pDirect3D   = csNullPtr;

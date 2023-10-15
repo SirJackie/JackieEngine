@@ -5,7 +5,7 @@
 #include "../CrossBufferLayer/FrameBuffer.h"
 
 
-#define HIGH_DPI_SCALING_FACTOR 2
+extern int HIGH_DPI_SCALING_FACTOR;
 
 class WSL_D3DHelper {
 public:

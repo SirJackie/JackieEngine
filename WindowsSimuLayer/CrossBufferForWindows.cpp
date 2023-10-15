@@ -57,6 +57,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// Initialize CrossBufferLayer and WIndowsSimuLayer Objects
 	windowsHelper = WSL_WindowsHelper(MsgProc, hInstance, (wchar_t*)WindowTitle, (wchar_t*)WindowTitle);
 
+	// Determine the DPI Scaling Factor
+	// Continue to increase until logical width is <= 1200
+	HIGH_DPI_SCALING_FACTOR = 1;
+	while (true) {
+		if ((windowsHelper.windowWidth / HIGH_DPI_SCALING_FACTOR) > 1200) {
+			HIGH_DPI_SCALING_FACTOR++;
+		}
+		else {
+			break;
+		}
+	}
+
 	// IMPORTANT! Lowered the logical resolution to speedup when HighDPI
 	windowsHelper.windowWidth /= HIGH_DPI_SCALING_FACTOR;
 	windowsHelper.windowHeight /= HIGH_DPI_SCALING_FACTOR;
