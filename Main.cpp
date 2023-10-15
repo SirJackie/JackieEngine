@@ -203,7 +203,8 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Draw Triangles
 	CS_Memset(zBuffer, 0.0f, fb.width * fb.height * sizeof(float));  // We're wroking on 1/z space, so it's 0.0f instead of +Infinity
 
-	for (int i = 0; i < obj.triAi.size(); i += 3) {
+	//for (int i = 0; i < obj.triAi.size(); i += 3) {
+	for (int i = 0; i < 4; i++) {
 		DrawTriangle(
 			fb,
 			obj.vec[obj.triAi[i]],
