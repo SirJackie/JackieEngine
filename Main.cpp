@@ -13,7 +13,7 @@ float theta_x = 0.5f;
 float theta_y = 0.5f;
 float theta_z = 0.0f;
 float deltaTheta = 0.0005f;
-int autoRotate = 1;
+int autoRotate = 0;
 ObjectHolder obj;
 PubeScreenTransformer pst;
 CS_FPSCalculator fps;
@@ -196,7 +196,12 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Draw Triangles
 	CS_Memset(zBuffer, 0.0f, fb.width * fb.height * sizeof(float));  // We're wroking on 1/z space, so it's 0.0f instead of +Infinity
 
-	for (int i = 0; i < obj.triAi.size(); i++) {
+	//int IIIFOCUS = 6;
+	//int IIIFOCUS = 14;
+	int IIIFOCUS = 15;
+
+	//for (int i = 4; i < obj.triAi.size(); i++) {
+	for (int i = IIIFOCUS; i < IIIFOCUS+1; i++) {
 		if (obj.triAi[i] != -1 || obj.triBi[i] != -1 || obj.triCi[i] != -1) {
 			DrawTriangle(
 				fb,
