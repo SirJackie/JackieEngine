@@ -8,8 +8,8 @@ using std::max;
 
 static constexpr float dTheta = PI;
 float offset_z = 1.5f;
-float theta_x = -0.5f;
-float theta_y = -0.5f;
+float theta_x = -0.28f;
+float theta_y = -0.024f;
 float theta_z = 0.0f;
 //Cube cube(1.0f);
 ObjectHolder obj;
@@ -214,5 +214,13 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	}
 
 	fps.Count(deltaTime);
-	fb.PrintLn(fps.ToString());
+	fb.Print(fps.ToString());
+	fb.Print("theta_x=");
+	fb.Print(theta_x);
+	fb.Print("\ntheta_y=");
+	fb.Print(theta_y);
+	fb.Print("\ntheta_z=");
+	fb.Print(theta_z);
+	fb.Print("\noffset_z=");
+	fb.Print(offset_z);
 }

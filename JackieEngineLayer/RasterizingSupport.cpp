@@ -118,7 +118,7 @@ void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & i
 		for (int x = xStart; x < xEnd; x++, iLine += diLine)
 		{
 			// Z-Buffer Test, Judge if pixel is inside the frustum
-			if (iLine.pos.z > zBuffer[y * fb.width + x]) {
+			if (iLine.pos.z > zBuffer[y * fb.width + x] && iLine.pos.z < 1.0f) {
 				// If it is, then do the 1/z to z space transformation.
 				// Why not do it before Z-Buffer Test? Save Performance.
 
