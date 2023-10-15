@@ -136,13 +136,16 @@ void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & i
 
 				int pixelX = (int) min (  attr.tex.x*(float)texImage.width , (float)(texImage.width -1));
 				int pixelY = (int) min (  attr.tex.y*(float)texImage.height, (float)(texImage.height-1));
-			
+				pixelX = CS_iclamp(0, pixelX, texImage.width);
+				pixelY = CS_iclamp(0, pixelY, texImage.height);
+				int pixelPos = pixelY * texImage.width + pixelX;
+
 				fb.PutPixel(
 					x,
 					y,
-					texImage.redBuffer[pixelY * texImage.width + pixelX],
-					texImage.greenBuffer[pixelY * texImage.width + pixelX],
-					texImage.blueBuffer[pixelY * texImage.width + pixelX]
+					texImage.redBuffer[pixelPos],
+					texImage.greenBuffer[pixelPos],
+					texImage.blueBuffer[pixelPos]
 				);
 			}
 		}
