@@ -33,7 +33,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	obj.vec_o.emplace_back(
 		Vertex(
 			Vec3(-halfSize, -halfSize, -halfSize),
-			Vec2(0.0f, 0.0f)
+			Vec2(0.0f, 1.0f)
 		)
 	);
 
@@ -41,7 +41,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	obj.vec_o.emplace_back(
 		Vertex(
 			Vec3(halfSize, -halfSize, -halfSize),
-			Vec2(1.0f, 0.0f)
+			Vec2(1.0f, 1.0f)
 		)
 	);
 
@@ -49,7 +49,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	obj.vec_o.emplace_back(
 		Vertex(
 			Vec3(halfSize, halfSize, -halfSize),
-			Vec2(1.0f, 1.0f)
+			Vec2(1.0f, 0.0f)
 		)
 	);
 
@@ -57,7 +57,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	obj.vec_o.emplace_back(
 		Vertex(
 			Vec3(-halfSize, halfSize, -halfSize),
-			Vec2(0.0f, 1.0f)
+			Vec2(0.0f, 0.0f)
 		)
 	);
 
@@ -65,7 +65,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	obj.vec_o.emplace_back(
 		Vertex(
 			Vec3(-halfSize, -halfSize, halfSize),
-			Vec2(1.0f, 0.0f)
+			Vec2(1.0f, 1.0f)
 		)
 	);
 
@@ -73,7 +73,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	obj.vec_o.emplace_back(
 		Vertex(
 			Vec3(halfSize, -halfSize, halfSize),
-			Vec2(0.0f, 0.0f)
+			Vec2(0.0f, 1.0f)
 		)
 	);
 
@@ -81,7 +81,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	obj.vec_o.emplace_back(
 		Vertex(
 			Vec3(halfSize, halfSize, halfSize),
-			Vec2(0.0f, 1.0f)
+			Vec2(0.0f, 0.0f)
 		)
 	);
 
@@ -89,7 +89,7 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	obj.vec_o.emplace_back(
 		Vertex(
 			Vec3(-halfSize, halfSize, halfSize),
-			Vec2(1.0f, 1.0f)
+			Vec2(1.0f, 0.0f)
 		)
 	);
 
@@ -212,9 +212,9 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	fb.Print(offset_z);
 
 	if (autoRotate >= 1) {
-		theta_x += deltaTheta * deltaTime;
-		theta_y += deltaTheta * deltaTime;
-		//theta_z += deltaTheta * deltaTime;
+		theta_x -= deltaTheta * deltaTime;
+		theta_y -= deltaTheta * deltaTime;
+		//theta_z -= deltaTheta * deltaTime;
 	}
 
 	int Deadzone = 250 / deltaTime;  // 1/4 seconds
