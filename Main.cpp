@@ -188,9 +188,11 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
 	 
 	for (int i = 0; i < obj.triAi.size(); i++) {
-	    DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triBi[i]]);
-	    DrawVertexLine(fb, screenRect, obj.vec[obj.triBi[i]], obj.vec[obj.triCi[i]]);
-	 	DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triCi[i]]);
+		if (obj.triAi[i] != -1 || obj.triBi[i] != -1 || obj.triCi[i] != -1) {
+			DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triBi[i]]);
+			DrawVertexLine(fb, screenRect, obj.vec[obj.triBi[i]], obj.vec[obj.triCi[i]]);
+			DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triCi[i]]);
+		}
 	}
 
 	// Draw Triangles

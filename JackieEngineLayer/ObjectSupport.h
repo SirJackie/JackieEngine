@@ -92,7 +92,7 @@ public:
 		int outCount = 0;
 
 		// vA
-		if (vA.pos.z < 1) {
+		if (vA.pos.z < 1.0f && vA.pos.z > 0.0f) {
 			inVecs[inCount] = iA;
 			inCount++;
 		}
@@ -102,7 +102,7 @@ public:
 		}
 
 		// vB
-		if (vB.pos.z < 1) {
+		if (vB.pos.z < 1.0f && vB.pos.z > 0.0f) {
 			inVecs[inCount] = iB;
 			inCount++;
 		}
@@ -112,7 +112,7 @@ public:
 		}
 
 		// vC
-		if (vC.pos.z < 1) {
+		if (vC.pos.z < 1.0f && vC.pos.z > 0.0f) {
 			inVecs[inCount] = iC;
 			inCount++;
 		}
