@@ -293,3 +293,17 @@ int LineClip(CS_FrameBuffer& fb, struct Rectangle* rect, int x0, int y0, int x1,
 	}
 	return accept;
 }
+
+void DrawVertexLine(CS_FrameBuffer& fb, struct Rectangle& screenRect, Vertex& ver1, Vertex& ver2) {
+	LineClip(
+		fb, &screenRect,
+
+		(int)ver1.pos.x,  // x0
+		(int)ver1.pos.y,  // y0
+
+		(int)ver2.pos.x,  // x1
+		(int)ver2.pos.y,  // y1
+
+		255, 255, 255  // rgb
+	);
+}

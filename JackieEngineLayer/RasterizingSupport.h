@@ -108,5 +108,6 @@ struct Rectangle
 void initRectangle(struct Rectangle* rect, int xmin, int ymin, int xmax, int ymax);
 int CompCode(int x, int y, struct Rectangle* rect);
 int LineClip(CS_FrameBuffer& fb, struct Rectangle* rect, int x0, int y0, int x1, int y1, unsigned char r, unsigned char g, unsigned char b);
+void DrawVertexLine(CS_FrameBuffer& fb, struct Rectangle& screenRect, Vertex& ver1, Vertex& ver2);
 
 #endif
