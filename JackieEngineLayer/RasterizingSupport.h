@@ -9,6 +9,7 @@
 using std::swap;
 
 extern CS_FrameBuffer texImage;
+extern float* zBuffer;
 
 
 class PubeScreenTransformer

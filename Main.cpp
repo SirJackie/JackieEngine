@@ -17,6 +17,10 @@ PubeScreenTransformer pst;
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	pst.SetWidthHeight(fb.width, fb.height);
 	texImage.LoadFromBMP("../Images/TestingTexture_512x512.bmp");
+
+	// Init Z-Buffer
+	zBuffer = new float[fb.width * fb.height];
+	CS_Memset(zBuffer, 0.0f, fb.width * fb.height * sizeof(float));  // We're wroking on 1/z space, so it's 0.0f instead of +Infinity
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
@@ -70,6 +74,7 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		Mat3::RotationY(theta_y) *
 		Mat3::RotationZ(theta_z);
 
+	// Transform
 	for (auto& v : triangles.vertices) {
 		v.pos *= rotation;
 		v.pos += Vec3(0.0f, 0.0f, offset_z);
@@ -107,6 +112,8 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	}
 
 	// Draw Triangles
+	CS_Memset(zBuffer, 0.0f, fb.width * fb.height * sizeof(float));  // We're wroking on 1/z space, so it's 0.0f instead of +Infinity
+
 	for (int i = 0; i < triangles.indices.size(); i += 3) {
 		DrawTriangle(
 			fb,

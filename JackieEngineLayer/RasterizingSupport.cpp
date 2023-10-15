@@ -5,6 +5,7 @@ using std::min;
 using std::max;
 
 CS_FrameBuffer texImage;
+float* zBuffer;
 
 void DrawTriangle(CS_FrameBuffer & fb, Vertex & v0, Vertex & v1, Vertex & v2)
 {
@@ -116,29 +117,31 @@ void DrawFlatTriangle(CS_FrameBuffer& fb, Vertex & it0, Vertex & it1, Vertex & i
 
 		for (int x = xStart; x < xEnd; x++, iLine += diLine)
 		{
-			// recover interpolated z from interpolated 1/z
-			float z = 1.0f / iLine.pos.z;
-			// recover interpolated attributes
-			// (wasted effort in multiplying pos (x,y,z) here, but
-			//  not a huge deal, not worth the code complication to fix)
-			auto attr = iLine * z;
-			// invoke pixel shader with interpolated vertex attributes
-			// and use result to set the pixel color on the screen
+			// Z-Buffer Test, Judge if pixel is inside the frustum
+			if (iLine.pos.z > zBuffer[y * fb.width + x] && iLine.pos.z < 1) {
+				// If it is, then do the 1/z to z space transformation.
+				// Why not do it before Z-Buffer Test? Save Performance.
 
-			//fb.PutPixel(x, y, (int)(attr.tex.x * 255), (int)(attr.tex.y * 255), 255);
+				// recover interpolated z from interpolated 1/z
+				float z = 1.0f / iLine.pos.z;
+				// recover interpolated attributes
+				// (wasted effort in multiplying pos (x,y,z) here, but
+				//  not a huge deal, not worth the code complication to fix)
+				auto attr = iLine * z;
+				// invoke pixel shader with interpolated vertex attributes
+				// and use result to set the pixel color on the screen
 
-			int pixelX = (int) min (  attr.tex.x*(float)texImage.width , (float)(texImage.width -1));
-			int pixelY = (int) min (  attr.tex.y*(float)texImage.height, (float)(texImage.height-1));
-
-			fb.PutPixel(
-				x,
-				y,
-				texImage.redBuffer   [pixelY * texImage.width + pixelX],
-				texImage.greenBuffer [pixelY * texImage.width + pixelX],
-				texImage.blueBuffer  [pixelY * texImage.width + pixelX]
-			);
-
-			//gfx.PutPixel(x, y, effect.ps(attr));
+				int pixelX = (int) min (  attr.tex.x*(float)texImage.width , (float)(texImage.width -1));
+				int pixelY = (int) min (  attr.tex.y*(float)texImage.height, (float)(texImage.height-1));
+			
+				fb.PutPixel(
+					x,
+					y,
+					texImage.redBuffer[pixelY * texImage.width + pixelX],
+					texImage.greenBuffer[pixelY * texImage.width + pixelX],
+					texImage.blueBuffer[pixelY * texImage.width + pixelX]
+				);
+			}
 		}
 	}
 }
