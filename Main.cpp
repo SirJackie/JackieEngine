@@ -99,25 +99,25 @@ void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// BDC
 	obj.triAi_o.emplace_back(1); obj.triBi_o.emplace_back(3); obj.triCi_o.emplace_back(2);
 	// FGH
-	obj.triAi_o.emplace_back(5); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(7);
+	//obj.triAi_o.emplace_back(5); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(7);
 	// FHE
-	obj.triAi_o.emplace_back(5); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(4);
+	//obj.triAi_o.emplace_back(5); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(4);
 	// BCG
 	obj.triAi_o.emplace_back(1); obj.triBi_o.emplace_back(2); obj.triCi_o.emplace_back(6);
 	// BGF
 	obj.triAi_o.emplace_back(1); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(5);
 	// AEH
-	obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(4); obj.triCi_o.emplace_back(7);
+	//obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(4); obj.triCi_o.emplace_back(7);
 	// AHD
-	obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(3);
+	//obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(3);
 	// DHG
-	obj.triAi_o.emplace_back(3); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(6);
+	//obj.triAi_o.emplace_back(3); obj.triBi_o.emplace_back(7); obj.triCi_o.emplace_back(6);
 	// DGC
-	obj.triAi_o.emplace_back(3); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(2);
+	//obj.triAi_o.emplace_back(3); obj.triBi_o.emplace_back(6); obj.triCi_o.emplace_back(2);
 	// ABF
-	obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(1); obj.triCi_o.emplace_back(5);
+	//obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(1); obj.triCi_o.emplace_back(5);
 	// AFE
-	obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(5); obj.triCi_o.emplace_back(4);
+	//obj.triAi_o.emplace_back(0); obj.triBi_o.emplace_back(5); obj.triCi_o.emplace_back(4);
 }
 
 void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
