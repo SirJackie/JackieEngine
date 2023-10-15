@@ -8,19 +8,35 @@
 
 ## 效果展示
 
-### v0.1.0（仅限Windows平台）
+### v1.1.6（仅限Windows平台）
 
-- 实现了基于深度坐标的着色示例
+- 编程实现了深度缓冲支持（Z-Buffer Support）
 
+![v1.1.6](readme.assets/v1.1.6.png)
 
-![Demo1](README.assets/Demo1.png)
+### v1.1.5（仅限Windows平台）
 
-### v0.2.0（支持Windows、Linux平台）
+- 编写了一个高分屏DPI自适应算法，自动Down-Sampling直到逻辑分辨率宽度小于1200。这种算法极大地增加的性能，同时不牺牲太多渲染质量。
 
-- 实现了仿射纹理插值
+### v1.1.4（仅限Windows平台）
 
+- 优化高分屏绘制性能，支持1/N倍将分辨率显示，极大提升性能（56FPS => 大于75FPS）
 
-![Demo2](README.assets/Demo2.png)
+### v1.1.3（仅限Windows平台）
+
+- 支持Windows平台的高分辨率屏幕显示（High DPI Support）
+
+### v1.1.2（支持Windows，Linux平台未测试）
+
+- 新增自适应大小窗口支持，根据FoV和窗口大小灵活调节渲染画面效果
+
+### v1.1.1（支持Windows，Linux平台未测试）
+
+- 新增嵌入式依赖库，实现“开箱即用”
+
+### v1.1.0（支持Windows，Linux平台未测试）
+
+- 新增光栅化裁剪功能（Raster Clipping），可以使几何物体在碰到屏幕边缘之后，不会被过度绘制（Overdraw），从而保证程序不会内存溢出而闪退
 
 ### v1.0.0（支持Windows，Linux平台未测试）
 
@@ -31,33 +47,19 @@
 
 ![Demo3](README.assets/Demo3.png)
 
-### v1.1.0（支持Windows，Linux平台未测试）
+### v0.2.0（支持Windows、Linux平台）
 
-- 新增光栅化裁剪功能（Raster Clipping），可以使几何物体在碰到屏幕边缘之后，不会被过度绘制（Overdraw），从而保证程序不会内存溢出而闪退
+- 实现了仿射纹理插值
 
-### v1.1.1（支持Windows，Linux平台未测试）
 
-- 新增嵌入式依赖库，实现“开箱即用”
+![Demo2](README.assets/Demo2.png)
 
-### v1.1.2（支持Windows，Linux平台未测试）
+### v0.1.0（仅限Windows平台）
 
-- 新增自适应大小窗口支持，根据FoV和窗口大小灵活调节渲染画面效果
+- 实现了基于深度坐标的着色示例
 
-### v1.1.3（仅限Windows平台）
 
-- 支持Windows平台的高分辨率屏幕显示（High DPI Support）
-
-### v1.1.4（仅限Windows平台）
-
-- 优化高分屏绘制性能，支持1/N倍将分辨率显示，极大提升性能（56FPS => 大于75FPS）
-
-### v1.1.5（仅限Windows平台）
-
-- 编写了一个高分屏DPI自适应算法，自动Down-Sampling直到逻辑分辨率宽度小于1200。这种算法极大地增加的性能，同时不牺牲太多渲染质量。
-
-### v1.1.6（仅限Windows平台）
-
-- 编程实现了深度缓冲支持（Z-Buffer Support）
+![Demo1](README.assets/Demo1.png)
 
 ## 如何编译并运行Demo？
 
