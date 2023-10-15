@@ -115,4 +115,6 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 			triangles.vertices[triangles.indices[i + 2]]
 		);
 	}
+
+	fb.PrintLn("This is a test.");
 }

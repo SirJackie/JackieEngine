@@ -32,6 +32,10 @@ WSL_WindowsHelper::WSL_WindowsHelper
 	const wchar_t* WindowClassName_, const wchar_t* WindowTitle_
 )
 {
+	// IMPORTANT!
+	// Enable High DPI Support in Windows OS
+	SetProcessDPIAware();
+
 	GetScreenResolution(screenWidth, screenHeight);
 	unit = screenHeight / 30;
 
