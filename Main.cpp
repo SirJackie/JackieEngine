@@ -7,8 +7,8 @@ using std::min;
 using std::max;
 
 static constexpr float dTheta = PI;
-//float offset_z = 2.0f;
-float offset_z = 0.566f;
+float offset_z = 2.0f;
+//float offset_z = 0.566f;
 float theta_x = 0.5f;
 float theta_y = 0.5f;
 float theta_z = 0.0f;
@@ -184,33 +184,28 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	}
 
 
-	// // Draw Lines
-	// Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
-	// 
-	// for (int i = 0; i < obj.triAi.size(); i++) {
-	//     DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triBi[i]]);
-	//     DrawVertexLine(fb, screenRect, obj.vec[obj.triBi[i]], obj.vec[obj.triCi[i]]);
-	// 	   DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triCi[i]]);
-	// }
+	// Draw Lines
+	Rectangle screenRect = { 0, fb.width - 1, 0, fb.height - 1 };
+	 
+	for (int i = 0; i < obj.triAi.size(); i++) {
+	    DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triBi[i]]);
+	    DrawVertexLine(fb, screenRect, obj.vec[obj.triBi[i]], obj.vec[obj.triCi[i]]);
+	 	DrawVertexLine(fb, screenRect, obj.vec[obj.triAi[i]], obj.vec[obj.triCi[i]]);
+	}
 
 	// Draw Triangles
 	CS_Memset(zBuffer, 0.0f, fb.width * fb.height * sizeof(float));  // We're wroking on 1/z space, so it's 0.0f instead of +Infinity
 
-	//int IIIFOCUS = 6;
-	//int IIIFOCUS = 14;
-	int IIIFOCUS = 15;
-
-	//for (int i = 4; i < obj.triAi.size(); i++) {
-	for (int i = IIIFOCUS; i < IIIFOCUS+1; i++) {
-		if (obj.triAi[i] != -1 || obj.triBi[i] != -1 || obj.triCi[i] != -1) {
-			DrawTriangle(
-				fb,
-				obj.vec[obj.triAi[i]],
-				obj.vec[obj.triBi[i]],
-				obj.vec[obj.triCi[i]]
-			);
-		}
-	}
+	//for (int i = 0; i < obj.triAi.size(); i++) {
+	//	if (obj.triAi[i] != -1 || obj.triBi[i] != -1 || obj.triCi[i] != -1) {
+	//		DrawTriangle(
+	//			fb,
+	//			obj.vec[obj.triAi[i]],
+	//			obj.vec[obj.triBi[i]],
+	//			obj.vec[obj.triCi[i]]
+	//		);
+	//	}
+	//}
 
 	fps.Count(deltaTime);
 	fb.PrintLn("WASDQE to Rotate, RF to Zoom, G to Enable/Disable Auto Rotation.");
