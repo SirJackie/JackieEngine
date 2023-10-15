@@ -9,6 +9,7 @@
 ## 效果展示
 
 <video src="readme.assets/DemoVideo.mp4"></video>
+点击观看视频演示：[Demo Video](./readme.assets/DemoVideo.mp4)
 
 ## 更新日志
 
