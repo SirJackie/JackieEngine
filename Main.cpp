@@ -13,6 +13,7 @@ float theta_y = -0.5f;
 float theta_z = 0.0f;
 Cube cube(1.0f);
 PubeScreenTransformer pst;
+CS_FPSCalculator fps;
 
 void Setup (CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime) {
 	pst.SetWidthHeight(fb.width, fb.height);
@@ -123,5 +124,6 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 		);
 	}
 
-	fb.PrintLn("This is a test.");
+	fps.Count(deltaTime);
+	fb.PrintLn(fps.ToString());
 }
