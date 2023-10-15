@@ -16,6 +16,8 @@
 [Rr]eleases/
 x64/
 x86/
+!/DXSDK/Lib/x64/
+!/DXSDK/Lib/x86/
 build/
 bld/
 [Bb]in/

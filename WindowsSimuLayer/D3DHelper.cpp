@@ -52,52 +52,28 @@ void WSL_D3DHelper::UnlockBuffer()
 
 void WSL_D3DHelper::PaintFrameBufferHere(CS_FrameBuffer& fb)
 {
+	i32* pBitsNow = (i32*)(rect.pBits);
 	i32  bufferPitch = (rect.Pitch) >> 2;
-	int realScreenWidth = fb.width * HIGH_DPI_SCALING_FACTOR;
-	int lineUpDelta = bufferPitch - realScreenWidth;  // for lining-up when screenWidth < bufferPitch, not really creating new line.
-	int hdsfMinusOne = HIGH_DPI_SCALING_FACTOR - 1;
+	ui8* pRed = fb.redBuffer;
+	ui8* pGreen = fb.greenBuffer;
+	ui8* pBlue = fb.blueBuffer;
 
-	for (int iLine = 0; iLine < HIGH_DPI_SCALING_FACTOR; iLine++) {
-
-		// DPI Scaling
-		// #1 to #n pixel in #ii line
-		i32* pBitsNow = (i32*)(rect.pBits);
-		ui8* pRed = fb.redBuffer;
-		ui8* pGreen = fb.greenBuffer;
-		ui8* pBlue = fb.blueBuffer;
-
-		for (int iSkip = 0; iSkip < iLine; iSkip++) {
-			pBitsNow += realScreenWidth;  // skip ii line first, which mutally complementary with preceding lines
-			pBitsNow += lineUpDelta;      // for lining-up when screenWidth < bufferPitch, not really creating new line.
+	for (i32 y = 0; y < fb.height; y++) {
+		for (i32 x = 0; x < fb.width; x++) {
+			*pBitsNow =
+				(i32)
+				(
+					(0xff << 24) |
+					(((*pRed) & 0xff) << 16) |
+					(((*pGreen) & 0xff) << 8) |
+					((*pBlue) & 0xff)
+					);
+			pRed++;
+			pGreen++;
+			pBlue++;
+			pBitsNow++;
 		}
-
-		for (i32 y = 0; y < fb.height; y++) {
-			for (i32 x = 0; x < fb.width; x++) {
-
-				for (int iiii = 0; iiii < HIGH_DPI_SCALING_FACTOR; iiii++){
-					// #n pixel
-					*pBitsNow =
-						(i32)
-						(
-							(0xff << 24) |
-							(((*pRed) & 0xff) << 16) |
-							(((*pGreen) & 0xff) << 8) |
-							((*pBlue) & 0xff)
-						);
-					pBitsNow++;
-				}
-
-				pRed++;
-				pGreen++;
-				pBlue++;
-			}
-			pBitsNow += lineUpDelta;      // for lining-up when screenWidth < bufferPitch, not really creating new line.
-			
-			for (int iSkip = 0; iSkip < hdsfMinusOne; iSkip++) {
-				pBitsNow += realScreenWidth;  // skip ii line first, which mutally complementary with preceding lines
-				pBitsNow += lineUpDelta;      // for lining-up when screenWidth < bufferPitch, not really creating new line.
-			}
-		}
+		pBitsNow += bufferPitch - fb.width;
 	}
 }
 

@@ -20,9 +20,6 @@ void CS_FrameBuffer::ClearSelfBuffer()
     CS_Memset(redBuffer, 0, width * height);
     CS_Memset(greenBuffer, 0, width * height);
     CS_Memset(blueBuffer, 0, width * height);
-
-	curX = CS_FB_INIT_CURX;
-	curY = CS_FB_INIT_CURY;
 }
 
 void CS_FrameBuffer::ClearSelfBuffer(ui8 r, ui8 g, ui8 b)
@@ -30,9 +27,6 @@ void CS_FrameBuffer::ClearSelfBuffer(ui8 r, ui8 g, ui8 b)
     CS_Memset(redBuffer, r, width * height);
     CS_Memset(greenBuffer, g, width * height);
     CS_Memset(blueBuffer, b, width * height);
-
-	curX = CS_FB_INIT_CURX;
-	curY = CS_FB_INIT_CURY;
 }
 
 void CS_FrameBuffer::CopySameSizeBuffer(const CS_FrameBuffer& from, CS_FrameBuffer& to)

@@ -56,11 +56,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Initialize CrossBufferLayer and WIndowsSimuLayer Objects
 	windowsHelper = WSL_WindowsHelper(MsgProc, hInstance, (wchar_t*)WindowTitle, (wchar_t*)WindowTitle);
-
-	// IMPORTANT! Lowered the logical resolution to speedup when HighDPI
-	windowsHelper.windowWidth /= HIGH_DPI_SCALING_FACTOR;
-	windowsHelper.windowHeight /= HIGH_DPI_SCALING_FACTOR;
-
 	d3dHelper = WSL_D3DHelper(windowsHelper.hWnd);
 	keyboardHelper = WSL_KeyboardHelper();
 	fb = CS_FrameBuffer(windowsHelper.windowWidth, windowsHelper.windowHeight);

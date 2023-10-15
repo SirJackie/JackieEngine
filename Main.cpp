@@ -7,9 +7,9 @@ using std::min;
 using std::max;
 
 static constexpr float dTheta = PI;
-float offset_z = 1.5f;
-float theta_x = -0.5f;
-float theta_y = -0.5f;
+float offset_z = 1.1f;
+float theta_x = 0.6f;
+float theta_y = 0.0f;
 float theta_z = 0.0f;
 Cube cube(1.0f);
 PubeScreenTransformer pst;
@@ -24,33 +24,31 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 	// Delta-Time Calculation
 	const float dt = (float)deltaTime / 1000.0f;
 	
-	// Rotation Key Control
-	if (kb.IsKeyPressed('W'))
-	{
-		theta_x += dTheta * dt;
-	}
-	if (kb.IsKeyPressed('S'))
-	{
-		theta_x -= dTheta * dt;
-	}
-	if (kb.IsKeyPressed('A'))
-	{
-		theta_y += dTheta * dt;
-	}
-	if (kb.IsKeyPressed('D'))
-	{
-		theta_y -= dTheta * dt;
-	}
+	// Keyboard Control
 	if (kb.IsKeyPressed('Q'))
 	{
-		theta_z += dTheta * dt;
+		theta_x = theta_x + dTheta * dt;
+	}
+	if (kb.IsKeyPressed('W'))
+	{
+		theta_y = theta_y + dTheta * dt;
 	}
 	if (kb.IsKeyPressed('E'))
 	{
-		theta_z -= dTheta * dt;
+		theta_z = theta_z + dTheta * dt;
 	}
-
-	// Move Forward or Backward
+	if (kb.IsKeyPressed('A'))
+	{
+		theta_x = theta_x - dTheta * dt;
+	}
+	if (kb.IsKeyPressed('S'))
+	{
+		theta_y = theta_y - dTheta * dt;
+	}
+	if (kb.IsKeyPressed('D'))
+	{
+		theta_z = theta_z - dTheta * dt;
+	}
 	if (kb.IsKeyPressed('R'))
 	{
 		offset_z += 2.0f * dt;
@@ -115,6 +113,4 @@ void Update(CS_FrameBuffer& fb, CS_Keyboard& kb, CS_Mouse& mouse, i32 deltaTime)
 			triangles.vertices[triangles.indices[i + 2]]
 		);
 	}
-
-	fb.PrintLn("This is a test.");
 }

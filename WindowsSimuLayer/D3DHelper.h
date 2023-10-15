@@ -5,8 +5,6 @@
 #include "../CrossBufferLayer/FrameBuffer.h"
 
 
-#define HIGH_DPI_SCALING_FACTOR 2
-
 class WSL_D3DHelper {
 public:
 	IDirect3D9* pDirect3D;
