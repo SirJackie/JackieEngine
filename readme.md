@@ -8,6 +8,16 @@
 
 ## 效果展示
 
+<video src="readme.assets/DemoVideo.mp4"></video>
+
+## 更新日志
+
+### v1.2.0（仅限Windows平台）
+
+- 编程实现了视锥体近截面几何裁剪算法（Frustum's Near-Plane Clipping），解决了相机太靠近物体时程序崩溃的问题
+
+![v1.2.0](readme.assets/v1.2.0.png)
+
 ### v1.1.6（仅限Windows平台）
 
 - 编程实现了深度缓冲支持（Z-Buffer Support）
@@ -36,7 +46,7 @@
 
 ### v1.1.0（支持Windows，Linux平台未测试）
 
-- 新增光栅化裁剪功能（Raster Clipping），可以使几何物体在碰到屏幕边缘之后，不会被过度绘制（Overdraw），从而保证程序不会内存溢出而闪退
+- 新增光栅化裁剪功能（Raster Clipping），可以使几何物体在碰到屏幕边缘之后，不会被过度绘制（Overdraw），从而保证程序不会内存溢出而闪退，解决了物体超出屏幕边界时程序崩溃的问题
 
 ### v1.0.0（支持Windows，Linux平台未测试）
 
